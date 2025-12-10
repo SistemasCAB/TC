@@ -1,0 +1,1134 @@
+object form_CambioCamaAdmision: Tform_CambioCamaAdmision
+  Left = 0
+  Top = 0
+  Caption = 'Cambio de Cama'
+  ClientHeight = 617
+  ClientWidth = 736
+  Fill.Color = xD8000000
+  Fill.Kind = Solid
+  Position = ScreenCenter
+  Transparency = True
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  DesignerMasterStyle = 0
+  object FondoTransparente: TRectangle
+    Align = Client
+    Fill.Color = claBlack
+    Opacity = 0.800000011920929000
+    Size.Width = 736.000000000000000000
+    Size.Height = 617.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle1: TRectangle
+    Align = Center
+    Size.Width = 613.000000000000000000
+    Size.Height = 510.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object recTituloVentana: TRectangle
+      Align = Top
+      Fill.Color = xFF00558C
+      Size.Width = 613.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object tituloVentana: TLabel
+        Align = Client
+        StyledSettings = [Family]
+        Size.Width = 613.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00060000000000000004000000}
+        TextSettings.FontColor = claWhitesmoke
+        TextSettings.HorzAlign = Center
+        Text = 'CAMBIO DE CAMA'
+        TabOrder = 2
+        object iconoVentana: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                00F1494441545847EDD53D76C2300C0770A94BD7CE64ED013814736FC301BA31
+                F500DC84B54FDEE9D2C1A92426F11C91400AD80FDED36FF347E4BFEDE4052084
+                1042787CCCBC4D29E5BEEF77D6A7AA3A9CD58088AC8848B4C0CC1B681D4844DE
+                55755F063144C4E0030D1A772422AF39E76F1FA2C4CC5FE0330C1A77C2CC9F7E
+                F11211FDA9EAD2E6EB5820FF502DCCBC3E2EEE32A0351011ADB3A21F005820E2
+                AF1FB00C2F7EA01655FD40C4B7B130271A9CCC452757E627D49252520080AEEB
+                D08F2122360F34C5B29C655F85EFBFD69C7ACD5EEAB92603953BB19D5DE2FF53
+                DE58ED7FF1856E35A7DEE409851042084FE20093E3B1D23B5D7FF50000000049
+                454E44AE426082}
+              FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
+            end>
+          Align = Left
+          HitTest = False
+          Size.Width = 49.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+        object botonSalir: TSpeedButton
+          Align = Right
+          StyledSettings = []
+          Hint = 'Salir'
+          Position.X = 565.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+          Text = #62480
+          TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+          TextSettings.Font.Size = 30.000000000000000000
+          TextSettings.FontColor = claWhite
+          OnClick = botonSalirClick
+          OnMouseMove = botonSalirMouseMove
+          OnMouseLeave = botonSalirMouseLeave
+        end
+      end
+    end
+    object Layout1: TLayout
+      Align = Client
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Size.Width = 593.000000000000000000
+      Size.Height = 440.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object pagina: TTabControl
+        Align = Client
+        Size.Width = 593.000000000000000000
+        Size.Height = 440.000000000000000000
+        Size.PlatformDefault = False
+        TabIndex = 1
+        TabOrder = 0
+        TabPosition = None
+        Sizes = (
+          593s
+          440s
+          593s
+          440s
+          593s
+          440s
+          593s
+          440s)
+        object tabOrden: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 8.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Ordenar'
+          ExplicitSize.cx = 8.000000000000000000
+          ExplicitSize.cy = 8.000000000000000000
+          object Rectangle7: TRectangle
+            Align = Client
+            Size.Width = 593.000000000000000000
+            Size.Height = 440.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object botonSolicitar: TRectangle
+              Fill.Color = xFF008795
+              Padding.Left = 5.000000000000000000
+              Position.X = 30.000000000000000000
+              Position.Y = 130.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label17: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 95.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Ordenar  Cambio'
+                TabOrder = 1
+              end
+              object SpeedButton6: TSpeedButton
+                Align = Contents
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object Label22: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 40.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claWhitesmoke
+                TextSettings.HorzAlign = Center
+                Text = #63501
+                TabOrder = 3
+              end
+            end
+            object Label24: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 30.000000000000000000
+              Position.Y = 38.000000000000000000
+              Size.Width = 336.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Text = 'No hay solicitudes ni '#243'rdenes de cambio de cama'
+              TabOrder = 3
+            end
+            object Label25: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 30.000000000000000000
+              Position.Y = 78.000000000000000000
+              Size.Width = 336.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 
+                'Para que este paciente sea cambiado de cama, presione el bot'#243'n O' +
+                'rdenar Cambio'
+              TabOrder = 1
+            end
+            object Rectangle8: TRectangle
+              Fill.Color = xFF008795
+              Padding.Left = 5.000000000000000000
+              Position.X = 30.000000000000000000
+              Position.Y = 334.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label26: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 95.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Historial de solicitudes'
+                TabOrder = 1
+              end
+              object SpeedButton7: TSpeedButton
+                Align = Contents
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object Label27: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 40.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claWhitesmoke
+                TextSettings.HorzAlign = Center
+                Text = #61914
+                TabOrder = 3
+              end
+            end
+            object Label29: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 35.000000000000000000
+              Position.Y = 278.000000000000000000
+              Size.Width = 534.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 
+                'Si desea consultar el historial de solicitudes de cambio de cama' +
+                ' (autorizadas, no autorizadas, canceladas), presione el bot'#243'n Hi' +
+                'storial de solicitudes.'
+              TabOrder = 0
+            end
+          end
+        end
+        object tabSolicitud: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 8.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Solicitud'
+          ExplicitSize.cx = 8.000000000000000000
+          ExplicitSize.cy = 8.000000000000000000
+          object Rectangle2: TRectangle
+            Align = Client
+            Corners = []
+            Size.Width = 593.000000000000000000
+            Size.Height = 440.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object Label4: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 28.000000000000000000
+              Size.Width = 89.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 'Solicitado el:'
+              TabOrder = 6
+            end
+            object botonCambiarCama: TRectangle
+              Fill.Color = xFF00558C
+              Padding.Left = 5.000000000000000000
+              Padding.Right = 5.000000000000000000
+              Position.X = 420.000000000000000000
+              Position.Y = 367.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label7: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 92.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Autorizar Cambio'
+                TabOrder = 1
+              end
+              object Label11: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = #61452
+                TabOrder = 2
+              end
+              object SpeedButton2: TSpeedButton
+                Align = Contents
+                Hint = 'Registrar el cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+            object botonCancelarCambio: TRectangle
+              Fill.Color = claRed
+              Padding.Left = 5.000000000000000000
+              Position.X = 33.000000000000000000
+              Position.Y = 367.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label9: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 97.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Cancelar solicitud'
+                TabOrder = 1
+              end
+              object Label10: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = #62189
+                TabOrder = 2
+              end
+              object SpeedButton3: TSpeedButton
+                Align = Contents
+                Hint = 'Eliminar esta solicitud de cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+            object lb_fecha_solicitud: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 102.000000000000000000
+              Position.Y = 28.000000000000000000
+              Size.Width = 155.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Text = '00-00-0000 00:00:00'
+              TabOrder = 7
+            end
+            object Label1: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 52.000000000000000000
+              Size.Width = 89.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 'Solicitado por:'
+              TabOrder = 1
+            end
+            object lb_solicitado_por: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 102.000000000000000000
+              Position.Y = 52.000000000000000000
+              Size.Width = 483.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Text = 'Apellido y nombre'
+              TabOrder = 3
+            end
+            object Label14: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 3.000000000000000000
+              Size.Width = 89.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 'ID solicitud:'
+              TabOrder = 4
+            end
+            object lb_idSolicitud: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 102.000000000000000000
+              Position.Y = 3.000000000000000000
+              Size.Width = 155.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Text = '000000'
+              TabOrder = 5
+            end
+            object Label15: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 245.000000000000000000
+              Size.Width = 155.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              Text = 'Motivos de cambio'
+              TabOrder = 2
+            end
+            object lb_motivo: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 33.000000000000000000
+              Position.Y = 272.000000000000000000
+              Size.Width = 552.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = '1- PASE A PISO'
+              TabOrder = 0
+            end
+            object rectCambioCama: TRectangle
+              Corners = []
+              Fill.Color = claOrange
+              Position.X = 8.000000000000000000
+              Position.Y = 93.000000000000000000
+              Size.Width = 577.000000000000000000
+              Size.Height = 142.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object CalloutPanel1: TCalloutPanel
+                Align = Left
+                Padding.Right = 11.000000000000000000
+                Size.Width = 169.000000000000000000
+                Size.Height = 142.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 11
+                CalloutWidth = 23.000000000000000000
+                CalloutLength = 11.000000000000000000
+                CalloutPosition = Right
+                object lb_cama_origen: TLabel
+                  Align = Contents
+                  StyledSettings = [Family, FontColor]
+                  Size.Width = 169.000000000000000000
+                  Size.Height = 142.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.Font.Size = 25.000000000000000000
+                  TextSettings.Font.StyleExt = {00070000000000000004000000}
+                  TextSettings.HorzAlign = Center
+                  Text = '000 X'
+                  TabOrder = 0
+                end
+                object Label28: TLabel
+                  Align = Top
+                  Size.Width = 158.000000000000000000
+                  Size.Height = 30.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'Cama actual'
+                  TabOrder = 1
+                end
+                object sombra: TShadowEffect
+                  Distance = 3.000000000000000000
+                  Direction = 45.000000000000000000
+                  Softness = 0.300000011920929000
+                  Opacity = 0.600000023841857900
+                  ShadowColor = claBlack
+                end
+              end
+              object Label16: TLabel
+                AutoSize = True
+                StyledSettings = [Family, FontColor]
+                Position.X = 175.000000000000000000
+                Position.Y = 11.000000000000000000
+                Size.Width = 140.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                Text = 'Estado de la solicitud:'
+                TabOrder = 7
+              end
+              object lb_estadoSolicitud: TLabel
+                AutoSize = True
+                StyledSettings = [Family]
+                Position.X = 317.000000000000000000
+                Position.Y = 11.000000000000000000
+                Size.Width = 155.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                Text = 'Autorizado'
+                TabOrder = 8
+              end
+              object Label18: TLabel
+                AutoSize = True
+                StyledSettings = [Family, FontColor]
+                Position.X = 175.000000000000000000
+                Position.Y = 45.000000000000000000
+                Size.Width = 139.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                Text = 'Responsable estado:'
+                TabOrder = 9
+              end
+              object lb_autorizadoFecha: TLabel
+                AutoSize = True
+                StyledSettings = [Family, FontColor]
+                Position.X = 317.000000000000000000
+                Position.Y = 79.000000000000000000
+                Size.Width = 252.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                Text = '00-00-0000 00:00:00'
+                TabOrder = 10
+              end
+              object Label20: TLabel
+                AutoSize = True
+                StyledSettings = [Family, FontColor]
+                Position.X = 175.000000000000000000
+                Position.Y = 79.000000000000000000
+                Size.Width = 129.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                Text = 'Fecha autorizaci'#243'n:'
+                TabOrder = 2
+              end
+              object lb_autorizadoNombre: TLabel
+                AutoSize = True
+                StyledSettings = [Family, FontColor]
+                Position.X = 317.000000000000000000
+                Position.Y = 45.000000000000000000
+                Size.Width = 252.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                Text = 'Apellido y nombre'
+                TabOrder = 4
+              end
+              object Label23: TLabel
+                AutoSize = True
+                StyledSettings = [Family, FontColor]
+                Position.X = 175.000000000000000000
+                Position.Y = 113.000000000000000000
+                Size.Width = 129.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                Text = 'Cambiar  a cama:'
+                TabOrder = 1
+              end
+              object lb_cama_destino: TLabel
+                AutoSize = True
+                StyledSettings = [Family]
+                Position.X = 317.000000000000000000
+                Position.Y = 106.000000000000000000
+                Size.Width = 252.000000000000000000
+                Size.Height = 34.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                Text = '000 X'
+                TabOrder = 3
+              end
+            end
+            object Rectangle6: TRectangle
+              Fill.Color = xFF00558C
+              Padding.Left = 5.000000000000000000
+              Padding.Right = 5.000000000000000000
+              Position.X = 227.000000000000000000
+              Position.Y = 367.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label12: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 92.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'No Autorizar Cambio'
+                TabOrder = 1
+              end
+              object Label13: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claRed
+                TextSettings.HorzAlign = Center
+                Text = #61534
+                TabOrder = 2
+              end
+              object SpeedButton5: TSpeedButton
+                Align = Contents
+                Hint = 'Registrar el cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+          end
+        end
+        object tabSeleccionarCama: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 8.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Autorizar'
+          ExplicitSize.cx = 8.000000000000000000
+          ExplicitSize.cy = 8.000000000000000000
+          object Rectangle3: TRectangle
+            Align = Client
+            Size.Width = 593.000000000000000000
+            Size.Height = 440.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object Label3: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 8.000000000000000000
+              Size.Width = 561.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 'Seleccione la cama a la que autoriza a cambiar a este paciente'
+              TabOrder = 1
+            end
+            object ListView1: TListView
+              ItemAppearanceClassName = 'TListItemAppearance'
+              ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+              HeaderAppearanceClassName = 'TListHeaderObjects'
+              FooterAppearanceClassName = 'TListHeaderObjects'
+              Position.X = 8.000000000000000000
+              Position.Y = 35.000000000000000000
+              Size.Width = 577.000000000000000000
+              Size.Height = 294.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+            end
+            object Rectangle4: TRectangle
+              Fill.Color = xFF008795
+              Padding.Left = 5.000000000000000000
+              Padding.Right = 5.000000000000000000
+              Position.X = 352.000000000000000000
+              Position.Y = 375.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label2: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 92.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Finalizar'
+                TabOrder = 1
+              end
+              object Label5: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = #61452
+                TabOrder = 2
+              end
+              object SpeedButton1: TSpeedButton
+                Align = Contents
+                Hint = 'Registrar el cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+            object Rectangle5: TRectangle
+              Fill.Color = xFF008795
+              Padding.Left = 5.000000000000000000
+              Position.X = 122.000000000000000000
+              Position.Y = 375.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label6: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 97.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Atr'#225's'
+                TabOrder = 1
+              end
+              object Label8: TLabel
+                Align = Left
+                StyledSettings = [Style]
+                Position.X = 5.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+                TextSettings.Font.Size = 25.000000000000000000
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = #61536
+                TabOrder = 2
+              end
+              object SpeedButton4: TSpeedButton
+                Align = Contents
+                Hint = 'Eliminar esta solicitud de cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+          end
+        end
+        object TabItem2: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 8.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'TabItem2'
+          ExplicitSize.cx = 8.000000000000000000
+          ExplicitSize.cy = 8.000000000000000000
+        end
+      end
+    end
+  end
+  object solicitudCli: TRESTClient
+    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
+    AcceptCharset = 'utf-8, *;q=0.8'
+    BaseURL = 'http://10.99.8.107/tc/public/api'
+    Params = <>
+    RaiseExceptionOn500 = False
+    SynchronizedEvents = False
+    Left = 536
+    Top = 88
+  end
+  object solicitudReq: TRESTRequest
+    Client = solicitudCli
+    Params = <
+      item
+        Kind = pkHTTPHEADER
+        Name = 'TokenAcceso'
+        Value = 
+          'cv44uu1depYrgYVwq7S6W7wC0F2OfjbZQvJ9Ay4wqY8qn1jDufmfZszW2V8bnnSa' +
+          'sGtHJMQyBVjQzZGC361iOMZGEU9jYTFUYxv2jZ6yZh7QoHEfb59kWgohM1FoB5aB'
+      end
+      item
+        Name = 'id_internacion'
+        Value = '7019'
+      end
+      item
+        Name = 'id_cama_origen'
+        Value = '17'
+      end>
+    Resource = 'cambioCama/buscarSolicitud'
+    Response = solicitudRes
+    SynchronizedEvents = False
+    Left = 536
+    Top = 136
+  end
+  object solicitudRes: TRESTResponse
+    ContentType = 'application/json'
+    Left = 536
+    Top = 192
+  end
+  object solicitudDSA: TRESTResponseDataSetAdapter
+    Active = True
+    Dataset = solicitud
+    FieldDefs = <>
+    Response = solicitudRes
+    Left = 536
+    Top = 248
+  end
+  object solicitud: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'id_solicitud'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_internacion'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_paciente'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'dni_pacientes'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'fecha'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_cama_origen'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'cama_origen'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_cama_destino'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'cama_destino'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_motivo'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'motivo'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_estado_solicitud'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'estado'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'solicitado_por_dni'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'solicitado_por_nombre'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'autorizado_fecha'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'autorizado_por_dni'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'autorizado_por_nombre'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'realizado_fecha'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'realizado_por_dni'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'realizado_por_nombre'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'cancelado_fecha'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'cancelado_por_dni'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'cancelado_por_nombre'
+        DataType = ftWideString
+        Size = 255
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.LockWait = True
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    StoreDefs = True
+    Left = 536
+    Top = 296
+    object solicitudid_solicitud: TWideStringField
+      FieldName = 'id_solicitud'
+      Size = 255
+    end
+    object solicitudid_internacion: TWideStringField
+      FieldName = 'id_internacion'
+      Size = 255
+    end
+    object solicitudid_paciente: TWideStringField
+      FieldName = 'id_paciente'
+      Size = 255
+    end
+    object solicituddni_pacientes: TWideStringField
+      FieldName = 'dni_pacientes'
+      Size = 255
+    end
+    object solicitudfecha: TWideStringField
+      FieldName = 'fecha'
+      Size = 255
+    end
+    object solicitudid_cama_origen: TWideStringField
+      FieldName = 'id_cama_origen'
+      Size = 255
+    end
+    object solicitudcama_origen: TWideStringField
+      FieldName = 'cama_origen'
+      Size = 255
+    end
+    object solicitudid_cama_destino: TWideStringField
+      FieldName = 'id_cama_destino'
+      Size = 255
+    end
+    object solicitudcama_destino: TWideStringField
+      FieldName = 'cama_destino'
+      Size = 255
+    end
+    object solicitudid_motivo: TWideStringField
+      FieldName = 'id_motivo'
+      Size = 255
+    end
+    object solicitudmotivo: TWideStringField
+      FieldName = 'motivo'
+      Size = 255
+    end
+    object solicitudid_estado_solicitud: TWideStringField
+      FieldName = 'id_estado_solicitud'
+      Size = 255
+    end
+    object solicitudestado: TWideStringField
+      FieldName = 'estado'
+      Size = 255
+    end
+    object solicitudsolicitado_por_dni: TWideStringField
+      FieldName = 'solicitado_por_dni'
+      Size = 255
+    end
+    object solicitudsolicitado_por_nombre: TWideStringField
+      FieldName = 'solicitado_por_nombre'
+      Size = 255
+    end
+    object solicitudautorizado_fecha: TWideStringField
+      FieldName = 'autorizado_fecha'
+      Size = 255
+    end
+    object solicitudautorizado_por_dni: TWideStringField
+      FieldName = 'autorizado_por_dni'
+      Size = 255
+    end
+    object solicitudautorizado_por_nombre: TWideStringField
+      FieldName = 'autorizado_por_nombre'
+      Size = 255
+    end
+    object solicitudrealizado_fecha: TWideStringField
+      FieldName = 'realizado_fecha'
+      Size = 255
+    end
+    object solicitudrealizado_por_dni: TWideStringField
+      FieldName = 'realizado_por_dni'
+      Size = 255
+    end
+    object solicitudrealizado_por_nombre: TWideStringField
+      FieldName = 'realizado_por_nombre'
+      Size = 255
+    end
+    object solicitudcancelado_fecha: TWideStringField
+      FieldName = 'cancelado_fecha'
+      Size = 255
+    end
+    object solicitudcancelado_por_dni: TWideStringField
+      FieldName = 'cancelado_por_dni'
+      Size = 255
+    end
+    object solicitudcancelado_por_nombre: TWideStringField
+      FieldName = 'cancelado_por_nombre'
+      Size = 255
+    end
+  end
+end

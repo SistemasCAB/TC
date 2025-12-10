@@ -1,0 +1,220 @@
+object form_ServiciosCambio: Tform_ServiciosCambio
+  Left = 0
+  Top = 0
+  Caption = 'Cambio de Servicio'
+  ClientHeight = 670
+  ClientWidth = 494
+  Fill.Color = xD8000000
+  Fill.Kind = Solid
+  Position = ScreenCenter
+  Transparency = True
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  DesignerMasterStyle = 0
+  object FondoTransparente: TRectangle
+    Align = Client
+    Fill.Color = claBlack
+    Opacity = 0.800000011920929000
+    Size.Width = 494.000000000000000000
+    Size.Height = 670.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle1: TRectangle
+    Align = Center
+    Size.Width = 417.000000000000000000
+    Size.Height = 635.000000000000000000
+    Size.PlatformDefault = False
+    object recTitulo: TRectangle
+      Align = Top
+      Fill.Color = xFF00558C
+      Padding.Left = 15.000000000000000000
+      Size.Width = 417.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object lbTitulo: TLabel
+        Align = Client
+        StyledSettings = [Family]
+        Size.Width = 351.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        Text = 'CAMBIAR DE SERVICIO'
+        TabOrder = 0
+      end
+      object SpeedButton1: TSpeedButton
+        Align = Right
+        StyledSettings = [Family]
+        Position.X = 366.000000000000000000
+        Size.Width = 51.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'X'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00060000000000000004000000}
+        TextSettings.FontColor = claWhite
+        OnClick = SpeedButton1Click
+      end
+    end
+    object listaServicios: TListView
+      ItemAppearanceClassName = 'TListItemAppearance'
+      ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+      HeaderAppearanceClassName = 'TListHeaderObjects'
+      FooterAppearanceClassName = 'TListHeaderObjects'
+      Align = Client
+      Size.Width = 417.000000000000000000
+      Size.Height = 585.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      ItemAppearanceObjects.ItemObjects.Text.Font.Size = 14.000000000000000000
+      ItemAppearanceObjects.ItemObjects.Text.Font.StyleExt = {00060000000000000004000000}
+      OnItemClick = listaServiciosItemClick
+    end
+    object ShadowEffect1: TShadowEffect
+      Distance = 3.000000000000000000
+      Direction = 45.000000000000000000
+      Softness = 0.300000011920929000
+      Opacity = 0.600000023841857900
+      ShadowColor = claBlack
+    end
+  end
+  object serviciosCli: TRESTClient
+    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
+    AcceptCharset = 'utf-8, *;q=0.8'
+    BaseURL = 'http://10.99.8.107/tc/public/api'
+    Params = <>
+    RaiseExceptionOn500 = False
+    SynchronizedEvents = False
+    Left = 216
+    Top = 264
+  end
+  object serviciosReq: TRESTRequest
+    Client = serviciosCli
+    Params = <
+      item
+        Kind = pkHTTPHEADER
+        Name = 'TokenAcceso'
+        Value = 
+          'cv44uu1depYrgYVwq7S6W7wC0F2OfjbZQvJ9Ay4wqY8qn1jDufmfZszW2V8bnnSa' +
+          'sGtHJMQyBVjQzZGC361iOMZGEU9jYTFUYxv2jZ6yZh7QoHEfb59kWgohM1FoB5aB'
+      end>
+    Resource = 'servicios/ver'
+    Response = serviciosRes
+    SynchronizedEvents = False
+    Left = 216
+    Top = 320
+  end
+  object serviciosRes: TRESTResponse
+    ContentType = 'application/json'
+    Left = 216
+    Top = 376
+  end
+  object serviciosDSA: TRESTResponseDataSetAdapter
+    Active = True
+    Dataset = servicios
+    FieldDefs = <>
+    Response = serviciosRes
+    Left = 216
+    Top = 432
+  end
+  object servicios: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'id_servicio'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'nombreServicio'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'tipo_internacion'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'cambioCama_areaCerrada'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'gestionaCamas'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'id_tipoInternacion'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'TipoInternacion'
+        DataType = ftWideString
+        Size = 255
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.LockWait = True
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    StoreDefs = True
+    Left = 216
+    Top = 488
+    object serviciosid_servicio: TWideStringField
+      FieldName = 'id_servicio'
+      Size = 255
+    end
+    object serviciosnombreServicio: TWideStringField
+      FieldName = 'nombreServicio'
+      Size = 255
+    end
+    object serviciostipo_internacion: TWideStringField
+      FieldName = 'tipo_internacion'
+      Size = 255
+    end
+    object servicioscambioCama_areaCerrada: TWideStringField
+      FieldName = 'cambioCama_areaCerrada'
+      Size = 255
+    end
+    object serviciosid_tipoInternacion: TWideStringField
+      FieldName = 'id_tipoInternacion'
+      Size = 255
+    end
+    object serviciosTipoInternacion: TWideStringField
+      FieldName = 'TipoInternacion'
+      Size = 255
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = servicios
+    ScopeMappings = <>
+    Left = 328
+    Top = 488
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 332
+    Top = 541
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'nombreServicio'
+      Control = listaServicios
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+  end
+end

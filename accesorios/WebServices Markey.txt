@@ -1,0 +1,4 @@
+cambiarCama
+en este servicio es necesario agregar el parámetro id_usuario (DNI) para que al hacer el cambio de cama, en Markey quede registrado quien hizo el movimiento.
+
+---------------------------------------

@@ -1,0 +1,5 @@
+----------------
+   TGIFImage
+----------------
+Descargar desde: https://github.com/TomDannert/GIFImage
+Descargado en: C:\Users\jorgeluis.rodriguez\Documents\Embarcadero\Componentes
