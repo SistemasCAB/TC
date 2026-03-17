@@ -70,9 +70,6 @@ Coordinates=892,936,73,58
 [menuSeparador3]
 Coordinates=197,1004,113,36
 
-[alertasid_cama]
-Coordinates=924,1651,102,36
-
 [Image2]
 Coordinates=651,936,57,58
 
@@ -97,4 +94,7 @@ Coordinates=1679,936,79,36
 []
 Coordinates=10,10,174,916
 Visible=True
+
+[alertasidCama]
+Coordinates=924,1651,102,36
 

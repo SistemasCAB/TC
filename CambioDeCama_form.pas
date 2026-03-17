@@ -72,30 +72,30 @@ type
     Label12: TLabel;
     Label13: TLabel;
     solicitud: TFDMemTable;
-    solicitudid_solicitud: TWideStringField;
-    solicitudid_internacion: TWideStringField;
-    solicitudid_paciente: TWideStringField;
-    solicituddni_pacientes: TWideStringField;
+    solicitudidSolicitud: TWideStringField;
+    solicitudidInternacion: TWideStringField;
+    solicitudpaciCodigo: TWideStringField;
+    solicitudnroDocumento: TWideStringField;
     solicitudfecha: TWideStringField;
-    solicitudid_cama_origen: TWideStringField;
-    solicitudcama_origen: TWideStringField;
-    solicitudid_cama_destino: TWideStringField;
-    solicitudcama_destino: TWideStringField;
-    solicitudid_motivo: TWideStringField;
+    solicitudidCamaOrigen: TWideStringField;
+    solicitudcamaOrigen: TWideStringField;
+    solicitudidCamaDestino: TWideStringField;
+    solicitudcamaDestino: TWideStringField;
+    solicitudidMotivo: TWideStringField;
     solicitudmotivo: TWideStringField;
-    solicitudid_estado_solicitud: TWideStringField;
+    solicitudidEstadoSolicitud: TWideStringField;
     solicitudestado: TWideStringField;
-    solicitudsolicitado_por_dni: TWideStringField;
-    solicitudsolicitado_por_nombre: TWideStringField;
-    solicitudautorizado_fecha: TWideStringField;
-    solicitudautorizado_por_dni: TWideStringField;
-    solicitudautorizado_por_nombre: TWideStringField;
-    solicitudrealizado_fecha: TWideStringField;
-    solicitudrealizado_por_dni: TWideStringField;
-    solicitudrealizado_por_nombre: TWideStringField;
-    solicitudcancelado_fecha: TWideStringField;
-    solicitudcancelado_por_dni: TWideStringField;
-    solicitudcancelado_por_nombre: TWideStringField;
+    solicitudsolicitadoPorDni: TWideStringField;
+    solicitudsolicitadoPorNombre: TWideStringField;
+    solicitudautorizadoFecha: TWideStringField;
+    solicitudautorizadoPorDni: TWideStringField;
+    solicitudautorizadoPorNombre: TWideStringField;
+    solicitudrealizadoFecha: TWideStringField;
+    solicitudrealizadoPorDni: TWideStringField;
+    solicitudrealizadoPorNombre: TWideStringField;
+    solicitudcanceladoFecha: TWideStringField;
+    solicitudcanceladoPorDni: TWideStringField;
+    solicitudcanceladoPorNombre: TWideStringField;
     FondoTransparente: TRectangle;
     lyCambioACamaVirtual: TLayout;
     Label17: TLabel;
@@ -113,7 +113,7 @@ type
     SpeedButton5: TSpeedButton;
     tabCambioVirtual: TTabItem;
     motivos: TFDMemTable;
-    motivosid_motivo: TIntegerField;
+    motivosidMotivoCambioCama: TIntegerField;
     motivosmotivo: TStringField;
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
@@ -124,6 +124,7 @@ type
     nuevaSolicitud: TFDMemTable;
     nuevaSolicitudmensaje: TStringField;
     nuevaSolicitudid_solicitud: TIntegerField;
+    motivosactivo: TIntegerField;
     procedure botonSalirClick(Sender: TObject);
     procedure Actualizar;
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
@@ -144,8 +145,8 @@ type
     { Private declarations }
   public
     { Public declarations }
-    id_cama_origen, id_internacion, id_paciente:integer;
-    dni_paciente:string;
+    idCamaOrigen, idInternacion, paciCodigo:integer;
+    nroDocumento:string;
   end;
 
 var
@@ -162,10 +163,10 @@ var
   response : IResponse;
 begin
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/cambioCama/buscarSolicitud')
+              .Resource('/tablerocamas/buscarSolicitudCambioCama')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_internacion', id_internacion.ToString)
-              .AddParam('id_cama_origen',id_cama_origen.ToString)
+              .AddParam('idInternacion', idInternacion.ToString)
+              .AddParam('idCamaOrigen',idCamaOrigen.ToString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(solicitud))
               .Get;
@@ -177,18 +178,18 @@ begin
         begin
           // Hay una solicitud
           pagina.TabIndex := 2; // página para ver la solicitud actual.
-          lb_idSolicitud.Text := solicitudid_solicitud.AsString;
+          lb_idSolicitud.Text := solicitudidSolicitud.AsString;
           lb_fecha_solicitud.Text := solicitudfecha.AsString;
-          lb_solicitado_por.Text := solicitudsolicitado_por_nombre.AsString;
-          lb_cama_origen.Text := solicitudcama_origen.AsString;
+          lb_solicitado_por.Text := solicitudsolicitadoPorNombre.AsString;
+          lb_cama_origen.Text := solicitudcamaOrigen.AsString;
           lb_estadoSolicitud.Text := solicitudestado.AsString;
-          if (solicitudid_estado_solicitud.AsInteger = 1) or (solicitudid_estado_solicitud.AsInteger = 2) then
+          if (solicitudidEstadoSolicitud.AsInteger = 1) or (solicitudidEstadoSolicitud.AsInteger = 2) then
             begin
-              lb_autorizadoNombre.Text := solicitudautorizado_por_nombre.AsString;
-              lb_autorizadoFecha.Text := solicitudautorizado_fecha.AsString;
-              lb_cama_destino.Text := solicitudcama_destino.AsString;
+              lb_autorizadoNombre.Text := solicitudautorizadoPorNombre.AsString;
+              lb_autorizadoFecha.Text := solicitudautorizadoFecha.AsString;
+              lb_cama_destino.Text := solicitudcamaDestino.AsString;
 
-              if solicitudid_estado_solicitud.AsInteger = 2 then // solicitud autorizada
+              if solicitudidEstadoSolicitud.AsInteger = 2 then // solicitud autorizada
                 begin
                   recBotonCambiarCama.Fill.Color := TAlphaColor(strtoint('$FF008795'));
                   botonCambiarCama.Enabled := true;
@@ -228,9 +229,8 @@ var
   Response: IResponse;
 begin
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/cambioCama/motivos')
+              .Resource('/tablerocamas/motivosCambioCama')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              //.AddParam('ParameterName', 'ParameterValue')
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(motivos))
               .Get;
@@ -285,9 +285,9 @@ begin
   if(resMod = 6)  then // 6 = mrYes
     begin
         response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/cambioCama/eliminarSolicitud')
+              .Resource('/tablerocamas/cambioCamaEliminarSolicitud')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_solicitudCambio', solicitudid_solicitud.AsString)
+              .AddParam('idSolicitudCambio', solicitudidSolicitud.AsString)
               .AddParam('dni',datos.dniLogin)
               .AddParam('nombreUsuario',datos.nombreLogin)
               .Accept('application/json')
@@ -313,11 +313,11 @@ begin
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource('/cambioCama/nuevaSolicitud')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_internacion', id_internacion.ToString)
-              .AddParam('id_paciente', id_paciente.ToString)
-              .AddParam('dni_paciente', dni_paciente)
-              .AddParam('id_cama_origen', id_cama_origen.ToString)
-              .AddParam('id_motivo', motivosid_motivo.AsString)
+              .AddParam('id_internacion', idInternacion.ToString)
+              .AddParam('id_paciente', paciCodigo.ToString)
+              .AddParam('dni_paciente', nroDocumento)
+              .AddParam('id_cama_origen', idCamaOrigen.ToString)
+              .AddParam('id_motivo', motivosidMotivoCambioCama.AsString)
               .AddParam('solicitado_por_dni', datos.dniLogin)
               .AddParam('solicitado_por_nombre', datos.nombreLogin)
               .Accept('application/json')
@@ -357,7 +357,7 @@ begin
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource('/cambioCama/eliminarSolicitud')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_solicitudCambio', solicitudid_solicitud.AsString)
+              .AddParam('id_solicitudCambio', solicitudidSolicitud.AsString)
               .AddParam('dni',datos.dniLogin)
               .AddParam('nombreUsuario',datos.nombreLogin)
               .Accept('application/json')

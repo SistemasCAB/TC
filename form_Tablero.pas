@@ -48,7 +48,35 @@ uses
   Data.Bind.EngExt,
   Fmx.Bind.DBEngExt,
   Data.Bind.DBScope,
-  FMX.GIFImage;
+  FMX.GIFImage,
+  System.Generics.Collections, // agrego el diccionario al form
+
+  System.SyncObjs,System.Threading;
+
+type
+  TCamaUI = class
+  public
+    Borde: TRectangle;
+    PanelB: TRectangle;
+    etiqueta: TRectangle;
+    LyDatos: TLayout;
+    LyCama: TLayout;
+    lbNroCama: TLabel;
+    LbPrincipal: TLabel;
+    LbSecundaria: TLabel;
+    fotoPac: TImage;
+    iconoAlta: TImage;
+    iconoAislamiento: TImage;
+    iconoAislamientoC: TImage;
+    iconoAislamientoGC: TImage;
+    iconoAislamientoAR: TImage;
+    iconoAislamientoN: TImage;
+    iconoAislamientoCD: TImage;
+    iconoAislamientoSC: TImage;
+    lbPrecaucion: TLabel;
+    cruzVerde: TGIFImage;
+
+  end;
 
 type
   TformTablero = class(TForm)
@@ -79,7 +107,7 @@ type
     alertas: TFDMemTable;
     alertasNueva: TFDMemTable;
     relojParpadeo: TTimer;
-    alertasid_cama: TIntegerField;
+    alertasidCama: TIntegerField;
     contenedor: TScrollBox;
     barra: TProgressBar;
     espere: TGIFImage;
@@ -94,129 +122,141 @@ type
     versionesfecha: TWideStringField;
     versionesmensaje: TWideStringField;
     permisos: TFDMemTable;
-    permisosid_permiso: TFloatField;
-    permisosid_servicio: TFloatField;
-    permisosnombreServicio: TWideStringField;
-    permisosid_modulo: TFloatField;
-    permisosnombreModulo: TWideStringField;
-    permisosdescripcion: TWideStringField;
-    permisoscontrolTotal: TFloatField;
     apagarAlertasTB: TFDMemTable;
-    camasid_cama: TIntegerField;
+    camasidcama: TIntegerField;
     camascama: TStringField;
-    camasid_habitacion: TIntegerField;
+    camasidHabitacion: TIntegerField;
     camashabitacion: TStringField;
     camaspiso: TStringField;
-    camasid_estado: TIntegerField;
+    camasidEstado: TIntegerField;
     camasestado: TStringField;
     camascolor: TStringField;
     camasobservaciones: TStringField;
-    camasid_paciente: TIntegerField;
-    camasnombre_paciente: TStringField;
-    camasapellido_paciente: TStringField;
-    camasdni: TStringField;
+    camaspaciCodigo: TIntegerField;
+    camasnombrePaciente: TStringField;
+    camasapellidoPaciente: TStringField;
+    camasnroDocumento: TStringField;
     camassexo: TStringField;
-    camassexo_texto: TStringField;
-    camasfecha_ingreso_institucion: TStringField;
-    camasfecha_ingreso_cama: TStringField;
+    camassexoTexto: TStringField;
+    camasfechaIngresoInstitucion: TStringField;
+    camasfechaIngresoCama: TStringField;
     camascobertura: TStringField;
     camasfantasia: TStringField;
     camasplan: TStringField;
-    camasnro_afiliado: TStringField;
-    camasid_internacion: TIntegerField;
-    camasfecha_alta_medica: TStringField;
-    camasprofesional_alta_medica: TStringField;
-    camastipo_alta_medica: TStringField;
-    camasfoto_paciente: TMemoField;
-    camasprocedimientos_no_cumplidos: TIntegerField;
-    camasmedicacion_no_programada: TIntegerField;
-    camasmedicacion_no_aplicada: TIntegerField;
+    camasnroAfiliado: TStringField;
+    camasidInternacion: TIntegerField;
+    camasfechaAltaMedica: TStringField;
+    camasprofesionalAltaMedica: TStringField;
+    camastipoAltaMedica: TStringField;
+    camasfotoPaciente: TMemoField;
+    camasprocedimientosNoCumplidos: TIntegerField;
+    camasmedicacionNoProgramada: TIntegerField;
+    camasmedicacionNoAplicada: TIntegerField;
     camasaislamiento_contacto: TStringField;
     camasaislamiento_respiratorio: TStringField;
     camasaislamiento_gota: TStringField;
     camasaislamiento_neutropenico: TStringField;
     camasaislamiento_cd: TStringField;
     camasaislamiento_sc: TStringField;
-    camascama_en_aislamiento: TIntegerField;
+    camascamaEnAislamiento: TIntegerField;
     camasacompanante: TIntegerField;
-    camasobservaciones_acompanante: TStringField;
+    camasobservacionesAcompanante: TStringField;
     camasorden: TIntegerField;
     camascambioCamaPendiente: TIntegerField;
     camasalertas: TIntegerField;
     camastareasPendientes: TIntegerField;
-    camasaltaProbable_fecha: TStringField;
-    camasaltaProbable_tipo: TStringField;
-    camasaltaProbable_dniUsuario: TStringField;
-    camasreserva_motivo: TStringField;
-    camasfecha_reserva: TStringField;
-    camasreservada_por_dni: TStringField;
-    camasreservada_por_nombre: TStringField;
-    camasid_reserva: TIntegerField;
-    camasreserva_fecha_cancelada: TStringField;
-    camasreserva_cancelada_por_dni: TStringField;
-    camasreserva_cancelada_por_nombre: TStringField;
-    camasreserva_paciente_dni: TStringField;
-    camasreserva_paciente_nombre: TStringField;
-    camasid_motivo_fin_reserva: TIntegerField;
-    camasreserva_id_solicitudCambio: TIntegerField;
+    camasaltaProbableFecha: TStringField;
+    camasaltaProbableTipo: TStringField;
+    camasaltaProbableDniUsuario: TStringField;
+    camasreservaMotivo: TStringField;
+    camasreservaFecha: TStringField;
+    camasreservadaPorDni: TStringField;
+    camasreservadaPorNombre: TStringField;
+    camasidReserva: TIntegerField;
+    camasreservaFechaCancelada: TStringField;
+    camasreservaCanceladaPorDni: TStringField;
+    camasreservaCanceladaPorNombre: TStringField;
+    camasreservaPacienteDni: TStringField;
+    camasreservaPacienteNombre: TStringField;
+    camasidMotivoFinReserva: TIntegerField;
+    camasreservaIdSolicitudCambio: TIntegerField;
     camas2: TFDMemTable;
-    camas2id_cama: TIntegerField;
+    camas2idCama: TIntegerField;
     camas2cama: TStringField;
-    camas2id_habitacion: TIntegerField;
+    camas2idHabitacion: TIntegerField;
     camas2habitacion: TStringField;
     camas2piso: TStringField;
-    camas2id_estado: TIntegerField;
+    camas2idEstado: TIntegerField;
     camas2estado: TStringField;
     camas2color: TStringField;
     camas2observaciones: TStringField;
-    camas2id_paciente: TIntegerField;
-    camas2nombre_paciente: TStringField;
-    camas2apellido_paciente: TStringField;
-    camas2dni: TStringField;
+    camas2paciCodigo: TIntegerField;
+    camas2nombrePaciente: TStringField;
+    camas2apellidoPaciente: TStringField;
+    camas2nroDocumento: TStringField;
     camas2sexo: TStringField;
-    camas2sexo_texto: TStringField;
-    camas2fecha_ingreso_institucion: TStringField;
-    camas2fecha_ingreso_cama: TStringField;
+    camas2sexoTexto: TStringField;
+    camas2fechaIngresoInstitucion: TStringField;
+    camas2fechaIngresoCama: TStringField;
     camas2cobertura: TStringField;
     camas2fantasia: TStringField;
     camas2plan: TStringField;
-    camas2nro_afiliado: TStringField;
-    camas2id_internacion: TIntegerField;
-    camas2fecha_alta_medica: TStringField;
-    camas2profesional_alta_medica: TStringField;
-    camas2tipo_alta_medica: TStringField;
-    camas2foto_paciente: TMemoField;
-    camas2procedimientos_no_cumplidos: TIntegerField;
-    camas2medicacion_no_programada: TIntegerField;
-    camas2medicacion_no_aplicada: TIntegerField;
+    camas2nroAfiliado: TStringField;
+    camas2idInternacion: TIntegerField;
+    camas2fechaAltaMedica: TStringField;
+    camas2profesionalAltaMedica: TStringField;
+    camas2tipoAltaMedica: TStringField;
+    camas2fotoPaciente: TMemoField;
+    camas2procedimientosNoCumplidos: TIntegerField;
+    camas2medicacionNoProgramada: TIntegerField;
+    camas2medicacionNoAplicada: TIntegerField;
     camas2aislamiento_contacto: TStringField;
     camas2aislamiento_respiratorio: TStringField;
     camas2aislamiento_gota: TStringField;
     camas2aislamiento_neutropenico: TStringField;
     camas2aislamiento_cd: TStringField;
     camas2aislamiento_sc: TStringField;
-    camas2cama_en_aislamiento: TIntegerField;
+    camas2camaEnAislamiento: TIntegerField;
     camas2acompanante: TIntegerField;
-    camas2observaciones_acompanante: TStringField;
+    camas2observacionesAcompanante: TStringField;
     camas2orden: TIntegerField;
     camas2cambioCamaPendiente: TIntegerField;
     camas2alertas: TIntegerField;
     camas2tareasPendientes: TIntegerField;
-    camas2altaProbable_fecha: TStringField;
-    camas2altaProbable_tipo: TStringField;
-    camas2altaProbable_dniUsuario: TStringField;
-    camas2reserva_motivo: TStringField;
-    camas2fecha_reserva: TStringField;
-    camas2reservada_por_dni: TStringField;
-    camas2reservada_por_nombre: TStringField;
-    camas2id_reserva: TIntegerField;
-    camas2reserva_fecha_cancelada: TStringField;
-    camas2reserva_cancelada_por_dni: TStringField;
-    camas2reserva_cancelada_por_nombre: TStringField;
-    camas2reserva_paciente_dni: TStringField;
-    camas2reserva_paciente_nombre: TStringField;
-    camas2id_motivo_fin_reserva: TIntegerField;
-    camas2reserva_id_solicitudCambio: TIntegerField;
+    camas2altaProbableFecha: TStringField;
+    camas2altaProbableTipo: TStringField;
+    camas2altaProbableDniUsuario: TStringField;
+    camas2reservaMotivo: TStringField;
+    camas2reservaFecha: TStringField;
+    camas2reservadaPorDni: TStringField;
+    camas2reservadaPorNombre: TStringField;
+    camas2idReserva: TIntegerField;
+    camas2reservaFechaCancelada: TStringField;
+    camas2reservaCanceladaPorDni: TStringField;
+    camas2reservaCanceladaPorNombre: TStringField;
+    camas2reservaPacienteDni: TStringField;
+    camas2reservaPacienteNombre: TStringField;
+    camas2idMotivoFinReserva: TIntegerField;
+    camas2reservaIdSolicitudCambio: TIntegerField;
+    camastdocCodigo: TIntegerField;
+    camas2tdocCodigo: TIntegerField;
+    servicio: TFDMemTable;
+    servicioidServicio: TIntegerField;
+    servicionombreServicio: TStringField;
+    servicioidTipoInternacion: TIntegerField;
+    serviciotipoInternacion: TStringField;
+    serviciocambioCamaAreaCerrada: TIntegerField;
+    serviciogestionaCamas: TIntegerField;
+    serviciopermisos: TMemoField;
+    camastdocDescripcion: TStringField;
+    camas2tdocDescripcion: TStringField;
+    permisosidPermiso: TIntegerField;
+    permisosidModulo: TIntegerField;
+    permisosnombreModulo: TStringField;
+    permisosdescripcionModulo: TStringField;
+    permisoscontrolTotal: TIntegerField;
+    camaskpc: TIntegerField;
+    camas2kpc: TIntegerField;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -229,21 +269,27 @@ type
     procedure FormShow(Sender: TObject);
     procedure Espera(comando:string);
     procedure botonConsultarCambiosClick(Sender: TObject);
-    procedure nuevaAlerta(cama, tipo, id_internacion, id_paciente:integer);
-    procedure verificarIconoAlta(id_cama:integer);
-    procedure verificarIconosAislamientos(id_cama:integer);
-    procedure verificarAlertasMedicas(id_cama:integer);
+    procedure nuevaAlerta(cama, tipo, idInternacion, paciCodigo: integer);
+    procedure verificarIconosAislamientos(idCama: integer);
+    procedure verificarAlertasMedicas(idCama: integer);
     procedure relojParpadeoTimer(Sender: TObject);
-    procedure blinking(id_cama:string);
+    procedure blinking(idCama: string);
     procedure botonConfiguracionClick(Sender: TObject);
     procedure ActualizarServicio;
     procedure FormActivate(Sender: TObject);
     procedure botonCambiarServicioClick(Sender: TObject);
     procedure controlarVersion;
-    function verificarPermisos(id_servicio,id_modulo: integer): integer;
-    procedure apagarAlertas(id_cama:integer);
+    function permisoModulo(idModulo: integer): integer;
+    procedure apagarAlertasCamasDisponibles();
+
+    procedure CargarPermisosDesdeJson(const JsonStr: string; Permisos: TFDMemTable);
+    procedure FormDestroy(Sender: TObject);
+    procedure LimpiarCacheCamas;
+
   private
     { Private declarations }
+    FApagandoAlertas: Integer;
+    FCamasUI: TDictionary<Integer, TCamaUI>;
     gifEspere  : TGIFImage;
     procedure clicBotonCama(sender:TObject);
   public
@@ -269,6 +315,26 @@ implementation
 uses form_login, ModuloDatos, constantes, DetallesCama_form, Configuracion_form, ServiciosCambio_form, UFunciones,
   FMX.Image.Base64, RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D;
 
+function TformTablero.permisoModulo(idModulo: integer): integer;
+begin
+  // Permisos: 0 = sin permiso, 1 = solo lectura, 2 = control total
+
+  Result := 0; // valor por defecto, sin permiso
+
+  if permisos.Locate('idModulo', idModulo, []) then
+    Result := permisos.FieldByName('controlTotal').AsInteger;
+end;
+
+procedure TformTablero.LimpiarCacheCamas;
+var
+  ui: TCamaUI;
+begin
+  for ui in FCamasUI.Values do
+    ui.Free;
+
+  FCamasUI.Clear;
+end;
+
 procedure TformTablero.botonSalirClick(Sender: TObject);
 begin
   Application.Terminate;
@@ -285,210 +351,105 @@ begin
     end;
 end;
 
-
 procedure TformTablero.relojParpadeoTimer(Sender: TObject);
 begin
   if alertas.RecordCount > 0 then
     begin
       alertas.First;
       repeat
-        blinking(alertasid_cama.AsString);
+        blinking(alertasidCama.AsString);
         alertas.Next;
       until (alertas.Eof);
     end;
 end;
 
-procedure TformTablero.verificarAlertasMedicas(id_cama: integer);
+procedure TformTablero.verificarAlertasMedicas(idCama: integer);
+var
+  ui:TCamaUI;
 begin
   // verifica si hay alertas médica, en caso positivo muestra la cruz verde sobre la cama.
 
+  if not FCamasUI.TryGetValue(idCama, ui) then
+    Exit;
+
   // oculto la cruz verde
-  with FindComponent('contenedorCamas') as TScrollBox do
-    begin
-      with FindComponent('bordeCama' + id_cama.ToString) as TRectangle  do
-        begin
-          with FindComponent('panelB' + id_cama.ToString) as TRectangle  do
-            begin
-              (FindComponent('cruzVerde' + id_cama.ToString) as TGIFImage).Visible := false;
-              (FindComponent('cruzVerde' + id_cama.ToString) as TGIFImage).Stop;
-            end;
-        end;
-    end;
+  ui.cruzVerde.Visible := false;
+  ui.cruzVerde.Stop;
 
-  // verifico si hay que mostrar la cruz verde
-  if camas2id_estado.AsInteger = 2 then
+  if camas2idEstado.AsInteger = 2 then
     begin
-      if (camas2procedimientos_no_cumplidos.AsInteger > 0) or (camas2medicacion_no_programada.AsInteger > 0) or (camas2medicacion_no_aplicada.AsInteger > 0) then
+      if (camas2procedimientosNoCumplidos.AsInteger > 0) or (camas2medicacionNoProgramada.AsInteger > 0) or (camas2medicacionNoAplicada.AsInteger > 0) then
         begin
-          with FindComponent('contenedorCamas') as TScrollBox do
-            begin
-              with FindComponent('bordeCama' + id_cama.ToString) as TRectangle  do
-                begin
-                  with FindComponent('panelB' + id_cama.ToString) as TRectangle  do
-                    begin
-                      (FindComponent('cruzVerde' + id_cama.ToString) as TGIFImage).Visible := true;
-                      (FindComponent('cruzVerde' + id_cama.ToString) as TGIFImage).Play;
-                    end;
-                end;
-            end;
+          ui.cruzVerde.Visible := true;
+          ui.cruzVerde.Play;
         end;
     end;
 end;
 
-procedure TformTablero.verificarIconoAlta(id_cama: integer);
-begin
-  // busco el icono del alta y lo oculto o muestro según corresponda
-  with FindComponent('contenedorCamas') as TScrollBox do
-    begin
-      with FindComponent('bordeCama' + id_cama.ToString) as TRectangle  do
-        begin
-          with FindComponent('panelB' + id_cama.ToString) as TRectangle  do
-            begin
-              with FindComponent('LyDatos' + id_cama.ToString) as TLayout  do
-                begin
-                  with FindComponent('LyCama' + id_cama.ToString) as TLayout  do
-                    begin
-                      if camas2id_estado.AsInteger = 2 then
-                        begin
-                          if camas2fecha_alta_medica.AsString = '' then
-                            (FindComponent('IconoAlta' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('IconoAlta' + id_cama.ToString) as TImage).Visible := true;
-                        end
-                      else
-                        begin
-                          (FindComponent('IconoAlta' + id_cama.ToString) as TImage).Visible := false;
-                        end;
-                    end;
-                end;
-            end;
-        end;
-    end;
-end;
-
-procedure TformTablero.verificarIconosAislamientos(id_cama: integer);
-begin
-  with FindComponent('contenedorCamas') as TScrollBox do
-    begin
-      with FindComponent('bordeCama' + id_cama.ToString) as TRectangle  do
-        begin
-          with FindComponent('panelB' + id_cama.ToString) as TRectangle  do
-            begin
-              with FindComponent('LyDatos' + id_cama.ToString) as TLayout  do
-                begin
-                  with FindComponent('LyIconos' + id_cama.ToString) as TLayout  do
-                    begin
-                      if camas2id_estado.AsInteger = 2 then
-                        begin
-                          // AISLAMIENTO DE CONTACTO
-                          if camas2aislamiento_contacto.AsString = '' then
-                            (FindComponent('aislamientoAC' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('aislamientoAC' + id_cama.ToString) as TImage).Visible := true;
-
-
-                          // AISLAMIENTO DE AIRE RESPIRATORIO
-                          if camas2aislamiento_respiratorio.AsString = '' then
-                            (FindComponent('aislamientoAR' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('aislamientoAR' + id_cama.ToString) as TImage).Visible := true;
-
-                          // AISLAMIENTO DE GOTA
-                          if camas2aislamiento_gota.AsString = '' then
-                            (FindComponent('aislamientoAG' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('aislamientoAG' + id_cama.ToString) as TImage).Visible := true;
-
-                          // AISLAMIENTO DE PROTECCIÓN NEUTROPÉNICO
-                          if camas2aislamiento_neutropenico.AsString = '' then
-                            (FindComponent('aislamientoAN' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('aislamientoAN' + id_cama.ToString) as TImage).Visible := true;
-
-                          // AISLAMIENTO DE CD
-                          if camas2aislamiento_cd.AsString = '' then
-                            (FindComponent('aislamientoCD' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('aislamientoCD' + id_cama.ToString) as TImage).Visible := true;
-
-                          // AISLAMIENTO SC
-                          if camas2aislamiento_sc.AsString = '' then
-                            (FindComponent('aislamientoSC' + id_cama.ToString) as TImage).Visible := false
-                          else
-                            (FindComponent('aislamientoSC' + id_cama.ToString) as TImage).Visible := true;
-                        end
-                      else
-                        begin
-                          // AISLAMIENTO DE CONTACTO
-                          (FindComponent('aislamientoAC' + id_cama.ToString) as TImage).Visible := false;
-
-                          // AISLAMIENTO RESPIRATORIO
-                          (FindComponent('aislamientoAR' + id_cama.ToString) as TImage).Visible := false;
-
-                          // AISLAMIENTO DE GOTA
-                          (FindComponent('aislamientoAG' + id_cama.ToString) as TImage).Visible := false;
-
-                          // AISLAMIENTO NEUTROPÉNICO
-                          (FindComponent('aislamientoAN' + id_cama.ToString) as TImage).Visible := false;
-
-                          // AISLAMIENTO CD
-                          (FindComponent('aislamientoCD' + id_cama.ToString) as TImage).Visible := false;
-
-                          // AISLAMIENTO SC
-                          (FindComponent('aislamientoSC' + id_cama.ToString) as TImage).Visible := false;
-                        end;
-                    end;
-                end;
-            end;
-        end;
-    end;
-end;
-
-function TformTablero.verificarPermisos(id_servicio,id_modulo: integer): integer;
-// verifica si el servicio tiene permisos sobre el módulo.
-// devuelve 0=no tiene permiso, 1=tiene permisos de lectura, 2= tiene permiso de control total
+procedure TformTablero.verificarIconosAislamientos(idCama: integer);
 var
-  response : IResponse;
+  ui: TCamaUI;
 begin
-  response := TRequest.New.BaseURL(datos.urlTC + '/tablerocamas/permisoModuloPaciente_ver')
-                    .AddHeader('TokenAcceso', datos.tokenAcceso)
-                    .AddParam('id_modulo', id_modulo.ToString)
-                    .AddParam('id_servicio', id_servicio.ToString)
-                    .Accept('application/json')
-                    .Adapters(TDataSetSerializeAdapter.New(permisos))
-                    .Get;
-
-  if permisos.RecordCount = 1 then
+  if FCamasUI.TryGetValue(idCama, ui) then
     begin
-      if permisoscontrolTotal.AsInteger = 1 then
-        verificarPermisos := 2 // control total
+      if permisoModulo(3) = 0 then
+        begin
+          if camas2camaEnAislamiento.AsInteger = 1 then
+            begin
+              ui.iconoAislamiento.Base64(aislamiento);
+              ui.iconoAislamiento.Visible := true;
+              ui.lbPrecaucion.Text := 'AISLAMIENTO';
+            end
+        end
       else
-        verificarPermisos := 1; // solo lectura
-    end
-  else
-    begin
-      verificarPermisos := 0; // acceso denegado
+        begin
+          if camas2idEstado.AsInteger = 2 then
+            begin
+                if (camas2aislamiento_contacto.AsString <> '') and (camas2kpc.AsInteger = 1) then
+                  ui.iconoAislamientoC.Base64(aislamientoKPC)
+                else
+                  ui.iconoAislamientoC.Base64(aislamientoAC);
+
+                ui.iconoAislamientoC.Visible  := camas2aislamiento_contacto.AsString <> '';
+                ui.iconoAislamientoAR.Visible := camas2aislamiento_respiratorio.AsString <> '';
+                ui.iconoAislamientoGC.Visible := camas2aislamiento_gota.AsString <> '';
+                ui.iconoAislamientoN.Visible  := camas2aislamiento_neutropenico.AsString <> '';
+                ui.iconoAislamientoCD.Visible := camas2aislamiento_cd.AsString <> '';
+                ui.iconoAislamientoSC.Visible := camas2aislamiento_sc.AsString <> '';
+              end
+            else
+              begin
+                ui.iconoAislamientoC.Visible  := false;
+                ui.iconoAislamientoAR.Visible := false;
+                ui.iconoAislamientoGC.Visible := false;
+                ui.iconoAislamientoN.Visible  := false;
+                ui.iconoAislamientoCD.Visible := false;
+                ui.iconoAislamientoSC.Visible := false;
+              end;
+        end;
     end;
 end;
+
 
 procedure TformTablero.FormShow(Sender: TObject);
 begin
+  ActualizarServicio;
   ActualizarCamas;
 end;
 
-procedure TformTablero.nuevaAlerta(cama, tipo, id_internacion, id_paciente: integer);
+procedure TformTablero.nuevaAlerta(cama, tipo, idInternacion, paciCodigo: integer);
 var
   response: IResponse;
 begin
   // inserta una alerta de acuerdo a los parámetros recibidos.
 
   response := TRequest.New.BaseURL(datos.urlTC)
-                      .Resource('alertas/nueva')
+                      .Resource('tablerocamas/alertaNueva')
                       .AddHeader('TokenAcceso', datos.tokenAcceso)
-                      .AddParam('id_cama', cama.ToString)
-                      .AddParam('id_tipo_alerta', tipo.ToString)
-                      .AddParam('id_paciente', id_paciente.ToString)
-                      .AddParam('id_internacion', id_internacion.ToString)
+                      .AddParam('idCama', cama.ToString)
+                      .AddParam('idTipoAlerta', tipo.ToString)
+                      .AddParam('paciCodigo', paciCodigo.ToString)
+                      .AddParam('idInternacion', idInternacion.ToString)
                       .Accept('application/json')
                       .Adapters(TDataSetSerializeAdapter.New(alertasNueva))
                       .Post;
@@ -519,27 +480,27 @@ end;
 
 procedure TformTablero.clicBotonCama(sender: TObject);
 var
-  id_cama:integer;
+  idCama:integer;
 begin
   if datos.autologin = 0 then
     begin
       // detengo el reloj de actualización de las camas mientras está abierta la ventana de detalles de la cama.
       RelojConsultarCambios.Enabled := false;
 
-      id_cama := (sender as TSpeedButton).Tag;
+      idCama := (sender as TSpeedButton).Tag;
 
       Application.CreateForm(Tform_DetallesCama, form_DetallesCama);
-      form_DetallesCama.id_cama := id_cama;
+      form_DetallesCama.idCama := idCama;
       form_DetallesCama.Height  := formTablero.Height;
       form_DetallesCama.Width   := formTablero.Width;
-      form_DetallesCama.Actualizar(id_cama);
+      form_DetallesCama.Actualizar(idCama);
       form_DetallesCama.Showmodal;
 
       ConsultarCambios;
     end
   else
     begin
-      datos.VerMensaje('ERROR','En modo Autologin, esta funcionalidad no está permitida','Aceptar','ERROR',0);
+      //datos.VerMensaje('ERROR','En modo Autologin, esta funcionalidad no está permitida','Aceptar','ERROR',0);
     end;
 end;
 
@@ -548,25 +509,40 @@ end;
 ************************}
 procedure TformTablero.ActualizarCamas;
 var
+  ui: TCamaUI;
   anchoContenedor:Integer;
   nLin, nCol, nPosX, nPosY, nRegistros, nColumnas,totalLineas:integer;
   mens:string; // variable que contendrá el mensaje a mostrar al usuario.
-  lp:string;
 
   Input, Output : TStringStream;
   pic:string;
   response: IResponse;
   recursoCamas : string;
+
+  etiqueta: TRectangle;
+  lbNroCama: TLabel;
+  lbPrincipal: TLabel;
+  lbSecundaria: TLabel;
+  fotoPac: TImage;
+  iconoAlta: TImage;
+  iconoAislamiento, iconoAislamientoC,iconoAislamientoGC, iconoAislamientoAR, iconoAislamientoN, iconoAislamientoCD, iconoAislamientoSC: TImage;
+  lbPrecaucion: TLabel;
+  cruzVerde: TGIFImage;
 begin
+  LimpiarCacheCamas;
+
   RelojConsultarCambios.Enabled := false;
+
+  verPaciente := permisoModulo(1);
+
 
   // INICIO LA ACTUALIZACIÓN
   Espera('play');
 
   if Assigned(contenedor) then
-      contenedor.Destroy;
+      FreeAndNil(contenedor);
 
-  contenedor := TScrollBox.Create(formTablero);
+  contenedor := TScrollBox.Create(Self);
   contenedor.Parent := formTablero;
   contenedor.Name := 'contenedorCamas';
   contenedor.Align := TAlignLayout.Client;
@@ -614,13 +590,13 @@ begin
                       nCol := 1;
                       repeat
                         // creo el rectángulo del borde de la cama
-                        bordeCama := TRectangle.Create(contenedor);
+                        bordeCama := TRectangle.Create(Self);
                         bordeCama.Parent := contenedor;
                         bordeCama.Position.X := nPosX + 1;
                         bordeCama.Position.Y := nPosY + 1;
                         bordeCama.Width := (anchoContenedor div nColumnas)-1;
                         bordeCama.Height := datos.alto;
-                        bordeCama.Name := 'bordeCama'+ camasid_cama.AsString;
+                        bordeCama.Name := 'bordeCama'+ camasidCama.AsString;
 
                         bordeCama.Padding.Top := datos.pad;
                         bordeCama.Padding.Bottom := datos.pad;
@@ -631,11 +607,11 @@ begin
                         bordeCama.Stroke.Kind := TbrushKind.None;
 
                         // creo el panelInterior
-                        panelB := TRectangle.Create(bordeCama);
+                        panelB := TRectangle.Create(Self);
                         panelB.Parent := bordeCama;
                         panelB.Position.X := 0;
                         panelB.Position.Y := 0;
-                        panelB.Name := 'panelB'+ camasid_cama.AsString;
+                        panelB.Name := 'panelB'+ camasidCama.AsString;
                         panelB.Width := 1;
                         panelB.Height := 1;
                         panelB.Align := TAlignLayout.Client;
@@ -644,14 +620,15 @@ begin
                         panelB.Stroke.Kind := TbrushKind.None;
 
                         // etiqueta de color
-                        with TRectangle.Create(panelB) do
+                        etiqueta := TRectangle.Create(Self);
+                        with etiqueta do
                           begin
                             Parent := panelB;
                             Position.X :=1;
                             Position.Y := 1;
                             Width := 15;
                             Align := TAlignLayout.Left;
-                            Name := 'etiqueta'+ camasid_cama.AsString;
+                            Name := 'etiqueta'+ camasidCama.AsString;
                             Fill.Kind := TbrushKind.Solid;
                             Fill.Color := TAlphaColor(StrToAlphaColor(camascolor.AsString));
                             Stroke.Kind := TbrushKind.None;
@@ -660,26 +637,27 @@ begin
 
 
                         // Layout Foto
-                        LyFoto := TLayout.Create(panelB);
+                        LyFoto := TLayout.Create(Self);
                         LyFoto.Parent := panelB;
                         LyFoto.Position.X :=1;
                         LyFoto.Position.Y := 1;
                         LyFoto.Width := 80;
                         LyFoto.Height := 1;
                         LyFoto.Align := TAlignLayout.Right;
-                        LyFoto.Name := 'lyFoto'+ camasid_cama.AsString;
+                        LyFoto.Name := 'lyFoto'+ camasidCama.AsString;
                         LyFoto.Margins.Top := 5;
                         LyFoto.Margins.Left := 5;
                         LyFoto.Margins.Right := 5;
                         LyFoto.Margins.Bottom := 5;
                         LyFoto.HitTest := false;
 
-                        pic := camasfoto_paciente.AsString;
+                        pic := camasfotoPaciente.AsString;
 
-                        if camasid_estado.AsInteger = 2 then
+                        if camasidEstado.AsInteger = 2 then
                           begin
                             // Foto
-                            with TImage.Create(LyFoto) do
+                            fotoPac := TImage.Create(Self);
+                            with fotoPac do
                               begin
                                 Parent := LyFoto;
                                 Position.X :=1;
@@ -687,18 +665,18 @@ begin
                                 Width := 1;
                                 Height := 101;
                                 Align := TAlignLayout.Top;
-                                Name := 'FotoPaciente'+ camasid_cama.AsString;
+                                Name := 'FotoPaciente'+ camasidCama.AsString;
                                 WrapMode := TImageWrapMode.Fit;
 
-                                if camasfoto_paciente.AsString = '' then
+                                if camasfotoPaciente.AsString = '' then
                                   Base64(sin_foto)
                                 else
                                 if verPaciente <> 0 then // tiene permiso para ver datos del paciente?
                                   begin
-                                    if camasfoto_paciente.AsString = '' then
+                                    if camasfotoPaciente.AsString = '' then
                                       Base64(sin_foto)
                                     else
-                                      Base64(camasfoto_paciente.AsString);
+                                      Base64(camasfotoPaciente.AsString);
                                   end
                                 else
                                   begin
@@ -709,28 +687,29 @@ begin
                           end;
 
                         // Layout Datos
-                        LyDatos := TLayout.Create(panelB);
+                        LyDatos := TLayout.Create(Self);
                         LyDatos.Parent := panelB;
                         LyDatos.Position.X :=1;
                         LyDatos.Position.Y := 1;
                         LyDatos.Width := 1;
                         LyDatos.Height := 1;
                         LyDatos.Align := TAlignLayout.Client;
-                        LyDatos.Name :=  'lyDatos'+ camasid_cama.AsString;
+                        LyDatos.Name :=  'lyDatos'+ camasidCama.AsString;
                         LyDatos.Margins.Left := 5;
 
                         // Layout Cama
-                        LyCama := TLayout.Create(LyDatos);
+                        LyCama := TLayout.Create(Self);
                         LyCama.Parent := LyDatos;
                         LyCama.Position.X :=1;
                         LyCama.Position.Y := 1;
                         LyCama.Height := 40;
                         LyCama.Align := TAlignLayout.Top;
-                        LyCama.Name :=  'lyCama'+ camasid_cama.AsString;
+                        LyCama.Name :=  'lyCama'+ camasidCama.AsString;
 
 
                         // Ícono Alta
-                        with TImage.Create(LyCama) do
+                        iconoAlta := TImage.Create(Self);
+                        with iconoAlta do
                           begin
                             Parent := LyCama;
                             Position.X :=1;
@@ -738,11 +717,11 @@ begin
                             Width := 40;
                             Height := 50;
                             Align := TAlignLayout.Right;
-                            Name := 'IconoAlta'+ camasid_cama.AsString;
+                            Name := 'IconoAlta'+ camasidCama.AsString;
                             WrapMode := TImageWrapMode.Fit;
                             Base64(icono_alta);
                             HitTest := false;
-                            if camasfecha_alta_medica.AsString <> '' then
+                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString <> '') then
                               Visible := true
                             else
                               Visible := false;
@@ -750,14 +729,15 @@ begin
 
 
                         // Número de Cama
-                        with TLabel.Create(LyCama) do
+                        lbNroCama := TLabel.Create(Self);
+                        with lbNroCama do
                           begin
                             Parent := LyCama;
                             Position.X :=1;
                             Position.Y := 1;
                             Height := 40;
                             Align := TAlignLayout.Client;
-                            Name := 'lbNroCama'+ camasid_cama.AsString;
+                            Name := 'lbNroCama'+ camasidCama.AsString;
                             StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
                             TextSettings.Font.Size := 36;
                             TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
@@ -768,7 +748,8 @@ begin
 
 
                         // Línea secundaria
-                        with TLabel.Create(LyDatos) do
+                        lbSecundaria :=  TLabel.Create(Self);
+                        with lbSecundaria do
                           begin
                             Parent := LyDatos;
                             Position.X :=1;
@@ -776,15 +757,15 @@ begin
                             Height := 17;
                             Align := TAlignLayout.Top;
                             HitTest := false;
-                            Name := 'lb_linea_secundaria'+ camasid_cama.AsString;
+                            Name := 'lb_linea_secundaria'+ camasidCama.AsString;
                             StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor, TStyledSetting.Size];
                             TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
                             TextSettings.HorzAlign := TTextAlign.Leading;
                             HitTest := false;
-                            if camasid_estado.AsInteger = 2 then
+                            if camasidEstado.AsInteger = 2 then
                               begin
                                 if verPaciente <> 0 then
-                                  Text := 'DNI: ' + camasdni.AsString
+                                  Text := camastdocDescripcion.AsString + ': ' + camasnroDocumento.AsString
                                 else
                                   Text := '';
                               end
@@ -793,7 +774,8 @@ begin
                           end;
 
                         // Línea principal
-                        with TLabel.Create(LyDatos) do
+                        lbPrincipal :=  TLabel.Create(Self);
+                        with lbPrincipal do
                           begin
                             Parent := LyDatos;
                             Position.X :=1;
@@ -801,166 +783,221 @@ begin
                             Height := 22;
                             Align := TAlignLayout.Top;
                             HitTest := false;
-                            Name := 'lb_linea_principal'+ camasid_cama.AsString;
+                            Name := 'lb_linea_principal'+ camasidCama.AsString;
                             StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
                             TextSettings.Font.Size := 13;
                             TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
                             TextSettings.HorzAlign := TTextAlign.Leading;
                             HitTest := false;
-                            if camasid_estado.AsInteger = 2 then
+                            if camasidEstado.AsInteger = 2 then
                               if verPaciente <> 0 then
-                                Text := camasapellido_paciente.AsString + ', ' + camasnombre_paciente.AsString
+                                Text := camasapellidoPaciente.AsString + ', ' + camasnombrePaciente.AsString
                               else
-                                begin
-                                  if camassexo.AsString = 'F' then
-                                    Text := 'MUJER'
-                                  else
-                                    Text := 'HOMBRE';
-                                end
+                                Text := uppercase(camasestado.AsString)
                             else
-                              Text := camasestado.AsString;
+                              Text := uppercase(camasestado.AsString);
                           end;
 
                         // Layout Iconos
-                        LyIconos := TLayout.Create(LyDatos);
+                        LyIconos := TLayout.Create(Self);
                         LyIconos.Parent := LyDatos;
                         LyIconos.Position.X :=1;
                         LyIconos.Position.Y := 1;
                         LyIconos.Width := 1;
                         LyIconos.Height := 1;
                         LyIconos.Align := TAlignLayout.Client;
-                        LyIconos.Name :=  'lyIconos'+ camasid_cama.AsString;
+                        LyIconos.Name :=  'lyIconos'+ camasidCama.AsString;
                         LyIconos.Margins.Left := 5;
                         LyIconos.HitTest := false;
 
-
-                        // Ícono Aislamiento de Contacto
-                        with TImage.Create(LyIconos) do
+                        if permisoModulo(3) = 0 then // si no tienen permisos para ver los aislamientos.
                           begin
-                            Parent := LyIconos;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Left;
-                            Name := 'aislamientoAC'+ camasid_cama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(aislamientoAC);
-                            HitTest := false;
-                            if camasaislamiento_contacto.AsString <> '' then
-                              Visible := true
-                            else
-                              Visible := false;
+                            // sin permiso
+                            // verifico si tiene algún tipo de aislamiento
+                            if camascamaEnAislamiento.AsInteger = 1 then
+                              begin
+                                iconoAislamiento := TImage.Create(Self);
+                                with iconoAislamiento do
+                                  begin
+                                    Parent := LyIconos;
+                                    Position.X :=1;
+                                    Position.Y := 1;
+                                    Width := 40;
+                                    Height := 50;
+                                    Align := TAlignLayout.Left;
+                                    Name := 'aislamientoNoAccede'+ camasidCama.AsString;
+                                    WrapMode := TImageWrapMode.Fit;
+                                    Base64(aislamiento);
+                                    HitTest := false;
+                                    Visible := true;
+                                  end;
+
+                                // texto indicando que hay aislamientos
+                                lbPrecaucion := TLabel.Create(Self);
+                                with lbPrecaucion do
+                                  begin
+                                    Parent := LyIconos;
+                                    Position.X :=45;
+                                    Position.Y := 20;
+                                    Height := 17;
+                                    Align := TAlignLayout.None;
+                                    HitTest := false;
+                                    Name := 'lb_lineaPrecuacion'+ camasidCama.AsString;
+                                    StyledSettings := StyledSettings - [TStyledSetting.Family, TStyledSetting.FontColor, TStyledSetting.Size];
+                                    Font.Style := Font.Style - [TFontStyle.fsBold];
+                                    TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+                                    TextSettings.HorzAlign := TTextAlign.Leading;
+                                    TextSettings.FontColor := TAlphaColorRec.Red;
+                                    TextSettings.Font.Size := 13;
+                                    HitTest := false;
+                                    Text := 'AISLAMIENTO';
+                                  end;
+                              end;
+                          end
+                        else
+                          begin
+                            // permiso de lectura (1) y control total (2)
+
+                            // Ícono Aislamiento de Contacto
+                            iconoAislamientoC := TImage.Create(Self);
+                            with iconoAislamientoC do
+                              begin
+                                Parent := LyIconos;
+                                Position.X :=1;
+                                Position.Y := 1;
+                                Width := 40;
+                                Height := 50;
+                                Align := TAlignLayout.Left;
+                                Name := 'aislamientoAC'+ camasidCama.AsString;
+                                WrapMode := TImageWrapMode.Fit;
+                                if camaskpc.AsInteger = 0 then
+                                  Base64(aislamientoAC)
+                                else
+                                  Base64(aislamientoKPC);
+                                HitTest := false;
+                                if camasaislamiento_contacto.AsString <> '' then
+                                  Visible := true
+                                else
+                                  Visible := false;
+                              end;
+
+
+                            // Ícono Aislamiento Gota Contacto
+                            iconoAislamientoGC := TImage.Create(Self);
+                            with iconoAislamientoGC do
+                              begin
+                                Parent := LyIconos;
+                                Position.X :=1;
+                                Position.Y := 1;
+                                Width := 40;
+                                Height := 50;
+                                Align := TAlignLayout.Left;
+                                Name := 'aislamientoAG'+ camasidCama.AsString;
+                                WrapMode := TImageWrapMode.Fit;
+                                Base64(aislamientoAG);
+                                HitTest := false;
+                                if camasaislamiento_gota.AsString <> '' then
+                                  Visible := true
+                                else
+                                  Visible := false;
+                              end;
+
+
+                            // Ícono Aislamiento Aire Respiratorio
+                            iconoAislamientoAR := TImage.Create(Self);
+                            with iconoAislamientoAR do
+                              begin
+                                Parent := LyIconos;
+                                Position.X :=1;
+                                Position.Y := 1;
+                                Width := 40;
+                                Height := 50;
+                                Align := TAlignLayout.Left;
+                                Name := 'aislamientoAR'+ camasidCama.AsString;
+                                WrapMode := TImageWrapMode.Fit;
+                                Base64(aislamientoAR);
+                                HitTest := false;
+                                if camasaislamiento_respiratorio.AsString <> '' then
+                                  Visible := true
+                                else
+                                  Visible := false;
+                              end;
+
+
+                            // Ícono Aislamiento de Protección Neutropenico
+                            iconoAislamientoN := TImage.Create(Self);
+                            with iconoAislamientoN do
+                              begin
+                                Parent := LyIconos;
+                                Position.X :=1;
+                                Position.Y := 1;
+                                Width := 40;
+                                Height := 50;
+                                Align := TAlignLayout.Left;
+                                Name := 'aislamientoAN'+ camasidCama.AsString;
+                                WrapMode := TImageWrapMode.Fit;
+                                Base64(aislamientoAN);
+                                HitTest := false;
+                                if camasaislamiento_neutropenico.AsString <> '' then
+                                  Visible := true
+                                else
+                                  Visible := false;
+                              end;
+
+
+                            // Ícono Aislamiento CD
+                            iconoAislamientoCD := TImage.Create(Self);
+                            with iconoAislamientoCD do
+                              begin
+                                Parent := LyIconos;
+                                Position.X :=1;
+                                Position.Y := 1;
+                                Width := 40;
+                                Height := 50;
+                                Align := TAlignLayout.Left;
+                                Name := 'aislamientoCD'+ camasidCama.AsString;
+                                WrapMode := TImageWrapMode.Fit;
+                                Base64(aislamientoCD);
+                                HitTest := false;
+                                if camasaislamiento_cd.AsString <> '' then
+                                  Visible := true
+                                else
+                                  Visible := false;
+                              end;
+
+                            // Ícono Aislamiento SC
+                            iconoAislamientoSC := TImage.Create(Self);
+                            with iconoAislamientoSC do
+                              begin
+                                Parent := LyIconos;
+                                Position.X :=1;
+                                Position.Y := 1;
+                                Width := 40;
+                                Height := 50;
+                                Align := TAlignLayout.Left;
+                                Name := 'aislamientoSC'+ camasidCama.AsString;
+                                WrapMode := TImageWrapMode.Fit;
+                                Base64(aislamientoSC);
+                                HitTest := false;
+                                if camasaislamiento_sc.AsString <> '' then
+                                  Visible := true
+                                else
+                                  Visible := false;
+                              end;
+
                           end;
 
-
-                        // Ícono Aislamiento Gota Contacto
-                        with TImage.Create(LyIconos) do
-                          begin
-                            Parent := LyIconos;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Left;
-                            Name := 'aislamientoAG'+ camasid_cama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(aislamientoAG);
-                            HitTest := false;
-                            if camasaislamiento_gota.AsString <> '' then
-                              Visible := true
-                            else
-                              Visible := false;
-                          end;
-
-
-                        // Ícono Aislamiento Aire Respiratorio
-                        with TImage.Create(LyIconos) do
-                          begin
-                            Parent := LyIconos;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Left;
-                            Name := 'aislamientoAR'+ camasid_cama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(aislamientoAR);
-                            HitTest := false;
-                            if camasaislamiento_respiratorio.AsString <> '' then
-                              Visible := true
-                            else
-                              Visible := false;
-                          end;
-
-
-                        // Ícono Aislamiento de Protección Neutropenico
-                        with TImage.Create(LyIconos) do
-                          begin
-                            Parent := LyIconos;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Left;
-                            Name := 'aislamientoAN'+ camasid_cama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(aislamientoAN);
-                            HitTest := false;
-                            if camasaislamiento_neutropenico.AsString <> '' then
-                              Visible := true
-                            else
-                              Visible := false;
-                          end;
-
-
-                        // Ícono Aislamiento CD
-                        with TImage.Create(LyIconos) do
-                          begin
-                            Parent := LyIconos;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Left;
-                            Name := 'aislamientoCD'+ camasid_cama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(aislamientoCD);
-                            HitTest := false;
-                            if camasaislamiento_cd.AsString <> '' then
-                              Visible := true
-                            else
-                              Visible := false;
-                          end;
-
-                        // Ícono Aislamiento SC
-                        with TImage.Create(LyIconos) do
-                          begin
-                            Parent := LyIconos;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Left;
-                            Name := 'aislamientoSC'+ camasid_cama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(aislamientoSC);
-                            HitTest := false;
-                            if camasaislamiento_sc.AsString <> '' then
-                              Visible := true
-                            else
-                              Visible := false;
-                          end;
 
 
                         // Cruz Verde
-                        with TGIFImage.Create(panelB) do
+                        cruzVerde := TGIFImage.Create(Self);
+                        with cruzVerde do
                           begin
                             Parent := panelB;
                             Position.X :=1;
                             Position.Y := 1;
                             Align := TAlignLayout.Contents;
-                            Name := 'cruzVerde'+ camasid_cama.AsString;
+                            Name := 'cruzVerde'+ camasidCama.AsString;
                             LoadFromBase64(cruz_verde);
                             Play;
                             LoadFromFile('c:\tc\img\cruz-verde.gif');
@@ -970,26 +1007,55 @@ begin
 
 
                         // Boton
-                        botonCama := TSpeedButton.Create(panelB);
+                        botonCama := TSpeedButton.Create(Self);
                         botonCama.Parent := panelB;
                         botonCama.Position.X :=1;
                         botonCama.Position.Y := 1;
                         botonCama.Width := 1;
                         botonCama.Height := 1;
                         botonCama.Align := TAlignLayout.Contents;
-                        botonCama.Name :=  'botonCama'+ camasid_cama.AsString;
+                        botonCama.Name :=  'botonCama'+ camasidCama.AsString;
                         botonCama.Text := '';
                         botonCama.Cursor := crHandPoint;
-                        botonCama.Tag := camasid_cama.AsInteger;
+                        botonCama.Tag := camasidCama.AsInteger;
                         botonCama.OnClick := clicBotonCama;
 
 
                         nPosX := nPosX + Trunc(bordeCama.Width);
                         nCol := nCol +1;
 
+                        // CACHEAR CONTROLES DE ESTA CAMA
+                        ui := TCamaUI.Create;
+                        ui.Borde := bordeCama;
+                        ui.PanelB := panelB;
+                        ui.Etiqueta := etiqueta;
+                        ui.LyDatos := LyDatos;
+                        ui.LyCama := LyCama;
+                        ui.LbNroCama := lbNroCama;
+                        ui.LbPrincipal := lbPrincipal;
+                        ui.LbSecundaria := lbSecundaria;
+                        ui.iconoAislamientoC := iconoAislamientoC;
+                        ui.iconoAislamientoGC := iconoAislamientoGC;
+                        ui.iconoAislamientoAR := iconoAislamientoAR;
+                        ui.iconoAislamientoN := iconoAislamientoN;
+                        ui.iconoAislamientoCD := iconoAislamientoCD;
+                        ui.iconoAislamientoSC := iconoAislamientoSC;
+                        ui.cruzVerde := cruzVerde;
+                        ui.iconoAlta := iconoAlta;
+                        if permisoModulo(3) = 0 then
+                          begin
+                            ui.iconoAislamiento := iconoAislamiento;
+                            ui.lbPrecaucion := lbPrecaucion;
+                          end;
+
+                        FCamasUI.AddOrSetValue(camasidCama.AsInteger, ui);
+
                         camas.Next;
                       until((nCol > nColumnas) or (camas.Eof));
                       nLin := nLin + 1;
+
+
+
                       nPosX := 0;
                       nPosY := nPosY + datos.alto;
                     until(nLin > totalLineas);
@@ -1034,13 +1100,14 @@ var
   nueva_alerta:integer;
   response: IResponse;
   recursoCamas:string;
+  ui: TCamaUI;
+  idCama: Integer;
 begin
   barra.Value := 0;
   RelojConsultarCambios.Enabled := false;
 
   try
-    // me contecto a la API del TC (10.99.8.107) para obtener las camas
-    recursoCamas := '/camas/obtenerCamas_v2';
+    recursoCamas := '/tablerocamas/camas';
     response := TRequest.New.BaseURL(datos.urlTC)
                         .Resource(recursoCamas)
                         .AddHeader('TokenAcceso', datos.tokenAcceso)
@@ -1062,145 +1129,136 @@ begin
             alertas.Close;
             alertas.Open;
 
-            repeat
-              // apago cualquier alerta que haya quedado en rojo
-              with contenedor do
-                begin
-                  with (FindComponent('bordeCama'+ camas2id_cama.AsString) as TRectangle) do
-                    begin
-                      (FindComponent('panelB'+ camas2id_cama.AsString) as TRectangle).Fill.Color := TAlphaColorRec.White;
-                    end;
-                end;
+            // apago todas las alertas de las camas que están disponibles.
+            if TInterlocked.CompareExchange(FApagandoAlertas, 1, 0) <> 0 then
+              Exit;
 
+            TTask.Run(
+              procedure
+              begin
+                try
+                  apagarAlertasCamasDisponibles;
+                finally
+                  TInterlocked.Exchange(FApagandoAlertas, 0);
+                end;
+              end);
+
+
+            repeat
+              idCama := camas2idCama.AsInteger;
+
+              if not FCamasUI.TryGetValue(idCama, ui) then
+                Exit;
+
+              if not Assigned(ui) then
+                Exit;
+
+
+              // apago cualquier alerta que haya quedado en rojo
+              ui.PanelB.Fill.Color := TAlphaColorRec.White;
 
               // verifico si hubo ingreso de paciente o alta médica. Si hubo cambios, ingreso una alerta en la tabla alertas
               // y luego ingreso un registro en alertas (tabla local)
 
               nueva_alerta := 0;
 
-              if camas2id_estado.AsInteger = 2 then
+              if camas2idEstado.AsInteger = 2 then
                 begin
-                  if camasid_estado.AsInteger <> 2 then
+                  if camasidEstado.AsInteger <> 2 then
                     begin
                       // alerta ingreso de paciente.
-                      nuevaAlerta(camas2id_cama.AsInteger,1,camas2id_internacion.AsInteger,camas2id_paciente.AsInteger);
+                      nuevaAlerta(camas2idCama.AsInteger,1,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
                       nueva_alerta := nueva_alerta + 1;
                     end;
 
                   // si el médico indicó el alta médica
-                  if camas2fecha_alta_medica.AsString <> '' then
+                  if camas2fechaAltaMedica.AsString <> '' then
                     begin
-                      if ((camasfecha_alta_medica.AsString <> camas2fecha_alta_medica.AsString)) then
+                      if ((camasfechaAltaMedica.AsString <> camas2fechaAltaMedica.AsString)) then
                         begin
                           // inserto una alerta de alta medica
-                          nuevaAlerta(camas2id_cama.AsInteger,2,camas2id_internacion.AsInteger,camas2id_paciente.AsInteger);
+                          nuevaAlerta(camas2idCama.AsInteger,2,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
                           nueva_alerta := nueva_alerta + 1;
                         end;
                     end;
                 end;
 
-
-              // si la cama está disponible, apago todas las alertas de la cama
-              if camas2id_estado.AsInteger = 1 then
+              // si la cama no está disponible y si hay alertas para esta cama, agrego en la tabla alertas el id de la cama.
+              // guardaré en la tabla alertas, el id de las camas que tienen alertas para luego ejecutar la alerta.
+              if(camas2idEstado.AsInteger <> 1) and ((camas2alertas.AsInteger > 0) or (nueva_alerta = 1)) then
                 begin
-                  // apagar alertas
-                  apagarAlertas(camas2id_cama.AsInteger);
-                end
-              else
-                begin
-                  // si hay alertas para esta cama, agrego en la tabla alertas el id de la cama.
-                  // guardaré en la tabla alertas, el id de las camas que tienen alertas para luego ejecutar la alerta.
-
-                  if ((camas2alertas.AsInteger > 0) or (nueva_alerta = 1)) then
-                    begin
-                      alertas.Append;
-                      alertas.Fields[0].AsInteger := camas2id_cama.AsInteger;
-                      alertas.Post;
-                    end;
+                  alertas.Append;
+                  alertas.Fields[0].AsInteger := camas2idCama.AsInteger;
+                  alertas.Post;
                 end;
 
 
-
-
-              // si cambió el id_cama
-              if camasid_cama.AsInteger <> camas2id_cama.AsInteger then
+              // si cambió el idCama
+              if camasidCama.AsInteger <> camas2idCama.AsInteger then
                 begin
                   cambios := cambios + 1;
                 end
               else
                 begin
-                  // actualizo la cama con la nueva información, aunque no haya cambiado.
-                  with contenedor do
+                  // ACTUALIZO LA CAMA CON LA NUEVA INFORMACIÓN AUNQUE NO HAYA CAMBIADO.
+
+
+                  // pinto la cama de color violeta si hay cambios de cama y es admision (si el servicio tiene gestionaCamas = 1)
+
+                  if (datos.gestionaCamas = 1) and (camas2cambioCamaPendiente.AsInteger = 1) then
                     begin
-                      with (FindComponent('bordeCama'+ camas2id_cama.AsString) as TRectangle) do
-                        begin
-                          with (FindComponent('panelB'+ camas2id_cama.AsString) as TRectangle) do
-                            begin
-                              // servicio gestiona camas
-                              if datos.gestionaCamas = 1 then // si el servicio tiene la función de Admisión y Egreso
-                                begin
-                                  // pinto la cama de color violeta si hay cambios de cama pendientes de autorización
-                                  if camas2cambioCamaPendiente.AsInteger = 1 then
-                                    begin
-                                      Fill.Kind := TbrushKind.Solid;
-                                      //Fill.Color := TAlphaColor(StrToAlphaColor('$00FFA4D1'));
-                                      Fill.Color := TAlphaColorRec.Darkorchid; // color violeta.
-                                    end
-                                  else
-                                    begin
-                                      Fill.Kind := TbrushKind.Solid;
-                                      Fill.Color := TAlphaColorRec.White;
-                                    end;
-                                end;
-
-
-                              // etiqueta de color (estado)
-                                 with (FindComponent('etiqueta'+ camas2id_cama.AsString) as TRectangle) do
-                                  begin
-                                    Fill.Kind := TbrushKind.Solid;
-                                    Fill.Color := TAlphaColor(StrToAlphaColor(camas2color.AsString));
-                                  end;
-
-                                with (FindComponent('LyDatos'+ camas2id_cama.AsString) as TLayout) do
-                                  begin
-                                    // nro de cama
-                                    with (FindComponent('LyCama'+ camas2id_cama.AsString) as TLayout) do
-                                      begin
-                                        (FindComponent('lbNroCama'+ camas2id_cama.AsString) as TLabel).Text := camas2cama.AsString;
-                                      end;
-
-                                    // linea principal
-                                   if camas2id_estado.AsInteger = 2 then
-                                    begin
-                                      if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
-                                        (FindComponent('lb_linea_principal'+ camas2id_cama.AsString) as TLabel).Text := camas2apellido_paciente.AsString  + ', ' + camas2nombre_paciente.AsString
-                                      else
-                                        (FindComponent('lb_linea_principal'+ camas2id_cama.AsString) as TLabel).Text := camas2sexo_texto.AsString;
-                                    end
-                                   else
-                                    (FindComponent('lb_linea_principal'+ camas2id_cama.AsString) as TLabel).Text := camas2estado.AsString;
-
-                                   // linea secundaria
-                                   if camas2id_estado.AsInteger = 2 then
-                                    begin
-                                      if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
-                                        (FindComponent('lb_linea_secundaria'+ camas2id_cama.AsString) as TLabel).Text := 'DNI: ' + camas2dni.AsString
-                                      else
-                                        (FindComponent('lb_linea_secundaria'+ camas2id_cama.AsString) as TLabel).Text := '';
-                                    end
-                                   else
-                                    (FindComponent('lb_linea_secundaria'+ camas2id_cama.AsString) as TLabel).Text := '';
-
-                                  end;
-
-                            end;
-                        end;
+                      ui.PanelB.Fill.Kind := TbrushKind.Solid;
+                      ui.PanelB.Fill.Color := TAlphaColorRec.Darkorchid; // color violeta.
                     end;
 
-                    verificarIconoAlta(camas2id_cama.AsInteger);
-                    verificarIconosAislamientos(camas2id_cama.AsInteger);
 
-                    verificarAlertasMedicas(camas2id_cama.AsInteger);
+                  // pinto la etiqueta del color correspondiente según el estado de la cama
+                  ui.etiqueta.Fill.Kind := TbrushKind.Solid;
+                  ui.etiqueta.Fill.Color := TAlphaColor(StrToAlphaColor(camas2color.AsString));
+
+                  // coloco el nro de cama en el label lbNroCama
+                  ui.lbNroCama.Text := camas2cama.AsString;
+
+                  // completo la linea principal
+                  if camas2idEstado.AsInteger = 2 then
+                    begin
+                      if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
+                        ui.LbPrincipal.Text := camas2apellidoPaciente.AsString  + ', ' + camas2nombrePaciente.AsString
+                      else
+                        ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
+                    end
+                   else
+                    ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
+
+                  // completo la linea secundaria
+                  if camas2idEstado.AsInteger = 2 then
+                    begin
+                      if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
+                        ui.LbSecundaria.Text := 'DNI: ' + camas2nroDocumento.AsString
+                      else
+                        ui.LbSecundaria.Text := '';
+                    end
+                  else
+                    ui.LbSecundaria.Text := '';
+
+                  // verifico Icono de Alta
+                  if camas2idEstado.AsInteger = 2 then
+                    begin
+                      if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
+                      //if camas2fechaAltaMedica.AsString = '' then
+                        ui.iconoAlta.Visible := true
+                      else
+                        ui.iconoAlta.Visible := false;
+                    end
+                  else
+                    begin
+                      ui.iconoAlta.Visible := false;
+                    end;
+
+
+                  verificarIconosAislamientos(camas2idCama.AsInteger);
+
+                  verificarAlertasMedicas(camas2idCama.AsInteger);
                 end;
 
               camas2.Next;
@@ -1219,34 +1277,36 @@ begin
               with camas do
                 begin
                   Append;
-                  FieldByName('id_cama').Value := camas2id_cama.AsInteger;
+                  FieldByName('idCama').Value := camas2idCama.AsInteger;
                   FieldByName('cama').Value := camas2cama.AsString;
-                  FieldByName('id_habitacion').Value := camas2id_habitacion.AsInteger;
+                  FieldByName('idHabitacion').Value := camas2idHabitacion.AsInteger;
                   FieldByName('habitacion').Value := camas2habitacion.AsString;
                   FieldByName('piso').Value := camas2piso.AsString;
-                  FieldByName('id_estado').Value := camas2id_estado.AsInteger;
+                  FieldByName('idEstado').Value := camas2idEstado.AsInteger;
                   FieldByName('estado').Value := camas2estado.AsString;
                   FieldByName('color').Value := camas2color.AsString;
-                  FieldByName('id_paciente').Value := camas2id_paciente.AsInteger;
-                  FieldByName('nombre_paciente').Value := camas2nombre_paciente.AsString;
-                  FieldByName('apellido_paciente').Value := camas2apellido_paciente.AsString;
-                  FieldByName('dni').Value := camas2dni.AsString;
+                  FieldByName('paciCodigo').Value := camas2paciCodigo.AsInteger;
+                  FieldByName('nombrePaciente').Value := camas2nombrePaciente.AsString;
+                  FieldByName('apellidoPaciente').Value := camas2apellidoPaciente.AsString;
+                  FieldByName('tdocCodigo').Value := camas2tdocCodigo.AsInteger;
+                  FieldByName('nroDocumento').Value := camas2nroDocumento.AsString;
                   FieldByName('sexo').Value := camas2sexo.AsString;
-                  FieldByName('fecha_ingreso_institucion').Value := camas2fecha_ingreso_cama.AsString;
-                  FieldByName('fecha_ingreso_cama').Value := camas2fecha_ingreso_cama.AsString;
+                  FieldByName('fechaIngresoInstitucion').Value := camas2fechaIngresoInstitucion.AsString;
+                  FieldByName('fechaIngresoCama').Value := camas2fechaIngresoCama.AsString;
                   FieldByName('cobertura').Value := camas2cobertura.AsString;
                   FieldByName('fantasia').Value := camas2fantasia.AsString;
                   FieldByName('plan').Value := camas2plan.AsString;
-                  FieldByName('nro_afiliado').Value := camas2nro_afiliado.AsString;
-                  FieldByName('id_internacion').Value := camas2id_internacion.AsInteger;
-                  FieldByName('fecha_alta_medica').Value := camas2fecha_alta_medica.AsString;
-                  FieldByName('profesional_alta_medica').Value := camas2profesional_alta_medica.AsString;
-                  FieldByName('cama_en_aislamiento').Value := camas2cama_en_aislamiento.AsString;
+                  FieldByName('nroAfiliado').Value := camas2nroAfiliado.AsString;
+                  FieldByName('idInternacion').Value := camas2idInternacion.AsInteger;
+                  FieldByName('fechaAltaMedica').Value := camas2fechaAltaMedica.AsString;
+                  FieldByName('profesionalAltaMedica').Value := camas2profesionalAltaMedica.AsString;
+                  FieldByName('camaEnAislamiento').Value := camas2camaEnAislamiento.AsString;
                   FieldByName('observaciones').Value := camas2observaciones.AsString;
-                  FieldByName('procedimientos_no_cumplidos').Value := camas2procedimientos_no_cumplidos.AsString;
-                  FieldByName('medicacion_no_programada').Value := camas2medicacion_no_programada.AsString;
-                  FieldByName('medicacion_no_aplicada').Value := camas2medicacion_no_aplicada.asString;
+                  FieldByName('procedimientosNoCumplidos').Value := camas2procedimientosNoCumplidos.AsString;
+                  FieldByName('medicacionNoProgramada').Value := camas2medicacionNoProgramada.AsString;
+                  FieldByName('medicacionNoAplicada').Value := camas2medicacionNoAplicada.asString;
 
+                  FieldByName('kpc').Value := camas2kpc.AsInteger;
                   FieldByName('aislamiento_contacto').Value := camas2aislamiento_contacto.AsString;
                   FieldByName('aislamiento_gota').Value := camas2aislamiento_gota.AsString;
                   FieldByName('aislamiento_respiratorio').Value := camas2aislamiento_respiratorio.AsString;
@@ -1254,29 +1314,29 @@ begin
                   FieldByName('aislamiento_cd').Value := camas2aislamiento_cd.AsString;
                   FieldByName('aislamiento_sc').Value := camas2aislamiento_sc.AsString;
 
-                  FieldByName('tipo_alta_medica').Value := camas2tipo_alta_medica.AsString;
+                  FieldByName('tipoAltaMedica').Value := camas2tipoAltaMedica.AsString;
                   FieldByName('acompanante').Value := camas2acompanante.AsInteger;
-                  FieldByName('observaciones_acompanante').Value := camas2observaciones_acompanante.AsString;
+                  FieldByName('observacionesAcompanante').Value := camas2observacionesAcompanante.AsString;
                   FieldByName('orden').Value := camas2orden.AsInteger;
                   FieldByName('cambioCamaPendiente').Value := camas2cambioCamaPendiente.AsInteger;
                   FieldByName('alertas').Value := camas2alertas.AsInteger;
                   FieldByName('tareasPendientes').Value := camas2tareasPendientes.AsInteger;
-                  FieldByName('altaProbable_fecha').Value := camas2altaProbable_fecha.AsString;
-                  FieldByName('altaProbable_tipo').Value := camas2altaProbable_tipo.AsString;
-                  FieldByName('altaProbable_dniUsuario').Value := camas2altaProbable_dniUsuario.AsInteger;
-                  FieldByName('reserva_motivo').Value := camas2reserva_motivo.AsString;
-                  FieldByName('fecha_reserva').Value := camas2fecha_reserva.AsString;
-                  FieldByName('reservada_por_dni').Value := camas2reservada_por_dni.AsInteger;
-                  FieldByName('reservada_por_nombre').Value := camas2reservada_por_nombre.AsString;
-                  FieldByName('id_reserva').Value := camas2id_reserva.AsInteger;
-                  FieldByName('reserva_fecha_cancelada').Value := camas2reserva_fecha_cancelada.AsString;
-                  FieldByName('reserva_cancelada_por_dni').Value := camas2reserva_cancelada_por_dni.AsInteger;
-                  FieldByName('reserva_cancelada_por_nombre').Value := camas2reserva_cancelada_por_nombre.AsString;
-                  FieldByName('reserva_paciente_dni').Value := camas2reserva_paciente_dni.AsString;
-                  FieldByName('reserva_paciente_nombre').Value := camas2reserva_paciente_nombre.AsString;
-                  FieldByName('id_motivo_fin_reserva').Value := camas2id_motivo_fin_reserva.AsInteger;
-                  FieldByName('reserva_id_solicitudCambio').Value := camas2reserva_id_solicitudCambio.AsInteger;
-                  FieldByName('foto_paciente').Value := camas2foto_paciente.AsString;
+                  FieldByName('altaProbableFecha').Value := camas2altaProbableFecha.AsString;
+                  FieldByName('altaProbableTipo').Value := camas2altaProbableTipo.AsString;
+                  FieldByName('altaProbableDniUsuario').Value := camas2altaProbableDniUsuario.AsInteger;
+                  FieldByName('reservaMotivo').Value := camas2reservaMotivo.AsString;
+                  FieldByName('reservaFecha').Value := camas2reservaFecha.AsString;
+                  FieldByName('reservadaPorDni').Value := camas2reservadaPorDni.AsInteger;
+                  FieldByName('reservadaPorNombre').Value := camas2reservadaPorNombre.AsString;
+                  FieldByName('idReserva').Value := camas2idReserva.AsInteger;
+                  FieldByName('reservaFechaCancelada').Value := camas2reservaFechaCancelada.AsString;
+                  FieldByName('reservaCanceladaPorDni').Value := camas2reservaCanceladaPorDni.AsInteger;
+                  FieldByName('reservaCanceladaPorNombre').Value := camas2reservaCanceladaPorNombre.AsString;
+                  FieldByName('reservaPacienteDni').Value := camas2reservaPacienteDni.AsString;
+                  FieldByName('reservaPacienteNombre').Value := camas2reservaPacienteNombre.AsString;
+                  FieldByName('idMotivoFinReserva').Value := camas2idMotivoFinReserva.AsInteger;
+                  FieldByName('reservaIdSolicitudCambio').Value := camas2reservaIdSolicitudCambio.AsInteger;
+                  FieldByName('fotoPaciente').Value := camas2fotoPaciente.AsString;
                   Post;
                 end;
               camas2.Next;
@@ -1306,7 +1366,7 @@ begin
         if datos.autologin = 0 then
           begin
             if datos.pendientes = 0 then
-              datos.VerMensaje('ERROR ','No se pudo verificar si los datos de las camas cambiaron','Aceptar','ERROR',10);
+              datos.VerMensaje('ERROR ','No se pudo verificar si los datos de las camas cambiaron.','Aceptar','ERROR',10);
           end
         else
           begin
@@ -1325,7 +1385,8 @@ var
 begin
   response := TRequest.New.BaseURL(datos.urlTC + '/tablerocamas/version')
                     .AddHeader('TokenAcceso', datos.tokenAcceso)
-                    .AddParam('nro_version', datos.GetAppVersion().ToString)
+                    .AddParam('idAplicacion', '4') // 4= Tablero de Camas (ver tabla CAB.dbo.aplicaciones)
+                    .AddParam('nroVersion', datos.GetAppVersion().ToString)
                     .Accept('application/json')
                     .Adapters(TDataSetSerializeAdapter.New(versiones))
                     .Get;
@@ -1357,14 +1418,17 @@ end;
 procedure TformTablero.FormActivate(Sender: TObject);
 begin
   lb_menu_version.Text := 'Versión: ' + datos.GetAppVersion().ToString;
-  ActualizarServicio;
+  // analizar si ActualizarServicio debo moverlo al evento OnShow antes de ActualizarCamas
+  // ActualizarServicio;
 end;
 
 procedure TformTablero.FormCreate(Sender: TObject);
 begin
+  FCamasUI := TDictionary<Integer, TCamaUI>.Create;
+
   ControlarVersion;
 
- // obtenerPermisosModulosPaciente(datos.servicio); // obtengo los permisos que tiene este servicio.
+  //obtenerPermisosModulosPaciente(datos.servicio); // obtengo los permisos que tiene este servicio.
 
   barra.Max := datos.segundos;
   barra.Value := 0;
@@ -1409,83 +1473,130 @@ begin
   Espera('stop');
 end;
 
-procedure TformTablero.ActualizarServicio;
+
+procedure TformTablero.FormDestroy(Sender: TObject);
 var
-  http: TidHTTP;
-  respuesta_json:string;
-  JSonObject:TJSonObject;
-  JSonValue:TJSonValue;
-  arreglo:TJSONArray;
-  i:integer;
+  ui: TCamaUI;
 begin
-  http := TidHTTP.Create();
+  for ui in FCamasUI.Values do
+    ui.Free;
+
+  FCamasUI.Free;
+end;
+
+procedure TformTablero.CargarPermisosDesdeJson(const JsonStr: string; Permisos: TFDMemTable);
+var
+  JsonValue: TJSONValue;
+  JsonArray: TJSONArray;
+  JsonObj: TJSONObject;
+  I: Integer;
+begin
+  Permisos.DisableControls;
   try
-    http.Request.CustomHeaders.Values['TokenAcceso'] := datos.tokenAcceso;
-    http.Request.Accept := 'application/json, text/javascript, */*; q=0.01';
-    http.Request.ContentType := 'application/json';
-    http.Request.CharSet:='utf-8';
+    Permisos.Close;
+    Permisos.Open;
+    Permisos.EmptyDataSet;
+
+    JsonValue := TJSONObject.ParseJSONValue(JsonStr);
+
+    if not Assigned(JsonValue) then
+      raise Exception.Create('JSON inválido o vacío');
+
+    if not (JsonValue is TJSONArray) then
+      raise Exception.Create('El JSON no es un array');
+
+    JsonArray := JsonValue as TJSONArray;
+
     try
-      respuesta_json := http.Get(datos.urlTC +'/tablerocamas/serviciosVerUno?idservicio='+inttostr(datos.servicio));
-    except
-      on E: Exception do
-        begin
-          datos.VerMensaje('ERROR','No se puedo conectar a la api','Aceptar','ERROR',0);
-        end;
+      for I := 0 to JsonArray.Count - 1 do
+      begin
+        if not (JsonArray.Items[I] is TJSONObject) then
+          Continue;
+
+        JsonObj := JsonArray.Items[I] as TJSONObject;
+
+        Permisos.Append;
+
+        Permisos.FieldByName('idPermiso').AsInteger := JsonObj.GetValue<Integer>('idPermiso');
+
+        Permisos.FieldByName('idModulo').AsInteger := JsonObj.GetValue<Integer>('idModulo');
+
+        Permisos.FieldByName('nombreModulo').AsString := JsonObj.GetValue<string>('nombreModulo');
+
+        Permisos.FieldByName('descripcionModulo').AsString := JsonObj.GetValue<string>('descripcionModulo');
+
+        Permisos.FieldByName('controlTotal').AsString := JsonObj.GetValue<string>('controlTotal');
+
+        Permisos.Post;
+      end;
+    finally
+      JsonArray.Free;
     end;
 
-    if http.ResponseCode = 200 then
-      begin
-        JSonObject  := TJSonObject.Create;
-        JsonValue   := JSonObject.ParseJSONValue(respuesta_json);
-        if (JSONValue is TJSONArray) then
-          begin
-            arreglo := JSONValue as TJSONArray;
-            for i := 0 to arreglo.Count - 1 do
-              begin
-                nombreServicio.Text := ((JSONValue as TJSONArray).Items[i] as TJSonObject).Get('nombreServicio').JSONValue.Value;
-                nombreServicio.TextSettings.FontColor := TAlphaColorRec.White;
-                datos.cambioCama_areaCerrada := strtoint(((JSONValue as TJSONArray).Items[i] as TJSonObject).Get('cambioCama_areaCerrada').JSONValue.Value);
-                datos.gestionaCamas := strtoint(((JSONValue as TJSONArray).Items[i] as TJSonObject).Get('gestionaCamas').JSONValue.Value);
-
-                verPaciente := verificarPermisos(datos.servicio,1) // 1 = modulo paciente (información del paciente)
-              end;
-          end;
-        JSonObject.Free;
-      end
-    else
-      begin
-        if http.ResponseCode = 404 then
-          begin
-            datos.VerMensaje('ERROR 404','Recurso no encontrado','Aceptar','ERROR',0);
-          end;
-      end;
-
   finally
-    http.Free;
+    Permisos.EnableControls;
   end;
 end;
 
-procedure TformTablero.apagarAlertas(id_cama: integer);
+procedure TformTablero.ActualizarServicio;
+var
+  response: IResponse;
+  recurso : string;
+
+  JsonValue: TJSONValue;
+  JsonArray: TJSONArray;
+  JsonObj: TJSONObject;
+  PermisosArray: TJSONArray;
+begin
+  recurso := '/tablerocamas/serviciosVerUno';
+  response := TRequest.New
+        .BaseURL(datos.urlTC)
+        .Resource(recurso)
+        .AddHeader('TokenAcceso', datos.tokenAcceso)
+        .AddParam('idServicio', datos.servicio.ToString)
+        .Accept('application/json')
+        .Adapters(TDataSetSerializeAdapter.New(servicio))
+        .Get;
+
+  if response.StatusCode = 200 then
+    begin
+      nombreServicio.Text := servicionombreServicio.AsString;
+      nombreServicio.TextSettings.FontColor := TAlphaColorRec.White;
+      datos.cambioCamaAreaCerrada := serviciocambioCamaAreaCerrada.AsInteger;
+      datos.gestionaCamas := serviciogestionaCamas.AsInteger;
+
+
+      JsonValue := TJSONObject.ParseJSONValue(response.Content);
+      JsonObj := JsonValue as TJSONObject;
+      PermisosArray := JsonObj.GetValue<TJSONArray>('permisos');
+
+      CargarPermisosDesdeJson(PermisosArray.ToJSON, permisos);
+    end
+  else
+    begin
+      datos.VerMensaje('ERROR ' +response.StatusCode.ToString ,'Ocurrió un error en el recurso ' + datos.urlTC + recurso ,'Aceptar','ERROR',0);
+    end;
+end;
+
+procedure TformTablero.apagarAlertasCamasDisponibles();
 var
   response : IResponse;
 begin
-  // marca como leidas todas las alertas de esta cama.
+  // marca como leidas todas las alertas de esta camas disponibles.
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('alertas/apagar')
+              .Resource('tablerocamas/apagarAlertasCamasDisponibles')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_cama', id_cama.ToString)
-              .AddParam('dni', '0') // no pongo el dni del usuario, porque el usuario no está llamando a esta proceso, sino que se ejecuta en forma automática (el usuario no apagó la alerta, lo hizo el sistema)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(apagaralertasTB))
               .Post;
 
   if response.StatusCode <> 200 then
     begin
-      datos.VerMensaje('ERROR','No fue posible apagar las alertas de esta cama','Aceptar','ERROR',0);
+      datos.VerMensaje('ERROR','No fue posible apagar las alertas de las camas que están en estado disponible' + #13+#13+'Servicio web: apagarAlertasCamasDisponibles','Aceptar','ERROR',0);
     end;
 end;
 
-procedure TformTablero.blinking(id_cama: string);
+procedure TformTablero.blinking(idCama: string);
 var
   e:boolean;
 begin
@@ -1493,29 +1604,29 @@ begin
     begin
       with contenedor do
         begin
-          if Assigned(FindComponent('bordeCama'+id_cama) as TRectangle) then
+          if Assigned(FindComponent('bordeCama'+idCama) as TRectangle) then
             begin
-              with (FindComponent('bordeCama'+id_cama) as TRectangle) do
+              with (FindComponent('bordeCama'+idCama) as TRectangle) do
                 begin
-                  e := camas2.Locate('id_cama',id_cama,[]);
+                  e := camas2.Locate('idCama',idCama,[]);
                   if camas2cambioCamaPendiente.AsInteger = 1 then
                     begin
-                      if Assigned((FindComponent('panelB'+id_cama) as TRectangle)) then
+                      if Assigned((FindComponent('panelB'+idCama) as TRectangle)) then
                         begin
-                          if (FindComponent('panelB'+id_cama) as TRectangle).Fill.Color = TAlphaColorRec.Red then
-                            (FindComponent('panelB'+id_cama) as TRectangle).Fill.Color := TAlphaColor(StrToAlphaColor('#FFA4D1'))
+                          if (FindComponent('panelB'+idCama) as TRectangle).Fill.Color = TAlphaColorRec.Red then
+                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColor(StrToAlphaColor('#FFA4D1'))
                           else
-                            (FindComponent('panelB'+id_cama) as TRectangle).Fill.Color := TAlphaColorRec.Red;
+                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColorRec.Red;
                         end;
                     end
                   else
                     begin
-                      if Assigned((FindComponent('panelB'+id_cama) as TRectangle)) then
+                      if Assigned((FindComponent('panelB'+idCama) as TRectangle)) then
                         begin
-                          if (FindComponent('panelB'+id_cama) as TRectangle).Fill.Color = TAlphaColorRec.White then
-                            (FindComponent('panelB'+id_cama) as TRectangle).Fill.Color := TAlphaColorRec.Red
+                          if (FindComponent('panelB'+idCama) as TRectangle).Fill.Color = TAlphaColorRec.White then
+                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColorRec.Red
                           else
-                            (FindComponent('panelB'+id_cama) as TRectangle).Fill.Color := TAlphaColorRec.White;
+                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColorRec.White;
                         end;
                     end;
                 end;

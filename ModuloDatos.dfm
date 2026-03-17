@@ -77,4 +77,32 @@ object datos: Tdatos
       FieldName = 'id_usuario_ticket'
     end
   end
+  object permisosServicio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 344
+    Top = 208
+    object permisosServicioidPermiso: TIntegerField
+      FieldName = 'idPermiso'
+    end
+    object permisosServicioidModulo: TIntegerField
+      FieldName = 'idModulo'
+    end
+    object permisosServicionombreModulo: TStringField
+      FieldName = 'nombreModulo'
+      Size = 255
+    end
+    object permisosServiciodescripcionModulo: TStringField
+      FieldName = 'descripcionModulo'
+      Size = 255
+    end
+    object permisosServiciocontrolTotal: TIntegerField
+      FieldName = 'controlTotal'
+    end
+  end
 end

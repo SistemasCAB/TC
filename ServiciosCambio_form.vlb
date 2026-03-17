@@ -4,58 +4,19 @@ Coordinates=10,1087,69,33
 [recTitulo]
 Coordinates=105,1087,57,33
 
-[servicios]
-Coordinates=450,40,58,33
-Visible=False
-
-[serviciosid_servicio]
-Coordinates=466,1,112,33
-
-[serviciosCli]
-Coordinates=190,992,72,69
-
-[serviciosDSA]
-Coordinates=320,430,80,33
-
 [lbTitulo]
 Coordinates=893,992,51,51
 
-[serviciosid_tipoInternacion]
-Coordinates=630,1,148,33
-
-[serviciosRes]
-Coordinates=692,10,85,303
-
 [listaServicios]
-Coordinates=10,807,89,141
+Coordinates=640,280,89,141
 Visible=True
-
-[serviciostipo_internacion]
-Coordinates=466,56,139,33
-
-[serviciosReq]
-Coordinates=835,789,107,105
 
 [SpeedButton1]
 Coordinates=970,992,84,51
 
-[serviciosTipoInternacion]
-Coordinates=466,111,136,33
-
-[serviciosnombreServicio]
-Coordinates=466,166,136,33
-
-[servicioscambioCama_areaCerrada]
-Coordinates=658,56,188,33
-
 []
-Coordinates=320,485,91,36
-
-[BindSourceDB1]
-Coordinates=179,789,130,177
-
-[BindingsList1]
-Coordinates=130,1,82,33
+Coordinates=361,739,82,33
+Visible=False
 
 [formTablero.camasCli2]
 Coordinates=424,992,128,69
@@ -82,10 +43,10 @@ Coordinates=726,992,141,51
 Coordinates=803,10,133,303
 
 [formTablero.camas2]
-Coordinates=181,10,145,753
+Coordinates=181,10,142,1095
 
 [formTablero.camas]
-Coordinates=10,10,145,753
+Coordinates=10,10,142,1095
 
 [formTablero.alertasNuevaReq]
 Coordinates=489,789,160,177
@@ -95,4 +56,47 @@ Coordinates=578,992,122,69
 
 [formTablero.camasReq]
 Coordinates=335,789,128,177
+
+[formTablero.versiones]
+Coordinates=171,1124,125,141
+
+[formTablero.apagarAlertasTB]
+Coordinates=361,197,159,51
+
+[FondoTransparente]
+Coordinates=361,267,111,33
+
+[formTablero.servicio]
+Coordinates=42,1124,125,177
+
+[ShadowEffect1]
+Coordinates=361,319,88,33
+
+[formTablero.permisos]
+Coordinates=361,1,123,177
+
+[serviciosidTipoInternacion]
+Coordinates=361,531,145,33
+
+[serviciosnombreServicio]
+Coordinates=361,583,136,33
+
+[servicioscambioCamaAreaCerrada]
+Coordinates=342,635,184,33
+
+[servicios]
+Coordinates=870,290,58,33
+Visible=False
+
+[serviciosgestionaCamas]
+Coordinates=361,687,135,33
+
+[serviciosidServicio]
+Coordinates=361,791,108,33
+
+[BindSourceDB1]
+Coordinates=870,290,125,159
+
+[BindingsList1]
+Coordinates=361,319,82,33
 

@@ -41,7 +41,9 @@ uses
   Data.Bind.EngExt,
   Fmx.Bind.DBEngExt,
   Data.Bind.DBScope,
-  Inifiles, FMX.Effects;
+  Inifiles, FMX.Effects,
+  RESTRequest4D,
+  DataSet.Serialize.Adapter.RESTRequest4D;
 
 type
   Tform_ServiciosCambio = class(TForm)
@@ -49,27 +51,22 @@ type
     recTitulo: TRectangle;
     lbTitulo: TLabel;
     SpeedButton1: TSpeedButton;
-    serviciosCli: TRESTClient;
-    serviciosReq: TRESTRequest;
-    serviciosRes: TRESTResponse;
-    serviciosDSA: TRESTResponseDataSetAdapter;
-    servicios: TFDMemTable;
-    serviciosid_servicio: TWideStringField;
-    serviciosnombreServicio: TWideStringField;
-    serviciostipo_internacion: TWideStringField;
-    servicioscambioCama_areaCerrada: TWideStringField;
-    serviciosid_tipoInternacion: TWideStringField;
-    serviciosTipoInternacion: TWideStringField;
     listaServicios: TListView;
+    ShadowEffect1: TShadowEffect;
+    FondoTransparente: TRectangle;
+    servicios: TFDMemTable;
+    serviciosidServicio: TIntegerField;
+    serviciosnombreServicio: TStringField;
+    serviciosidTipoInternacion: TIntegerField;
+    servicioscambioCamaAreaCerrada: TIntegerField;
+    serviciosgestionaCamas: TIntegerField;
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
     LinkListControlToField1: TLinkListControlToField;
-    ShadowEffect1: TShadowEffect;
-    FondoTransparente: TRectangle;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure listaServiciosItemClick(const Sender: TObject;
-      const AItem: TListViewItem);
+    procedure listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
+    procedure ActualizarServicios;
   private
     { Private declarations }
   public
@@ -85,34 +82,47 @@ implementation
 
 uses ModuloDatos, form_Tablero;
 
-procedure Tform_ServiciosCambio.FormActivate(Sender: TObject);
+procedure Tform_ServiciosCambio.ActualizarServicios;
 var
+  response: IResponse;
+  apiRecurso:string;
   e:boolean;
 begin
-  serviciosCli.BaseURL                                      := datos.urlTC;
-  serviciosReq.Resource                                     := 'servicios/ver';
-  serviciosReq.Params.ParameterByName('TokenAcceso').Value  := datos.tokenAcceso;
-  serviciosReq.Execute;
+  // Obtengo los servicios
+  apiRecurso := '/tablerocamas/servicios';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(apiRecurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(servicios))
+              .Get;
 
-  if serviciosRes.StatusCode = 200 then
+  if response.StatusCode = 200 then
     begin
-      e:= servicios.Locate('id_servicio',datos.servicio,[]);
+      e:= servicios.Locate('idServicio',datos.servicio,[]);
       listaServicios.Enabled := true;
     end
   else
     begin
       listaServicios.Enabled := false;
-      datos.VerMensaje('Error',servicios.Fields[1].AsString  ,'Aceptar','error',0)
+      datos.VerMensaje('Error ' + response.StatusCode.ToString, 'El endpoint ' + datos.urlTC + apiRecurso + ' ha retornado el status code ' + response.StatusCode.ToString ,'Aceptar','error',0)
     end;
 end;
 
-procedure Tform_ServiciosCambio.listaServiciosItemClick(const Sender: TObject;
-  const AItem: TListViewItem);
+procedure Tform_ServiciosCambio.FormActivate(Sender: TObject);
+var
+  e:boolean;
+begin
+
+  ActualizarServicios;
+end;
+
+procedure Tform_ServiciosCambio.listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
 var
   archivo :TInifile;
 begin
   archivo := TIniFile.Create('c:\tc\config.ini');
-  archivo.WriteInteger('TABLERO','servicio',serviciosid_servicio.AsInteger);
+  archivo.WriteInteger('TABLERO','servicio',serviciosidServicio.AsInteger);
   archivo.Free;
   datos.actualizarConfiguracion; // vuelvo a leer los datos del archivo de configuración
   formTablero.ActualizarServicio;

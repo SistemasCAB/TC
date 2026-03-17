@@ -78,8 +78,6 @@ begin
 end;
 
 procedure TformLogin.botonAceptarClick(Sender: TObject);
-var
-  mensaje : Tform_mensajes;
 begin
   iniciarSesion(cuenta.Text,clave.Text);
 end;
@@ -189,3 +187,4 @@ begin
 end;
 
 end.
+

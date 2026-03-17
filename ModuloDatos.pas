@@ -18,6 +18,12 @@ type
     tickets: TFDMemTable;
     ticketsdni: TWideStringField;
     ticketsid_usuario_ticket: TFloatField;
+    permisosServicio: TFDMemTable;
+    permisosServicioidPermiso: TIntegerField;
+    permisosServicioidModulo: TIntegerField;
+    permisosServicionombreModulo: TStringField;
+    permisosServiciodescripcionModulo: TStringField;
+    permisosServiciocontrolTotal: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure VerMensaje(textoTitulo,textoMensaje,textoBoton,icono:string; tiempo:integer);
     function  GetAppVersion: integer;
@@ -34,7 +40,7 @@ type
     segundos:integer;
     cambiarServicio:integer;
     col, alto,pad:integer;
-    cambioCama_areaCerrada:integer; //indica si en el servicio se puede hacer cambios de cama sin autorización de Admisión por ser un área cerrada.
+    cambioCamaAreaCerrada:integer; //indica si en el servicio se puede hacer cambios de cama sin autorización de Admisión por ser un área cerrada.
     gestionaCamas:integer; // indica que este servicio tiene capacidad para autorizar los cambios de cama (como Admisión y Egresos)
     pendientes:integer;
 
@@ -100,7 +106,7 @@ begin
   url             := archivo.ReadString('API','url','https://clinicaadventista.markey.com.ar/APIMarkeyCAB');
   APIKey          := archivo.ReadString('API','APIKey','');
 
-  urlTC           := archivo.ReadString('API','urlTC','http://10.99.8.107/tc/public/api');
+  urlTC           := archivo.ReadString('API','urlTC','http://10.99.8.106/cab/public/v2');
   tokenAcceso     := archivo.ReadString('API','tokenAcceso','');
 
   autologin       := archivo.ReadInteger('TABLERO','autologin',0);
@@ -114,8 +120,8 @@ begin
   pad             := archivo.ReadInteger('TABLERO','padding',5);
   pendientes      := archivo.ReadInteger('TABLERO','versolotareaspendientes',0);
 
-  servidorSQL     := archivo.ReadString('SQL','servidor','10.99.8.105');
-  baseDatos       := archivo.ReadString('SQL','base','TableroCamas');
+  servidorSQL     := archivo.ReadString('SQL','servidor','10.99.8.8');
+  baseDatos       := archivo.ReadString('SQL','base','CAB');
   usuarioBD       := archivo.ReadString('SQL','usuario','superusr_cab');
   passwordBD      := '8125.5b2a1c8';
 end;

@@ -9,9 +9,7 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  OnActivate = FormActivate
   OnCreate = FormCreate
-  OnClose = FormClose
   DesignerMasterStyle = 0
   object FondoTransparente: TRectangle
     Align = Client
@@ -24,7 +22,7 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
   object formulario: TRectangle
     Align = Center
     Size.Width = 670.000000000000000000
-    Size.Height = 369.000000000000000000
+    Size.Height = 410.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     object recTituloVentana: TRectangle
@@ -56,47 +54,47 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                04EC494441545847ED975BA8564514C7D7CCEEDB5BB19B4537A42C1249CA4ACC
-                13680F56441914514A194604DDC8C06E04DDE986F41044D185AE2FF5D48354D4
-                430591094542446991889669914145A66766CFACFFBF87BDF7D77CE3F79D5351
-                3EF983C3F966ADFF9A597BF6ACD93322FBF997003846555FABEB7A4708618BAA
-                3E06A0CA75FB040053638C9F3043559FCBB5FB040017E6C990A4736E1CC0B1B9
-                FEBFC4E68696A37283884855555344E4B0DCFEBF0360AE730EF90CD575FD2DC9
-                0373FD3E01C03D6932CEB93F005C94EB2602C03400A7029891FBFE15001600B8
-                1BC06D0066E6FE890070790861B3734E9D73BFAAEA3324A7E4BA1C931B00DC48
-                724C442822E322125A57658CF9C25A3B69A5919CEFBDFFB8AAAA5E6A07F06851
-                14F7A6B60901B0307D4D23589CC7E5A8EAEA3C882443089B4996B93E65A0CA00
-                AC4EDBC350D527014CCDED19435F0DC95E3EE648005CD53D8973EEE7C1671B04
-                C084D30EE0FC3C86CDC6FA72AE1D0A806921844D6DD013006ECD3B4B6937C825
-                793F2900EE73CEF92E4655DF0730747FDB0B0027778100660358D91F3DC17BFF
-                A3F7FE473649FD02E08CBCAF14002700B80CC0A2DC378AEE7DCE1411F1DEFF6E
-                8CD9668C396850D65014C5B65EAF77A5F77E775555D3638C6B009C98EBA4592F
-                A7935C457239C9A500CECC352301702749C6183F9766E13E98CF0E9B2AD9D8EA
-                5774B618E397000E2669014C253985E471CEB99D69AC736ECF64332ADD0C913C
-                4D44C418B3A5B50FAD1269B407586B5F2579BF34B3768A885C1C63DC1842D8AA
-                AA1F925C5C55D511695C55555345645E6A1BC6404222F25DFB7FA2738F1111B1
-                D63E4CF22692D71963D65A6B371445B139C6384B440EC8835A626EC8E9D6D02E
-                6966E89DB63D51427DACB5CF5A6B5F34C66C2B8A6299B5F61A6BED9E615F80BF
-                8B95A6E36524CFB1D6BED7DA8726648CC1244F39D98639295D42DBADB51F24F6
-                A1DB7B8CF1A85167A516E4867FCAA86DBC3F43DEFB5FBDF7419A85790480BB07
-                94831892456E4C70B921675442FD2A2BCBF2A1B22CAFEDDA21841B009CDC57B6
-                B49BE04B24A78F9A29922B00DCD2FEAD22797AAE198AAABEDBED1FDDA12CB5E5
-                DF2400878710BE6EF5570358D46927C27BFF038023D3BE861263FC94CD660692
-                F3A51974AE736E77DBD76F248FEEF4AAFA389B6496B6DA6931C6CF06461F81AA
-                3E998EBD577902985DD7F56755554DF3DEEF2ACB7296B576A73489AE2B8A6291
-                F75ECBB23CD55AFB1580838D31DB00AC2F8AE2BCA49F1924578AC8EC64697811
-                71246715457196346B74BC2CCB316BED862EB60F49A3AA6F25D9BF99FA55F5ED
-                CE07609E34039FD6B66F4EB5C300B010C003000E0A217C336A9C3E006EEF44CE
-                B9006041EA57D53549420BDB98B1B67D45AA1D0680BBDA704B7259D7571B7F9E
-                A4550660ACAEEB47BA76AFD77BCA5ABBBE6BB78C27BF2B6936CB9DD2CCEE9CC4
-                371492C78710BE9726EE7555FDA8F31963FE3AAD923CA4AB12365FF56F86DDBF
-                54F595E4892E6C636D8C717D08616B7B441D0AC943DBDBC7D39D2DAD46EFFD4F
-                7DB1AABED0399C730AE0ECBE3341559FEF74242FE9EC0096B0590B2F90DCAB50
-                4896AAFA86736E577E15077087AAAE01706EDFA8AAEFB4C97800ABD280140057
-                B6BAF1FC60D65D2C638C6B015C4AF2240073002C8F317EDEAEC9BF77D1247934
-                809500C6725F0A4943F27A0017E43E6992BA3C84B0C939B7BBAEEBED755DEF70
-                CEED8931AE9BACEFFDECE7BFE24F2A9A65C87E7381960000000049454E44AE42
-                6082}
+                04F7494441545847ED976D88554518C7E7CC71BDBB98EE6E611A521685646A2A
+                E606FAC58A2885224A31C588A03732B03782EC8D5EA50F4118BD90955F8A3E14
+                49457EA82052A14808A92414D1DA34C9E0DCBBF7DEBD6F33CFFFDF8733E73A77
+                3C77D7C4FCE40F2EBBF33CFF67E63973669E33A3D4594E11001788C887AD56EB
+                8831E6A088BC02A010EACE0800FAACB53F304044DE0EB56704002BC26448B258
+                2CD6015C18EA4F273A3438A68506A5941A1818E8554A9D1BDAFF7700CC4B9204
+                E10CB55AADDF499E13EACF08009EF493A9542A55003785BAB1003009C0950066
+                84BE5302C062001B013C026066E81F0B00AB8D31079224917ABD5E14913749F6
+                86BA90283400B89FE490528A4AA9BA52CA3857218AA29FB5D6E3EE34928B8AC5
+                E2F78383833DBE1DC04B711C3FE5DBC604C012FF35756159181722229BC22092
+                34C61C203931D4FB74EC32009BFC761E22B219405F680FC87D35247BC231BB02
+                E08EEC491A8DC63F9DCFD6098031A71DC00D610CD3C2FA7EA8CD05C02463CC7E
+                17F41A8087C3CE7C5C815C1EF6E303E0E924499A598C887C0320B7BE9D008039
+                5920805900D6B747F768369B479BCDE65192ACD7EB0980ABC2BE7C005C02E036
+                004B435F37B2F7395329A56AB55A398AA2E1288A2677CA52E2381EEEE9E9595B
+                AD56477B7B7B07ADB5DB005C1AEA54BA5E1690DC40720DC99500AE0E355D01F0
+                38495A6BF7A874E13E17CE0ED35DB2D7E9D765366BED2F00A690D400FA48F692
+                BCA8D1681CF3634BA5526DBC1955D90C919CAF945251141D74F6DC5DA252ED04
+                ADF507249F51E9ACCD554ADD6CADDD6B8C392422DF915C562814A6FA71FDFDFD
+                7D4AA985BE2D8F8E8494527FB8BF639D7B22A594D25ABF40F20192F74451B443
+                6BFD6B1CC7078C319729A52684410E1B1A42B2355451E90C6D77EDB1126AA3B5
+                7E4B6BFD6E1445C3711CAFD25ADF15C7712DEF0B70B2689576BC8AE4B55AEBAF
+                9D3D37A1288A30CE538E5730C7254BE8B0D6FA5BCF9E5BDEADB5D3BA9D951C08
+                0DFF956E65BC3D438D46A3582C168D524A150A85A9003676283B8948C6A1D1A3
+                111A42BA25D4DE658542E1F9818181BBB3F6C8C8C87D00E6B4950E5704DFABD5
+                6A83DD668AE43A000FB9DF06920B424D2E22F255563FB243996F0BBF4900CE33
+                C6FCE6F47702589A69C7A2D96CFE05E07CBFAF5CACB53F92A43BC62E52E9A0F3
+                CAE5F2A8EBAB44727AA61791579926B3D26927596B7FEA18BD0B22B2D91FFB04
+                00CCAA542A55921C1D1D2DFB4F60ADDDC534510BE00AA79F42B22422D90ECDFA
+                9921222F8BC82722F2A9FB7D24225BADB53BB3845C059FEBC7B6211989C8175E
+                F69FFB7E11F932F30158A8D281E7BBF683BE360F004B003C0B60B231665FB771
+                DA00783413254962002CF6FD22B2CD4B68898B1972EDDB7D6D1E009E70E19AE4
+                AAAC2F177FBDF2771980A191919117B3767F7FFFEB5AEBDD59DB51F7FE2FA8B4
+                581E53E9ECCEF67CB990BCD818F3A74AE33E16919D992F8AA2E3A75592FDD92E
+                61FA55DF9777FF1291ADDE13AD70B1DA5ABBDB1873C81D51732139E06E1F6F64
+                367F37369BCDBFDB6211D9923992241100D7B49D1E22F24EA623794B6607B09C
+                E95AD842F284EF18C98922F259B55AAD845771008F89C83600D7B58D22B2DD25
+                D304B0C10FF001B096C78FB01D07B3EC6269ADDD01E056929703980D608DB576
+                8F5B932777D124391DC07A0043A1CF876444F25E0037863E9526B5DA18B3BF5C
+                2E8FB65AADC3AD56EB48A954AA596B778DD7F759CE72BAF817B5188C53C33939
+                900000000049454E44AE426082}
               FileName = 
                 'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                 '\Alta.png'
@@ -108,34 +106,16 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
           Size.PlatformDefault = False
           WrapMode = Place
         end
-        object botonSalir: TSpeedButton
-          Align = Right
-          StyledSettings = []
-          Hint = 'Salir'
-          Position.X = 622.000000000000000000
-          Size.Width = 48.000000000000000000
-          Size.Height = 50.000000000000000000
-          Size.PlatformDefault = False
-          ParentShowHint = False
-          ShowHint = True
-          Text = #62480
-          TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
-          TextSettings.Font.Size = 30.000000000000000000
-          TextSettings.FontColor = claWhite
-          OnClick = botonSalirClick
-          OnMouseMove = botonSalirMouseMove
-          OnMouseLeave = botonSalirMouseLeave
-        end
       end
     end
-    object Layout1: TLayout
+    object lyDatosAlta: TLayout
       Align = Client
       Margins.Left = 10.000000000000000000
       Margins.Top = 10.000000000000000000
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 10.000000000000000000
       Size.Width = 650.000000000000000000
-      Size.Height = 299.000000000000000000
+      Size.Height = 340.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
       object panelPaciente: TRectangle
@@ -289,7 +269,7 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
             TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.FontColor = claWhite
             TextSettings.HorzAlign = Center
-            Text = 'INDICACI'#211'N M'#201'DICA'
+            Text = 'DATOS EPICRISIS'
             TabOrder = 1
           end
         end
@@ -337,12 +317,11 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
         end
       end
       object botonAlta: TRectangle
-        Enabled = False
         Fill.Color = claRed
         Padding.Left = 5.000000000000000000
         Padding.Right = 5.000000000000000000
-        Position.X = 481.000000000000000000
-        Position.Y = 223.000000000000000000
+        Position.X = 430.000000000000000000
+        Position.Y = 265.000000000000000000
         Size.Width = 140.000000000000000000
         Size.Height = 55.000000000000000000
         Size.PlatformDefault = False
@@ -353,7 +332,7 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
         object Label4: TLabel
           Align = Client
           StyledSettings = [Family, Size]
-          Size.Width = 92.000000000000000000
+          Size.Width = 81.000000000000000000
           Size.Height = 55.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
@@ -362,19 +341,44 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
           Text = 'Alta Definitiva'
           TabOrder = 1
         end
-        object Label5: TLabel
+        object Image1: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                0201494441545847EDD6BDAF0C611805F07B2FB9B9C28A488882BF805B132A89
+                46422824370AB750107F8196522991505011A211143E1A11FF80844E211A4122
+                447CC59939E728CCCA3859FB313BBBD5FECAD9E73CCF3BEF9BCDBC7373333333
+                A393D42179B52CCB17242FDBDE963553637B91E403D7007823E964D64E05C9EB
+                F5C5D491BC29A99399892179311791485EC9DC44485ACDE1BD90BC9BD9D649DA
+                05E05B0E4F00DE4B5ACE7CAB2475CAB27C99C3138077927666BE7524AFE5F004
+                E08BA4BD991D48D2B2A4D39276E76FBDD83E9AC37B917424B30349DA0FE0B3FF
+                BCD12F49C7B3A64ED216006F7378927436B303493A0CE0678F6627B2B68BE4AD
+                AC4F246F676E20DB07FAFD4324AD6646D2B1AC4B4551BC92B439B37D49DADE3D
+                A67E24ADD4325B017CC89A3A0085A47DFF4E1B82A43DD9EC7FAA5D59D3EFD3D0
+                45F27CCE1A8AA47524EF64C35E00FCB0FD349FA7B22C9FDB5EC8594393B491E4
+                936CDC0400363AAA647B89E4FD1C302A9217B2776392D6937C9443865514C56B
+                DB9BB2EF58AA9B5EA3E3937428FBB5A2C9F191BC917D5A551DDFE31CDC0B804F
+                9276648FD68D707CA7323B31D585FD5EAEA0AB2CCB67999938DB0B242F01F85E
+                5F0C004CE5C2956CCFDB5EB47D0EC0D76A311F25ADD85EB03D9F996134CDFD65
+                7B49D219920F251D1CEBF350ED7C3E1B99EDB5B6378CFB76D5AE8FD563666666
+                58BF0174305CCC7CC2053C0000000049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\Aceptar.png'
+            end>
           Align = Left
-          StyledSettings = [Style]
+          HitTest = False
           Position.X = 5.000000000000000000
-          Size.Width = 38.000000000000000000
+          Size.Width = 49.000000000000000000
           Size.Height = 55.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
-          TextSettings.Font.Size = 25.000000000000000000
-          TextSettings.FontColor = claWhite
-          TextSettings.HorzAlign = Center
-          Text = #61452
-          TabOrder = 2
+          WrapMode = Place
         end
         object btnAltaDefinitiva: TSpeedButton
           Align = Contents
@@ -387,81 +391,103 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
           OnClick = btnAltaDefinitivaClick
         end
       end
-      object Label6: TLabel
-        StyledSettings = [Family, FontColor]
+      object botonCancelar: TRectangle
+        Fill.Color = xFF00558C
+        Position.X = 80.000000000000000000
+        Position.Y = 265.000000000000000000
+        Size.Width = 140.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        Stroke.Thickness = 2.000000000000000000
+        XRadius = 5.000000000000000000
+        YRadius = 5.000000000000000000
+        object Image14: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                0296494441545847EDD6BF6B14511007F0F7EE4E0908060BA35D40040D92422C
+                15B552507BBB68CC5F6021586991D25F606165A1D808422A1B6D044D25C60801
+                8BD416B1F3376476E6FBB5C8DDB137D9B7B72F972AE4D3EDDB37F3E676B89D0D
+                61D74E0260CACC5E98D9028073FE7E0E92B7CDEC2D809BFE5E23002654F523BB
+                44E41BC9537E5F1366F6A097872401DCF17B6A019854D59572126E14B5965B94
+                99DDF37948D2CCE6FDDE4A00268BA2F8EA13F488C82F92677C5C15FF643C0077
+                7DCC0000FB5475D1077A4D9E94993DF2715500CCF9D83E00A77D404A5D51A936
+                5551D5F73EBE8FE41111F9ED8352AADA37AC4D9E993D2EC76F0260C607D51191
+                35005361A398FBFE7E1D555D2279D8D7B009C9EB22029F20A5288A55337BE9D7
+                EBA8EA3280097F7612806B3EC97651D50F24C7FD99430198F3C946A5AA4B000E
+                F9B31ACB6D5F9DEC36A50098F5C9736DB94D2900E644A4F00735F469A436A500
+                B89A5B94AA2E931CF3B9525A7E6188A3B931DD361DF7EB236B3A9BAAD48D992D
+                C9994D29DB5654EE6CAA5335FBB298D9439F74545B7E52B98332477651B94FC6
+                CC5E03B8E5D7EB346A1FC9B699CDFBE03ADD4F880361E33D75C3DFAFD3FD7499
+                F675F40198F64175BAB369E00D9C3BFBCCEC55397EE0251763DC5BBEAE63668B
+                ED76FB7CABD5FA5E5E8F313EEB743AB3E5B521F6FB85BE6ECB9EFB5FE135F984
+                68F2E9222206E0A28F1D40728F992DF8E01E55FD0CE0A08FAB026026D53E1159
+                0770D9C72499D91311D17212337BD71B9424636F2FC958BE2E037081E48F7261
+                22F277E83FCC233966664F45645D44ACDBA663243BA9C353009C2D8A6255444C
+                44FE00B8E4F7F42413936C8510C6499E0C218C8510BE84107EC618FFC518E9F7
+                D721D926792284702584B012637C136314BF6FD7AE1DE93F291F91008BAD1F1C
+                0000000049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\Cancelar.png'
+            end>
+          Align = Left
+          HitTest = False
+          Size.Width = 49.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+        object Label33: TLabel
+          Align = Client
+          StyledSettings = [Family, Size]
+          Size.Width = 91.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Cancelar'
+          TabOrder = 1
+        end
+        object btn_AltaDefinitiva: TSpeedButton
+          Align = Contents
+          Cursor = crHandPoint
+          Size.Width = 140.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          OnClick = btn_AltaDefinitivaClick
+        end
+      end
+      object Label5: TLabel
+        StyledSettings = [Family, Size, FontColor]
         Position.X = 8.000000000000000000
-        Position.Y = 208.000000000000000000
-        Size.Width = 177.000000000000000000
+        Position.Y = 216.000000000000000000
+        Size.Width = 361.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
-        TextSettings.Font.Size = 14.000000000000000000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
-        Text = 'Seleccione el tipo de alta'
+        Text = 'Indique la fecha y hora en que el paciente se retir'#243' de la CAB'
+        TabOrder = 0
+      end
+      object lbFormato: TLabel
+        StyledSettings = [Family, Size, FontColor]
+        Position.X = 520.000000000000000000
+        Position.Y = 216.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 41.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00040000000200000004000000}
+        Text = 'dd/mm/aaaa hh:mm Ej. 09-03-2026 08:35'
         TabOrder = 1
       end
-      object listaAltas: TComboBox
-        Position.X = 8.000000000000000000
-        Position.Y = 233.000000000000000000
-        Size.Width = 433.000000000000000000
-        Size.Height = 32.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 4
-        OnChange = listaAltasChange
-      end
-    end
-  end
-  object tipos: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 38
-    Top = 292
-    object tiposid_tipoAlta: TIntegerField
-      FieldName = 'id_tipoAlta'
-    end
-    object tipostipoAlta: TStringField
-      FieldName = 'tipoAlta'
-      Size = 255
-    end
-  end
-  object BindSourceDB1: TBindSourceDB
-    DataSet = tipos
-    ScopeMappings = <>
-    Left = 32
-    Top = 456
-  end
-  object BindingsList1: TBindingsList
-    Methods = <>
-    OutputConverters = <>
-    Left = 20
-    Top = 5
-    object LinkListControlToField1: TLinkListControlToField
-      Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      FieldName = 'tipoAlta'
-      Control = listaAltas
-      FillExpressions = <>
-      FillHeaderExpressions = <>
-      FillBreakGroups = <>
-    end
-  end
-  object horaServidor: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 38
-    Top = 364
-    object horaServidorhora: TStringField
-      FieldName = 'hora'
-      Size = 50
     end
   end
   object alta: TFDMemTable
@@ -472,8 +498,8 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 38
-    Top = 220
+    Left = 78
+    Top = 196
     object altaestado: TStringField
       FieldName = 'estado'
       Size = 255
@@ -483,905 +509,22 @@ object form_AltaDefinitiva: Tform_AltaDefinitiva
       Size = 255
     end
   end
-  object camasMarkey: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id_cama'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cama'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_habitacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'habitacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'piso'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'piso_texto'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'tipocama'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_estado'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'estado'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'color'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'Id_Paciente'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'nombre_paciente'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'apellido_paciente'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'dni'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'sexo'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'fecha_ingreso_institucion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'fecha_ingreso_cama'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cobertura'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'fantasia'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'plan'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'nro_afiliado'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_aislado'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'aislado'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_internacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'fecha_alta_medica'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'profesional_alta'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cama_en_aislamiento'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'observaciones'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'foto_paciente'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'procedimientos_no_cumplidos'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'medicacion_no_programada'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'medicacion_no_aplicada'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'aislamiento_contacto'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'aislamiento_gota_contacto'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'aislamiento_aire_respiratorio'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'aislamiento_proteccion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'aislamiento_gotas_contacto'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'tipo_alta_medica'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'acompanante'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'observaciones_acompanante'
-        DataType = ftWideString
-        Size = 255
-      end>
-    IndexDefs = <>
+  object resultadoActualizacion: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
     ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
-    UpdateOptions.LockWait = True
-    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 688
-    Top = 16
-    object camasMarkeyid_cama: TWideStringField
-      FieldName = 'id_cama'
-      Size = 255
-    end
-    object camasMarkeycama: TWideStringField
-      FieldName = 'cama'
-      Size = 255
-    end
-    object camasMarkeyid_habitacion: TWideStringField
-      FieldName = 'id_habitacion'
-      Size = 255
-    end
-    object camasMarkeyhabitacion: TWideStringField
-      FieldName = 'habitacion'
-      Size = 255
-    end
-    object camasMarkeypiso: TWideStringField
-      FieldName = 'piso'
-      Size = 255
-    end
-    object camasMarkeypiso_texto: TWideStringField
-      FieldName = 'piso_texto'
-      Size = 255
-    end
-    object camasMarkeytipocama: TWideStringField
-      FieldName = 'tipocama'
-      Size = 255
-    end
-    object camasMarkeyid_estado: TWideStringField
-      FieldName = 'id_estado'
-      Size = 255
-    end
-    object camasMarkeyestado: TWideStringField
-      FieldName = 'estado'
-      Size = 255
-    end
-    object camasMarkeycolor: TWideStringField
-      FieldName = 'color'
-      Size = 255
-    end
-    object camasMarkeyId_Paciente: TWideStringField
-      FieldName = 'Id_Paciente'
-      Size = 255
-    end
-    object camasMarkeynombre_paciente: TWideStringField
-      FieldName = 'nombre_paciente'
-      Size = 255
-    end
-    object camasMarkeyapellido_paciente: TWideStringField
-      FieldName = 'apellido_paciente'
-      Size = 255
-    end
-    object camasMarkeydni: TWideStringField
-      FieldName = 'dni'
-      Size = 255
-    end
-    object camasMarkeysexo: TWideStringField
-      FieldName = 'sexo'
-      Size = 255
-    end
-    object camasMarkeyfecha_ingreso_institucion: TWideStringField
-      FieldName = 'fecha_ingreso_institucion'
-      Size = 255
-    end
-    object camasMarkeyfecha_ingreso_cama: TWideStringField
-      FieldName = 'fecha_ingreso_cama'
-      Size = 255
-    end
-    object camasMarkeycobertura: TWideStringField
-      FieldName = 'cobertura'
-      Size = 255
-    end
-    object camasMarkeyfantasia: TWideStringField
-      FieldName = 'fantasia'
-      Size = 255
-    end
-    object camasMarkeyplan: TWideStringField
-      FieldName = 'plan'
-      Size = 255
-    end
-    object camasMarkeynro_afiliado: TWideStringField
-      FieldName = 'nro_afiliado'
-      Size = 255
-    end
-    object camasMarkeyid_aislado: TWideStringField
-      FieldName = 'id_aislado'
-      Size = 255
-    end
-    object camasMarkeyaislado: TWideStringField
-      FieldName = 'aislado'
-      Size = 255
-    end
-    object camasMarkeyid_internacion: TWideStringField
-      FieldName = 'id_internacion'
-      Size = 255
-    end
-    object camasMarkeyfecha_alta_medica: TWideStringField
-      FieldName = 'fecha_alta_medica'
-      Size = 255
-    end
-    object camasMarkeyprofesional_alta: TWideStringField
-      FieldName = 'profesional_alta'
-      Size = 255
-    end
-    object camasMarkeycama_en_aislamiento: TWideStringField
-      FieldName = 'cama_en_aislamiento'
-      Size = 255
-    end
-    object camasMarkeyobservaciones: TWideStringField
-      FieldName = 'observaciones'
-      Size = 255
-    end
-    object camasMarkeyfoto_paciente: TWideStringField
-      FieldName = 'foto_paciente'
-      Size = 255
-    end
-    object camasMarkeyprocedimientos_no_cumplidos: TWideStringField
-      FieldName = 'procedimientos_no_cumplidos'
-      Size = 255
-    end
-    object camasMarkeymedicacion_no_programada: TWideStringField
-      FieldName = 'medicacion_no_programada'
-      Size = 255
-    end
-    object camasMarkeymedicacion_no_aplicada: TWideStringField
-      FieldName = 'medicacion_no_aplicada'
-      Size = 255
-    end
-    object camasMarkeyaislamiento_contacto: TWideStringField
-      FieldName = 'aislamiento_contacto'
-      Size = 255
-    end
-    object camasMarkeyaislamiento_gota_contacto: TWideStringField
-      FieldName = 'aislamiento_gota_contacto'
-      Size = 255
-    end
-    object camasMarkeyaislamiento_aire_respiratorio: TWideStringField
-      FieldName = 'aislamiento_aire_respiratorio'
-      Size = 255
-    end
-    object camasMarkeyaislamiento_proteccion: TWideStringField
-      FieldName = 'aislamiento_proteccion'
-      Size = 255
-    end
-    object camasMarkeyaislamiento_gotas_contacto: TWideStringField
-      FieldName = 'aislamiento_gotas_contacto'
-      Size = 255
-    end
-    object camasMarkeytipo_alta_medica: TWideStringField
-      FieldName = 'tipo_alta_medica'
-      Size = 255
-    end
-    object camasMarkeyacompanante: TWideStringField
-      FieldName = 'acompanante'
-      Size = 255
-    end
-    object camasMarkeyobservaciones_acompanante: TWideStringField
-      FieldName = 'observaciones_acompanante'
-      Size = 255
-    end
-  end
-  object conexion: TADOConnection
-    ConnectionString = 
-      'Provider=SQLOLEDB.1;Password=8125.5b2a1c8;Persist Security Info=' +
-      'True;User ID=superusr_cab;Initial Catalog=TableroCamas;Data Sour' +
-      'ce=10.99.8.105;Use Procedure for Prepare=1;Auto Translate=True;P' +
-      'acket Size=4096;Workstation ID=CAB-SISTEJLR;Use Encryption for D' +
-      'ata=False;Tag with column collation when possible=False'
-    LoginPrompt = False
-    Provider = 'SQLOLEDB.1'
-    Left = 208
-    Top = 16
-  end
-  object camasMarkey_ver: TADOQuery
-    Connection = conexion
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'exec camasMarkey_ver')
-    Left = 304
-    Top = 16
-    object camasMarkey_verid_cama: TIntegerField
-      FieldName = 'id_cama'
-    end
-    object camasMarkey_vercama: TStringField
-      FieldName = 'cama'
-      Size = 50
-    end
-    object camasMarkey_verid_habitacion: TIntegerField
-      FieldName = 'id_habitacion'
-    end
-    object camasMarkey_verhabitacion: TStringField
-      FieldName = 'habitacion'
-      Size = 50
-    end
-    object camasMarkey_verpiso: TStringField
-      FieldName = 'piso'
-      Size = 50
-    end
-    object camasMarkey_verpiso_texto: TStringField
-      FieldName = 'piso_texto'
-      Size = 50
-    end
-    object camasMarkey_vertipocama: TStringField
-      FieldName = 'tipocama'
-      Size = 1
-    end
-    object camasMarkey_verid_estado: TIntegerField
-      FieldName = 'id_estado'
-    end
-    object camasMarkey_verestado: TStringField
-      FieldName = 'estado'
-      Size = 50
-    end
-    object camasMarkey_vercolor: TStringField
-      FieldName = 'color'
-      Size = 50
-    end
-    object camasMarkey_verid_paciente: TIntegerField
-      FieldName = 'id_paciente'
-    end
-    object camasMarkey_vernombre_paciente: TStringField
-      FieldName = 'nombre_paciente'
-      Size = 255
-    end
-    object camasMarkey_verapellido_paciente: TStringField
-      FieldName = 'apellido_paciente'
-      Size = 255
-    end
-    object camasMarkey_verdni: TStringField
-      FieldName = 'dni'
-      Size = 50
-    end
-    object camasMarkey_versexo: TStringField
-      FieldName = 'sexo'
-      Size = 50
-    end
-    object camasMarkey_verfecha_ingreso_institucion: TDateTimeField
-      FieldName = 'fecha_ingreso_institucion'
-    end
-    object camasMarkey_verfecha_ingreso_cama: TDateTimeField
-      FieldName = 'fecha_ingreso_cama'
-    end
-    object camasMarkey_vercobertura: TStringField
-      FieldName = 'cobertura'
-      Size = 255
-    end
-    object camasMarkey_verfantasia: TStringField
-      FieldName = 'fantasia'
-      Size = 255
-    end
-    object camasMarkey_verplan: TStringField
-      FieldName = 'plan'
-      Size = 255
-    end
-    object camasMarkey_vernro_afiliado: TStringField
-      FieldName = 'nro_afiliado'
-      Size = 255
-    end
-    object camasMarkey_verid_aislado: TIntegerField
-      FieldName = 'id_aislado'
-    end
-    object camasMarkey_veraislado: TStringField
-      FieldName = 'aislado'
-      Size = 255
-    end
-    object camasMarkey_verid_internacion: TIntegerField
-      FieldName = 'id_internacion'
-    end
-    object camasMarkey_verfecha_alta_medica: TDateTimeField
-      FieldName = 'fecha_alta_medica'
-    end
-    object camasMarkey_verprofesional_alta: TStringField
-      FieldName = 'profesional_alta'
-      Size = 255
-    end
-    object camasMarkey_vercama_en_aislamiento: TIntegerField
-      FieldName = 'cama_en_aislamiento'
-    end
-    object camasMarkey_verobservaciones: TStringField
-      FieldName = 'observaciones'
-      Size = 255
-    end
-    object camasMarkey_verfoto_paciente: TMemoField
-      FieldName = 'foto_paciente'
-      BlobType = ftMemo
-    end
-    object camasMarkey_verprocedimientos_no_cumplidos: TIntegerField
-      FieldName = 'procedimientos_no_cumplidos'
-    end
-    object camasMarkey_vermedicacion_no_programada: TIntegerField
-      FieldName = 'medicacion_no_programada'
-    end
-    object camasMarkey_vermedicacion_no_aplicada: TIntegerField
-      FieldName = 'medicacion_no_aplicada'
-    end
-    object camasMarkey_veraislamiento_contacto: TDateTimeField
-      FieldName = 'aislamiento_contacto'
-    end
-    object camasMarkey_veraislamiento_gota_contacto: TDateTimeField
-      FieldName = 'aislamiento_gota_contacto'
-    end
-    object camasMarkey_veraislamiento_aire_respiratorio: TDateTimeField
-      FieldName = 'aislamiento_aire_respiratorio'
-    end
-    object camasMarkey_veraislamiento_proteccion: TDateTimeField
-      FieldName = 'aislamiento_proteccion'
-    end
-    object camasMarkey_veraislamiento_gotas_contacto: TDateTimeField
-      FieldName = 'aislamiento_gotas_contacto'
-    end
-    object camasMarkey_vertipo_alta_medica: TStringField
-      FieldName = 'tipo_alta_medica'
-      Size = 255
-    end
-    object camasMarkey_veracompanante: TStringField
-      FieldName = 'acompanante'
-      Size = 50
-    end
-    object camasMarkey_verobservaciones_acompanante: TStringField
-      FieldName = 'observaciones_acompanante'
-      Size = 255
-    end
-  end
-  object camasMarkey_borrarTodas: TADOStoredProc
-    Connection = conexion
-    ProcedureName = 'camasMarkey_borrarTodas'
-    Parameters = <
-      item
-        Name = 'RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-        Value = Null
-      end>
-    Left = 440
-    Top = 16
-  end
-  object camasActualizar: TADOStoredProc
-    Connection = conexion
-    ProcedureName = 'camasMarkey_actualizar;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@id_cama'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@cama'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@id_habitacion'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@habitacion'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@piso'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@piso_texto'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@tipocama'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 1
-        Value = Null
-      end
-      item
-        Name = '@id_estado'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@estado'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@color'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@id_paciente'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@nombre_paciente'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@apellido_paciente'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@dni'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@sexo'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@fecha_ingreso_institucion'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@fecha_ingreso_cama'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@cobertura'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@fantasia'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@plan'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@nro_afiliado'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@id_aislado'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@aislado'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@id_internacion'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@fecha_alta_medica'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@profesional_alta'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@cama_en_aislamiento'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@observaciones'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@foto_paciente'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 2147483647
-        Value = Null
-      end
-      item
-        Name = '@procedimientos_no_cumplidos'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@medicacion_no_programada'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@medicacion_no_aplicada'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@aislamiento_contacto'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@aislamiento_gota_contacto'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@aislamiento_aire_respiratorio'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@aislamiento_proteccion'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@aislamiento_gotas_contacto'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end
-      item
-        Name = '@tipo_alta_medica'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end
-      item
-        Name = '@acompanante'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = '@observaciones_acompanante'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 255
-        Value = Null
-      end>
-    Left = 580
-    Top = 16
-  end
-  object camas: TADOStoredProc
-    Connection = conexion
-    CursorType = ctStatic
-    ProcedureName = 'camasHabitacion_ver'
-    Parameters = <
-      item
-        Name = 'RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = 'id_habitacion'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end>
-    Left = 816
-    Top = 16
-    object camasid_cama: TIntegerField
-      FieldName = 'id_cama'
-    end
-    object camasid_estado: TIntegerField
-      FieldName = 'id_estado'
-    end
-    object camaslimpia: TIntegerField
-      FieldName = 'limpia'
-    end
-    object camascama_en_aislamiento: TIntegerField
-      FieldName = 'cama_en_aislamiento'
-    end
-    object camastipo: TStringField
-      FieldName = 'tipo'
-      FixedChar = True
-      Size = 1
-    end
-  end
-  object actualizarEstados: TADOStoredProc
-    Connection = conexion
-    CursorType = ctStatic
-    ProcedureName = 'camasHabitacion_ver'
-    Parameters = <
-      item
-        Name = 'RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = 'id_habitacion'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end>
+    UpdateOptions.AutoCommitUpdates = True
     Left = 952
-    Top = 24
+    Top = 368
+    object resultadoActualizacionestado: TIntegerField
+      FieldName = 'estado'
+    end
+    object resultadoActualizacionmensaje: TStringField
+      FieldName = 'mensaje'
+      Size = 255
+    end
   end
 end

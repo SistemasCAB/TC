@@ -82,131 +82,44 @@ object form_ServiciosCambio: Tform_ServiciosCambio
       ShadowColor = claBlack
     end
   end
-  object serviciosCli: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://10.99.8.107/tc/public/api'
-    Params = <>
-    RaiseExceptionOn500 = False
-    SynchronizedEvents = False
-    Left = 216
-    Top = 264
-  end
-  object serviciosReq: TRESTRequest
-    Client = serviciosCli
-    Params = <
-      item
-        Kind = pkHTTPHEADER
-        Name = 'TokenAcceso'
-        Value = 
-          'cv44uu1depYrgYVwq7S6W7wC0F2OfjbZQvJ9Ay4wqY8qn1jDufmfZszW2V8bnnSa' +
-          'sGtHJMQyBVjQzZGC361iOMZGEU9jYTFUYxv2jZ6yZh7QoHEfb59kWgohM1FoB5aB'
-      end>
-    Resource = 'servicios/ver'
-    Response = serviciosRes
-    SynchronizedEvents = False
-    Left = 216
-    Top = 320
-  end
-  object serviciosRes: TRESTResponse
-    ContentType = 'application/json'
-    Left = 216
-    Top = 376
-  end
-  object serviciosDSA: TRESTResponseDataSetAdapter
-    Active = True
-    Dataset = servicios
-    FieldDefs = <>
-    Response = serviciosRes
-    Left = 216
-    Top = 432
-  end
   object servicios: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id_servicio'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'nombreServicio'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'tipo_internacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cambioCama_areaCerrada'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'gestionaCamas'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_tipoInternacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TipoInternacion'
-        DataType = ftWideString
-        Size = 255
-      end>
-    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
     ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
-    UpdateOptions.LockWait = True
-    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 216
-    Top = 488
-    object serviciosid_servicio: TWideStringField
-      FieldName = 'id_servicio'
-      Size = 255
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 214
+    Top = 259
+    object serviciosidServicio: TIntegerField
+      FieldName = 'idServicio'
     end
-    object serviciosnombreServicio: TWideStringField
+    object serviciosnombreServicio: TStringField
       FieldName = 'nombreServicio'
       Size = 255
     end
-    object serviciostipo_internacion: TWideStringField
-      FieldName = 'tipo_internacion'
-      Size = 255
+    object serviciosidTipoInternacion: TIntegerField
+      FieldName = 'idTipoInternacion'
     end
-    object servicioscambioCama_areaCerrada: TWideStringField
-      FieldName = 'cambioCama_areaCerrada'
-      Size = 255
+    object servicioscambioCamaAreaCerrada: TIntegerField
+      FieldName = 'cambioCamaAreaCerrada'
     end
-    object serviciosid_tipoInternacion: TWideStringField
-      FieldName = 'id_tipoInternacion'
-      Size = 255
-    end
-    object serviciosTipoInternacion: TWideStringField
-      FieldName = 'TipoInternacion'
-      Size = 255
+    object serviciosgestionaCamas: TIntegerField
+      FieldName = 'gestionaCamas'
     end
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = servicios
     ScopeMappings = <>
-    Left = 328
-    Top = 488
+    Left = 232
+    Top = 320
   end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 332
-    Top = 541
+    Left = 20
+    Top = 5
     object LinkListControlToField1: TLinkListControlToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1

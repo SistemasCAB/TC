@@ -57,14 +57,14 @@ object form_CambioDeCama: Tform_CambioDeCama
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                00F2494441545847EDD53B72C2400C06608986969A19773900874ACD6D72003A
-                2A0EC04DD2CAE33E34143692A8C4AC651B9BC4DE2133FABA7D58FBEFAE3D0608
-                218410DE1F339FABAAAA9BA6F9B63E55D5F6AC0C44E493884413CC7C84DC8144
-                E443557FD2208688187CA056634622B2AEEB9A7C8814339FC067683566C2CC07
-                BF788A886EAABAB3F9DA17C83FB41466FE7A2CEE32A0351011AD73411700D822
-                E2D50F5886951F588AAAEE1171D317A623C3C98CEA5C999FB094B22C1500A028
-                0AF4638888D9030DB12C4FD957E1FB7F6B4ABD6C2FF5548381D29DD8CEC6F8FF
-                94D757FB25BED05F4DA9377842218410C23F710772FCB1BA327D9D3800000000
+                00F2494441545847EDD53B8EC2400C06609B86969A2A0507E050D4DC86036CB7
+                1507E026548E90D2434391ACEDAD8C262681F0C808247FDD3CE2F96726510042
+                082184CFC7CCBBAAAAEAA669F6D6A7AADA9E958188AC884834C1CCBF903B9088
+                2C54F598063144C4E003B51A6F2422D3BAAE0F3E448A99B7E033B41A6FC2CC3F
+                7EF11411FDA9EAD2E66B5720FFD05898797359DC65406B20225AE7884E003047
+                C4B31FB00C133F3016555D23E2AC2BCC950C2773D7D595F9096329CB5201008A
+                A2403F8688983D501FCB72937D15BEFF5943EA657BA987EA0D94EEC476768FFF
+                4F795DB51FE20BBD6A48BDDE130A218410BEC43FC19AB196B274AFDE00000000
                 49454E44AE426082}
               FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
             end>
@@ -110,7 +110,7 @@ object form_CambioDeCama: Tform_CambioDeCama
         Size.Width = 593.000000000000000000
         Size.Height = 440.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 1
+        TabIndex = 2
         TabOrder = 0
         TabPosition = None
         Sizes = (
@@ -301,7 +301,7 @@ object form_CambioDeCama: Tform_CambioDeCama
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -450,7 +450,7 @@ object form_CambioDeCama: Tform_CambioDeCama
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -849,100 +849,100 @@ object form_CambioDeCama: Tform_CambioDeCama
     StoreDefs = True
     Left = 536
     Top = 296
-    object solicitudid_solicitud: TWideStringField
-      FieldName = 'id_solicitud'
+    object solicitudidSolicitud: TWideStringField
+      FieldName = 'idSolicitud'
       Size = 255
     end
-    object solicitudid_internacion: TWideStringField
-      FieldName = 'id_internacion'
+    object solicitudidInternacion: TWideStringField
+      FieldName = 'idInternacion'
       Size = 255
     end
-    object solicitudid_paciente: TWideStringField
-      FieldName = 'id_paciente'
+    object solicitudpaciCodigo: TWideStringField
+      FieldName = 'paciCodigo'
       Size = 255
     end
-    object solicituddni_pacientes: TWideStringField
-      FieldName = 'dni_pacientes'
+    object solicitudnroDocumento: TWideStringField
+      FieldName = 'nroDocumento'
       Size = 255
     end
     object solicitudfecha: TWideStringField
       FieldName = 'fecha'
       Size = 255
     end
-    object solicitudid_cama_origen: TWideStringField
-      FieldName = 'id_cama_origen'
+    object solicitudidCamaOrigen: TWideStringField
+      FieldName = 'idCamaOrigen'
       Size = 255
     end
-    object solicitudcama_origen: TWideStringField
-      FieldName = 'cama_origen'
+    object solicitudcamaOrigen: TWideStringField
+      FieldName = 'camaOrigen'
       Size = 255
     end
-    object solicitudid_cama_destino: TWideStringField
-      FieldName = 'id_cama_destino'
+    object solicitudidCamaDestino: TWideStringField
+      FieldName = 'idCamaDestino'
       Size = 255
     end
-    object solicitudcama_destino: TWideStringField
-      FieldName = 'cama_destino'
+    object solicitudcamaDestino: TWideStringField
+      FieldName = 'camaDestino'
       Size = 255
     end
-    object solicitudid_motivo: TWideStringField
-      FieldName = 'id_motivo'
+    object solicitudidMotivo: TWideStringField
+      FieldName = 'idMotivo'
       Size = 255
     end
     object solicitudmotivo: TWideStringField
       FieldName = 'motivo'
       Size = 255
     end
-    object solicitudid_estado_solicitud: TWideStringField
-      FieldName = 'id_estado_solicitud'
+    object solicitudidEstadoSolicitud: TWideStringField
+      FieldName = 'idEstadoSolicitud'
       Size = 255
     end
     object solicitudestado: TWideStringField
       FieldName = 'estado'
       Size = 255
     end
-    object solicitudsolicitado_por_dni: TWideStringField
-      FieldName = 'solicitado_por_dni'
+    object solicitudsolicitadoPorDni: TWideStringField
+      FieldName = 'solicitadoPorDni'
       Size = 255
     end
-    object solicitudsolicitado_por_nombre: TWideStringField
-      FieldName = 'solicitado_por_nombre'
+    object solicitudsolicitadoPorNombre: TWideStringField
+      FieldName = 'solicitadoPorNombre'
       Size = 255
     end
-    object solicitudautorizado_fecha: TWideStringField
-      FieldName = 'autorizado_fecha'
+    object solicitudautorizadoFecha: TWideStringField
+      FieldName = 'autorizadoFecha'
       Size = 255
     end
-    object solicitudautorizado_por_dni: TWideStringField
-      FieldName = 'autorizado_por_dni'
+    object solicitudautorizadoPorDni: TWideStringField
+      FieldName = 'autorizadoPorDni'
       Size = 255
     end
-    object solicitudautorizado_por_nombre: TWideStringField
-      FieldName = 'autorizado_por_nombre'
+    object solicitudautorizadoPorNombre: TWideStringField
+      FieldName = 'autorizadoPorNombre'
       Size = 255
     end
-    object solicitudrealizado_fecha: TWideStringField
-      FieldName = 'realizado_fecha'
+    object solicitudrealizadoFecha: TWideStringField
+      FieldName = 'realizadoFecha'
       Size = 255
     end
-    object solicitudrealizado_por_dni: TWideStringField
-      FieldName = 'realizado_por_dni'
+    object solicitudrealizadoPorDni: TWideStringField
+      FieldName = 'realizadoPorDni'
       Size = 255
     end
-    object solicitudrealizado_por_nombre: TWideStringField
-      FieldName = 'realizado_por_nombre'
+    object solicitudrealizadoPorNombre: TWideStringField
+      FieldName = 'realizadoPorNombre'
       Size = 255
     end
-    object solicitudcancelado_fecha: TWideStringField
-      FieldName = 'cancelado_fecha'
+    object solicitudcanceladoFecha: TWideStringField
+      FieldName = 'canceladoFecha'
       Size = 255
     end
-    object solicitudcancelado_por_dni: TWideStringField
-      FieldName = 'cancelado_por_dni'
+    object solicitudcanceladoPorDni: TWideStringField
+      FieldName = 'canceladoPorDni'
       Size = 255
     end
-    object solicitudcancelado_por_nombre: TWideStringField
-      FieldName = 'cancelado_por_nombre'
+    object solicitudcanceladoPorNombre: TWideStringField
+      FieldName = 'canceladoPorNombre'
       Size = 255
     end
   end
@@ -956,12 +956,15 @@ object form_CambioDeCama: Tform_CambioDeCama
     UpdateOptions.AutoCommitUpdates = True
     Left = 504
     Top = 384
-    object motivosid_motivo: TIntegerField
-      FieldName = 'id_motivo'
+    object motivosidMotivoCambioCama: TIntegerField
+      FieldName = 'idMotivoCambioCama'
     end
     object motivosmotivo: TStringField
       FieldName = 'motivo'
       Size = 255
+    end
+    object motivosactivo: TIntegerField
+      FieldName = 'activo'
     end
   end
   object BindSourceDB1: TBindSourceDB

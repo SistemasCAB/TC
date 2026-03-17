@@ -13,6 +13,7 @@ object formTablero: TformTablero
   FormFactor.Devices = [Desktop]
   OnActivate = FormActivate
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   DesignerMasterStyle = 0
   object espere: TGIFImage
@@ -791,8 +792,8 @@ object formTablero: TformTablero
     UpdateOptions.AutoCommitUpdates = True
     Left = 264
     Top = 299
-    object alertasid_cama: TIntegerField
-      FieldName = 'id_cama'
+    object alertasidCama: TIntegerField
+      FieldName = 'idCama'
     end
   end
   object alertasNueva: TFDMemTable
@@ -821,15 +822,15 @@ object formTablero: TformTablero
     StoreDefs = True
     Left = 272
     Top = 128
-    object camasid_cama: TIntegerField
-      FieldName = 'id_cama'
+    object camasidcama: TIntegerField
+      FieldName = 'idCama'
     end
     object camascama: TStringField
       FieldName = 'cama'
       Size = 255
     end
-    object camasid_habitacion: TIntegerField
-      FieldName = 'id_habitacion'
+    object camasidHabitacion: TIntegerField
+      FieldName = 'idHabitacion'
     end
     object camashabitacion: TStringField
       FieldName = 'habitacion'
@@ -839,8 +840,8 @@ object formTablero: TformTablero
       FieldName = 'piso'
       Size = 255
     end
-    object camasid_estado: TIntegerField
-      FieldName = 'id_estado'
+    object camasidEstado: TIntegerField
+      FieldName = 'idEstado'
     end
     object camasestado: TStringField
       FieldName = 'estado'
@@ -854,35 +855,42 @@ object formTablero: TformTablero
       FieldName = 'observaciones'
       Size = 255
     end
-    object camasid_paciente: TIntegerField
-      FieldName = 'id_paciente'
+    object camaspaciCodigo: TIntegerField
+      FieldName = 'paciCodigo'
     end
-    object camasnombre_paciente: TStringField
-      FieldName = 'nombre_paciente'
+    object camasnombrePaciente: TStringField
+      FieldName = 'nombrePaciente'
       Size = 255
     end
-    object camasapellido_paciente: TStringField
-      FieldName = 'apellido_paciente'
+    object camasapellidoPaciente: TStringField
+      FieldName = 'apellidoPaciente'
       Size = 255
     end
-    object camasdni: TStringField
-      FieldName = 'dni'
+    object camastdocCodigo: TIntegerField
+      FieldName = 'tdocCodigo'
+    end
+    object camastdocDescripcion: TStringField
+      FieldName = 'tdocDescripcion'
+      Size = 50
+    end
+    object camasnroDocumento: TStringField
+      FieldName = 'nroDocumento'
       Size = 255
     end
     object camassexo: TStringField
       FieldName = 'sexo'
       Size = 255
     end
-    object camassexo_texto: TStringField
-      FieldName = 'sexo_texto'
+    object camassexoTexto: TStringField
+      FieldName = 'sexoTexto'
       Size = 255
     end
-    object camasfecha_ingreso_institucion: TStringField
-      FieldName = 'fecha_ingreso_institucion'
+    object camasfechaIngresoInstitucion: TStringField
+      FieldName = 'fechaIngresoInstitucion'
       Size = 255
     end
-    object camasfecha_ingreso_cama: TStringField
-      FieldName = 'fecha_ingreso_cama'
+    object camasfechaIngresoCama: TStringField
+      FieldName = 'fechaIngresoCama'
       Size = 255
     end
     object camascobertura: TStringField
@@ -897,41 +905,44 @@ object formTablero: TformTablero
       FieldName = 'plan'
       Size = 255
     end
-    object camasnro_afiliado: TStringField
-      FieldName = 'nro_afiliado'
+    object camasnroAfiliado: TStringField
+      FieldName = 'nroAfiliado'
       Size = 255
     end
-    object camasid_internacion: TIntegerField
-      FieldName = 'id_internacion'
+    object camasidInternacion: TIntegerField
+      FieldName = 'idInternacion'
     end
-    object camasfecha_alta_medica: TStringField
-      FieldName = 'fecha_alta_medica'
+    object camasfechaAltaMedica: TStringField
+      FieldName = 'fechaAltaMedica'
       Size = 255
     end
-    object camasprofesional_alta_medica: TStringField
-      FieldName = 'profesional_alta_medica'
+    object camasprofesionalAltaMedica: TStringField
+      FieldName = 'profesionalAltaMedica'
       Size = 255
     end
-    object camastipo_alta_medica: TStringField
-      FieldName = 'tipo_alta_medica'
+    object camastipoAltaMedica: TStringField
+      FieldName = 'tipoAltaMedica'
       Size = 255
     end
-    object camasfoto_paciente: TMemoField
-      FieldName = 'foto_paciente'
+    object camasfotoPaciente: TMemoField
+      FieldName = 'fotoPaciente'
       BlobType = ftMemo
     end
-    object camasprocedimientos_no_cumplidos: TIntegerField
-      FieldName = 'procedimientos_no_cumplidos'
+    object camasprocedimientosNoCumplidos: TIntegerField
+      FieldName = 'procedimientosNoCumplidos'
     end
-    object camasmedicacion_no_programada: TIntegerField
-      FieldName = 'medicacion_no_programada'
+    object camasmedicacionNoProgramada: TIntegerField
+      FieldName = 'medicacionNoProgramada'
     end
-    object camasmedicacion_no_aplicada: TIntegerField
-      FieldName = 'medicacion_no_aplicada'
+    object camasmedicacionNoAplicada: TIntegerField
+      FieldName = 'medicacionNoAplicada'
     end
     object camasaislamiento_contacto: TStringField
       FieldName = 'aislamiento_contacto'
       Size = 255
+    end
+    object camaskpc: TIntegerField
+      FieldName = 'kpc'
     end
     object camasaislamiento_respiratorio: TStringField
       FieldName = 'aislamiento_respiratorio'
@@ -953,14 +964,14 @@ object formTablero: TformTablero
       FieldName = 'aislamiento_sc'
       Size = 255
     end
-    object camascama_en_aislamiento: TIntegerField
-      FieldName = 'cama_en_aislamiento'
+    object camascamaEnAislamiento: TIntegerField
+      FieldName = 'camaEnAislamiento'
     end
     object camasacompanante: TIntegerField
       FieldName = 'acompanante'
     end
-    object camasobservaciones_acompanante: TStringField
-      FieldName = 'observaciones_acompanante'
+    object camasobservacionesAcompanante: TStringField
+      FieldName = 'observacionesAcompanante'
       Size = 255
     end
     object camasorden: TIntegerField
@@ -975,62 +986,62 @@ object formTablero: TformTablero
     object camastareasPendientes: TIntegerField
       FieldName = 'tareasPendientes'
     end
-    object camasaltaProbable_fecha: TStringField
-      FieldName = 'altaProbable_fecha'
+    object camasaltaProbableFecha: TStringField
+      FieldName = 'altaProbableFecha'
       Size = 255
     end
-    object camasaltaProbable_tipo: TStringField
-      FieldName = 'altaProbable_tipo'
+    object camasaltaProbableTipo: TStringField
+      FieldName = 'altaProbableTipo'
       Size = 255
     end
-    object camasaltaProbable_dniUsuario: TStringField
-      FieldName = 'altaProbable_dniUsuario'
+    object camasaltaProbableDniUsuario: TStringField
+      FieldName = 'altaProbableDniUsuario'
       Size = 255
     end
-    object camasreserva_motivo: TStringField
-      FieldName = 'reserva_motivo'
+    object camasreservaMotivo: TStringField
+      FieldName = 'reservaMotivo'
       Size = 255
     end
-    object camasfecha_reserva: TStringField
-      FieldName = 'fecha_reserva'
+    object camasreservaFecha: TStringField
+      FieldName = 'reservaFecha'
       Size = 255
     end
-    object camasreservada_por_dni: TStringField
-      FieldName = 'reservada_por_dni'
+    object camasreservadaPorDni: TStringField
+      FieldName = 'reservadaPorDni'
       Size = 255
     end
-    object camasreservada_por_nombre: TStringField
-      FieldName = 'reservada_por_nombre'
+    object camasreservadaPorNombre: TStringField
+      FieldName = 'reservadaPorNombre'
       Size = 255
     end
-    object camasid_reserva: TIntegerField
-      FieldName = 'id_reserva'
+    object camasidReserva: TIntegerField
+      FieldName = 'idReserva'
     end
-    object camasreserva_fecha_cancelada: TStringField
-      FieldName = 'reserva_fecha_cancelada'
+    object camasreservaFechaCancelada: TStringField
+      FieldName = 'reservaFechaCancelada'
       Size = 255
     end
-    object camasreserva_cancelada_por_dni: TStringField
-      FieldName = 'reserva_cancelada_por_dni'
+    object camasreservaCanceladaPorDni: TStringField
+      FieldName = 'reservaCanceladaPorDni'
       Size = 255
     end
-    object camasreserva_cancelada_por_nombre: TStringField
-      FieldName = 'reserva_cancelada_por_nombre'
+    object camasreservaCanceladaPorNombre: TStringField
+      FieldName = 'reservaCanceladaPorNombre'
       Size = 255
     end
-    object camasreserva_paciente_dni: TStringField
-      FieldName = 'reserva_paciente_dni'
+    object camasreservaPacienteDni: TStringField
+      FieldName = 'reservaPacienteDni'
       Size = 255
     end
-    object camasreserva_paciente_nombre: TStringField
-      FieldName = 'reserva_paciente_nombre'
+    object camasreservaPacienteNombre: TStringField
+      FieldName = 'reservaPacienteNombre'
       Size = 255
     end
-    object camasid_motivo_fin_reserva: TIntegerField
-      FieldName = 'id_motivo_fin_reserva'
+    object camasidMotivoFinReserva: TIntegerField
+      FieldName = 'idMotivoFinReserva'
     end
-    object camasreserva_id_solicitudCambio: TIntegerField
-      FieldName = 'reserva_id_solicitudCambio'
+    object camasreservaIdSolicitudCambio: TIntegerField
+      FieldName = 'reservaIdSolicitudCambio'
     end
   end
   object versiones: TFDMemTable
@@ -1079,30 +1090,23 @@ object formTablero: TformTablero
     UpdateOptions.FetchGeneratorsPoint = gpNone
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Left = 264
-    Top = 430
-    object permisosid_permiso: TFloatField
-      FieldName = 'id_permiso'
+    Left = 992
+    Top = 190
+    object permisosidPermiso: TIntegerField
+      FieldName = 'idPermiso'
     end
-    object permisosid_servicio: TFloatField
-      FieldName = 'id_servicio'
+    object permisosidModulo: TIntegerField
+      FieldName = 'idModulo'
     end
-    object permisosnombreServicio: TWideStringField
-      FieldName = 'nombreServicio'
-      Size = 13
-    end
-    object permisosid_modulo: TFloatField
-      FieldName = 'id_modulo'
-    end
-    object permisosnombreModulo: TWideStringField
+    object permisosnombreModulo: TStringField
       FieldName = 'nombreModulo'
-      Size = 12
+      Size = 255
     end
-    object permisosdescripcion: TWideStringField
-      FieldName = 'descripcion'
-      Size = 25
+    object permisosdescripcionModulo: TStringField
+      FieldName = 'descripcionModulo'
+      Size = 255
     end
-    object permisoscontrolTotal: TFloatField
+    object permisoscontrolTotal: TIntegerField
       FieldName = 'controlTotal'
     end
   end
@@ -1132,15 +1136,15 @@ object formTablero: TformTablero
     StoreDefs = True
     Left = 344
     Top = 128
-    object camas2id_cama: TIntegerField
-      FieldName = 'id_cama'
+    object camas2idCama: TIntegerField
+      FieldName = 'idCama'
     end
     object camas2cama: TStringField
       FieldName = 'cama'
       Size = 255
     end
-    object camas2id_habitacion: TIntegerField
-      FieldName = 'id_habitacion'
+    object camas2idHabitacion: TIntegerField
+      FieldName = 'idHabitacion'
     end
     object camas2habitacion: TStringField
       FieldName = 'habitacion'
@@ -1150,8 +1154,8 @@ object formTablero: TformTablero
       FieldName = 'piso'
       Size = 255
     end
-    object camas2id_estado: TIntegerField
-      FieldName = 'id_estado'
+    object camas2idEstado: TIntegerField
+      FieldName = 'idEstado'
     end
     object camas2estado: TStringField
       FieldName = 'estado'
@@ -1165,35 +1169,42 @@ object formTablero: TformTablero
       FieldName = 'observaciones'
       Size = 255
     end
-    object camas2id_paciente: TIntegerField
-      FieldName = 'id_paciente'
+    object camas2paciCodigo: TIntegerField
+      FieldName = 'paciCodigo'
     end
-    object camas2nombre_paciente: TStringField
-      FieldName = 'nombre_paciente'
+    object camas2nombrePaciente: TStringField
+      FieldName = 'nombrePaciente'
       Size = 255
     end
-    object camas2apellido_paciente: TStringField
-      FieldName = 'apellido_paciente'
+    object camas2apellidoPaciente: TStringField
+      FieldName = 'apellidoPaciente'
       Size = 255
     end
-    object camas2dni: TStringField
-      FieldName = 'dni'
+    object camas2tdocCodigo: TIntegerField
+      FieldName = 'tdocCodigo'
+    end
+    object camas2tdocDescripcion: TStringField
+      FieldName = 'tdocDescripcion'
+      Size = 50
+    end
+    object camas2nroDocumento: TStringField
+      FieldName = 'nroDocumento'
       Size = 255
     end
     object camas2sexo: TStringField
       FieldName = 'sexo'
       Size = 255
     end
-    object camas2sexo_texto: TStringField
-      FieldName = 'sexo_texto'
+    object camas2sexoTexto: TStringField
+      FieldName = 'sexoTexto'
       Size = 255
     end
-    object camas2fecha_ingreso_institucion: TStringField
-      FieldName = 'fecha_ingreso_institucion'
+    object camas2fechaIngresoInstitucion: TStringField
+      FieldName = 'fechaIngresoInstitucion'
       Size = 255
     end
-    object camas2fecha_ingreso_cama: TStringField
-      FieldName = 'fecha_ingreso_cama'
+    object camas2fechaIngresoCama: TStringField
+      FieldName = 'fechaIngresoCama'
       Size = 255
     end
     object camas2cobertura: TStringField
@@ -1208,41 +1219,44 @@ object formTablero: TformTablero
       FieldName = 'plan'
       Size = 255
     end
-    object camas2nro_afiliado: TStringField
-      FieldName = 'nro_afiliado'
+    object camas2nroAfiliado: TStringField
+      FieldName = 'nroAfiliado'
       Size = 255
     end
-    object camas2id_internacion: TIntegerField
-      FieldName = 'id_internacion'
+    object camas2idInternacion: TIntegerField
+      FieldName = 'idInternacion'
     end
-    object camas2fecha_alta_medica: TStringField
-      FieldName = 'fecha_alta_medica'
+    object camas2fechaAltaMedica: TStringField
+      FieldName = 'fechaAltaMedica'
       Size = 255
     end
-    object camas2profesional_alta_medica: TStringField
-      FieldName = 'profesional_alta_medica'
+    object camas2profesionalAltaMedica: TStringField
+      FieldName = 'profesionalAltaMedica'
       Size = 255
     end
-    object camas2tipo_alta_medica: TStringField
-      FieldName = 'tipo_alta_medica'
+    object camas2tipoAltaMedica: TStringField
+      FieldName = 'tipoAltaMedica'
       Size = 255
     end
-    object camas2foto_paciente: TMemoField
-      FieldName = 'foto_paciente'
+    object camas2fotoPaciente: TMemoField
+      FieldName = 'fotoPaciente'
       BlobType = ftMemo
     end
-    object camas2procedimientos_no_cumplidos: TIntegerField
-      FieldName = 'procedimientos_no_cumplidos'
+    object camas2procedimientosNoCumplidos: TIntegerField
+      FieldName = 'procedimientosNoCumplidos'
     end
-    object camas2medicacion_no_programada: TIntegerField
-      FieldName = 'medicacion_no_programada'
+    object camas2medicacionNoProgramada: TIntegerField
+      FieldName = 'medicacionNoProgramada'
     end
-    object camas2medicacion_no_aplicada: TIntegerField
-      FieldName = 'medicacion_no_aplicada'
+    object camas2medicacionNoAplicada: TIntegerField
+      FieldName = 'medicacionNoAplicada'
     end
     object camas2aislamiento_contacto: TStringField
       FieldName = 'aislamiento_contacto'
       Size = 255
+    end
+    object camas2kpc: TIntegerField
+      FieldName = 'kpc'
     end
     object camas2aislamiento_respiratorio: TStringField
       FieldName = 'aislamiento_respiratorio'
@@ -1264,14 +1278,14 @@ object formTablero: TformTablero
       FieldName = 'aislamiento_sc'
       Size = 255
     end
-    object camas2cama_en_aislamiento: TIntegerField
-      FieldName = 'cama_en_aislamiento'
+    object camas2camaEnAislamiento: TIntegerField
+      FieldName = 'camaEnAislamiento'
     end
     object camas2acompanante: TIntegerField
       FieldName = 'acompanante'
     end
-    object camas2observaciones_acompanante: TStringField
-      FieldName = 'observaciones_acompanante'
+    object camas2observacionesAcompanante: TStringField
+      FieldName = 'observacionesAcompanante'
       Size = 255
     end
     object camas2orden: TIntegerField
@@ -1286,62 +1300,97 @@ object formTablero: TformTablero
     object camas2tareasPendientes: TIntegerField
       FieldName = 'tareasPendientes'
     end
-    object camas2altaProbable_fecha: TStringField
-      FieldName = 'altaProbable_fecha'
+    object camas2altaProbableFecha: TStringField
+      FieldName = 'altaProbableFecha'
       Size = 255
     end
-    object camas2altaProbable_tipo: TStringField
-      FieldName = 'altaProbable_tipo'
+    object camas2altaProbableTipo: TStringField
+      FieldName = 'altaProbableTipo'
       Size = 255
     end
-    object camas2altaProbable_dniUsuario: TStringField
-      FieldName = 'altaProbable_dniUsuario'
+    object camas2altaProbableDniUsuario: TStringField
+      FieldName = 'altaProbableDniUsuario'
       Size = 255
     end
-    object camas2reserva_motivo: TStringField
-      FieldName = 'reserva_motivo'
+    object camas2reservaMotivo: TStringField
+      FieldName = 'reservaMotivo'
       Size = 255
     end
-    object camas2fecha_reserva: TStringField
-      FieldName = 'fecha_reserva'
+    object camas2reservaFecha: TStringField
+      FieldName = 'reservaFecha'
       Size = 255
     end
-    object camas2reservada_por_dni: TStringField
-      FieldName = 'reservada_por_dni'
+    object camas2reservadaPorDni: TStringField
+      FieldName = 'reservadaPorDni'
       Size = 255
     end
-    object camas2reservada_por_nombre: TStringField
-      FieldName = 'reservada_por_nombre'
+    object camas2reservadaPorNombre: TStringField
+      FieldName = 'reservadaPorNombre'
       Size = 255
     end
-    object camas2id_reserva: TIntegerField
-      FieldName = 'id_reserva'
+    object camas2idReserva: TIntegerField
+      FieldName = 'idReserva'
     end
-    object camas2reserva_fecha_cancelada: TStringField
-      FieldName = 'reserva_fecha_cancelada'
+    object camas2reservaFechaCancelada: TStringField
+      FieldName = 'reservaFechaCancelada'
       Size = 255
     end
-    object camas2reserva_cancelada_por_dni: TStringField
-      FieldName = 'reserva_cancelada_por_dni'
+    object camas2reservaCanceladaPorDni: TStringField
+      FieldName = 'reservaCanceladaPorDni'
       Size = 255
     end
-    object camas2reserva_cancelada_por_nombre: TStringField
-      FieldName = 'reserva_cancelada_por_nombre'
+    object camas2reservaCanceladaPorNombre: TStringField
+      FieldName = 'reservaCanceladaPorNombre'
       Size = 255
     end
-    object camas2reserva_paciente_dni: TStringField
-      FieldName = 'reserva_paciente_dni'
+    object camas2reservaPacienteDni: TStringField
+      FieldName = 'reservaPacienteDni'
       Size = 255
     end
-    object camas2reserva_paciente_nombre: TStringField
-      FieldName = 'reserva_paciente_nombre'
+    object camas2reservaPacienteNombre: TStringField
+      FieldName = 'reservaPacienteNombre'
       Size = 255
     end
-    object camas2id_motivo_fin_reserva: TIntegerField
-      FieldName = 'id_motivo_fin_reserva'
+    object camas2idMotivoFinReserva: TIntegerField
+      FieldName = 'idMotivoFinReserva'
     end
-    object camas2reserva_id_solicitudCambio: TIntegerField
-      FieldName = 'reserva_id_solicitudCambio'
+    object camas2reservaIdSolicitudCambio: TIntegerField
+      FieldName = 'reservaIdSolicitudCambio'
+    end
+  end
+  object servicio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 716
+    Top = 201
+    object servicioidServicio: TIntegerField
+      FieldName = 'idServicio'
+    end
+    object servicionombreServicio: TStringField
+      FieldName = 'nombreServicio'
+      Size = 255
+    end
+    object servicioidTipoInternacion: TIntegerField
+      FieldName = 'idTipoInternacion'
+    end
+    object serviciotipoInternacion: TStringField
+      FieldName = 'tipoInternacion'
+      Size = 255
+    end
+    object serviciocambioCamaAreaCerrada: TIntegerField
+      FieldName = 'cambioCamaAreaCerrada'
+    end
+    object serviciogestionaCamas: TIntegerField
+      FieldName = 'gestionaCamas'
+    end
+    object serviciopermisos: TMemoField
+      FieldName = 'permisos'
+      BlobType = ftMemo
     end
   end
 end

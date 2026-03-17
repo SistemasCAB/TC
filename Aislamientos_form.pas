@@ -13,34 +13,18 @@ uses
   FireDAC.Comp.Client, FMX.Layouts, FMX.StdCtrls, FMX.Objects,
   FMX.Controls.Presentation, FMX.TabControl, FMX.ListBox, FMX.DateTimeCtrls,
   FMX.Edit, System.Rtti, System.Bindings.Outputs, Fmx.Bind.Editors,
-  Data.Bind.EngExt, Fmx.Bind.DBEngExt, Data.Bind.Components, Data.Bind.DBScope;
+  Data.Bind.EngExt, Fmx.Bind.DBEngExt, Data.Bind.Components, Data.Bind.DBScope,
+  FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
+  FMX.ListView;
 
 type
   TformAislamiento = class(TForm)
-    aislamientos: TFDMemTable;
     FondoTransparente: TRectangle;
     formulario: TRectangle;
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
     botonSalir: TSpeedButton;
-    aislamientosid: TIntegerField;
-    aislamientosdni: TStringField;
-    aislamientosapellido_paciente: TStringField;
-    aislamientosnombre_paciente: TStringField;
-    aislamientosid_aislamiento: TIntegerField;
-    aislamientosaislamiento: TStringField;
-    aislamientosbreve: TStringField;
-    aislamientoscolor: TStringField;
-    aislamientosobservaciones: TStringField;
-    aislamientosdni_usuario_alta: TStringField;
-    aislamientosnombre_usuario_alta: TStringField;
-    aislamientosdni_usuario_fin: TStringField;
-    aislamientosnombre_usuario_fin: TStringField;
-    aislamientosdesde: TStringField;
-    aislamientoshasta: TStringField;
-    aislamientosfecha_alta: TStringField;
-    aislamientosfecha_fin: TStringField;
     pagina: TTabControl;
     tabAislamientos: TTabItem;
     Layout3: TLayout;
@@ -58,22 +42,10 @@ type
     Label6: TLabel;
     Label7: TLabel;
     btnGrabar: TSpeedButton;
-    listaAislamientos: TComboBox;
     Label8: TLabel;
-    hasta: TDateEdit;
-    chk_hasta: TCheckBox;
-    obs: TEdit;
-    Label9: TLabel;
-    Label10: TLabel;
-    Label11: TLabel;
     disponibles: TFDMemTable;
-    disponiblesid_aislamiento: TIntegerField;
-    disponiblesaislamiento: TStringField;
     disponiblesbreve: TStringField;
     disponiblescolor: TStringField;
-    BindSourceDB1: TBindSourceDB;
-    BindingsList1: TBindingsList;
-    LinkListControlToField1: TLinkListControlToField;
     resultado: TFDMemTable;
     resultadoestado: TIntegerField;
     resultadomensaje: TStringField;
@@ -89,20 +61,26 @@ type
     recBoton: TRectangle;
     iconoBoton: TImage;
     botonEliminar: TSpeedButton;
-    lbObs: TLabel;
+    lbEstado: TLabel;
     separador1: TRectangle;
     icono: TImage;
-    procedure ActualizarAislamientos(dni:string);
+    disponiblesidAislamiento: TIntegerField;
+    disponiblesnombreAislamiento: TStringField;
+    BindingsList1: TBindingsList;
+    Layout4: TLayout;
+    ListView1: TListView;
+    BindSourceDB1: TBindSourceDB;
+    LinkListControlToField1: TLinkListControlToField;
+    procedure ActualizarAislamientos();
     procedure botonSalirClick(Sender: TObject);
-    procedure crearAislamiento(id,id_aislamiento:integer;desde, hasta,observaciones:string);
+    procedure crearAislamiento(id, idAislamiento, kpc: integer; FechaDesde: string);
     procedure FormActivate(Sender: TObject);
     procedure noHayAislamientos;
     procedure FormCreate(Sender: TObject);
     procedure btnNuevoAislamientoClick(Sender: TObject);
-    procedure ActualizarDisponibles(dni:string);
+    procedure ActualizarDisponibles(idInternacion: integer);
     procedure btnGrabarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
-    procedure chk_hastaChange(Sender: TObject);
   private
     { Private declarations }
     procedure clicBotonEliminar(sender:TObject);
@@ -110,7 +88,7 @@ type
     { Public declarations }
     lyAislamientos,lyBtn: TLayout;
     recBtn:TRectangle;
-    dniPaciente: string;
+    idInternacion: integer;
     alto, ancho: integer;
   end;
 
@@ -125,52 +103,40 @@ uses ModuloDatos, FMX.Image.Base64,constantes, UFunciones, DetallesCama_form;
 
 { TformAislamiento }
 
-procedure TformAislamiento.ActualizarAislamientos(dni: string);
-var
-  response: IResponse;
-  apiRecurso : string;
+procedure TformAislamiento.ActualizarAislamientos();
 begin
-  apiRecurso := '/aislamientos/' + dni;
-  response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource(apiRecurso)
-              .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .Accept('application/json')
-              .Adapters(TDataSetSerializeAdapter.New(aislamientos))
-              .Get;
+    contenedor.Destroy;
+    contenedor := TScrollBox.Create(tabAislamientos);
+    contenedor.Parent := tabAislamientos;
+    contenedor.Name := 'contenedor';
+    contenedor.Align := TAlignLayout.Client;
+    contenedor.ShowScrollBars := true;
 
-  if response.StatusCode = 200 then
-    begin
-      contenedor.Destroy;
-
-      contenedor := TScrollBox.Create(tabAislamientos);
-      contenedor.Parent := tabAislamientos;
-      contenedor.Name := 'contenedor';
-      contenedor.Align := TAlignLayout.Client;
-      contenedor.ShowScrollBars := true;
-
-      if aislamientos.RecordCount >= 1 then
-        begin
-          aislamientos.First;
-          repeat
-            crearAislamiento(aislamientosid.AsInteger,aislamientosid_aislamiento.AsInteger,aislamientosdesde.AsString, aislamientoshasta.AsString ,aislamientosobservaciones.AsString);
-            aislamientos.Next;
-          until aislamientos.eof;
-        end
-      else
-        begin
-          noHayAislamientos;
-        end;
-
-
-    end;
+    if form_DetallesCama.aislamientos.RecordCount >= 1 then
+      begin
+        form_DetallesCama.aislamientos.First;
+        repeat
+          crearAislamiento(
+                form_DetallesCama.aislamientosidPacienteAislamiento.AsInteger,
+                form_DetallesCama.aislamientosidAislamiento.AsInteger,
+                form_DetallesCama.aislamientoskpc.AsInteger,
+                form_DetallesCama.aislamientosfechaDesde.AsString
+          );
+          form_DetallesCama.aislamientos.Next;
+        until form_DetallesCama.aislamientos.eof;
+      end
+    else
+      begin
+        noHayAislamientos;
+      end;
 end;
 
-procedure TformAislamiento.ActualizarDisponibles(dni: string);
+procedure TformAislamiento.ActualizarDisponibles(idInternacion: integer);
 var
   response: IResponse;
   apiRecurso : string;
 begin
-  apiRecurso := '/aislamientos/disponibles/' + dni;
+  apiRecurso := '/tablerocamas/aislamientosDisponibles/' + idInternacion.ToString;
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(apiRecurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
@@ -201,7 +167,7 @@ end;
 
 procedure TformAislamiento.btnCancelarClick(Sender: TObject);
 begin
-  ActualizarAislamientos(dniPaciente);
+  ActualizarAislamientos();
   pagina.TabIndex := 0;
 end;
 
@@ -209,66 +175,40 @@ procedure TformAislamiento.btnGrabarClick(Sender: TObject);
 var
   response: IResponse;
   apiRecurso : string;
-  fecha,fd,fm:string;
-  d,m,a:Word;
+  body : string;
+  kpc: string;
 begin
-  apiRecurso := '/aislamientos/nuevo';
+  apiRecurso := '/tablerocamas/agregarAislamiento';
 
-  // fecha hasta
-  if chk_hasta.IsChecked then
+  if disponiblesidAislamiento.AsInteger = 1 then // si es aislamiento de contacto, pregunto si es kpc
     begin
-      DecodeDate(hasta.Date,a,m,d);
-      if(d < 10) then
-        fd := '0'+d.ToString
+      if datos.MensajeConfirmacion('¿KPC?','¿Este aislamiento de contacto es por KPC?','Si, es KPC','No','pregunta',ancho,alto) = 6 then
+        kpc := '1'
       else
-        fd := d.ToString;
-
-      if(m < 10) then
-        fm := '0'+ m.ToString
-      else
-        fm := m.ToString;
-
-      fecha := a.ToString + '-' + fm + '-' + fd + ' 00:00:00';
-
-      response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource(apiRecurso)
-              .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .Accept('application/json')
-              .AddParam('dni', dniPaciente)
-              .AddParam('apellido_paciente',form_DetallesCama.camasapellido_paciente.AsString)
-              .AddParam('nombre_paciente',form_DetallesCama.camasnombre_paciente.AsString)
-              .AddParam('id_aislamiento',disponiblesid_aislamiento.AsString)
-              .AddParam('hasta',fecha)
-              .AddParam('observaciones',obs.Text)
-              .AddParam('dni_usuario', datos.dniLogin)
-              .AddParam('nombre_usuario',datos.nombreLogin)
-              .Adapters(TDataSetSerializeAdapter.New(resultado))
-              .Post;
+        kpc := '0';
     end
   else
     begin
-      response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource(apiRecurso)
-              .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .Accept('application/json')
-              .AddParam('dni', dniPaciente)
-              .AddParam('apellido_paciente',form_DetallesCama.camasapellido_paciente.AsString)
-              .AddParam('nombre_paciente',form_DetallesCama.camasnombre_paciente.AsString)
-              .AddParam('id_aislamiento',disponiblesid_aislamiento.AsString)
-              .AddParam('observaciones',obs.Text)
-              .AddParam('dni_usuario', datos.dniLogin)
-              .AddParam('nombre_usuario',datos.nombreLogin)
-              .Adapters(TDataSetSerializeAdapter.New(resultado))
-              .Post;
+      kpc := '0';
     end;
 
 
 
+  body := '{"idAislamiento":'+ disponiblesidAislamiento.AsString +',"idInternacion":'+form_DetallesCama.camasidInternacion.AsString+',"paciCodigo":'+ form_DetallesCama.camaspaciCodigo.AsString +',"creadoPorDni":"'+ datos.dniLogin +'","creadoPorNombre":"'+ datos.nombreLogin +'","kpc":"'+ kpc +'"}';
+
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(apiRecurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .Accept('application/json')
+              .AddBody(body)
+              .Adapters(TDataSetSerializeAdapter.New(resultado))
+              .Post;
 
   if response.StatusCode = 200 then
     begin
       datos.VerMensaje('Aislamiento agregado',resultadomensaje.AsString,'Aceptar','OK',0);
-      ActualizarAislamientos(dniPaciente);
+      form_DetallesCama.Actualizar(form_DetallesCama.camasidCama.AsInteger);
+      ActualizarAislamientos();
       pagina.TabIndex := 0;
     end
   else
@@ -280,18 +220,7 @@ end;
 procedure TformAislamiento.btnNuevoAislamientoClick(Sender: TObject);
 begin
   pagina.TabIndex := 1;
-  chk_hasta.IsChecked := false;
-  hasta.Enabled := false;
-  obs.Text := '';
-  ActualizarDisponibles(dniPaciente);
-end;
-
-procedure TformAislamiento.chk_hastaChange(Sender: TObject);
-begin
-if chk_hasta.IsChecked then
-    hasta.Enabled := true
-  else
-    hasta.Enabled := false;
+  ActualizarDisponibles(idInternacion);
 end;
 
 procedure TformAislamiento.clicBotonEliminar(sender: TObject);
@@ -325,14 +254,14 @@ begin
       else
         datos.VerMensaje('Error ' + response.StatusCode.ToString ,resultadomensaje.AsString,'Aceptar','ERROR',0);
 
-      ActualizarAislamientos(dniPaciente);
+      ActualizarAislamientos();
       pagina.TabIndex := 0;
     end;
 end;
 
-procedure TformAislamiento.crearAislamiento(id, id_aislamiento: integer; desde, hasta, observaciones: string);
+procedure TformAislamiento.crearAislamiento(id, idAislamiento, kpc: integer; FechaDesde: string);
 begin
-  // Contenedor del aislamieno
+  // Contenedor del aislamiento
   lyAislamientos := TLayout.Create(contenedor);
   lyAislamientos.Parent := contenedor;
   lyAislamientos.Height := 85;
@@ -349,7 +278,7 @@ begin
     begin
       Parent := lyAislamientos;
       Align := TAlignLayout.Bottom;
-      Name := 'separador'+ aislamientosid.AsString;
+      Name := 'separador'+ id.ToString;
       Fill.Color := TAlphaColorRec.Lightseagreen;
       Stroke.Kind := TbrushKind.None;
       Height := 2;
@@ -360,15 +289,20 @@ begin
     begin
       Parent := lyAislamientos;
       Align := TAlignLayout.Left;
-      Name := 'iconoAislamiento'+ aislamientosid.AsString;
+      Name := 'iconoAislamiento'+ id.ToString;
       WrapMode := TImageWrapMode.Center;
-      case aislamientosid_aislamiento.AsInteger of
-          1:Base64(aislamientoAC);
+      case idAislamiento of
+          1:begin
+            if form_DetallesCama.aislamientoskpc.AsInteger = 1 then
+              Base64(aislamientoKPC)
+            else
+              Base64(aislamientoAC);
+          end;
           2:Base64(aislamientoAR);
-          4:Base64(aislamientoAG);
-          5:Base64(aislamientoAN);
-          6:Base64(aislamientoCD);
-          7:Base64(aislamientoSC);
+          3:Base64(aislamientoAG);
+          4:Base64(aislamientoAN);
+          5:Base64(aislamientoCD);
+          6:Base64(aislamientoSC);
       end;
       HitTest := false;
     end;
@@ -382,49 +316,58 @@ begin
   lyBtn.Margins.Left := 15;
 
 
-  recBtn := TRectangle.Create(lyBtn);
-  recBtn.Parent := lyBtn;
-  recBtn.Name := 'recBtn' + id.ToString;
-  recBtn.Align := TAlignLayout.Client;
-  recBtn.Fill.Color := TAlphaColorRec.Red;
-  recBtn.Stroke.Kind := TbrushKind.None;
-  recBtn.Width := 55;
-  recBtn.CornerType := TCornerType.Round;
-  recBtn.Corners := [TCorner.TopLeft,TCorner.TopRight,TCorner.BottomLeft,TCorner.BottomRight];
-  recBtn.XRadius := 5;
-  recBtn.YRadius := 5;
 
-  // ícono del botón
-  with TImage.Create(recBtn) do
+
+  if form_DetallesCama.aislamientosestado.AsString = 'Vigente' then
     begin
-      Parent := recBtn;
-      Align := TAlignLayout.Client;
-      Name := 'iconoBoton'+ aislamientosid.AsString;
-      WrapMode := TImageWrapMode.Center;
-      Base64(iconoEliminar);
-      HitTest := false;
+      recBtn := TRectangle.Create(lyBtn);
+      recBtn.Parent := lyBtn;
+      recBtn.Name := 'recBtn' + id.ToString;
+      recBtn.Align := TAlignLayout.Client;
+      recBtn.Fill.Color := TAlphaColorRec.Red;
+      recBtn.Stroke.Kind := TbrushKind.None;
+      recBtn.Width := 55;
+      recBtn.CornerType := TCornerType.Round;
+      recBtn.Corners := [TCorner.TopLeft,TCorner.TopRight,TCorner.BottomLeft,TCorner.BottomRight];
+      recBtn.XRadius := 5;
+      recBtn.YRadius := 5;
+
+      // ícono del botón
+      with TImage.Create(recBtn) do
+        begin
+          Parent := recBtn;
+          Align := TAlignLayout.Client;
+          Name := 'iconoBoton'+ id.ToString;
+          WrapMode := TImageWrapMode.Center;
+          Base64(iconoEliminar);
+          HitTest := false;
+        end;
+
+      // botón Eliminar aislamiento
+      with TSpeedButton.Create(recBtn) do
+        begin
+          Parent := recBtn;
+          Align := TAlignLayout.Client;
+          Name := 'botonEliminar'+ id.ToString;
+          Tag := id;
+          Text := '';
+          ShowHint := true;
+          Hint := 'Finalizar este aislamiento';
+          onClick := clicBotonEliminar;
+        end;
     end;
 
-  // botón Eliminar aislamiento
-  with TSpeedButton.Create(recBtn) do
-    begin
-      Parent := recBtn;
-      Align := TAlignLayout.Client;
-      Name := 'botonEliminar'+ aislamientosid.AsString;
-      Tag := aislamientosid.AsInteger;
-      Text := '';
-      ShowHint := true;
-      Hint := 'Finalizar este aislamiento';
-      onClick := clicBotonEliminar;
-    end;
 
 
   // Titulo
   with TLabel.Create(lyAislamientos) do
     begin
       Parent := lyAislamientos;
-      Name := 'lbTitulo'+ aislamientosid.AsString;
-      Text := aislamientosaislamiento.AsString;
+      Name := 'lbTitulo'+ id.ToString;
+      if form_DetallesCama.aislamientoskpc.AsInteger = 1 then
+        Text := form_DetallesCama.aislamientosnombre.AsString + '    KPC'
+      else
+        Text := form_DetallesCama.aislamientosnombre.AsString;
       Height := 17;
       Width := 380;
       Position.X := 75;
@@ -439,20 +382,23 @@ begin
   with TLabel.Create(lyAislamientos) do
     begin
       Parent := lyAislamientos;
-      Name := 'lbFechas'+ aislamientosid.AsString;
-      Text := 'Desde: ' + aislamientosdesde.AsString + '      Hasta: ' + aislamientoshasta.AsString;
+      Name := 'lbFechas'+ id.ToString;
+      Text := 'Desde: ' + form_DetallesCama.aislamientosfechaDesde.AsString + '      Hasta: ' + form_DetallesCama.aislamientosfechaHasta.AsString;
       Height := 17;
       Width := 476;
       Position.X := 85;
       Position.Y := 30;
     end;
 
-  // Observaciones
+  // Estado
   with TLabel.Create(lyAislamientos) do
     begin
       Parent := lyAislamientos;
-      Name := 'lbObservaciones'+ aislamientosid.AsString;
-      Text := 'Observaciones: ' + aislamientosobservaciones.AsString;
+      Name := 'lbEstado'+ id.ToString;
+      if form_DetallesCama.aislamientosestado.AsString = 'Finalizado' then
+        Text := 'Estado: Finalizado por ' + form_DetallesCama.aislamientosfinalizadoPorNombre.AsString + ' el '+ form_DetallesCama.aislamientosfechaHasta.AsString
+      else
+        Text := 'Estado: ' + form_DetallesCama.aislamientosestado.AsString;
       Height := 32;
       Width := 476;
       Position.X := 85;
@@ -463,7 +409,7 @@ end;
 
 procedure TformAislamiento.FormActivate(Sender: TObject);
 begin
-  ActualizarAislamientos(dniPaciente);
+  ActualizarAislamientos();
 end;
 
 procedure TformAislamiento.FormCreate(Sender: TObject);
@@ -473,9 +419,6 @@ begin
 
   alto := form_DetallesCama.Height;
   ancho := form_DetallesCama.Width;
-
-  // fecha hasta
-  hasta.DateTime := now;
 end;
 
 procedure TformAislamiento.noHayAislamientos;

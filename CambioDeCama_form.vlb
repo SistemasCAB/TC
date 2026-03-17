@@ -7,14 +7,8 @@ Coordinates=317,674,105,51
 [lb_solicitado_por]
 Coordinates=486,606,99,51
 
-[solicituddni_pacientes]
-Coordinates=756,1,125,33
-
 [solicitudfecha]
 Coordinates=0,781,83,33
-
-[solicitudautorizado_fecha]
-Coordinates=756,56,141,33
 
 [Label6]
 Coordinates=755,674,46,51
@@ -22,38 +16,20 @@ Coordinates=755,674,46,51
 [Label20]
 Coordinates=509,674,52,51
 
-[solicitudsolicitado_por_dni]
-Coordinates=756,111,148,33
-
 [lb_autorizadoNombre]
 Coordinates=924,674,120,51
-
-[solicitudautorizado_por_dni]
-Coordinates=960,1,152,33
 
 [botonSalir]
 Coordinates=856,606,65,51
 
-[solicitudid_cama_destino]
-Coordinates=756,166,140,33
-
-[solicitudcama_origen]
-Coordinates=756,221,120,33
-
 [Rectangle1]
 Coordinates=447,788,69,33
-
-[solicitudid_estado_solicitud]
-Coordinates=960,56,152,33
 
 [Rectangle3]
 Coordinates=357,788,69,33
 
 [iconoVentana]
 Coordinates=1141,606,81,51
-
-[solicitudcama_destino]
-Coordinates=756,386,125,33
 
 [pagina]
 Coordinates=294,788,47,33
@@ -63,9 +39,6 @@ Coordinates=724,10,111,51
 
 [Label1]
 Coordinates=1351,674,46,51
-
-[solicitudid_motivo]
-Coordinates=756,441,105,33
 
 [Label9]
 Coordinates=968,10,46,51
@@ -91,23 +64,11 @@ Coordinates=10,788,82,33
 [recBotonCambiarCama]
 Coordinates=1424,742,128,33
 
-[solicitudcancelado_por_dni]
-Coordinates=960,111,150,33
-
-[solicitudrealizado_fecha]
-Coordinates=756,826,133,33
-
 [Label13]
 Coordinates=579,674,52,51
 
 [recTituloVentana]
 Coordinates=1302,742,97,33
-
-[solicitudid_internacion]
-Coordinates=607,913,127,33
-
-[solicitudrealizado_por_nombre]
-Coordinates=960,166,167,33
 
 [lb_motivo]
 Coordinates=1101,10,62,51
@@ -139,12 +100,6 @@ Coordinates=795,742,83,33
 [Label18]
 Coordinates=1391,10,52,51
 
-[solicitudcancelado_por_nombre]
-Coordinates=960,221,172,33
-
-[solicitudid_solicitud]
-Coordinates=960,276,113,33
-
 [Label12]
 Coordinates=1071,674,52,51
 
@@ -163,9 +118,6 @@ Coordinates=353,606,52,51
 [sombra]
 Coordinates=53,913,51,33
 
-[solicitudid_cama_origen]
-Coordinates=960,331,135,33
-
 [Label23]
 Coordinates=1281,674,52,51
 
@@ -178,20 +130,11 @@ Coordinates=1211,674,52,51
 [Label10]
 Coordinates=1141,674,52,51
 
-[solicitudrealizado_por_dni]
-Coordinates=960,386,144,33
-
 [Label15]
 Coordinates=1251,10,52,51
 
 [Label5]
 Coordinates=1078,606,46,51
-
-[solicitudid_paciente]
-Coordinates=960,441,113,33
-
-[solicitudautorizado_por_nombre]
-Coordinates=960,496,174,33
 
 [lb_cama_destino]
 Coordinates=608,606,97,51
@@ -202,14 +145,8 @@ Coordinates=10,10,115,483
 [rectCambioCama]
 Coordinates=671,742,99,33
 
-[solicitudsolicitado_por_nombre]
-Coordinates=960,606,170,33
-
 [Label8]
 Coordinates=793,606,46,51
-
-[solicitudcancelado_fecha]
-Coordinates=960,661,139,33
 
 [lb_fecha_solicitud]
 Coordinates=1244,606,104,51
@@ -275,9 +212,6 @@ Coordinates=167,395,82,33
 Coordinates=450,10,53,33
 Visible=False
 
-[motivosid_motivo]
-Coordinates=15,1076,102,33
-
 [motivosmotivo]
 Coordinates=382,1076,87,33
 
@@ -302,4 +236,70 @@ Coordinates=10,742,69,33
 
 [btn_NuevaSolicitud]
 Coordinates=1461,10,84,51
+
+[solicitudidSolicitud]
+Coordinates=960,276,113,33
+
+[solicitudidInternacion]
+Coordinates=607,913,127,33
+
+[solicitudpaciCodigo]
+Coordinates=960,441,113,33
+
+[solicitudnroDocumento]
+Coordinates=756,1,125,33
+
+[solicitudidCamaOrigen]
+Coordinates=960,331,135,33
+
+[solicitudcamaOrigen]
+Coordinates=756,221,120,33
+
+[solicitudidCamaDestino]
+Coordinates=756,166,140,33
+
+[solicitudcamaDestino]
+Coordinates=756,386,125,33
+
+[solicitudidMotivo]
+Coordinates=756,441,105,33
+
+[solicitudidEstadoSolicitud]
+Coordinates=960,56,152,33
+
+[solicitudsolicitadoPorDni]
+Coordinates=756,111,148,33
+
+[solicitudsolicitadoPorNombre]
+Coordinates=960,606,170,33
+
+[solicitudautorizadoFecha]
+Coordinates=756,56,141,33
+
+[solicitudautorizadoPorDni]
+Coordinates=960,1,152,33
+
+[solicitudautorizadoPorNombre]
+Coordinates=960,496,174,33
+
+[solicitudrealizadoFecha]
+Coordinates=756,826,133,33
+
+[solicitudrealizadoPorDni]
+Coordinates=960,386,144,33
+
+[solicitudrealizadoPorNombre]
+Coordinates=960,166,167,33
+
+[solicitudcanceladoFecha]
+Coordinates=960,661,139,33
+
+[solicitudcanceladoPorDni]
+Coordinates=960,111,150,33
+
+[solicitudcanceladoPorNombre]
+Coordinates=960,221,172,33
+
+[motivosidMotivoCambioCama]
+Coordinates=15,1076,102,33
 

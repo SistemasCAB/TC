@@ -13,7 +13,8 @@ uses
 
   RESTRequest4D,
   DataSet.Serialize.Adapter.RESTRequest4D, FMX.Memo.Types, FMX.ScrollBox,
-  FMX.Memo, FMX.Edit
+  FMX.Memo, FMX.Edit,
+  System.JSON,System.DateUtils
   ;
 
 type
@@ -132,7 +133,7 @@ type
     fechafecha_servidor: TWideStringField;
     rectAlertaCambioCama: TRectangle;
     lb_botonCambioCama: TLabel;
-    lb_id_paciente: TLabel;
+    lb_paciCodigo: TLabel;
     lb_id_internacion: TLabel;
     FondoTransparente: TRectangle;
     recAlertas: TRectangle;
@@ -147,39 +148,38 @@ type
     alertasid_cama: TWideStringField;
     alertasfecha: TWideStringField;
     alertasleida: TWideStringField;
-    camasid_cama: TWideStringField;
+    camasidCama: TWideStringField;
     camascama: TWideStringField;
-    camasid_habitacion: TWideStringField;
+    camasidHabitacion: TWideStringField;
     camashabitacion: TWideStringField;
     camaspiso: TWideStringField;
-    camaspiso_texto: TWideStringField;
+    camaspisoTexto: TWideStringField;
     camastipocama: TWideStringField;
-    camasid_estado: TWideStringField;
+    camasidEstado: TWideStringField;
     camasestado: TWideStringField;
     camascolor: TWideStringField;
-    camasid_paciente: TWideStringField;
-    camasnombre_paciente: TWideStringField;
-    camasapellido_paciente: TWideStringField;
-    camasdni: TWideStringField;
+    camasnombrePaciente: TWideStringField;
+    camasapellidoPaciente: TWideStringField;
+    camasnroDocumento: TWideStringField;
     camassexo: TWideStringField;
-    camasfecha_ingreso_institucion: TWideStringField;
-    camasfecha_ingreso_cama: TWideStringField;
+    camasfechaIngresoInstitucion: TWideStringField;
+    camasfechaIngresoCama: TWideStringField;
     camascobertura: TWideStringField;
     camasfantasia: TWideStringField;
     camasplan: TWideStringField;
-    camasnro_afiliado: TWideStringField;
-    camasid_internacion: TWideStringField;
-    camasfecha_alta_medica: TWideStringField;
-    camasprofesional_alta: TWideStringField;
-    camascama_en_aislamiento: TWideStringField;
+    camasnroAfiliado: TWideStringField;
+    camasidInternacion: TWideStringField;
+    camasfechaAltaMedica: TWideStringField;
+    camasprofesionalAlta: TWideStringField;
+    camascamaEnAislamiento: TWideStringField;
     camasobservaciones: TWideStringField;
-    camasfoto_paciente: TWideStringField;
-    camasprocedimientos_no_cumplidos: TWideStringField;
-    camasmedicacion_no_programada: TWideStringField;
-    camasmedicacion_no_aplicada: TWideStringField;
-    camastipo_alta_medica: TWideStringField;
+    camasfotoPaciente: TWideStringField;
+    camasprocedimientosNoCumplidos: TWideStringField;
+    camasmedicacionNoProgramada: TWideStringField;
+    camasmedicacionNoAplicada: TWideStringField;
+    camastipoAltaMedica: TWideStringField;
     camasacompanante: TWideStringField;
-    camasobservaciones_acompanante: TWideStringField;
+    camasobservacionesAcompanante: TWideStringField;
     camascambioCamaPendiente: TWideStringField;
     camascambioCamaIdSolicitud: TWideStringField;
     camastareasPendientes: TWideStringField;
@@ -189,15 +189,15 @@ type
     camascambioCamaAutorizadoFecha: TWideStringField;
     camascambioCamaIdCamaDestino: TWideStringField;
     camascambioCamaCamaDestino: TWideStringField;
-    camasaltaProbable_fecha: TWideStringField;
+    camasaltaProbableFecha: TWideStringField;
     camasaltaProbable_idTipoAlta: TWideStringField;
     camasaltaProbable_tipoAltaProbable: TWideStringField;
     camasaltaProbable_dniUsuario: TWideStringField;
     permisos: TFDMemTable;
-    permisosid_permiso: TIntegerField;
-    permisosid_servicio: TIntegerField;
+    permisosidPermiso: TIntegerField;
+    permisosidServicio: TIntegerField;
     permisosnombreServicio: TStringField;
-    permisosid_modulo: TIntegerField;
+    permisosidModulo: TIntegerField;
     permisosnombreModulo: TStringField;
     permisosdescripcion: TMemoField;
     permisoscontrolTotal: TIntegerField;
@@ -211,27 +211,49 @@ type
     fechaAislamientoAC: TLabel;
     botonAislamientos: TSpeedButton;
     iconoAislamientoAC: TImage;
-    camasaislamientos: TArrayField;
+    camastdocCodigo: TIntegerField;
+    camasaislamientos: TMemoField;
+    camaspaciCodigo: TIntegerField;
+    aislamientos: TFDMemTable;
+    aislamientosidPacienteAislamiento: TIntegerField;
+    aislamientosidAislamiento: TIntegerField;
+    aislamientosnombre: TStringField;
+    aislamientosbreve: TStringField;
+    aislamientoscolor: TStringField;
+    aislamientoscreadoPorDni: TStringField;
+    aislamientoscreadoPorNombre: TStringField;
+    lbAgregarAislamiento: TLabel;
+    aislamientosfinalizadoPorDni: TStringField;
+    aislamientosfinalizadoPorNombre: TStringField;
+    aislamientosestado: TStringField;
+    aislamientosfechaDesde: TStringField;
+    aislamientosfechaHasta: TStringField;
+    camastdocDescripcion: TStringField;
+    aislamientoskpc: TIntegerField;
+    camasidTipoAltaMedica: TIntegerField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
-    procedure Actualizar(id_cama:integer);
+    procedure Actualizar(idCama:integer);
     procedure btn_AltaDefinitivaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure ApagarAlertas(id_cama:integer);
+    procedure ApagarAlertas(idCama: integer);
     procedure botonCambioCamaClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure crearAlertas(id_cama, id_servicio:integer; dni:string);
     procedure crearAlerta(id_alerta: integer; texto:string);
-    procedure obtenerPermisosModulosPaciente(id_servicio:integer);
-    function permisoModulo(id_modulo: integer): integer;
+    procedure obtenerPermisosModulosPaciente(idServicio: integer);
+    function permisoModulo(idModulo: integer): integer;
     procedure Cerrar;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure botonAislamientosClick(Sender: TObject);
+    procedure CargarAislamientosDesdeJson(const JsonStr:string; Aislamientos: TFDMemTable);
+    procedure MostrarAislamentos;
+    procedure cambiosDeCamaActualizar;
   private
     { Private declarations }
   public
-    id_cama:integer;
+    idCama:integer;
     rAlertas:TRectangle;
     ancho, alto: integer;
   end;
@@ -246,21 +268,27 @@ implementation
 uses form_Tablero, ModuloDatos, UFunciones, constantes, CambioDeCama_form, CambioDeCamaAdmision_form,
   FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form;
 
-procedure Tform_DetallesCama.Actualizar(id_cama:integer);
+procedure Tform_DetallesCama.Actualizar(idCama:integer);
 var
   mensaje:string;
   response: IResponse;
   apiRecurso:string;
+
+  JsonValue: TJSONValue;
+  JsonArray: TJSONArray;
+  JsonObj: TJSONObject;
+  AislamientosArray: TJSONArray;
+  I: Integer;
 begin
   obtenerPermisosModulosPaciente(datos.servicio); // obtengo los permisos que tiene este servicio.
 
   // Obtengo los datos de la cama
-  apiRecurso := '/camas/verUna_v2';
+  apiRecurso := '/tablerocamas/verUnaCama';
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(apiRecurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_cama', id_cama.ToString)
-              .AddParam('id_servicio', datos.servicio.ToString)
+              .AddParam('idCama', idCama.ToString)
+              .AddParam('idServicio', datos.servicio.ToString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(camas))
               .Get;
@@ -268,19 +296,21 @@ begin
   if response.StatusCode = 200 then
     begin
       lb_cama.Text := camascama.AsString;
-      lb_id_cama.Text := camasid_cama.AsString;
+      lb_id_cama.Text := camasidCama.AsString;
       lb_estado.Text  := camasestado.AsString;
       etiquetaEstado.Fill.Color := TAlphaColor(StrToAlphaColor(camascolor.AsString));
 
 
       // SI LA CAMA ESTÁ OCUPADA
-      if camasid_estado.AsInteger = 2 then
+      if camasidEstado.AsInteger = 2 then
         begin
           // PANEL PACIENTE
+
+          // Permisos: 0 = sin permiso, 1 = solo lectura, 2 = control total
           case permisoModulo(1) of
             0: begin
               panelPaciente.Visible := true;
-              lb_id_paciente.Text := 'ID: ' + camasid_paciente.AsString;
+              lb_paciCodigo.Text := 'ID: ' + camaspaciCodigo.AsString;
               if camassexo.AsString = 'F' then
                 lb_apellido.Text := 'MUJER'
               else
@@ -297,34 +327,36 @@ begin
               lb_TituloCobertura.Text := '';
               lb_TituloPlan.Text := '';
               lb_TituloNroAfiliado.Text := '';
-              lb_id_paciente.Text := '';
+              lb_paciCodigo.Text := '';
 
             end;
             1: begin
               panelPaciente.Visible := true;
-              lb_id_paciente.Text := 'ID: ' + camasid_paciente.AsString;
-              lb_apellido.Text := camasapellido_paciente.AsString;
-              lb_nombre.Text   := camasnombre_paciente.AsString;
-              lb_nro_documento.Text := camasdni.AsString;
+              lb_paciCodigo.Text := 'ID: ' + camaspaciCodigo.AsString;
+              lb_apellido.Text := camasapellidoPaciente.AsString;
+              lb_nombre.Text   := camasnombrePaciente.AsString;
+              // agregar tipo de documento
+              lb_nro_documento.Text := camastdocDescripcion.AsString + ': '+  camasnroDocumento.AsString;
               lb_cobertura.Text := camasfantasia.AsString;
               lb_plan.Text := camasplan.AsString;
-              lb_nro_afiliado.Text := camasnro_afiliado.AsString;
-              if camasfoto_paciente.AsString <> '' then
-                foto.Base64(camasfoto_paciente.AsString)
+              lb_nro_afiliado.Text := camasnroAfiliado.AsString;
+              if camasfotoPaciente.AsString <> '' then
+                foto.Base64(camasfotoPaciente.AsString)
               else
                 foto.Base64(sin_foto);
             end;
             2:begin
               panelPaciente.Visible := true;
-              lb_id_paciente.Text := 'ID: ' + camasid_paciente.AsString;
-              lb_apellido.Text := camasapellido_paciente.AsString;
-              lb_nombre.Text   := camasnombre_paciente.AsString;
-              lb_nro_documento.Text := camasdni.AsString;
+              lb_paciCodigo.Text := 'ID: ' + camaspaciCodigo.AsString;
+              lb_apellido.Text := camasapellidoPaciente.AsString;
+              lb_nombre.Text   := camasnombrePaciente.AsString;
+              // agregar tipo de documento
+              lb_nro_documento.Text := camastdocDescripcion.AsString + ': '+  camasnroDocumento.AsString;
               lb_cobertura.Text := camasfantasia.AsString;
               lb_plan.Text := camasplan.AsString;
-              lb_nro_afiliado.Text := camasnro_afiliado.AsString;
-              if camasfoto_paciente.AsString <> '' then
-                foto.Base64(camasfoto_paciente.AsString)
+              lb_nro_afiliado.Text := camasnroAfiliado.AsString;
+              if camasfotoPaciente.AsString <> '' then
+                foto.Base64(camasfotoPaciente.AsString)
               else
                 foto.Base64(sin_foto);
             end;
@@ -339,17 +371,17 @@ begin
             end;
 
             1:begin
-              lb_id_internacion.Text := 'ID: ' + camasid_internacion.AsString;
+              lb_id_internacion.Text := 'ID: ' + camasidInternacion.AsString;
               panelInternacion.Visible := true;
-              lb_ingreso_institucion.Text := camasfecha_ingreso_institucion.AsString;
-              lb_ingreso_cama.Text := camasfecha_ingreso_cama.AsString;
+              lb_ingreso_institucion.Text := camasfechaIngresoInstitucion.AsString;
+              lb_ingreso_cama.Text := camasfechaIngresoCama.AsString;
 
-              if camasfecha_alta_medica.AsString <> '' then
+              if camasfechaAltaMedica.AsString <> '' then
                 begin
                   icono_alta_medica.Visible := true;
-                  lb_fecha_alta_medica.Text := camasfecha_alta_medica.AsString;
-                  lb_tipoAlta.Text := camastipo_alta_medica.AsString;
-                  lb_altaProfesional.Text := camasprofesional_alta.AsString;
+                  lb_fecha_alta_medica.Text := camasfechaAltaMedica.AsString;
+                  lb_tipoAlta.Text := camastipoAltaMedica.AsString;
+                  lb_altaProfesional.Text := camasprofesionalAlta.AsString;
                 end
               else
                 begin
@@ -362,17 +394,17 @@ begin
             end;
 
             2:begin
-              lb_id_internacion.Text := 'ID: ' + camasid_internacion.AsString;
+              lb_id_internacion.Text := 'ID: ' + camasidInternacion.AsString;
               panelInternacion.Visible := true;
-              lb_ingreso_institucion.Text := camasfecha_ingreso_institucion.AsString;
-              lb_ingreso_cama.Text := camasfecha_ingreso_cama.AsString;
+              lb_ingreso_institucion.Text := camasfechaIngresoInstitucion.AsString;
+              lb_ingreso_cama.Text := camasfechaIngresoCama.AsString;
 
-              if camasfecha_alta_medica.AsString <> '' then
+              if camasfechaAltaMedica.AsString <> '' then
                 begin
                   icono_alta_medica.Visible := true;
-                  lb_fecha_alta_medica.Text := camasfecha_alta_medica.AsString;
-                  lb_tipoAlta.Text := camastipo_alta_medica.AsString;
-                  lb_altaProfesional.Text := camasprofesional_alta.AsString;
+                  lb_fecha_alta_medica.Text := camasfechaAltaMedica.AsString;
+                  lb_tipoAlta.Text := camastipoAltaMedica.AsString;
+                  lb_altaProfesional.Text := camasprofesionalAlta.AsString;
                   //botonAltaDefinitiva.Visible := true;
                 end
               else
@@ -388,177 +420,19 @@ begin
 
 
           // PANEL AISLAMIENTOS
-//          case permisoModulo(3) of
-//            0: begin
-//              panelAislamientos.Visible := false;
-//            end;
-//
-//            1:begin
-//              panelAislamientos.Visible := true;
-//
-//              //Aislamiento Precaución de Contacto (C)
-//              if camasaislamiento_contacto.AsString <> '' then
-//                begin
-//                  lyAislamientoC.Visible := true;
-//                  lb_fechaAislamientoC.Text := camasaislamiento_contacto.AsString;
-//                  imgAislamientoC.Hint := 'Aislamiento Precaución de Contacto desde el ' + camasaislamiento_contacto.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoC.Visible := false;
-//                  lb_fechaAislamientoC.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Gotas (G)
-//              if camasaislamiento_gota_contacto.AsString <> '' then
-//                begin
-//                  lyAislamientoG.Visible := true;
-//                  lb_fechaAislamientoG.Text := camasaislamiento_gota_contacto.AsString;
-//                  imgAislamientoG.Hint := 'Aislamiento Precaución de Gotas desde el ' + camasaislamiento_gota_contacto.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoG.Visible := false;
-//                  lb_fechaAislamientoG.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Aires (A)
-//              if camasaislamiento_aire_respiratorio.AsString <> '' then
-//                begin
-//                  lyAislamientoA.Visible := true;
-//                  lb_fechaAislamientoA.Text := camasaislamiento_aire_respiratorio.AsString;
-//                  imgAislamientoA.Hint := 'Aislamiento Precaución de Aire desde el ' + camasaislamiento_aire_respiratorio.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoA.Visible := false;
-//                  lb_fechaAislamientoA.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Proteccion (N)
-//              if camasaislamiento_proteccion.AsString <> '' then
-//                begin
-//                  lyAislamientoN.Visible := true;
-//                  lb_fechaAislamientoN.Text := camasaislamiento_proteccion.AsString;
-//                  imgAislamientoN.Hint := 'Aislamiento Precauciones de Proteccion (Neutropénico) desde el ' + camasaislamiento_proteccion.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoN.Visible := false;
-//                  lb_fechaAislamientoN.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Gotas y de Contacto (GC)
-//              if camasaislamiento_gotas_contacto.AsString <> '' then
-//                begin
-//                  lyAislamientoGC.Visible := true;
-//                  lb_fechaAislamientoGC.Text := camasaislamiento_gotas_contacto.AsString;
-//                  imgAislamientoGC.Hint := 'Aislamiento Precaución de Gotas y de Contacto desde el ' + camasaislamiento_gotas_contacto.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoGC.Visible := false;
-//                  lb_fechaAislamientoGC.Text := '';
-//                end;
-//
-//              //Aislamiento Preventivo (P)
-//              if camasaislamiento_preventivo.AsString <> '' then
-//                begin
-//                  lyAislamientoP.Visible := true;
-//                  lb_fechaAislamientoP.Text := camasaislamiento_preventivo.AsString;
-//                  imgAislamientoP.Hint := 'Aislamiento Preventivo desde el ' + camasaislamiento_preventivo.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoP.Visible := false;
-//                  lb_fechaAislamientoP.Text := '';
-//                end;
-//            end;
-//
-//            2:begin
-//              panelAislamientos.Visible := true;
-//
-//              //Aislamiento Precaución de Contacto (C)
-//              if camasaislamiento_contacto.AsString <> '' then
-//                begin
-//                  lyAislamientoC.Visible := true;
-//                  lb_fechaAislamientoC.Text := camasaislamiento_contacto.AsString;
-//                  imgAislamientoC.Hint := 'Aislamiento Precaución de Contacto desde el ' + camasaislamiento_contacto.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoC.Visible := false;
-//                  lb_fechaAislamientoC.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Gotas (G)
-//              if camasaislamiento_gota_contacto.AsString <> '' then
-//                begin
-//                  lyAislamientoG.Visible := true;
-//                  lb_fechaAislamientoG.Text := camasaislamiento_gota_contacto.AsString;
-//                  imgAislamientoG.Hint := 'Aislamiento Precaución de Gotas desde el ' + camasaislamiento_gota_contacto.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoG.Visible := false;
-//                  lb_fechaAislamientoG.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Aires (A)
-//              if camasaislamiento_aire_respiratorio.AsString <> '' then
-//                begin
-//                  lyAislamientoA.Visible := true;
-//                  lb_fechaAislamientoA.Text := camasaislamiento_aire_respiratorio.AsString;
-//                  imgAislamientoA.Hint := 'Aislamiento Precaución de Aire desde el ' + camasaislamiento_aire_respiratorio.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoA.Visible := false;
-//                  lb_fechaAislamientoA.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Proteccion (N)
-//              if camasaislamiento_proteccion.AsString <> '' then
-//                begin
-//                  lyAislamientoN.Visible := true;
-//                  lb_fechaAislamientoN.Text := camasaislamiento_proteccion.AsString;
-//                  imgAislamientoN.Hint := 'Aislamiento Precauciones de Proteccion (Neutropénico) desde el ' + camasaislamiento_proteccion.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoN.Visible := false;
-//                  lb_fechaAislamientoN.Text := '';
-//                end;
-//
-//              //Aislamiento Precauciones de Gotas y de Contacto (GC)
-//              if camasaislamiento_gotas_contacto.AsString <> '' then
-//                begin
-//                  lyAislamientoGC.Visible := true;
-//                  lb_fechaAislamientoGC.Text := camasaislamiento_gotas_contacto.AsString;
-//                  imgAislamientoGC.Hint := 'Aislamiento Precaución de Gotas y de Contacto desde el ' + camasaislamiento_gotas_contacto.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoGC.Visible := false;
-//                  lb_fechaAislamientoGC.Text := '';
-//                end;
-//
-//              //Aislamiento Preventivo (P)
-//              if camasaislamiento_preventivo.AsString <> '' then
-//                begin
-//                  lyAislamientoP.Visible := true;
-//                  lb_fechaAislamientoP.Text := camasaislamiento_preventivo.AsString;
-//                  imgAislamientoP.Hint := 'Aislamiento Preventivo desde el ' + camasaislamiento_preventivo.AsString;
-//                end
-//              else
-//                begin
-//                  lyAislamientoP.Visible := false;
-//                  lb_fechaAislamientoP.Text := '';
-//                end;
-//            end;
-//          end;
 
+          // cargo los aislamientos en la tabla aislamientos a partir del json del campo camasaislamientos
 
+          JsonValue := TJSONObject.ParseJSONValue(response.Content);
+
+          JsonArray := JsonValue as TJSONArray;
+          JsonObj := JsonArray.Items[0] as TJSONObject;
+
+          AislamientosArray := JsonObj.GetValue<TJSONArray>('aislamientos');
+
+          CargarAislamientosDesdeJson(AislamientosArray.ToJSON, aislamientos);
+
+          MostrarAislamentos;
 
           // ALERTAS MÉDICAS
           case permisoModulo(5) of
@@ -570,60 +444,60 @@ begin
               lyAlertasMedicas.Visible := true;
               // PROCEDIMIENTOS NO CUMPLIDOS
               recProcedimiento.Visible          := true;
-              if camasprocedimientos_no_cumplidos.AsInteger > 0 then
+              if camasprocedimientosNoCumplidos.AsInteger > 0 then
                 lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
               else
                 lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
 
-              lb_cantidad_procedimientos.Text := camasprocedimientos_no_cumplidos.AsString;
+              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
 
               // INDICACIONES NO PROGRAMADAS
               recMedicacionNoProgramada.Visible := true;
-              if camasmedicacion_no_programada.AsInteger > 0 then
+              if camasmedicacionNoProgramada.AsInteger > 0 then
                 lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
               else
                 lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
 
-              lb_indicaciones_no_programadas.Text := camasmedicacion_no_programada.AsString;
+              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
 
               // MEDICACION NO APLICADA
               recMedicacionNoAplicada.Visible   := true;
-              if camasmedicacion_no_programada.AsInteger > 0 then
+              if camasmedicacionNoAplicada.AsInteger > 0 then
                 lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
               else
                 lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
 
-              lb_medicacion_no_aplicada.Text := camasmedicacion_no_aplicada.AsString;
+              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
             end;
 
             2: begin
               lyAlertasMedicas.Visible := true;
               // PROCEDIMIENTOS NO CUMPLIDOS
               recProcedimiento.Visible          := true;
-              if camasprocedimientos_no_cumplidos.AsInteger > 0 then
+              if camasprocedimientosNoCumplidos.AsInteger > 0 then
                 lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
               else
                 lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
 
-              lb_cantidad_procedimientos.Text := camasprocedimientos_no_cumplidos.AsString;
+              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
 
               // INDICACIONES NO PROGRAMADAS
               recMedicacionNoProgramada.Visible := true;
-              if camasmedicacion_no_programada.AsInteger > 0 then
+              if camasmedicacionNoProgramada.AsInteger > 0 then
                 lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
               else
                 lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
 
-              lb_indicaciones_no_programadas.Text := camasmedicacion_no_programada.AsString;
+              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
 
               // MEDICACION NO APLICADA
               recMedicacionNoAplicada.Visible   := true;
-              if camasmedicacion_no_programada.AsInteger > 0 then
+              if camasmedicacionNoAplicada.AsInteger > 0 then
                 lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
               else
                 lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
 
-              lb_medicacion_no_aplicada.Text := camasmedicacion_no_aplicada.AsString;
+              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
             end;
           end;
 
@@ -633,73 +507,8 @@ begin
           recReserva.Visible := false;
 
           // PANEL CAMBIO DE CAMA
-          case permisoModulo(4) of
-            0: begin
-              recCambioCama.Visible := false;
-            end;
+          cambiosDeCamaActualizar;
 
-            1: begin
-              recCambioCama.Visible := true;
-              lb_cama_origen.Text := camascama.AsString;
-              lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
-              if datos.gestionaCamas = 1 then // si es un servicio con la función de Admisión y Egresos
-                begin
-                  if camascambioCamaPendiente.AsInteger = 1 then
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Darkorchid;
-                    end
-                  else
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
-                    end;
-                end
-              else
-                begin
-                  if camascambioCamaAutorizacion.AsInteger <> 0 then
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Red;
-                      lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
-                    end
-                  else
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
-                    end;
-                end;
-
-              rCambioCama.Visible := false;
-            end;
-
-            2: begin
-              recCambioCama.Visible := true;
-              lb_cama_origen.Text := camascama.AsString;
-              lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
-              if datos.gestionaCamas = 1 then // si es un servicio con la función de Admisión y Egresos
-                begin
-                  if camascambioCamaPendiente.AsInteger = 1 then
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Darkorchid;
-                    end
-                  else
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
-                    end;
-                end
-              else
-                begin
-                  if camascambioCamaAutorizacion.AsInteger <> 0 then
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Red;
-                      lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
-                    end
-                  else
-                    begin
-                      rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
-                    end;
-                end;
-
-              rCambioCama.Visible := true;
-            end;
-          end;
 
 
           // ENVIAR A QUIRÓFANO
@@ -786,48 +595,73 @@ begin
 
       if camascantidadAlertas.AsInteger > 0 then
         begin
-          crearAlertas(id_cama,datos.servicio,datos.dniLogin);
+          crearAlertas(idCama,datos.servicio,datos.dniLogin);
         end;
     end
   else
     begin
-      mensaje := camas.FieldByName('mensaje').AsString + #13 + #13 + 'Recurso: ' + apiRecurso + #13 + 'ID cama: ' + id_cama.ToString;
+      mensaje := camas.FieldByName('mensaje').AsString + #13 + #13 + 'Recurso: ' + apiRecurso + #13 + 'ID cama: ' + idCama.ToString;
       datos.VerMensaje('ERROR ' + response.StatusCode.ToString,mensaje,'Aceptar','ERROR',0);
     end;
 end;
 
-procedure Tform_DetallesCama.ApagarAlertas(id_cama: integer);
+procedure Tform_DetallesCama.ApagarAlertas(idCama: integer);
 var
   response : IResponse;
 begin
   // marca como leidas todas las alertas de esta cama.
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('alertas/apagar')
+              .Resource('tablerocamas/apagarAlertas')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_cama', id_cama.ToString)
-              .AddParam('dni', datos.dniLogin)
+              .AddParam('idCama', idCama.ToString)
+              .AddParam('leidaPorDni', datos.dniLogin)
+              .AddParam('leidaPorNombre',datos.nombreLogin)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(apagaralertastb))
               .Post;
 
   if response.StatusCode <> 200 then
     begin
-      datos.VerMensaje('ERROR','No fue posible apagar las alertas de esta cama','Aceptar','ERROR',0);
+      datos.VerMensaje('ERROR' + response.StatusCode.ToString,'No fue posible apagar las alertas de esta cama','Aceptar','ERROR',0);
     end;
 end;
 
 procedure Tform_DetallesCama.botonActualizarClick(Sender: TObject);
 begin
-  Actualizar(id_cama);
+  Actualizar(idCama);
 end;
 
 procedure Tform_DetallesCama.botonAislamientosClick(Sender: TObject);
 begin
-  Application.CreateForm(TformAislamiento, formAislamiento);
-  formAislamiento.Height := alto;
-  formAislamiento.Width := ancho;
-  formAislamiento.dniPaciente := camasdni.AsString;
-  formAislamiento.ShowModal;
+  // antes de darle acceso al formulario de los aislamientos, verifico que tenga controlTotal (2) para usar ese módulo.
+  case permisoModulo(3) of
+    0: begin
+        datos.VerMensaje('ACCESO DENEGADO','No tenés permisos para acceder al módulo Aislamientos del Paciente.','Aceptar','ERROR',0);
+    end;
+    1: begin
+        if aislamientos.RecordCount = 0 then // si no hay aislamientos y tiene permiso de solo lectura, no puede agregar.
+          begin
+            datos.VerMensaje('ACCESO DENEGADO','No tenés permisos para agregar Aislamientos al Paciente.','Aceptar','ERROR',0);
+          end
+        else
+          begin
+            Application.CreateForm(TformAislamiento, formAislamiento);
+            formAislamiento.Height := alto;
+            formAislamiento.Width := ancho;
+            // agregar tipo de documento
+            formAislamiento.idInternacion := camasidInternacion.AsInteger;
+            formAislamiento.ShowModal;
+          end;
+    end;
+    2: begin
+        Application.CreateForm(TformAislamiento, formAislamiento);
+        formAislamiento.Height := alto;
+        formAislamiento.Width := ancho;
+        // agregar tipo de documento
+        formAislamiento.idInternacion := camasidInternacion.AsInteger;
+        formAislamiento.ShowModal;
+      end;
+  end;
 end;
 
 procedure Tform_DetallesCama.botonCambioCamaClick(Sender: TObject);
@@ -837,8 +671,8 @@ begin
       Application.CreateForm(Tform_CambioCamaAdmision, form_CambioCamaAdmision);
       form_CambioCamaAdmision.Height := alto;
       form_CambioCamaAdmision.Width := ancho;
-      form_CambioCamaAdmision.id_cama_origen := id_cama;
-      form_CambioCamaAdmision.id_internacion := camasid_internacion.AsInteger;
+      form_CambioCamaAdmision.id_cama_origen := idCama;
+      form_CambioCamaAdmision.id_internacion := camasidInternacion.AsInteger;
       form_CambioCamaAdmision.ShowModal;
     end
   else
@@ -846,14 +680,14 @@ begin
       Application.CreateForm(Tform_CambioDeCama, form_CambioDeCama);
       form_CambioDeCama.Height          := alto;
       form_CambioDeCama.Width           := ancho;
-      form_CambioDeCama.id_cama_origen  := id_cama;
-      form_CambioDeCama.id_internacion  := camasid_internacion.AsInteger;
-      form_CambioDeCama.dni_paciente    := camasdni.AsString;
-      form_CambioDeCama.id_paciente     := camasid_paciente.AsInteger;
+      form_CambioDeCama.idCamaOrigen    := idCama;
+      form_CambioDeCama.idInternacion   := camasidInternacion.AsInteger;
+      form_CambioDeCama.nroDocumento    := camasnroDocumento.AsString;
+      form_CambioDeCama.paciCodigo      := camaspaciCodigo.AsInteger;
       form_CambioDeCama.ShowModal;
     end;
 
-  Actualizar(id_cama);
+  Actualizar(idCama);
 end;
 
 procedure Tform_DetallesCama.botonSalirClick(Sender: TObject);
@@ -918,6 +752,229 @@ begin
       Margins.Left := 10;
     end;
 end;
+
+procedure Tform_DetallesCama.cambiosDeCamaActualizar;
+begin
+  case permisoModulo(4) of
+    // no accede porque no tiene permisos
+    0: begin
+      recCambioCama.Visible := false;
+    end;
+
+    // acceso de solo lectura.
+    1: begin
+      recCambioCama.Visible := true;
+      lb_cama_origen.Text := camascama.AsString;
+      lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
+      if datos.gestionaCamas = 1 then // si es un servicio con la función de Admisión y Egresos
+        begin
+          if camascambioCamaPendiente.AsInteger = 1 then
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Darkorchid;
+            end
+          else
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
+            end;
+        end
+      else
+        begin
+          if camascambioCamaAutorizacion.AsInteger <> 0 then
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Red;
+              lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
+            end
+          else
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
+            end;
+        end;
+
+      rCambioCama.Visible := false;
+    end;
+
+    // acceso con control total.
+    2: begin
+      recCambioCama.Visible := true;
+      lb_cama_origen.Text := camascama.AsString;
+      lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
+
+      if datos.gestionaCamas = 1 then // si es un servicio con la función de Admisión y Egresos
+        begin
+          if camascambioCamaPendiente.AsInteger = 1 then
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Darkorchid;  // color violeta
+            end
+          else
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
+            end;
+        end
+      else
+        begin
+          if camascambioCamaAutorizacion.AsInteger <> 0 then
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.Red;
+              lb_cama_destino.Text := camascambioCamaCamaDestino.AsString;
+            end
+          else
+            begin
+              rectAlertaCambioCama.Fill.Color := TAlphaColorRec.White;
+            end;
+        end;
+
+      rCambioCama.Visible := true;
+    end;
+  end;
+end;
+
+procedure Tform_DetallesCama.CargarAislamientosDesdeJson(
+  const JsonStr: string;
+  Aislamientos: TFDMemTable);
+var
+  JsonValue: TJSONValue;
+  JsonArray: TJSONArray;
+  JsonObj: TJSONObject;
+  I: Integer;
+begin
+  Aislamientos.DisableControls;
+  try
+    Aislamientos.Close;
+    Aislamientos.Open;
+    Aislamientos.EmptyDataSet;
+
+    JsonValue := TJSONObject.ParseJSONValue(JsonStr);
+
+    if not Assigned(JsonValue) then
+      raise Exception.Create('JSON inválido o vacío');
+
+    if not (JsonValue is TJSONArray) then
+      raise Exception.Create('El JSON no es un array');
+
+    JsonArray := JsonValue as TJSONArray;
+
+    try
+      for I := 0 to JsonArray.Count - 1 do
+      begin
+        if not (JsonArray.Items[I] is TJSONObject) then
+          Continue;
+
+        JsonObj := JsonArray.Items[I] as TJSONObject;
+
+        Aislamientos.Append;
+
+        Aislamientos.FieldByName('idPacienteAislamiento').AsInteger :=
+          JsonObj.GetValue<Integer>('idPacienteAislamiento');
+
+        Aislamientos.FieldByName('idAislamiento').AsInteger :=
+          JsonObj.GetValue<Integer>('idAislamiento');
+
+        Aislamientos.FieldByName('nombre').AsString :=
+          JsonObj.GetValue<string>('nombre');
+
+        Aislamientos.FieldByName('breve').AsString :=
+          JsonObj.GetValue<string>('breve');
+
+        Aislamientos.FieldByName('color').AsString :=
+          JsonObj.GetValue<string>('color');
+
+        Aislamientos.FieldByName('fechaDesde').AsString :=
+          JsonObj.GetValue<string>('fechaDesde');
+
+        Aislamientos.FieldByName('creadoPorDni').AsString :=
+          JsonObj.GetValue<string>('creadoPorDni');
+
+        Aislamientos.FieldByName('creadoPorNombre').AsString :=
+          JsonObj.GetValue<string>('creadoPorNombre');
+
+        Aislamientos.FieldByName('fechaHasta').AsString :=
+          JsonObj.GetValue<string>('fechaHasta');
+
+        Aislamientos.FieldByName('finalizadoPorDni').AsString :=
+          JsonObj.GetValue<string>('finalizadoPorDni');
+
+        Aislamientos.FieldByName('finalizadoPorNombre').AsString :=
+          JsonObj.GetValue<string>('finalizadoPorNombre');
+
+        Aislamientos.FieldByName('estado').AsString :=
+          JsonObj.GetValue<string>('estado');
+
+        Aislamientos.FieldByName('kpc').AsString :=
+          JsonObj.GetValue<string>('kpc');
+
+        Aislamientos.Post;
+      end;
+    finally
+      JsonArray.Free;
+    end;
+
+  finally
+    Aislamientos.EnableControls;
+  end;
+end;
+
+//procedure Tform_DetallesCama.CargarAislamientosDesdeJson(const JsonStr: string; Aislamientos: TFDMemTable);
+//var
+//  JsonArray: TJSONArray;
+//  JsonObj: TJSONObject;
+//  I: Integer;
+//  FS: TFormatSettings;
+//begin
+//  FS := TFormatSettings.Create;
+//  FS.DateSeparator := '-';
+//  FS.TimeSeparator := ':';
+//  FS.ShortDateFormat := 'yyyy-mm-dd';
+//  FS.LongTimeFormat := 'hh:nn:ss';
+//
+//  Aislamientos.DisableControls;
+//
+//  try
+//    Aislamientos.Close;
+//    Aislamientos.Open;
+//    Aislamientos.EmptyDataSet;
+//
+//    JsonArray := TJSONObject.ParseJSONValue(JsonStr) as TJSONArray;
+//
+//    try
+//      for I := 0 to JsonArray.Count - 1 do
+//        begin
+//          JsonObj := JsonArray.Items[I] as TJSONObject;
+//
+//          Aislamientos.Append;
+//          Aislamientos.FieldByName('idPacienteAislamiento').AsInteger :=
+//            JsonObj.GetValue<Integer>('idPacienteAislamiento');
+//
+//          Aislamientos.FieldByName('idAislamiento').AsInteger :=
+//            JsonObj.GetValue<Integer>('idAislamiento');
+//
+//          Aislamientos.FieldByName('nombre').AsString :=
+//            JsonObj.GetValue<string>('nombre');
+//
+//          Aislamientos.FieldByName('breve').AsInteger :=
+//            JsonObj.GetValue<Integer>('breve');
+//
+//          Aislamientos.FieldByName('color').AsString :=
+//            JsonObj.GetValue<string>('color');
+//
+//          Aislamientos.FieldByName('fechaDesde').AsDateTime :=
+//            StrToDateTime(JsonObj.GetValue<string>('fechaDesde'), FS);
+//
+//          Aislamientos.FieldByName('creadoPorDni').AsString :=
+//            JsonObj.GetValue<string>('creadoPorDni');
+//
+//          Aislamientos.FieldByName('creadoPorNombre').AsString :=
+//            JsonObj.GetValue<string>('creadoPorNombre');
+//
+//          Aislamientos.Post;
+//        end;
+//    finally
+//      JsonArray.Free;
+//    end;
+//  finally
+//    Aislamientos.EnableControls;
+//  end;
+//
+//end;
 
 procedure Tform_DetallesCama.Cerrar;
 begin
@@ -999,7 +1056,7 @@ end;
 procedure Tform_DetallesCama.FormClose(Sender: TObject;  var Action: TCloseAction);
 begin
   // apago todas las alertas de esta cama
-  ApagarAlertas(id_cama);
+  ApagarAlertas(idCama);
 end;
 
 procedure Tform_DetallesCama.FormCreate(Sender: TObject);
@@ -1008,14 +1065,127 @@ begin
   ancho := form_DetallesCama.Width;
 end;
 
-procedure Tform_DetallesCama.obtenerPermisosModulosPaciente(id_servicio: integer);
+procedure Tform_DetallesCama.MostrarAislamentos;
+var
+  lyAisl: TLayout;
+  fecAis: TLabel;
+  iconAis: TImage;
+begin
+  while pAislamiento.ChildrenCount > 0 do
+    pAislamiento.Children[0].Free;
+
+  if permisoModulo(3) = 0 then
+    begin
+      panelAislamientos.Visible := false;
+    end
+  else
+    begin
+      panelAislamientos.Visible := true;
+
+      if(aislamientos.RecordCount > 0) then
+        begin
+          aislamientos.First;
+          repeat
+            // creo los objetos para cada tipo de aislamiento que tiene el paciente.
+
+            if aislamientosestado.AsString = 'Vigente' then
+              begin
+                // Layout aislamiento
+            lyAisl := TLayout.Create(pAislamiento);
+            lyAisl.Parent := pAislamiento;
+            lyAisl.name := 'lyAislamiento'+ aislamientosidPacienteAislamiento.AsString;
+            lyAisl.width := 82;
+            lyAisl.Align := TAlignLayout.Left;
+
+
+            // Ícono Aislamiento
+            with TImage.Create(lyAisl) do
+              begin
+                Parent := lyAisl;
+                Height := 50;
+                Align := TAlignLayout.Top;
+                Name := 'iconoAislamiento'+ aislamientosidPacienteAislamiento.AsString;
+                WrapMode := TImageWrapMode.Fit;
+                HitTest := false;
+                case aislamientosidAislamiento.AsInteger of
+                  1: begin
+                    if aislamientoskpc.AsInteger = 1 then
+                      Base64(aislamientoKPC)
+                    else
+                      Base64(aislamientoAC);
+                  end;
+
+                  2: begin
+                    Base64(aislamientoAR);
+                  end;
+
+                  3: begin
+                    Base64(aislamientoAG);
+                  end;
+                  4: begin
+                    Base64(aislamientoAN);
+                  end;
+                  5: begin
+                    Base64(aislamientoCD);
+                  end;
+                  6: begin
+                    Base64(aislamientoSC);
+                  end;
+                end;
+              end;
+
+              // Fecha del aislamiento
+              with TLabel.Create(lyAisl) do
+                begin
+                  Parent := lyAisl;
+                  Height := 37;
+                  Width := 82;
+                  Align := TAlignLayout.Bottom;
+                  HitTest := false;
+                  Name := 'fechaAislamiento'+ aislamientosidPacienteAislamiento.AsString;
+                  StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
+                  // TextSettings.Font.Size := 13;
+                  // TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+                  TextSettings.HorzAlign := TTextAlign.Center;
+                  HitTest := false;
+                  Text := aislamientosfechaDesde.AsString;
+                end;
+              end;
+
+
+
+            aislamientos.Next;
+          until aislamientos.Eof;
+        end
+      else
+        begin
+          // si no hay aislamientos, muestro el texto Agregar Aislamiento.
+
+          with TLabel.Create(pAislamiento) do
+            begin
+              Parent := pAislamiento;
+              Align := TAlignLayout.Client;
+              HitTest := false;
+              Name := 'lbAgregarAislamientos';
+              StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
+              TextSettings.Font.Size := 16;
+              // TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+              TextSettings.HorzAlign := TTextAlign.Center;
+              HitTest := false;
+              Text := 'Agregar Aislamiento';
+            end;
+        end;
+    end;
+end;
+
+procedure Tform_DetallesCama.obtenerPermisosModulosPaciente(idServicio: integer);
 var
   response: IResponse;
 begin
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/aplicacion/permisosModulosPaciente')
+              .Resource('/tablerocamas/permisosModulosTableroServicio')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_servicio', id_servicio.ToString)
+              .AddParam('idServicio', idServicio.ToString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(permisos))
               .Get;
@@ -1024,34 +1194,16 @@ begin
     datos.VerMensaje('ERROR',response.Content,'Aceptar','ERROR',0);
 end;
 
-function Tform_DetallesCama.permisoModulo(id_modulo: integer): integer;
+function Tform_DetallesCama.permisoModulo(idModulo: integer): integer;
 var
   res:integer;
 begin
-  permisos.Filtered := false;
-  // filtro los permisos por el módulo que recibe como parámetro.
-  if permisos.RecordCount > 0 then
-    begin
-      permisos.Filtered := false;
-      permisos.Filter   := 'id_modulo = ' + id_modulo.ToString;
-      permisos.Filtered := true;
+  // Permisos: 0 = sin permiso, 1 = solo lectura, 2 = control total
 
-      if permisos.RecordCount = 1 then
-        begin
-          if permisoscontrolTotal.AsInteger = 1 then
-            res := 2 // control total
-          else
-          begin
-            res := 1 // solo lectura
-          end;
-        end
-      else
-        res := 0;
-    end
-  else
-    res := 0;
+  Result := 0; // valor por defecto, sin permiso
 
-  permisoModulo := res;
+  if permisos.Locate('idModulo', idModulo, []) then
+    Result := permisos.FieldByName('controlTotal').AsInteger;
 end;
 
 procedure Tform_DetallesCama.btn_AltaDefinitivaClick(Sender: TObject);
@@ -1059,51 +1211,34 @@ var
   mens:string;
   response: IResponse;
 begin
-  if camasfecha_alta_medica.AsString = '' then
-    datos.VerMensaje('ACCIÓN NO PERMITIDA','El paciente no tiene el alta médica. No puede realizar el alta definitiva hasta que el médico haya hecho la epicrisis','Aceptar','ERROR',0)
-  else
+  if permisoModulo(9) = 2 then // si tiene control total en el módulo Alta Definitiva
     begin
-      response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('aplicacion/compararFechaHora')
-              .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('fecha', camasfecha_alta_medica.AsString)
-              .Accept('application/json')
-              .Adapters(TDataSetSerializeAdapter.New(fecha))
-              .Get;
-
-      if response.StatusCode = 200 then
-        begin
-          if fecharesultado.AsString = 'Posterior' then
-            begin
-              mens := 'No puede dar el alta al paciente antes de la fecha y hora indicada por el médico.' + #13 + #13 + 'Alta médica: ' + camasfecha_alta_medica.AsString + #13 + 'Fecha actual: ' + fechafecha_servidor.AsString;
-              datos.VerMensaje('ACCIÓN NO PERMITIDA',mens,'Aceptar','ERROR',0);
-            end
-          else
-            begin
-                Application.CreateForm(Tform_AltaDefinitiva, form_AltaDefinitiva);
-//                form_AltaDefinitiva.Height            := formTablero.Height;
-//                form_AltaDefinitiva.Width             := formTablero.Width;
-                form_AltaDefinitiva.Height            := alto;
-                form_AltaDefinitiva.Width             := ancho;
-                form_AltaDefinitiva.id_cama           := camasid_cama.AsInteger;
-                form_AltaDefinitiva.apellido          := camasapellido_paciente.AsString;
-                form_AltaDefinitiva.nombre            := camasnombre_paciente.AsString;
-                form_AltaDefinitiva.dni               := camasdni.AsString;
-                form_AltaDefinitiva.fechaAlta         := camasfecha_alta_medica.AsString;
-                form_AltaDefinitiva.fechaIngresoCama  := camasfecha_ingreso_cama.AsString;
-                form_AltaDefinitiva.tipoAlta          := camastipo_alta_medica.AsString;
-                form_AltaDefinitiva.profesional       := camasprofesional_alta.AsString;
-                form_AltaDefinitiva.soloAltaMedica    := camassoloAltaMedica.AsInteger;
-                form_AltaDefinitiva.id_habitacion     := camasid_habitacion.AsInteger;
-                form_AltaDefinitiva.Actualizar;
-                form_AltaDefinitiva.showModal;
-            end;
-        end
+      if camasfechaAltaMedica.AsString = '' then
+        datos.VerMensaje('NO HAY EPICRISIS','El paciente no tiene el alta médica.'+#13+'No puede realizar el alta definitiva hasta que el médico haya hecho la epicrisis','Aceptar','ERROR',0)
       else
         begin
-          datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'No puede dar el alta al paciente antes de la fecha y hora indicada por el médico.','Aceptar','ERROR',0)
+          Application.CreateForm(Tform_AltaDefinitiva, form_AltaDefinitiva);
+          form_AltaDefinitiva.Height            := alto;
+          form_AltaDefinitiva.Width             := ancho;
+          form_AltaDefinitiva.idCama            := camasidCama.AsInteger;
+          form_AltaDefinitiva.apellido          := camasapellidoPaciente.AsString;
+          form_AltaDefinitiva.nombre            := camasnombrePaciente.AsString;
+          form_AltaDefinitiva.dni               := camasnroDocumento.AsString;
+          form_AltaDefinitiva.fechaAlta         := camasfechaAltaMedica.AsString;
+          form_AltaDefinitiva.fechaIngresoCama  := camasfechaIngresoCama.AsString;
+          form_AltaDefinitiva.tipoAlta          := camastipoAltaMedica.AsString;
+          form_AltaDefinitiva.profesional       := camasprofesionalAlta.AsString;
+          form_AltaDefinitiva.soloAltaMedica    := camassoloAltaMedica.AsInteger;
+          form_AltaDefinitiva.id_habitacion     := camasidHabitacion.AsInteger;
+          form_AltaDefinitiva.idTipoAltaMedica  := camasidTipoAltaMedica.AsInteger;
+          form_AltaDefinitiva.paciCodigo        := camaspaciCodigo.AsInteger;
+          form_AltaDefinitiva.Actualizar;
+          form_AltaDefinitiva.showModal;
         end;
-
+    end
+  else
+    begin
+      datos.VerMensaje('ACCESO DENEGADO','El servicio '+ formTablero.nombreServicio.Text +' no tiene permiso para realizar el alta del paciente.','Aceptar','ERROR',0)
     end;
 end;
 

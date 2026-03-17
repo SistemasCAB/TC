@@ -19,7 +19,8 @@ uses
   FMX.Image.Base64 in 'FMX.Image.Base64.pas',
   mensajeConfirmacion_form in 'mensajeConfirmacion_form.pas' {form_mensajeConfirmacion},
   AltaDefinitiva_form in 'AltaDefinitiva_form.pas' {form_AltaDefinitiva},
-  Aislamientos_form in 'Aislamientos_form.pas' {formAislamiento};
+  Aislamientos_form in 'Aislamientos_form.pas' {formAislamiento},
+  DateTimeMaskEdit_unit in 'DateTimeMaskEdit_unit.pas';
 
 {$R *.res}
 

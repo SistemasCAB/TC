@@ -4,7 +4,7 @@
         <ProjectVersion>19.5</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <TargetedPlatforms>693267</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -333,6 +333,7 @@
             <Form>formAislamiento</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="DateTimeMaskEdit_unit.pas"/>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -404,6 +405,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="config.ini" Configuration="Debug" Class="ProjectFile"/>
+                <DeployFile LocalName="config.ini" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="config.ini" Configuration="Release" Class="ProjectFile"/>
                 <DeployFile LocalName="config.ini" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win32">
@@ -425,6 +432,18 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Win64\Debug\TableroCamas.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win64\Debug\TableroCamas.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win64">
+                        <RemoteName>TableroCamas.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win64\Debug\TableroCamas.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win64">
+                        <RemoteName>TableroCamas.rsm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win64\Release\TableroCamas.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win64\Release\TableroCamas.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64">
