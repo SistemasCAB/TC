@@ -11,7 +11,10 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, REST.Response.Adapter, REST.Client, Data.Bind.Components,
-  Data.Bind.ObjectScope;
+  Data.Bind.ObjectScope,
+  RESTRequest4D,DataSet.Serialize.Adapter.RESTRequest4D, System.Rtti,
+  System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.EngExt,
+  Fmx.Bind.DBEngExt, Data.Bind.DBScope;
 
 type
   Tform_CambioCamaAdmision = class(TForm)
@@ -55,7 +58,7 @@ type
     lb_autorizadoNombre: TLabel;
     Label23: TLabel;
     Label3: TLabel;
-    ListView1: TListView;
+    listaCamasDisponibles: TListView;
     Rectangle4: TRectangle;
     Label2: TLabel;
     Label5: TLabel;
@@ -82,47 +85,65 @@ type
     SpeedButton7: TSpeedButton;
     Label27: TLabel;
     Label29: TLabel;
-    solicitudCli: TRESTClient;
-    solicitudReq: TRESTRequest;
-    solicitudRes: TRESTResponse;
-    solicitudDSA: TRESTResponseDataSetAdapter;
     solicitud: TFDMemTable;
-    solicitudid_solicitud: TWideStringField;
-    solicitudid_internacion: TWideStringField;
-    solicitudid_paciente: TWideStringField;
-    solicituddni_pacientes: TWideStringField;
+    solicitudidSolicitud: TWideStringField;
+    solicitudidInternacion: TWideStringField;
+    solicitudpaciCodigo: TWideStringField;
+    solicitudnroDocumento: TWideStringField;
     solicitudfecha: TWideStringField;
-    solicitudid_cama_origen: TWideStringField;
-    solicitudcama_origen: TWideStringField;
-    solicitudid_cama_destino: TWideStringField;
-    solicitudcama_destino: TWideStringField;
-    solicitudid_motivo: TWideStringField;
+    solicitudidCamaOrigen: TWideStringField;
+    solicitudcamaOrigen: TWideStringField;
+    solicitudidCamaDestino: TWideStringField;
+    solicitudcamaDestino: TWideStringField;
+    solicitudidMotivo: TWideStringField;
     solicitudmotivo: TWideStringField;
-    solicitudid_estado_solicitud: TWideStringField;
+    solicitudidEstadoSolicitud: TWideStringField;
     solicitudestado: TWideStringField;
-    solicitudsolicitado_por_dni: TWideStringField;
-    solicitudsolicitado_por_nombre: TWideStringField;
-    solicitudautorizado_fecha: TWideStringField;
-    solicitudautorizado_por_dni: TWideStringField;
-    solicitudautorizado_por_nombre: TWideStringField;
-    solicitudrealizado_fecha: TWideStringField;
-    solicitudrealizado_por_dni: TWideStringField;
-    solicitudrealizado_por_nombre: TWideStringField;
-    solicitudcancelado_fecha: TWideStringField;
-    solicitudcancelado_por_dni: TWideStringField;
-    solicitudcancelado_por_nombre: TWideStringField;
+    solicitudsolicitadoPorDni: TWideStringField;
+    solicitudsolicitadoPorNombre: TWideStringField;
+    solicitudautorizadoFecha: TWideStringField;
+    solicitudautorizadoPorDni: TWideStringField;
+    solicitudautorizadoPorNombre: TWideStringField;
+    solicitudrealizadoFecha: TWideStringField;
+    solicitudrealizadoPorDni: TWideStringField;
+    solicitudrealizadoPorNombre: TWideStringField;
+    solicitudcanceladoFecha: TWideStringField;
+    solicitudcanceladoPorDni: TWideStringField;
+    solicitudcanceladoPorNombre: TWideStringField;
     lb_cama_destino: TLabel;
     FondoTransparente: TRectangle;
+    solicitudtdocCodigo: TIntegerField;
+    eliminarSolicitud: TFDMemTable;
+    eliminarSolicitudestado: TIntegerField;
+    eliminarSolicitudmensaje: TStringField;
+    camasDisponibles: TFDMemTable;
+    camasDisponiblesidCama: TIntegerField;
+    camasDisponiblescama: TStringField;
+    camasDisponiblesidHabitacion: TIntegerField;
+    camasDisponiblespiso: TStringField;
+    camasDisponiblestipoCama: TStringField;
+    BindSourceDB1: TBindSourceDB;
+    BindingsList1: TBindingsList;
+    LinkListControlToField1: TLinkListControlToField;
+    autorizarCambio: TFDMemTable;
+    autorizarCambioestado: TIntegerField;
+    autorizarCambiomensaje: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
     procedure Actualizar;
     procedure FormActivate(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure cancelarSolicitudCambio;
+    procedure actualizarCamasDisponibles;
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure autorizarCambioDeCama;
   private
     { Private declarations }
   public
     { Public declarations }
-    id_internacion, id_cama_origen : Integer;
+    idInternacion, idCamaOrigen : Integer;
   end;
 
 var
@@ -135,31 +156,40 @@ implementation
 uses ModuloDatos;
 
 procedure Tform_CambioCamaAdmision.Actualizar;
+var
+  response : IResponse;
+  recurso: string;
 begin
-  // Obtengo los datos de la cama
-  solicitudCli.BaseURL                                        := datos.urlTC;
-  solicitudReq.Resource                                       := 'cambioCama/buscarSolicitud';
-  solicitudReq.Params.ParameterByName('TokenAcceso').Value    := datos.tokenAcceso;
-  solicitudReq.Params.ParameterByName('id_internacion').Value := id_internacion.ToString;
-  solicitudReq.Params.ParameterByName('id_cama_origen').Value := id_cama_origen.ToString;
-  solicitudReq.Execute;
+  // Obtengo los datos de la solicitud de cambio de cama
 
-  if solicitudRes.StatusCode = 200 then
+  recurso := '/tablerocamas/buscarSolicitudCambioCama';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idInternacion', idInternacion.ToString)
+              .AddParam('idCamaOrigen',idCamaOrigen.ToString)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(solicitud))
+              .Get;
+
+
+  if response.StatusCode = 200 then
+
     begin
       if solicitud.RecordCount = 1 then
         begin
           // Hay una solicitud
           pagina.TabIndex := 1;
-          lb_idSolicitud.Text := solicitudid_solicitud.AsString;
+          lb_idSolicitud.Text := solicitudidSolicitud.AsString;
           lb_fecha_solicitud.Text := solicitudfecha.AsString;
-          lb_solicitado_por.Text := solicitudsolicitado_por_nombre.AsString;
-          lb_cama_origen.Text := solicitudcama_origen.AsString;
+          lb_solicitado_por.Text := solicitudsolicitadoPorNombre.AsString;
+          lb_cama_origen.Text := solicitudcamaOrigen.AsString;
           lb_estadoSolicitud.Text := solicitudestado.AsString;
-          if (solicitudid_estado_solicitud.AsInteger = 1) or (solicitudid_estado_solicitud.AsInteger = 2) then
+          if (solicitudidEstadoSolicitud.AsInteger = 1) or (solicitudidEstadoSolicitud.AsInteger = 2) then
             begin
-              lb_autorizadoNombre.Text := solicitudautorizado_por_nombre.AsString;
-              lb_autorizadoFecha.Text := solicitudautorizado_fecha.AsString;
-              lb_cama_destino.Text := solicitudcama_destino.AsString;
+              lb_autorizadoNombre.Text := solicitudautorizadoPorNombre.AsString;
+              lb_autorizadoFecha.Text := solicitudautorizadoFecha.AsString;
+              lb_cama_destino.Text := solicitudcamaDestino.AsString;
 
 //              if solicitudid_estado_solicitud.AsInteger = 2 then
 //                begin
@@ -192,8 +222,67 @@ begin
     end
   else
     begin
-      Showmessage('Error ' + solicitudRes.StatusCode.ToString + #13 + #13 + 'Ha ocurrido un error en la ejecución del método ' + solicitudReq.Resource);
+      Showmessage('Error ' + response.StatusCode.ToString + #13 + #13 + 'Ha ocurrido un error en la ejecución del método ' + recurso);
     end;
+end;
+
+procedure Tform_CambioCamaAdmision.actualizarCamasDisponibles;
+var
+  response: IResponse;
+  recurso: string;
+begin
+  recurso := '/tablerocamas/camasDisponibles';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(camasDisponibles))
+              .Get;
+
+  if response.StatusCode = 200 then
+    begin
+      if camasDisponibles.RecordCount > 0 then
+        begin
+          pagina.TabIndex := 2;
+          listaCamasDisponibles.Enabled := true;        
+        end
+      else
+        begin
+          pagina.TabIndex := 1;
+          listaCamasDisponibles.Enabled := false;
+          datos.VerMensaje('No hay camas disponibles','En este momento no hay camas disponibles','Aceptar','ERROR',0);        
+        end;
+    end
+  else
+    begin
+      datos.VerMensaje('Error ' + response.StatusCode.ToString ,'Ocurrió un error al consultar el método ' + recurso,'Aceptar','ERROR',0);
+    end;
+end;
+
+procedure Tform_CambioCamaAdmision.autorizarCambioDeCama;
+var
+  response: IResponse;
+  recurso:string;
+  body:string;
+begin
+  recurso := '/tablerocamas/autorizarCambioCama';
+  body:= '';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
+              .Get;
+               
+  if response.StatusCode = 200 then
+    begin
+      datos.VerMensaje('Cambio de cama Autorizado','Se autorizó el cambio del paciente de la cama x a la z','Aceptar','OK',0);
+    end
+  else
+    begin
+      datos.VerMensaje('Error ' + response.StatusCode.ToString ,'El método ' + recurso + ' respondió: ' + autorizarCambiomensaje.AsString,'Aceptar','ERROR',0);
+    end;  
 end;
 
 procedure Tform_CambioCamaAdmision.botonSalirClick(Sender: TObject);
@@ -212,9 +301,64 @@ begin
   botonSalir.FontColor := TAlphaColorRec.Red;
 end;
 
+procedure Tform_CambioCamaAdmision.cancelarSolicitudCambio;
+var
+  Response: IResponse;
+  mens:string;
+  resMod:integer;
+begin
+
+  resMod := datos.MensajeConfirmacion(
+              'Eliminar Solicitud de Cambio de Cama',
+              '¿Está seguro que desea eliminar esta solicitud de cambio de cama?',
+              'Si. Eliminar',
+              'No eliminar',
+              'PREGUNTA',
+              form_CambioCamaAdmision.Width,
+              form_CambioCamaAdmision.Height);
+
+  if(resMod = 6)  then // 6 = mrYes
+    begin
+        response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource('/tablerocamas/cambioCamaEliminarSolicitud')
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idSolicitudCambio', solicitudidSolicitud.AsString)
+              .AddParam('dni',datos.dniLogin)
+              .AddParam('nombreUsuario',datos.nombreLogin)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(eliminarSolicitud))
+              .Delete;
+
+        mens := eliminarSolicitudmensaje.AsString;
+
+        if response.StatusCode = 200 then
+          datos.VerMensaje('Solicitud de Cambio de Cama',mens,'Aceptar','OK',0)
+        else
+          datos.VerMensaje('Error ' + response.StatusCode.ToString ,mens,'Aceptar','ERROR',0);
+
+        Actualizar;
+    end;
+
+end;
+
 procedure Tform_CambioCamaAdmision.FormActivate(Sender: TObject);
 begin
   Actualizar;
+end;
+
+procedure Tform_CambioCamaAdmision.SpeedButton1Click(Sender: TObject);
+begin
+  autorizarCambioDeCama;
+end;
+
+procedure Tform_CambioCamaAdmision.SpeedButton2Click(Sender: TObject);
+begin
+  actualizarCamasDisponibles;
+end;
+
+procedure Tform_CambioCamaAdmision.SpeedButton3Click(Sender: TObject);
+begin
+  cancelarSolicitudCambio;
 end;
 
 end.

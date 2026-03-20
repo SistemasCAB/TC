@@ -669,10 +669,10 @@ begin
   if datos.gestionaCamas = 1 then // Ejemplo: Admisión
     begin
       Application.CreateForm(Tform_CambioCamaAdmision, form_CambioCamaAdmision);
-      form_CambioCamaAdmision.Height := alto;
-      form_CambioCamaAdmision.Width := ancho;
-      form_CambioCamaAdmision.id_cama_origen := idCama;
-      form_CambioCamaAdmision.id_internacion := camasidInternacion.AsInteger;
+      form_CambioCamaAdmision.Height        := alto;
+      form_CambioCamaAdmision.Width         := ancho;
+      form_CambioCamaAdmision.idCamaOrigen  := idCama;
+      form_CambioCamaAdmision.idInternacion := camasidInternacion.AsInteger;
       form_CambioCamaAdmision.ShowModal;
     end
   else
@@ -682,6 +682,7 @@ begin
       form_CambioDeCama.Width           := ancho;
       form_CambioDeCama.idCamaOrigen    := idCama;
       form_CambioDeCama.idInternacion   := camasidInternacion.AsInteger;
+      form_CambioDeCama.tdocCodigo      := camastdocCodigo.AsInteger;
       form_CambioDeCama.nroDocumento    := camasnroDocumento.AsString;
       form_CambioDeCama.paciCodigo      := camaspaciCodigo.AsInteger;
       form_CambioDeCama.ShowModal;

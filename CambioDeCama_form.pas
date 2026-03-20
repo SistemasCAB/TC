@@ -145,7 +145,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    idCamaOrigen, idInternacion, paciCodigo:integer;
+    idCamaOrigen, idInternacion, tdocCodigo, paciCodigo:integer;
     nroDocumento:string;
   end;
 
@@ -161,9 +161,11 @@ uses ModuloDatos, mensajeConfirmacion_form;
 procedure Tform_CambioDeCama.Actualizar;
 var
   response : IResponse;
+  recurso: string;
 begin
+  recurso := '/tablerocamas/buscarSolicitudCambioCama';
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/tablerocamas/buscarSolicitudCambioCama')
+              .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
               .AddParam('idInternacion', idInternacion.ToString)
               .AddParam('idCamaOrigen',idCamaOrigen.ToString)
@@ -220,7 +222,7 @@ begin
     end
   else
     begin
-      datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,'Ha ocurrido un error en la ejecución del método cambioCama/buscarSolicitud','Aceptar','ERROR',0);
+      datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,'Ha ocurrido un error en la ejecución del método ' + recurso,'Aceptar','ERROR',0);
     end;
 end;
 
@@ -292,7 +294,7 @@ begin
               .AddParam('nombreUsuario',datos.nombreLogin)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(eliminarSolicitud))
-              .Post;
+              .Delete;
 
         mens := eliminarSolicitudmensaje.AsString;
 
@@ -309,17 +311,23 @@ end;
 procedure Tform_CambioDeCama.crearSolicitudCambio;
 var
   response: IResponse;
+  body: String;
 begin
+  body := '{ '+
+              '"idInternacion":'+idInternacion.ToString +','+
+              '"paciCodigo":'+paciCodigo.ToString +','+
+              '"tdocCodigo":'+tdocCodigo.ToString +','+
+              '"nroDocumento":"'+ nroDocumento +'",'+
+              '"idCamaOrigen":'+ idCamaOrigen.ToString +','+
+              '"idMotivo":'+ motivosidMotivoCambioCama.AsString +','+
+              '"solicitadoPorDni":"'+ datos.dniLogin +'",'+
+              '"solicitadoPorNombre":"'+ datos.nombreLogin +'"'+
+          '}';
+
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/cambioCama/nuevaSolicitud')
+              .Resource('/tablerocamas/cambioCamaCrearSolicitud')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_internacion', idInternacion.ToString)
-              .AddParam('id_paciente', paciCodigo.ToString)
-              .AddParam('dni_paciente', nroDocumento)
-              .AddParam('id_cama_origen', idCamaOrigen.ToString)
-              .AddParam('id_motivo', motivosidMotivoCambioCama.AsString)
-              .AddParam('solicitado_por_dni', datos.dniLogin)
-              .AddParam('solicitado_por_nombre', datos.nombreLogin)
+              .AddBody(body)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(nuevaSolicitud))
               .Post;

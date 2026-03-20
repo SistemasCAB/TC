@@ -56,15 +56,15 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                00F1494441545847EDD53D76C2300C0770A94BD7CE64ED013814736FC301BA31
-                F500DC84B54FDEE9D2C1A92426F11C91400AD80FDED36FF347E4BFEDE4052084
-                1042787CCCBC4D29E5BEEF77D6A7AA3A9CD58088AC8848B4C0CC1B681D4844DE
-                55755F063144C4E0030D1A772422AF39E76F1FA2C4CC5FE0330C1A77C2CC9F7E
-                F11211FDA9EAD2E6EB5820FF502DCCBC3E2EEE32A0351011ADB3A21F005820E2
-                AF1FB00C2F7EA01655FD40C4B7B130271A9CCC452757E627D49252520080AEEB
-                D08F2122360F34C5B29C655F85EFBFD69C7ACD5EEAB92603953BB19D5DE2FF53
-                DE58ED7FF1856E35A7DEE409851042084FE20093E3B1D23B5D7FF50000000049
-                454E44AE426082}
+                00F2494441545847EDD53B72C2400C06608986969A19773900874ACD6D72003A
+                2A0EC04DD2CAE33E34143692A8C4AC651B9BC4DE2133FABA7D58FBEFAE3D0608
+                218410DE1F339FABAAAA9BA6F9B63E55D5F6AC0C44E493884413CC7C84DC8144
+                E443557FD2208688187CA056634622B2AEEB9A7C8814339FC067683566C2CC07
+                BF788A886EAABAB3F9DA17C83FB41466FE7A2CEE32A0351011AD73411700D822
+                E2D50F5886951F588AAAEE1171D317A623C3C98CEA5C999FB094B22C1500A028
+                0AF4638888D9030DB12C4FD957E1FB7F6B4ABD6C2FF5548381D29DD8CEC6F8FF
+                94D757FB25BED05F4DA9377842218410C23F710772FCB1BA327D9D3800000000
+                49454E44AE426082}
               FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
             end>
           Align = Left
@@ -109,7 +109,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
         Size.Width = 593.000000000000000000
         Size.Height = 440.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 1
+        TabIndex = 2
         TabOrder = 0
         TabPosition = None
         Sizes = (
@@ -278,7 +278,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -353,6 +353,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 Size.PlatformDefault = False
                 ParentShowHint = False
                 ShowHint = True
+                OnClick = SpeedButton2Click
               end
             end
             object botonCancelarCambio: TRectangle
@@ -401,6 +402,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 Size.PlatformDefault = False
                 ParentShowHint = False
                 ShowHint = True
+                OnClick = SpeedButton3Click
               end
             end
             object lb_fecha_solicitud: TLabel
@@ -697,7 +699,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -724,7 +726,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               Text = 'Seleccione la cama a la que autoriza a cambiar a este paciente'
               TabOrder = 1
             end
-            object ListView1: TListView
+            object listaCamasDisponibles: TListView
               ItemAppearanceClassName = 'TListItemAppearance'
               ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
               HeaderAppearanceClassName = 'TListHeaderObjects'
@@ -783,6 +785,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 Size.PlatformDefault = False
                 ParentShowHint = False
                 ShowHint = True
+                OnClick = SpeedButton1Click
               end
             end
             object Rectangle5: TRectangle
@@ -852,176 +855,8 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
       end
     end
   end
-  object solicitudCli: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://10.99.8.107/tc/public/api'
-    Params = <>
-    RaiseExceptionOn500 = False
-    SynchronizedEvents = False
-    Left = 536
-    Top = 88
-  end
-  object solicitudReq: TRESTRequest
-    Client = solicitudCli
-    Params = <
-      item
-        Kind = pkHTTPHEADER
-        Name = 'TokenAcceso'
-        Value = 
-          'cv44uu1depYrgYVwq7S6W7wC0F2OfjbZQvJ9Ay4wqY8qn1jDufmfZszW2V8bnnSa' +
-          'sGtHJMQyBVjQzZGC361iOMZGEU9jYTFUYxv2jZ6yZh7QoHEfb59kWgohM1FoB5aB'
-      end
-      item
-        Name = 'id_internacion'
-        Value = '7019'
-      end
-      item
-        Name = 'id_cama_origen'
-        Value = '17'
-      end>
-    Resource = 'cambioCama/buscarSolicitud'
-    Response = solicitudRes
-    SynchronizedEvents = False
-    Left = 536
-    Top = 136
-  end
-  object solicitudRes: TRESTResponse
-    ContentType = 'application/json'
-    Left = 536
-    Top = 192
-  end
-  object solicitudDSA: TRESTResponseDataSetAdapter
-    Active = True
-    Dataset = solicitud
-    FieldDefs = <>
-    Response = solicitudRes
-    Left = 536
-    Top = 248
-  end
   object solicitud: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id_solicitud'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_internacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_paciente'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'dni_pacientes'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'fecha'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_cama_origen'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cama_origen'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_cama_destino'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cama_destino'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_motivo'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'motivo'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_estado_solicitud'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'estado'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'solicitado_por_dni'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'solicitado_por_nombre'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'autorizado_fecha'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'autorizado_por_dni'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'autorizado_por_nombre'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'realizado_fecha'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'realizado_por_dni'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'realizado_por_nombre'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cancelado_fecha'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cancelado_por_dni'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cancelado_por_nombre'
-        DataType = ftWideString
-        Size = 255
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -1034,100 +869,189 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
     StoreDefs = True
     Left = 536
     Top = 296
-    object solicitudid_solicitud: TWideStringField
-      FieldName = 'id_solicitud'
+    object solicitudidSolicitud: TWideStringField
+      FieldName = 'idSolicitud'
       Size = 255
     end
-    object solicitudid_internacion: TWideStringField
-      FieldName = 'id_internacion'
+    object solicitudidInternacion: TWideStringField
+      FieldName = 'idInternacion'
       Size = 255
     end
-    object solicitudid_paciente: TWideStringField
-      FieldName = 'id_paciente'
+    object solicitudpaciCodigo: TWideStringField
+      FieldName = 'paciCodigo'
       Size = 255
     end
-    object solicituddni_pacientes: TWideStringField
-      FieldName = 'dni_pacientes'
+    object solicitudtdocCodigo: TIntegerField
+      FieldName = 'tdocCodigo'
+    end
+    object solicitudnroDocumento: TWideStringField
+      FieldName = 'nroDocumento'
       Size = 255
     end
     object solicitudfecha: TWideStringField
       FieldName = 'fecha'
       Size = 255
     end
-    object solicitudid_cama_origen: TWideStringField
-      FieldName = 'id_cama_origen'
+    object solicitudidCamaOrigen: TWideStringField
+      FieldName = 'idCamaOrigen'
       Size = 255
     end
-    object solicitudcama_origen: TWideStringField
-      FieldName = 'cama_origen'
+    object solicitudcamaOrigen: TWideStringField
+      FieldName = 'camaOrigen'
       Size = 255
     end
-    object solicitudid_cama_destino: TWideStringField
-      FieldName = 'id_cama_destino'
+    object solicitudidCamaDestino: TWideStringField
+      FieldName = 'idCamaDestino'
       Size = 255
     end
-    object solicitudcama_destino: TWideStringField
-      FieldName = 'cama_destino'
+    object solicitudcamaDestino: TWideStringField
+      FieldName = 'camaDestino'
       Size = 255
     end
-    object solicitudid_motivo: TWideStringField
-      FieldName = 'id_motivo'
+    object solicitudidMotivo: TWideStringField
+      FieldName = 'idMotivo'
       Size = 255
     end
     object solicitudmotivo: TWideStringField
       FieldName = 'motivo'
       Size = 255
     end
-    object solicitudid_estado_solicitud: TWideStringField
-      FieldName = 'id_estado_solicitud'
+    object solicitudidEstadoSolicitud: TWideStringField
+      FieldName = 'idEstadoSolicitud'
       Size = 255
     end
     object solicitudestado: TWideStringField
       FieldName = 'estado'
       Size = 255
     end
-    object solicitudsolicitado_por_dni: TWideStringField
-      FieldName = 'solicitado_por_dni'
+    object solicitudsolicitadoPorDni: TWideStringField
+      FieldName = 'solicitadoPorDni'
       Size = 255
     end
-    object solicitudsolicitado_por_nombre: TWideStringField
-      FieldName = 'solicitado_por_nombre'
+    object solicitudsolicitadoPorNombre: TWideStringField
+      FieldName = 'solicitadoPorNombre'
       Size = 255
     end
-    object solicitudautorizado_fecha: TWideStringField
-      FieldName = 'autorizado_fecha'
+    object solicitudautorizadoFecha: TWideStringField
+      FieldName = 'autorizadoFecha'
       Size = 255
     end
-    object solicitudautorizado_por_dni: TWideStringField
-      FieldName = 'autorizado_por_dni'
+    object solicitudautorizadoPorDni: TWideStringField
+      FieldName = 'autorizadoPorDni'
       Size = 255
     end
-    object solicitudautorizado_por_nombre: TWideStringField
-      FieldName = 'autorizado_por_nombre'
+    object solicitudautorizadoPorNombre: TWideStringField
+      FieldName = 'autorizadoPorNombre'
       Size = 255
     end
-    object solicitudrealizado_fecha: TWideStringField
-      FieldName = 'realizado_fecha'
+    object solicitudrealizadoFecha: TWideStringField
+      FieldName = 'realizadoFecha'
       Size = 255
     end
-    object solicitudrealizado_por_dni: TWideStringField
-      FieldName = 'realizado_por_dni'
+    object solicitudrealizadoPorDni: TWideStringField
+      FieldName = 'realizadoPorDni'
       Size = 255
     end
-    object solicitudrealizado_por_nombre: TWideStringField
-      FieldName = 'realizado_por_nombre'
+    object solicitudrealizadoPorNombre: TWideStringField
+      FieldName = 'realizadoPorNombre'
       Size = 255
     end
-    object solicitudcancelado_fecha: TWideStringField
-      FieldName = 'cancelado_fecha'
+    object solicitudcanceladoFecha: TWideStringField
+      FieldName = 'canceladoFecha'
       Size = 255
     end
-    object solicitudcancelado_por_dni: TWideStringField
-      FieldName = 'cancelado_por_dni'
+    object solicitudcanceladoPorDni: TWideStringField
+      FieldName = 'canceladoPorDni'
       Size = 255
     end
-    object solicitudcancelado_por_nombre: TWideStringField
-      FieldName = 'cancelado_por_nombre'
+    object solicitudcanceladoPorNombre: TWideStringField
+      FieldName = 'canceladoPorNombre'
+      Size = 255
+    end
+  end
+  object eliminarSolicitud: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 120
+    Top = 432
+    object eliminarSolicitudestado: TIntegerField
+      FieldName = 'estado'
+    end
+    object eliminarSolicitudmensaje: TStringField
+      FieldName = 'mensaje'
+      Size = 255
+    end
+  end
+  object camasDisponibles: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 303
+    Top = 204
+    object camasDisponiblesidCama: TIntegerField
+      FieldName = 'idCama'
+    end
+    object camasDisponiblescama: TStringField
+      FieldName = 'cama'
+      Size = 255
+    end
+    object camasDisponiblesidHabitacion: TIntegerField
+      FieldName = 'idHabitacion'
+    end
+    object camasDisponiblestipoCama: TStringField
+      FieldName = 'tipoCama'
+      Size = 10
+    end
+    object camasDisponiblespiso: TStringField
+      FieldName = 'piso'
+      Size = 50
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = camasDisponibles
+    ScopeMappings = <>
+    Left = 352
+    Top = 296
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 20
+    Top = 5
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'cama'
+      Control = listaCamasDisponibles
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+  end
+  object autorizarCambio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 487
+    Top = 404
+    object autorizarCambioestado: TIntegerField
+      FieldName = 'estado'
+    end
+    object autorizarCambiomensaje: TStringField
+      FieldName = 'mensaje'
       Size = 255
     end
   end
