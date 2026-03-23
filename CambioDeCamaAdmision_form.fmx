@@ -56,14 +56,14 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                00F2494441545847EDD53B72C2400C06608986969A19773900874ACD6D72003A
-                2A0EC04DD2CAE33E34143692A8C4AC651B9BC4DE2133FABA7D58FBEFAE3D0608
-                218410DE1F339FABAAAA9BA6F9B63E55D5F6AC0C44E493884413CC7C84DC8144
-                E443557FD2208688187CA056634622B2AEEB9A7C8814339FC067683566C2CC07
-                BF788A886EAABAB3F9DA17C83FB41466FE7A2CEE32A0351011AD73411700D822
-                E2D50F5886951F588AAAEE1171D317A623C3C98CEA5C999FB094B22C1500A028
-                0AF4638888D9030DB12C4FD957E1FB7F6B4ABD6C2FF5548381D29DD8CEC6F8FF
-                94D757FB25BED05F4DA9377842218410C23F710772FCB1BA327D9D3800000000
+                00F2494441545847EDD53B8EC2400C06609B86969A2A0507E050D4DC86036CB7
+                1507E026548E90D2434391ACEDAD8C262681F0C808247FDD3CE2F96726510042
+                082184CFC7CCBBAAAAEAA669F6D6A7AADA9E958188AC884834C1CCBF903B9088
+                2C54F598063144C4E003B51A6F2422D3BAAE0F3E448A99B7E033B41A6FC2CC3F
+                7EF11411FDA9EAD2E66B5720FFD05898797359DC65406B20225AE7884E003047
+                C4B31FB00C133F3016555D23E2AC2BCC950C2773D7D595F9096329CB5201008A
+                A2403F8688983D501FCB72937D15BEFF5943EA657BA987EA0D94EEC476768FFF
+                4F795DB51FE20BBD6A48BDDE130A218410BEC43FC19AB196B274AFDE00000000
                 49454E44AE426082}
               FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
             end>
@@ -109,7 +109,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
         Size.Width = 593.000000000000000000
         Size.Height = 440.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 0
         TabPosition = None
         Sizes = (
@@ -278,7 +278,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -472,7 +472,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               AutoSize = True
               StyledSettings = [Family, FontColor]
               Position.X = 8.000000000000000000
-              Position.Y = 245.000000000000000000
+              Position.Y = 285.000000000000000000
               Size.Width = 155.000000000000000000
               Size.Height = 19.000000000000000000
               Size.PlatformDefault = False
@@ -485,7 +485,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               AutoSize = True
               StyledSettings = [Family, FontColor]
               Position.X = 33.000000000000000000
-              Position.Y = 272.000000000000000000
+              Position.Y = 312.000000000000000000
               Size.Width = 552.000000000000000000
               Size.Height = 19.000000000000000000
               Size.PlatformDefault = False
@@ -691,6 +691,37 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 Size.PlatformDefault = False
                 ParentShowHint = False
                 ShowHint = True
+                OnClick = SpeedButton5Click
+              end
+            end
+            object panelAutEnfermeria: TCalloutPanel
+              Padding.Top = 11.000000000000000000
+              Position.X = 194.000000000000000000
+              Position.Y = 233.000000000000000000
+              Size.Width = 376.000000000000000000
+              Size.Height = 54.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 8
+              CalloutWidth = 23.000000000000000000
+              CalloutLength = 11.000000000000000000
+              object lb_AutEnfermeriaEstado: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 376.000000000000000000
+                Size.Height = 43.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claCrimson
+                TextSettings.HorzAlign = Center
+                Text = 'Requiere autorizacion de Supervici'#243'n de Enfermer'#237'a'
+                TabOrder = 0
+              end
+              object ShadowEffect1: TShadowEffect
+                Distance = 3.000000000000000000
+                Direction = 45.000000000000000000
+                Softness = 0.300000011920929000
+                Opacity = 0.600000023841857900
+                ShadowColor = claBlack
               end
             end
           end
@@ -699,7 +730,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -968,6 +999,28 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
       FieldName = 'canceladoPorNombre'
       Size = 255
     end
+    object solicitudrequiereAutorizacionEnfermeria: TIntegerField
+      FieldName = 'requiereAutorizacionEnfermeria'
+    end
+    object solicitudautEnfermeriaEstado: TIntegerField
+      FieldName = 'autEnfermeriaEstado'
+    end
+    object solicitudautEnfermeriaEstadoTexto: TStringField
+      FieldName = 'autEnfermeriaEstadoTexto'
+      Size = 50
+    end
+    object solicitudautEnfermeriaPorDni: TStringField
+      FieldName = 'autEnfermeriaPorDni'
+      Size = 50
+    end
+    object solicitudautEnfermeriaPorNombre: TStringField
+      FieldName = 'autEnfermeriaPorNombre'
+      Size = 255
+    end
+    object solicitudautEnfermeriaFecha: TStringField
+      FieldName = 'autEnfermeriaFecha'
+      Size = 255
+    end
   end
   object eliminarSolicitud: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -977,8 +1030,8 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 120
-    Top = 432
+    Left = 112
+    Top = 368
     object eliminarSolicitudestado: TIntegerField
       FieldName = 'estado'
     end

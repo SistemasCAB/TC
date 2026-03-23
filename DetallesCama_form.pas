@@ -231,6 +231,14 @@ type
     camastdocDescripcion: TStringField;
     aislamientoskpc: TIntegerField;
     camasidTipoAltaMedica: TIntegerField;
+    camastareasBloqueanHabitacion: TIntegerField;
+    camastareasBloqueanCama: TIntegerField;
+    camaslimpia: TIntegerField;
+    camasrequiereAutorizacionEnfermeria: TIntegerField;
+    camasautEnfermeriaEstado: TIntegerField;
+    camasautEnfermeriaPorDni: TStringField;
+    camasautEnfermeriaPorNombre: TStringField;
+    camasautEnfermeriaFecha: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);

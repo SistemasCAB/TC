@@ -641,3 +641,6 @@ Visible=True
 [formAislamiento.disponibles]
 Visible=False
 
+[form_CambioDeCama.motivos]
+Visible=False
+

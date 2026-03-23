@@ -128,6 +128,15 @@ type
     autorizarCambio: TFDMemTable;
     autorizarCambioestado: TIntegerField;
     autorizarCambiomensaje: TStringField;
+    panelAutEnfermeria: TCalloutPanel;
+    lb_AutEnfermeriaEstado: TLabel;
+    ShadowEffect1: TShadowEffect;
+    solicitudrequiereAutorizacionEnfermeria: TIntegerField;
+    solicitudautEnfermeriaEstado: TIntegerField;
+    solicitudautEnfermeriaEstadoTexto: TStringField;
+    solicitudautEnfermeriaPorDni: TStringField;
+    solicitudautEnfermeriaPorNombre: TStringField;
+    solicitudautEnfermeriaFecha: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
@@ -139,6 +148,8 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure autorizarCambioDeCama;
+    procedure noAutorizarCambioDeCama;
+    procedure SpeedButton5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -190,25 +201,38 @@ begin
               lb_autorizadoNombre.Text := solicitudautorizadoPorNombre.AsString;
               lb_autorizadoFecha.Text := solicitudautorizadoFecha.AsString;
               lb_cama_destino.Text := solicitudcamaDestino.AsString;
+              if solicitudrequiereAutorizacionEnfermeria.AsInteger = 1 then
+                begin
+                  panelAutEnfermeria.Visible := true;
+                  case solicitudautEnfermeriaEstado.AsInteger of
+                    // pendiente de autorización
+                    0:begin
+                      lb_AutEnfermeriaEstado.Text := 'Requiere autorización de Sup. de Enfermería';
+                      lb_AutEnfermeriaEstado.TextSettings.FontColor := TAlphaColorRec.Crimson;
+                    end;
+                    // autorizado por enfermeria
+                    1:begin
+                      lb_AutEnfermeriaEstado.Text := 'Autorizado por Sup. de Enfermería';
+                      lb_AutEnfermeriaEstado.TextSettings.FontColor := TAlphaColorRec.Green;
+                    end;
+                    // no autorizado por enfemería
+                    2:begin
+                      lb_AutEnfermeriaEstado.Text := 'No autorizado por Sup. de Enfermería';
+                      lb_AutEnfermeriaEstado.TextSettings.FontColor := TAlphaColorRec.Crimson;
+                    end;
+                  end;
 
-//              if solicitudid_estado_solicitud.AsInteger = 2 then
-//                begin
-//                  recBotonCambiarCama.Fill.Color := TAlphaColor(strtoint('$FF008795'));
-//                  botonCambiarCama.Enabled := true;
-//                end
-//              else
-//                begin
-//                  recBotonCambiarCama.Fill.Color := TAlphaColorRec.Slategray;
-//                  botonCambiarCama.Enabled := false;
-//                end;
-
+                end
+              else
+                begin
+                  panelAutEnfermeria.Visible := false;
+                end;
             end
           else
             begin
               lb_autorizadoNombre.Text := '';
               lb_autorizadoFecha.Text := '';
               lb_cama_destino.Text := '';
-//              recBotonCambiarCama.Fill.Color := TAlphaColorRec.Slategray;
               botonCambiarCama.Enabled := false;
             end;
 
@@ -266,23 +290,29 @@ var
   body:string;
 begin
   recurso := '/tablerocamas/autorizarCambioCama';
-  body:= '';
+  body:= '{'+
+            '"idSolicitudCambio":'+ solicitudidSolicitud.AsString +','+
+            '"idCamaDestino":'+ camasDisponiblesidCama.AsString +','+
+            '"autorizadoPorDni":"'+ datos.dniLogin +'",'+
+            '"autorizadoPorNombre":"'+ datos.nombreLogin +'"'+
+          '}';
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
               .AddBody(body)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
-              .Get;
+              .Post;
                
   if response.StatusCode = 200 then
     begin
-      datos.VerMensaje('Cambio de cama Autorizado','Se autorizó el cambio del paciente de la cama x a la z','Aceptar','OK',0);
+      datos.VerMensaje('Cambio de cama Autorizado',autorizarCambiomensaje.AsString,'Aceptar','OK',0);
+      Close;
     end
   else
     begin
       datos.VerMensaje('Error ' + response.StatusCode.ToString ,'El método ' + recurso + ' respondió: ' + autorizarCambiomensaje.AsString,'Aceptar','ERROR',0);
-    end;  
+    end;
 end;
 
 procedure Tform_CambioCamaAdmision.botonSalirClick(Sender: TObject);
@@ -346,6 +376,36 @@ begin
   Actualizar;
 end;
 
+procedure Tform_CambioCamaAdmision.noAutorizarCambioDeCama;
+var
+  response: IResponse;
+  recurso:string;
+  body:string;
+begin
+  recurso := '/tablerocamas/noAutorizarCambioCama';
+  body:= '{'+
+              '"idSolicitudCambio":'+ solicitudidSolicitud.AsString +','+
+              '"autorizadoPorDni":"'+ datos.dniLogin +'",'+
+              '"autorizadoPorNombre":"'+ datos.nombreLogin +'"'+
+          '}';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
+              .Post;
+
+  if response.StatusCode = 200 then
+    begin
+      datos.VerMensaje('No Autorización - Cambio de cama',autorizarCambiomensaje.AsString,'Aceptar','OK',0);
+    end
+  else
+    begin
+      datos.VerMensaje('Error ' + response.StatusCode.ToString ,autorizarCambiomensaje.AsString,'Aceptar','ERROR',0);
+    end;
+end;
+
 procedure Tform_CambioCamaAdmision.SpeedButton1Click(Sender: TObject);
 begin
   autorizarCambioDeCama;
@@ -359,6 +419,23 @@ end;
 procedure Tform_CambioCamaAdmision.SpeedButton3Click(Sender: TObject);
 begin
   cancelarSolicitudCambio;
+end;
+
+procedure Tform_CambioCamaAdmision.SpeedButton5Click(Sender: TObject);
+var
+  resMod:integer;
+begin
+  resMod := datos.MensajeConfirmacion(
+              'No Autorizar Cambio de Cama',
+              '¿Está seguro que desea No Autorizar esta solicitud de cambio de cama?',
+              'Si. Estoy seguro',
+              'No',
+              'PREGUNTA',
+              form_CambioCamaAdmision.Width,
+              form_CambioCamaAdmision.Height);
+
+  if(resMod = 6)  then // 6 = mrYes
+    noAutorizarCambioDeCama;
 end;
 
 end.
