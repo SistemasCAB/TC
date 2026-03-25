@@ -30,9 +30,8 @@ type
     tabSolicitud: TTabItem;
     Rectangle2: TRectangle;
     Label4: TLabel;
-    botonCambiarCama: TRectangle;
-    Label7: TLabel;
-    Label11: TLabel;
+    botonAutorizarCambio: TRectangle;
+    lb_botonAutorizarCambio: TLabel;
     SpeedButton2: TSpeedButton;
     botonCancelarCambio: TRectangle;
     Label9: TLabel;
@@ -69,7 +68,7 @@ type
     SpeedButton4: TSpeedButton;
     tabOrden: TTabItem;
     TabItem2: TTabItem;
-    Rectangle6: TRectangle;
+    botonNoAutorizar: TRectangle;
     Label12: TLabel;
     Label13: TLabel;
     SpeedButton5: TSpeedButton;
@@ -139,6 +138,8 @@ type
     solicitudautEnfermeriaFecha: TStringField;
     camasDisponiblesaislamiento: TIntegerField;
     camasDisponiblesadvertencia: TStringField;
+    iconoBotonAutorizar: TImage;
+    iconoEditarCambioCama: TImage;
     procedure botonSalirClick(Sender: TObject);
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
@@ -207,22 +208,38 @@ begin
               lb_cama_destino.Text := solicitudcamaDestino.AsString;
               if solicitudrequiereAutorizacionEnfermeria.AsInteger = 1 then
                 begin
+                  botonCancelarCambio.Enabled := false;
                   panelAutEnfermeria.Visible := true;
                   case solicitudautEnfermeriaEstado.AsInteger of
                     // pendiente de autorización
                     0:begin
-                      lb_AutEnfermeriaEstado.Text := 'Requiere autorización de Sup. de Enfermería';
+                      lb_AutEnfermeriaEstado.Text := 'Pendiente de autorización de Sup. de Enfermería';
                       lb_AutEnfermeriaEstado.TextSettings.FontColor := TAlphaColorRec.Crimson;
+                      lb_botonAutorizarCambio.Text := 'Autorizar Cambio';
+                      iconoBotonAutorizar.Visible := true;
+                      iconoEditarCambioCama.Visible := false;
+                      botonAutorizarCambio.Enabled := false;
+                      botonNoAutorizar.Enabled := false;
                     end;
                     // autorizado por enfermeria
                     1:begin
                       lb_AutEnfermeriaEstado.Text := 'Autorizado por Sup. de Enfermería';
                       lb_AutEnfermeriaEstado.TextSettings.FontColor := TAlphaColorRec.Green;
+                      lb_botonAutorizarCambio.Text := 'Autorizar Cambio';
+                      iconoBotonAutorizar.Visible := true;
+                      iconoEditarCambioCama.Visible := false;
+                      botonAutorizarCambio.Enabled := false;
+                      botonNoAutorizar.Enabled := false;
                     end;
                     // no autorizado por enfemería
                     2:begin
                       lb_AutEnfermeriaEstado.Text := 'No autorizado por Sup. de Enfermería';
                       lb_AutEnfermeriaEstado.TextSettings.FontColor := TAlphaColorRec.Crimson;
+                      lb_botonAutorizarCambio.Text := 'Editar Cambio';
+                      iconoBotonAutorizar.Visible := false;
+                      iconoEditarCambioCama.Visible := true;
+                      botonAutorizarCambio.Enabled := true;
+                      botonNoAutorizar.Enabled := true;
                     end;
                   end;
 
@@ -237,7 +254,7 @@ begin
               lb_autorizadoNombre.Text := '';
               lb_autorizadoFecha.Text := '';
               lb_cama_destino.Text := '';
-              botonCambiarCama.Enabled := false;
+              botonAutorizarCambio.Enabled := false;
             end;
 
           lb_motivo.Text := solicitudmotivo.AsString;

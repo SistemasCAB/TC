@@ -334,6 +334,10 @@
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="DateTimeMaskEdit_unit.pas"/>
+        <DCCReference Include="AutorizacionesPendientes_form.pas">
+            <Form>form_AutorizacionesPendientes</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

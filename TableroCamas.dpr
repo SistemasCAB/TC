@@ -20,7 +20,8 @@ uses
   mensajeConfirmacion_form in 'mensajeConfirmacion_form.pas' {form_mensajeConfirmacion},
   AltaDefinitiva_form in 'AltaDefinitiva_form.pas' {form_AltaDefinitiva},
   Aislamientos_form in 'Aislamientos_form.pas' {formAislamiento},
-  DateTimeMaskEdit_unit in 'DateTimeMaskEdit_unit.pas';
+  DateTimeMaskEdit_unit in 'DateTimeMaskEdit_unit.pas',
+  AutorizacionesPendientes_form in 'AutorizacionesPendientes_form.pas' {form_AutorizacionesPendientes};
 
 {$R *.res}
 

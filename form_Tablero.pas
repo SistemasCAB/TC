@@ -113,7 +113,7 @@ type
     espere: TGIFImage;
     botonConsultarCambios: TButton;
     botonConfiguracion: TSpeedButton;
-    Rectangle3: TRectangle;
+    menuSeparador5: TRectangle;
     camas: TFDMemTable;
     versiones: TFDMemTable;
     versionesversionActual: TFloatField;
@@ -257,6 +257,8 @@ type
     permisoscontrolTotal: TIntegerField;
     camaskpc: TIntegerField;
     camas2kpc: TIntegerField;
+    botonAutorizar: TSpeedButton;
+    Rectangle3: TRectangle;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -285,6 +287,7 @@ type
     procedure CargarPermisosDesdeJson(const JsonStr: string; Permisos: TFDMemTable);
     procedure FormDestroy(Sender: TObject);
     procedure LimpiarCacheCamas;
+    procedure botonAutorizarClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -313,7 +316,8 @@ implementation
 {$R *.fmx}
 
 uses form_login, ModuloDatos, constantes, DetallesCama_form, Configuracion_form, ServiciosCambio_form, UFunciones,
-  FMX.Image.Base64, RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D;
+  FMX.Image.Base64, RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D,
+  AutorizacionesPendientes_form;
 
 function TformTablero.permisoModulo(idModulo: integer): integer;
 begin
@@ -1639,6 +1643,16 @@ procedure TformTablero.botonActualizarClick(Sender: TObject);
 begin
   lyMenuLateral.Visible := false;
   ActualizarCamas;
+end;
+
+procedure TformTablero.botonAutorizarClick(Sender: TObject);
+begin
+  RelojConsultarCambios.Enabled := false;
+  lyMenuLateral.Visible := false;
+  Application.CreateForm(Tform_AutorizacionesPendientes, form_AutorizacionesPendientes);
+  form_AutorizacionesPendientes.Height := formTablero.Height;
+  form_AutorizacionesPendientes.Width := formTablero.Width;
+  form_AutorizacionesPendientes.ShowModal;
 end;
 
 procedure TformTablero.botonCambiarServicioClick(Sender: TObject);

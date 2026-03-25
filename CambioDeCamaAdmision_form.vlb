@@ -7,9 +7,6 @@ Coordinates=397,256,46,51
 [Label1]
 Coordinates=832,256,46,51
 
-[botonCambiarCama]
-Coordinates=674,438,112,33
-
 [SpeedButton2]
 Coordinates=829,10,84,51
 
@@ -70,9 +67,6 @@ Coordinates=10,188,84,51
 [Label4]
 Coordinates=289,324,46,51
 
-[Label11]
-Coordinates=257,256,52,51
-
 [SpeedButton1]
 Coordinates=80,324,84,51
 
@@ -117,12 +111,6 @@ Coordinates=608,324,52,51
 
 [Label5]
 Coordinates=935,10,46,51
-
-[Rectangle6]
-Coordinates=346,392,69,33
-
-[Label7]
-Coordinates=378,188,46,51
 
 [iconoVentana]
 Coordinates=186,324,81,51
@@ -189,7 +177,7 @@ Coordinates=818,324,69,33
 Coordinates=479,10,52,51
 
 []
-Coordinates=722,87,91,36
+Coordinates=257,256,52,51
 
 [lb_autorizadoFecha]
 Coordinates=593,256,111,51
@@ -378,4 +366,13 @@ Coordinates=12,896,83,87
 
 [camasDisponiblesadvertencia]
 Coordinates=1126,244,162,33
+
+[botonNoAutorizar]
+Coordinates=346,392,69,33
+
+[botonAutorizarCambio]
+Coordinates=674,438,112,33
+
+[lb_botonAutorizarCambio]
+Coordinates=378,188,46,51
 

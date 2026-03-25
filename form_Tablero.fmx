@@ -639,7 +639,7 @@ object formTablero: TformTablero
       object menuSeparador1: TRectangle
         Align = Top
         Fill.Color = xFF00A8BB
-        Position.Y = 201.000000000000000000
+        Position.Y = 252.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 3.000000000000000000
         Size.PlatformDefault = False
@@ -660,7 +660,7 @@ object formTablero: TformTablero
       object menuSeparador2: TRectangle
         Align = Top
         Fill.Color = xFF00A8BB
-        Position.Y = 99.000000000000000000
+        Position.Y = 150.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 3.000000000000000000
         Size.PlatformDefault = False
@@ -669,7 +669,7 @@ object formTablero: TformTablero
       object botonCambiarServicio: TSpeedButton
         Align = Top
         StyledSettings = [Family, Size]
-        Position.Y = 102.000000000000000000
+        Position.Y = 153.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
@@ -681,7 +681,7 @@ object formTablero: TformTablero
       object menuSeparador3: TRectangle
         Align = Top
         Fill.Color = xFF00A8BB
-        Position.Y = 150.000000000000000000
+        Position.Y = 201.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 3.000000000000000000
         Size.PlatformDefault = False
@@ -690,7 +690,7 @@ object formTablero: TformTablero
       object botonSalir: TSpeedButton
         Align = Top
         StyledSettings = [Family, Size]
-        Position.Y = 204.000000000000000000
+        Position.Y = 255.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
@@ -702,7 +702,7 @@ object formTablero: TformTablero
       object menuSeparador4: TRectangle
         Align = Top
         Fill.Color = xFF00A8BB
-        Position.Y = 252.000000000000000000
+        Position.Y = 303.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 3.000000000000000000
         Size.PlatformDefault = False
@@ -741,7 +741,7 @@ object formTablero: TformTablero
       object botonConfiguracion: TSpeedButton
         Align = Top
         StyledSettings = [Family, Size]
-        Position.Y = 153.000000000000000000
+        Position.Y = 204.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
@@ -750,10 +750,31 @@ object formTablero: TformTablero
         TextSettings.FontColor = claWhitesmoke
         OnClick = botonConfiguracionClick
       end
-      object Rectangle3: TRectangle
+      object menuSeparador5: TRectangle
         Align = Top
         Fill.Color = xFF00A8BB
         Position.Y = 48.000000000000000000
+        Size.Width = 180.000000000000000000
+        Size.Height = 3.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claNull
+      end
+      object botonAutorizar: TSpeedButton
+        Align = Top
+        StyledSettings = [Family, Size]
+        Position.Y = 102.000000000000000000
+        Size.Width = 180.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Autorizaciones Pendientes'
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhitesmoke
+        OnClick = botonAutorizarClick
+      end
+      object Rectangle3: TRectangle
+        Align = Top
+        Fill.Color = xFF00A8BB
+        Position.Y = 99.000000000000000000
         Size.Width = 180.000000000000000000
         Size.Height = 3.000000000000000000
         Size.PlatformDefault = False

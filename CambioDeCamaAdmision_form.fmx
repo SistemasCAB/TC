@@ -56,15 +56,15 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                00F3494441545847EDD53B8EC2400C06609B86969A2E1207E050D4DC86036CB7
-                1507E026348E84941E1A8A646D6F6534310984474620F9EBE611CF3F33890210
-                4208217C3E66DE555555374DB3B73E55D5F6AC0C44644544A20966FE85DC8144
-                64A1AAC734882122061FA8D578231199D6757DF02152CCBC059FA1D5781366FE
-                F18BA788E84F5597365FBB02F987C6C2CC9BCBE22E035A0311D13A4774028039
-                229EFD806598F881B1A8EA1A11675D61AE643899BBAEAECC4F184B59960A0050
-                1405FA3144C4EC81FA58969BECABF0FDCF1A522FDB4B3D546FA07427B6B37BFC
-                7FCAEBAAFD105FE85543EAF59E50082184F025FE01312EB18A58D91154000000
-                0049454E44AE426082}
+                00F2494441545847EDD53B8EC2400C06609B86969A32E2001C8A9ADB7080EDB6
+                E200DC84C22990D2434391ACEDAD8C262681F0C808247FDD3CE2F96726510042
+                082184CFC7CCBBAAAAEAA669F6D6A7AADA9E958188AC884834C1CCBF903B9088
+                2C54F598063144C4E003B51A6F2422D3BAAE0F3E448A99B7E033B41A6FC2CC3F
+                7EF11411FDA9EAD2E66B5720FFD05898797359DC65406B20225AE7884E003047
+                C4B31FB00C133F3016555D23E2AC2BCC950C2773D7D595F9096329CB5201008A
+                A2403F8688983D501FCB72937D15BEFF5943EA657BA987EA0D94EEC476768FFF
+                4F795DB51FE20BBD6A48BDDE130A218410BEC43FA0B3B17E12A247EA00000000
+                49454E44AE426082}
               FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
             end>
           Align = Left
@@ -109,7 +109,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
         Size.Width = 593.000000000000000000
         Size.Height = 440.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 0
         TabPosition = None
         Sizes = (
@@ -278,7 +278,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -306,7 +306,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               Text = 'Solicitado el:'
               TabOrder = 6
             end
-            object botonCambiarCama: TRectangle
+            object botonAutorizarCambio: TRectangle
               Fill.Color = xFF00558C
               Padding.Left = 5.000000000000000000
               Padding.Right = 5.000000000000000000
@@ -319,7 +319,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               Stroke.Thickness = 2.000000000000000000
               XRadius = 5.000000000000000000
               YRadius = 5.000000000000000000
-              object Label7: TLabel
+              object lb_botonAutorizarCambio: TLabel
                 Align = Client
                 StyledSettings = [Family, Size]
                 Size.Width = 92.000000000000000000
@@ -331,20 +331,6 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 Text = 'Autorizar Cambio'
                 TabOrder = 1
               end
-              object Label11: TLabel
-                Align = Left
-                StyledSettings = [Style]
-                Position.X = 5.000000000000000000
-                Size.Width = 38.000000000000000000
-                Size.Height = 55.000000000000000000
-                Size.PlatformDefault = False
-                TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
-                TextSettings.Font.Size = 25.000000000000000000
-                TextSettings.FontColor = claWhite
-                TextSettings.HorzAlign = Center
-                Text = #61452
-                TabOrder = 2
-              end
               object SpeedButton2: TSpeedButton
                 Align = Contents
                 Hint = 'Registrar el cambio de cama'
@@ -354,6 +340,84 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 ParentShowHint = False
                 ShowHint = True
                 OnClick = SpeedButton2Click
+              end
+              object iconoBotonAutorizar: TImage
+                MultiResBitmap.Height = 38
+                MultiResBitmap.Width = 36
+                MultiResBitmap = <
+                  item
+                    Width = 36
+                    Height = 38
+                    PNG = {
+                      89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                      93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      01C7494441545847EDD64DAB8D61140660E7D089389222037E01674C8C948922
+                      06EA64E00C0CC82F306568A81403464426C2C0C744F20714330399082592AF90
+                      6B99BC5BDBDDB6BFF719ED6BF8EE75AFF5ECE7E9E97D57AC989A9A1A1CE67119
+                      CF70B1AAB664CDB2A9AA39DCAB367885E359BB2C70B57D31ED701DF39999189C
+                      CF45245CCADC446029877782DB991D3BECC0971C9EF0160B991FABE6463DCFE1
+                      096FB03DF363872B393CE1137667B6272CE02476E66F9D54D5E11CDE090E65B6
+                      27ECC5C7A6C10F1CCD9A76D884D7393CE174667BC2417CEFD0EC58D6B6E046D6
+                      27DCCC5C4F55B5AFDB0DC152667024EB125E606366BBC2D6D6317583C5B6CC66
+                      BCCB9A76F8853DFF4EEB037665B3FF69766565B757430BCEE6ACBE600D6E65C3
+                      4EF0ADAA1EE7F384A755359BB3FA86F578948D8781DF431D55AAAAD5B89B0306
+                      8573D97B68588B0739A45F7859551BB2EF489AF7D250C78703D96F2C86393E5C
+                      CB3E63D51CDFC31CDC093E605BF618BB018EEF446627A6F960BF932B68C193CC
+                      4C5C55CDE202BEC6627E2ECB0757AAAA99AA9AABAA33F8DC2CE63D16AB6AB6AA
+                      6632D38F61737F35B7EF14EE63FF48AF8766E7F3D9C0AA6A5555AD1BF5DF35BB
+                      3E528FA9A9A97EFD0178195E342169FF390000000049454E44AE426082}
+                    FileName = 
+                      'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                      '\Aceptar.png'
+                  end>
+                Align = Left
+                Position.X = 5.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object iconoEditarCambioCama: TImage
+                MultiResBitmap.Height = 38
+                MultiResBitmap.Width = 36
+                MultiResBitmap = <
+                  item
+                    Width = 36
+                    Height = 38
+                    PNG = {
+                      89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                      93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      029C494441545847ED97CBEB4D5114C7D75A4284919489090A91E42F40065218
+                      281345060C0C3CC3C4481226989811512646A61E49F90348061891C2C4FBDDE7
+                      6B707FE7B6CF72CE7D8981EEA74EEDBDD6FAAEBDCE59FB9CBBAFD99831634643
+                      D276E021F00AB801CCCF31FF0449D381634A00EF242DCAF17F1D606E2EA60278
+                      9DE33D1B4A800D66B6DACC6667DF048FDDFD84BB931D2592564ABAEFEE53B2CF
+                      DD7BD660D649301BB897EFA809E078D65B27C711606D350796035F92F6535DD5
+                      80A4009E94C25E00D7720EE040E15F50D897015F4B7D5DD90070B414A893F425
+                      F0A2E1BA29695ED21F4CF2B7C0E2C2BFBC7200274B6D23C0D342F001582569B2
+                      A449F96AD0E662A44E9E8FC0C2226EDD40C55827F87391E84AF6B751B6A985B7
+                      C092ACEB0BF0B1CA009CCFFE268043F5B57B526B7126B2C1CCCA57786A316E04
+                      D8E7EE033D7E4997CDEC5DB6F704785FDD0A7021FB4B80C3F59B6F07389DF503
+                      316841C0FEFA92ED0067B27E60062908D8555FB21DE054D60F45BF82244DAF2F
+                      D90E7036EBFBD1B4A97B226963B63521E94C44EC49B6B6DFC42E431764665BB2
+                      2123E95C44EC2BE63380BB929E039724F5FF41ADE8D532601AF0ADDE983A4D1B
+                      18D89A6256E4988A619FD0A6A62344C5449BF666BB99CD4CF35969DE65D882BA
+                      6D28917447D28EB24D896F69FE3DCDBB0C5BD08B6A20E9B6A4BD921646C4EA88
+                      B8580F1D8DA10A72F72D92364B5A1A116B22E26C443CCD717F425341E5B1E24B
+                      313677FF1111D723E251691F805A9E9675CD5A1CE52B39A7188F8CBBE74DDD7A
+                      52FCED7B003C72F725D6D9273FDC7DA7A45BE914300C8BCCEC82BB778F1D92E6
+                      44C49B7A580BC0EEF29B31F1DD00F839CAD590EB7A5EB32F83FEE31816E03DD0
+                      731BFCD632EB3C529774D5CCD6B7C58CC00333DB1611CFB263CC98FF9A5F9AB1
+                      7EBCFB3A29120000000049454E44AE426082}
+                    FileName = 
+                      'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                      '\Editar.png'
+                  end>
+                Align = Left
+                Position.X = 43.000000000000000000
+                Size.Width = 38.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                Visible = False
               end
             end
             object botonCancelarCambio: TRectangle
@@ -644,7 +708,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
                 TabOrder = 3
               end
             end
-            object Rectangle6: TRectangle
+            object botonNoAutorizar: TRectangle
               Fill.Color = xFF00558C
               Padding.Left = 5.000000000000000000
               Padding.Right = 5.000000000000000000
@@ -730,7 +794,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
