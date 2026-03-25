@@ -24,6 +24,7 @@ type
     lbTextoBoton: TLabel;
     Rectangle1: TRectangle;
     reloj: TTimer;
+    iconoWarning: TImage;
     procedure Rectangle2Click(Sender: TObject);
     procedure relojTimer(Sender: TObject);
 
@@ -57,6 +58,7 @@ begin
       iconoOk.Visible     := true;
       iconoError.Visible  := false;
       iconoInfo.Visible   := false;
+      iconoWarning.Visible:= false;
     end;
 
   if Icono = 'ERROR' then
@@ -64,6 +66,7 @@ begin
       iconoOk.Visible     := false;
       iconoError.Visible  := true;
       iconoInfo.Visible   := false;
+      iconoWarning.Visible:= false;
     end;
 
   if Icono = 'INFO' then
@@ -71,6 +74,15 @@ begin
       iconoOk.Visible     := false;
       iconoError.Visible  := false;
       iconoInfo.Visible   := true;
+      iconoWarning.Visible:= false;
+    end;
+
+  if Icono = 'WARNING' then
+    begin
+      iconoOk.Visible     := false;
+      iconoError.Visible  := false;
+      iconoInfo.Visible   := false;
+      iconoWarning.Visible:= true;
     end;
 
   if tiempo > 1 then

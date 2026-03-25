@@ -56,15 +56,15 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                00F2494441545847EDD53B8EC2400C06609B86969A2A0507E050D4DC86036CB7
-                1507E026548E90D2434391ACEDAD8C262681F0C808247FDD3CE2F96726510042
-                082184CFC7CCBBAAAAEAA669F6D6A7AADA9E958188AC884834C1CCBF903B9088
-                2C54F598063144C4E003B51A6F2422D3BAAE0F3E448A99B7E033B41A6FC2CC3F
-                7EF11411FDA9EAD2E66B5720FFD05898797359DC65406B20225AE7884E003047
-                C4B31FB00C133F3016555D23E2AC2BCC950C2773D7D595F9096329CB5201008A
-                A2403F8688983D501FCB72937D15BEFF5943EA657BA987EA0D94EEC476768FFF
-                4F795DB51FE20BBD6A48BDDE130A218410BEC43FC19AB196B274AFDE00000000
-                49454E44AE426082}
+                00F3494441545847EDD53B8EC2400C06609B86969A2E1207E050D4DC86036CB7
+                1507E026348E84941E1A8A646D6F6534310984474620F9EBE611CF3F33890210
+                4208217C3E66DE555555374DB3B73E55D5F6AC0C44644544A20966FE85DC8144
+                64A1AAC734882122061FA8D578231199D6757DF02152CCBC059FA1D5781366FE
+                F18BA788E84F5597365FBB02F987C6C2CC9BCBE22E035A0311D13A4774028039
+                229EFD806598F881B1A8EA1A11675D61AE643899BBAEAECC4F184B59960A0050
+                1405FA3144C4EC81FA58969BECABF0FDCF1A522FDB4B3D546FA07427B6B37BFC
+                7FCAEBAAFD105FE85543EAF59E50082184F025FE01312EB18A58D91154000000
+                0049454E44AE426082}
               FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
             end>
           Align = Left
@@ -109,7 +109,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
         Size.Width = 593.000000000000000000
         Size.Height = 440.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 1
+        TabIndex = 2
         TabOrder = 0
         TabPosition = None
         Sizes = (
@@ -278,7 +278,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -730,7 +730,7 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -758,10 +758,11 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
               TabOrder = 1
             end
             object listaCamasDisponibles: TListView
-              ItemAppearanceClassName = 'TListItemAppearance'
-              ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+              ItemAppearanceClassName = 'TImageListItemBottomDetailAppearance'
+              ItemEditAppearanceClassName = 'TImageListItemBottomDetailShowCheckAppearance'
               HeaderAppearanceClassName = 'TListHeaderObjects'
               FooterAppearanceClassName = 'TListHeaderObjects'
+              OnUpdateObjects = listaCamasDisponiblesUpdateObjects
               Position.X = 8.000000000000000000
               Position.Y = 35.000000000000000000
               Size.Width = 577.000000000000000000
@@ -1068,6 +1069,13 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
       FieldName = 'piso'
       Size = 50
     end
+    object camasDisponiblesaislamiento: TIntegerField
+      FieldName = 'aislamiento'
+    end
+    object camasDisponiblesadvertencia: TStringField
+      FieldName = 'advertencia'
+      Size = 255
+    end
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = camasDisponibles
@@ -1085,7 +1093,11 @@ object form_CambioCamaAdmision: Tform_CambioCamaAdmision
       DataSource = BindSourceDB1
       FieldName = 'cama'
       Control = listaCamasDisponibles
-      FillExpressions = <>
+      FillExpressions = <
+        item
+          SourceMemberName = 'advertencia'
+          ControlMemberName = 'Detail'
+        end>
       FillHeaderExpressions = <>
       FillBreakGroups = <>
     end

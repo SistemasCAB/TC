@@ -137,6 +137,8 @@ type
     solicitudautEnfermeriaPorDni: TStringField;
     solicitudautEnfermeriaPorNombre: TStringField;
     solicitudautEnfermeriaFecha: TStringField;
+    camasDisponiblesaislamiento: TIntegerField;
+    camasDisponiblesadvertencia: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
@@ -150,6 +152,8 @@ type
     procedure autorizarCambioDeCama;
     procedure noAutorizarCambioDeCama;
     procedure SpeedButton5Click(Sender: TObject);
+    procedure listaCamasDisponiblesUpdateObjects(const Sender: TObject;
+      const AItem: TListViewItem);
   private
     { Private declarations }
   public
@@ -259,22 +263,25 @@ begin
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('paciCodigo', solicitudpaciCodigo.AsString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(camasDisponibles))
               .Get;
+
+
 
   if response.StatusCode = 200 then
     begin
       if camasDisponibles.RecordCount > 0 then
         begin
           pagina.TabIndex := 2;
-          listaCamasDisponibles.Enabled := true;        
+          listaCamasDisponibles.Enabled := true;
         end
       else
         begin
           pagina.TabIndex := 1;
           listaCamasDisponibles.Enabled := false;
-          datos.VerMensaje('No hay camas disponibles','En este momento no hay camas disponibles','Aceptar','ERROR',0);        
+          datos.VerMensaje('No hay camas disponibles','En este momento no hay camas disponibles','Aceptar','ERROR',0);
         end;
     end
   else
@@ -304,15 +311,19 @@ begin
               .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
               .Post;
                
-  if response.StatusCode = 200 then
-    begin
+  case response.StatusCode of
+    200: begin
       datos.VerMensaje('Cambio de cama Autorizado',autorizarCambiomensaje.AsString,'Aceptar','OK',0);
       Close;
-    end
-  else
-    begin
+    end;
+    202: begin
+      datos.VerMensaje('¡Atención!',autorizarCambiomensaje.AsString,'Aceptar','WARNING',0);
+      Close;
+    end;
+    500:begin
       datos.VerMensaje('Error ' + response.StatusCode.ToString ,'El método ' + recurso + ' respondió: ' + autorizarCambiomensaje.AsString,'Aceptar','ERROR',0);
     end;
+  end;
 end;
 
 procedure Tform_CambioCamaAdmision.botonSalirClick(Sender: TObject);
@@ -376,6 +387,25 @@ begin
   Actualizar;
 end;
 
+procedure Tform_CambioCamaAdmision.listaCamasDisponiblesUpdateObjects(const Sender: TObject; const AItem: TListViewItem);
+//var
+//  ds: TDataSet;
+begin
+//  ds := camasDisponibles;
+//
+//  ds.RecNo := AItem.Index + 1;
+//
+//  if ds.FieldByName('aislamiento').AsInteger = 1 then
+//  begin
+//    AItem.Detail := 'AISLAMIENTO - Requiere autorización de Sup. Enfermería';
+//
+//    if AItem.Objects.DetailObject <> nil then
+//      AItem.Objects.DetailObject.TextColor := TAlphaColorRec.Red;
+//  end
+//  else
+//    AItem.Detail := '';
+end;
+
 procedure Tform_CambioCamaAdmision.noAutorizarCambioDeCama;
 var
   response: IResponse;
@@ -407,8 +437,31 @@ begin
 end;
 
 procedure Tform_CambioCamaAdmision.SpeedButton1Click(Sender: TObject);
+var
+  resMod:integer;
+  mensaje: string;
 begin
-  autorizarCambioDeCama;
+  mensaje := 'Seleccionar la cama '+ camasDisponiblescama.AsString +' implica que el cambio de cama deberá ser autorizado por Supervisión de Enfermería. Esto puede demorar el proceso.';
+  mensaje := mensaje + #13+#13+'¿Desea avanzar con esta cama de todo modos?';
+
+  if camasDisponiblesaislamiento.AsInteger = 1 then
+    begin
+      resMod := datos.MensajeConfirmacion(
+                  'AISLAMIENTO',
+                  mensaje,
+                  'Si. Avanzar',
+                  'No',
+                  'PREGUNTA',
+                  form_CambioCamaAdmision.Width,
+                  form_CambioCamaAdmision.Height);
+
+      if(resMod = 6)  then // 6 = mrYes
+        autorizarCambioDeCama;
+    end
+  else
+    begin
+      autorizarCambioDeCama;
+    end;
 end;
 
 procedure Tform_CambioCamaAdmision.SpeedButton2Click(Sender: TObject);
