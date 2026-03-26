@@ -1652,6 +1652,7 @@ begin
   Application.CreateForm(Tform_AutorizacionesPendientes, form_AutorizacionesPendientes);
   form_AutorizacionesPendientes.Height := formTablero.Height;
   form_AutorizacionesPendientes.Width := formTablero.Width;
+  form_AutorizacionesPendientes.pagina.tabIndex := 0;
   form_AutorizacionesPendientes.ShowModal;
 end;
 
