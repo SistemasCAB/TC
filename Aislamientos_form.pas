@@ -228,24 +228,28 @@ var
   id:integer;
   mensaje:string;
   response: IResponse;
-  apiRecurso : string;
+  recurso : string;
+  body:string;
 begin
   id := (sender as TSpeedButton).Tag;
-
-
 
   mensaje:= '¿Está seguro que desea finalizar este aislamiento?';
   if datos.MensajeConfirmacion('Confirme su decisión',mensaje,'Si. Estoy seguro','Cancelar','WARNING',ancho,alto) = 6 then
     begin
       //  finalizar aislamiento.
-      apiRecurso := '/aislamientos/finalizar';
+      recurso := '/tablerocamas/finalizarAislamiento';
+
+      body := '{'+
+                  '"idPacienteAislamiento":'+ id.ToString +','+
+                  '"finalizadoPorDni":"'+ datos.dniLogin +'",'+
+                  '"finalizadoPorNombre":"'+ datos.nombreLogin +'"'+
+              '}';
+
       response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource(apiRecurso)
+              .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
               .Accept('application/json')
-              .AddParam('id', id.ToString)
-              .AddParam('dni_usuario', datos.dniLogin)
-              .AddParam('nombre_usuario',datos.nombreLogin)
+              .AddBody(body)
               .Adapters(TDataSetSerializeAdapter.New(resultado))
               .Post;
 
@@ -254,6 +258,7 @@ begin
       else
         datos.VerMensaje('Error ' + response.StatusCode.ToString ,resultadomensaje.AsString,'Aceptar','ERROR',0);
 
+      form_DetallesCama.Actualizar(form_DetallesCama.camasidCama.AsInteger);
       ActualizarAislamientos();
       pagina.TabIndex := 0;
     end;

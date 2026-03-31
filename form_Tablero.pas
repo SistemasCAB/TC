@@ -51,7 +51,8 @@ uses
   FMX.GIFImage,
   System.Generics.Collections, // agrego el diccionario al form
 
-  System.SyncObjs,System.Threading;
+  System.SyncObjs,System.Threading, FMX.ListView.Types,
+  FMX.ListView.Appearances, FMX.ListView.Adapters.Base, FMX.ListView;
 
 type
   TCamaUI = class
@@ -66,6 +67,7 @@ type
     LbSecundaria: TLabel;
     fotoPac: TImage;
     iconoAlta: TImage;
+    iconoAltaProbable: TImage;
     iconoAislamiento: TImage;
     iconoAislamientoC: TImage;
     iconoAislamientoGC: TImage;
@@ -259,6 +261,8 @@ type
     camas2kpc: TIntegerField;
     botonAutorizar: TSpeedButton;
     Rectangle3: TRectangle;
+    camasaltaProbableNombreUsuario: TStringField;
+    camas2altaProbableNombreUsuario: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -380,7 +384,8 @@ begin
   ui.cruzVerde.Visible := false;
   ui.cruzVerde.Stop;
 
-  if camas2idEstado.AsInteger = 2 then
+  // las alertas medicas solo son visibles para los servicios de enfermería.
+  if (camas2idEstado.AsInteger = 2) and (servicioidTipoInternacion.AsInteger <> 5) then
     begin
       if (camas2procedimientosNoCumplidos.AsInteger > 0) or (camas2medicacionNoProgramada.AsInteger > 0) or (camas2medicacionNoAplicada.AsInteger > 0) then
         begin
@@ -529,6 +534,7 @@ var
   lbSecundaria: TLabel;
   fotoPac: TImage;
   iconoAlta: TImage;
+  iconoAltaProbable: TImage;
   iconoAislamiento, iconoAislamientoC,iconoAislamientoGC, iconoAislamientoAR, iconoAislamientoN, iconoAislamientoCD, iconoAislamientoSC: TImage;
   lbPrecaucion: TLabel;
   cruzVerde: TGIFImage;
@@ -710,6 +716,25 @@ begin
                         LyCama.Align := TAlignLayout.Top;
                         LyCama.Name :=  'lyCama'+ camasidCama.AsString;
 
+                        // Ícono Alta Probable
+                        iconoAltaProbable := TImage.Create(Self);
+                        with iconoAltaProbable do
+                          begin
+                            Parent := LyCama;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Right;
+                            Name := 'IconoAltaProbable'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            Base64(altaProbable);
+                            HitTest := false;
+                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString = '') and (camasaltaProbableFecha.AsString <> '') then
+                              Visible := true
+                            else
+                              Visible := false;
+                          end;
 
                         // Ícono Alta
                         iconoAlta := TImage.Create(Self);
@@ -1046,6 +1071,7 @@ begin
                         ui.iconoAislamientoSC := iconoAislamientoSC;
                         ui.cruzVerde := cruzVerde;
                         ui.iconoAlta := iconoAlta;
+                        ui.iconoAltaProbable := iconoAltaProbable;
                         if permisoModulo(3) = 0 then
                           begin
                             ui.iconoAislamiento := iconoAislamiento;
@@ -1185,6 +1211,17 @@ begin
                           nueva_alerta := nueva_alerta + 1;
                         end;
                     end;
+
+                  // si el médico indicó el alta probable
+                  if camas2altaProbableFecha.AsString <> '' then
+                    begin
+                      if ((camasaltaProbableFecha.AsString <> camas2altaProbableFecha.AsString)) then
+                        begin
+                          // inserto una alerta de alta medica
+                          nuevaAlerta(camas2idCama.AsInteger,15,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+                          nueva_alerta := nueva_alerta + 1;
+                        end;
+                    end;
                 end;
 
               // si la cama no está disponible y si hay alertas para esta cama, agrego en la tabla alertas el id de la cama.
@@ -1249,7 +1286,6 @@ begin
                   if camas2idEstado.AsInteger = 2 then
                     begin
                       if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
-                      //if camas2fechaAltaMedica.AsString = '' then
                         ui.iconoAlta.Visible := true
                       else
                         ui.iconoAlta.Visible := false;
@@ -1257,6 +1293,19 @@ begin
                   else
                     begin
                       ui.iconoAlta.Visible := false;
+                    end;
+
+                  // verifico Icono de Alta Probable
+                  if camas2idEstado.AsInteger = 2 then
+                    begin
+                      if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
+                        ui.iconoAltaProbable.Visible := true
+                      else
+                        ui.iconoAltaProbable.Visible := false;
+                    end
+                  else
+                    begin
+                      ui.iconoAltaProbable.Visible := false;
                     end;
 
 
@@ -1328,6 +1377,7 @@ begin
                   FieldByName('altaProbableFecha').Value := camas2altaProbableFecha.AsString;
                   FieldByName('altaProbableTipo').Value := camas2altaProbableTipo.AsString;
                   FieldByName('altaProbableDniUsuario').Value := camas2altaProbableDniUsuario.AsInteger;
+                  FieldByName('altaProbableNombreUsuario').Value := camas2altaProbableNombreUsuario.AsString;
                   FieldByName('reservaMotivo').Value := camas2reservaMotivo.AsString;
                   FieldByName('reservaFecha').Value := camas2reservaFecha.AsString;
                   FieldByName('reservadaPorDni').Value := camas2reservadaPorDni.AsInteger;
@@ -1603,39 +1653,25 @@ end;
 procedure TformTablero.blinking(idCama: string);
 var
   e:boolean;
+  ui:TCamaUI;
 begin
-  if Assigned(contenedor) then
+  if not FCamasUI.TryGetValue(idCama.ToInteger(), ui) then
+    Exit;
+
+  e := camas2.Locate('idCama',idCama,[]);
+  if camas2cambioCamaPendiente.AsInteger = 1 then
     begin
-      with contenedor do
-        begin
-          if Assigned(FindComponent('bordeCama'+idCama) as TRectangle) then
-            begin
-              with (FindComponent('bordeCama'+idCama) as TRectangle) do
-                begin
-                  e := camas2.Locate('idCama',idCama,[]);
-                  if camas2cambioCamaPendiente.AsInteger = 1 then
-                    begin
-                      if Assigned((FindComponent('panelB'+idCama) as TRectangle)) then
-                        begin
-                          if (FindComponent('panelB'+idCama) as TRectangle).Fill.Color = TAlphaColorRec.Red then
-                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColor(StrToAlphaColor('#FFA4D1'))
-                          else
-                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColorRec.Red;
-                        end;
-                    end
-                  else
-                    begin
-                      if Assigned((FindComponent('panelB'+idCama) as TRectangle)) then
-                        begin
-                          if (FindComponent('panelB'+idCama) as TRectangle).Fill.Color = TAlphaColorRec.White then
-                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColorRec.Red
-                          else
-                            (FindComponent('panelB'+idCama) as TRectangle).Fill.Color := TAlphaColorRec.White;
-                        end;
-                    end;
-                end;
-            end;
-        end;
+      if ui.panelB.Fill.Color =  TAlphaColorRec.Red then
+        ui.panelB.Fill.Color := TAlphaColor(StrToAlphaColor('#FFA4D1'))
+      else
+        ui.panelB.Fill.Color := TAlphaColorRec.Red;
+    end
+  else
+    begin
+      if ui.panelB.Fill.Color =  TAlphaColorRec.White then
+        ui.panelB.Fill.Color := TAlphaColorRec.Red
+      else
+        ui.panelB.Fill.Color := TAlphaColorRec.White;
     end;
 end;
 

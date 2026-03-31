@@ -89,18 +89,18 @@ type
     SpeedButton9: TSpeedButton;
     Image30: TImage;
     recCama1: TRectangle;
-    Layout7: TLayout;
+    ly_aislamientosPaciente1: TLayout;
     Image1: TImage;
     Image2: TImage;
     Image3: TImage;
     Image4: TImage;
     Image5: TImage;
     Image6: TImage;
-    Label1: TLabel;
-    Layout2: TLayout;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
+    lb_cama1: TLabel;
+    ly_datosPaciente1: TLayout;
+    lb_paciente1: TLabel;
+    lb_documentoPaciente1: TLabel;
+    lb_sexoPaciente1: TLabel;
     Rectangle1: TRectangle;
     recCama2: TRectangle;
     Layout6: TLayout;
@@ -118,6 +118,10 @@ type
     Rectangle4: TRectangle;
     pendientesidHabitacion: TIntegerField;
     pendientestipoDocumento: TStringField;
+    pacientestipoDocumento: TStringField;
+    autorizar: TFDMemTable;
+    autorizarestado: TIntegerField;
+    autorizarmensaje: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure btn_AutorizarCambioCamaClick(Sender: TObject);
     procedure ActualizarPendientes;
@@ -154,6 +158,21 @@ begin
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(pacientes))
               .Get;
+  // Re-parsear solo aislamientos
+  var JsonRoot := TJSONObject.ParseJSONValue(response.Content) as TJSONArray;
+  for var i := 0 to pacientes.RecordCount - 1 do
+  begin
+    pacientes.RecNo := i + 1;
+    pacientes.Edit;
+    var Obj := JsonRoot.Items[i] as TJSONObject;
+    var arr := Obj.GetValue<TJSONArray>('aislamientos');
+    if Assigned(arr) then
+      pacientes.FieldByName('aislamientos').AsString := arr.ToJSON
+    else
+      pacientes.FieldByName('aislamientos').Clear;
+    pacientes.Post;
+  end;
+
 
   if response.StatusCode <> 200 then
     begin
@@ -176,21 +195,16 @@ begin
 
   // Re-parsear solo aislamientos
   var JsonRoot := TJSONObject.ParseJSONValue(response.Content) as TJSONArray;
-
   for var i := 0 to pendientes.RecordCount - 1 do
   begin
     pendientes.RecNo := i + 1;
-
     pendientes.Edit;
-
     var Obj := JsonRoot.Items[i] as TJSONObject;
     var arr := Obj.GetValue<TJSONArray>('aislamientos');
-
     if Assigned(arr) then
       pendientes.FieldByName('aislamientos').AsString := arr.ToJSON
     else
       pendientes.FieldByName('aislamientos').Clear;
-
     pendientes.Post;
   end;
 
@@ -244,10 +258,39 @@ end;
 procedure Tform_AutorizacionesPendientes.clicBotonNoAutorizar(sender: TObject);
 var
   idCamasCambiosPendientes: integer;
+  response : IResponse;
+  recurso, body : string;
 begin
   idCamasCambiosPendientes := (sender as TSpeedButton).Tag;
+  recurso := '/tablerocamas/camasCambiosPendientesNoAutorizar';
 
-  showmessage('No Autorizar: ' + idCamasCambiosPendientes.ToString);
+  body := '{'+
+              '"idCamasCambiosPendientes":'+ idCamasCambiosPendientes.ToString +','+
+              '"autEnfermeriaPorDni":"'+ datos.dniLogin +'",'+
+              '"autEnfermeriaPorNombre":"'+ datos.nombreLogin +'"'+
+          '}';
+
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(autorizar))
+              .Post;
+
+  if response.StatusCode = 200 then
+    begin
+      datos.VerMensaje('OK ', autorizarmensaje.AsString,'Aceptar','OK',0);
+
+      ActualizarPendientes;
+      if(pendientes.RecordCount = 0) then
+        Close;
+
+    end
+  else
+    begin
+      datos.VerMensaje('Error ' + response.StatusCode.ToString,'El endpoint ' + recurso + ' ha respondido con status code ' + response.StatusCode.ToString +#13+ '. Mensaje: ' + autorizarmensaje.AsString,'Aceptar','ERROR',0);
+    end;
 end;
 
 procedure Tform_AutorizacionesPendientes.FormActivate(Sender: TObject);
@@ -262,6 +305,10 @@ var
   lbNroCama, lb_nombrePaciente, lb_documentoPaciente, lb_textoBotonAutorizar, lb_textoBotonNoAutorizar: TLabel;
   iconoBotonAutorizar, iconoBotonNoAutorizar: TImage;
   btnAutorizar, btnNoAutorizar:TSpeedButton;
+
+  recCama, recSeparador:TRectangle;
+  lb_cama, lb_paciente, lb_docPaciente, lb_sexoPaciente:TLabel;
+  ly_datosPac, ly_aislamientosPaciente:TLayout;
 
   JsonValue: TJSONValue;
   JsonArray: TJSONArray;
@@ -360,7 +407,10 @@ begin
         Name := 'lb_documentoPaciente'+ pendientesidCamaCambiosPendientes.AsString;
         Align := TAlignLayout.Top;
         Width := 17;
-        Text :=  pendientestipoDocumento.AsString + ' ' + pendientesnroDocumento.AsString + '    Sexo: ' + pendientessexo.AsString;
+        if pendientessexo.AsString = 'M' then
+          Text :=  pendientestipoDocumento.AsString + ' ' + pendientesnroDocumento.AsString + '    Sexo: Masculino'
+        else
+          Text :=  pendientestipoDocumento.AsString + ' ' + pendientesnroDocumento.AsString + '    Sexo: Femenino';
         HitTest := false;
       end;
 
@@ -382,13 +432,11 @@ begin
           begin
             JsonValue := JsonArray.Items[i];
             JsonObject := JsonValue as TJSONObject;
-
             // Obtener valores
             var idPacienteAislamiento := JsonObject.GetValue<Integer>('idPacienteAislamiento');
             var idAislamiento := JsonObject.GetValue<Integer>('idAislamiento');
             //var breve := JsonObject.GetValue<string>('breve');
             var kpc := JsonObject.GetValue<Integer>('kpc');
-
             // muestro el ícono del aislamiento
             // Ícono Aislamiento
             with TImage.Create(Self) do
@@ -533,9 +581,158 @@ begin
     btnNoAutorizar.OnClick := clicBotonNoAutorizar;
 
 
+    {MUESTRO OTROS PACIENTES EN LA HABITACIÓN}
+    pacientes.First;
+    repeat
+      // rectangulo cama
+      recCama := TRectangle.Create(Self);
+      recCama.Parent := ly_pendientes;
+      recCama.Name := 'recCama' + pacientespaciCodigo.AsString;
+      recCama.Align := TAlignLayout.Top;
+      recCama.Height := 53;
+      recCama.Margins.Left := 30;
+      recCama.Fill.Color := TAlphaColorRec.Whitesmoke;
+      recCama.Stroke.Kind := TbrushKind.None;
+
+      // rectángulo separador de camas
+      recSeparador := TRectangle.Create(Self);
+      recSeparador.Parent := recCama;
+      recSeparador.Name := 'recSeparador' + pacientespaciCodigo.AsString;
+      recSeparador.Align := TAlignLayout.Bottom;
+      recSeparador.Height := 2;
+      recSeparador.Fill.Color :=  TAlphaColor(StrToAlphaColor('#00558C'));
+      recSeparador.Stroke.Kind := TbrushKind.None;
+
+      // nro de cama
+      lb_cama := TLabel.Create(Self);
+      with lb_cama do
+        begin
+          Parent := recCama;
+          Name := 'lb_camaPaciente'+ pacientespaciCodigo.AsString;
+          Align := TAlignLayout.Left;
+          Width := 88;
+          Text := pacientescama.AsString;
+          HitTest := false;
+          StyledSettings := [TStyledSetting.Family];
+          TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+          TextSettings.HorzAlign := TTextAlign.Center;
+          TextSettings.Font.Size := 18;
+        end;
+
+      // layout aislamientos del paciente
+      ly_aislamientosPaciente := TLayout.Create(Self);
+      ly_aislamientosPaciente.Parent := recCama;
+      ly_aislamientosPaciente.Name := 'ly_aislamientosPaciente'+ pacientespaciCodigo.AsString;
+      ly_aislamientosPaciente.Align := TAlignLayout.Right;
+      ly_aislamientosPaciente.Width := 217;
+
+
+      // layout datos del paciente
+      ly_datosPac := TLayout.Create( Self);
+      ly_datosPac.Parent := recCama;
+      ly_datosPac.Name := 'ly_datosPac' + pacientespaciCodigo.AsString;
+      ly_datosPac.Align := TAlignLayout.Client;
+
+      // label nombre del paciente
+      lb_paciente := TLabel.Create(Self);
+      with lb_paciente do
+      begin
+        Parent := ly_datosPac;
+        Name := 'lb_paciente'+ pacientespaciCodigo.AsString;
+        Align := TAlignLayout.Top;
+        Text := pacientespaciente.AsString;
+        HitTest := false;
+        StyledSettings := [TStyledSetting.Family];
+        TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+      end;
+
+      // label numero de documento del paciente
+      lb_documentoPaciente := TLabel.Create(Self);
+      with lb_documentoPaciente do
+      begin
+        Parent := ly_datosPac;
+        Name := 'lb_documentoPaciente'+ pacientespaciCodigo.AsString;
+        Align := TAlignLayout.Top;
+        Text := pacientestipoDocumento.AsString + ': ' + pacientesnroDocumento.AsString;
+        HitTest := false;
+      end;
+
+      // label sexo del paciente
+      lb_sexoPaciente := TLabel.Create(Self);
+      with lb_sexoPaciente do
+      begin
+        Parent := ly_datosPac;
+        Name := 'lb_sexoPaciente'+ pacientespaciCodigo.AsString;
+        Align := TAlignLayout.Top;
+        if (pacientessexo.AsString = 'M') then
+          Text := 'Sexo: Masculino'
+        else
+          Text := 'Sexo: Femenino';
+        HitTest := false;
+      end;
+
+      // Aislamientos del paciente
+      JsonArray := TJSONObject.ParseJSONValue(pacientesaislamientos.AsString) as TJSONArray;
+
+      if Assigned(JsonArray) then
+      begin
+        try
+          for i := 0 to JsonArray.Count - 1 do
+            begin
+              JsonValue := JsonArray.Items[i];
+              JsonObject := JsonValue as TJSONObject;
+              // Obtener valores
+              var idPacienteAislamiento1 := JsonObject.GetValue<Integer>('idPacienteAislamiento');
+              var idAislamiento1 := JsonObject.GetValue<Integer>('idAislamiento');
+              var kpc1 := JsonObject.GetValue<Integer>('kpc');
+              // muestro el ícono del aislamiento
+              // Ícono Aislamiento
+              with TImage.Create(Self) do
+                begin
+                  Parent := ly_aislamientosPaciente;
+                  Height := 40;
+                  Align := TAlignLayout.Left;
+                  Name := 'iconoAislamientoPaciente'+ idPacienteAislamiento1.ToString +  pacientespaciCodigo.AsString;
+                  WrapMode := TImageWrapMode.Fit;
+                  HitTest := false;
+                  case idAislamiento1 of
+                    1: begin
+                      if kpc1 = 1 then
+                        Base64(aislamientoKPC)
+                      else
+                        Base64(aislamientoAC);
+                    end;
+
+                    2: begin
+                      Base64(aislamientoAR);
+                    end;
+
+                    3: begin
+                      Base64(aislamientoAG);
+                    end;
+                    4: begin
+                      Base64(aislamientoAN);
+                    end;
+                    5: begin
+                      Base64(aislamientoCD);
+                    end;
+                    6: begin
+                      Base64(aislamientoSC);
+                    end;
+                  end;
+                end;
+            end;
+        finally
+          JsonArray.Free;
+        end;
+      end;
 
 
 
+
+
+      pacientes.Next;
+    until pacientes.eof;
 
 
 

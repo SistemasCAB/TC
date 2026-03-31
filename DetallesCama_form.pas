@@ -140,7 +140,6 @@ type
     ShadowEffect10: TShadowEffect;
     lb_alertasTexto: TLabel;
     contenedorAlertas: TLayout;
-    Button2: TButton;
     alertas: TFDMemTable;
     alertasid_alerta: TWideStringField;
     alertasid_tipo_alerta: TWideStringField;
@@ -203,9 +202,6 @@ type
     permisoscontrolTotal: TIntegerField;
     lyAlertasMedicas: TLayout;
     camassoloAltaMedica: TIntegerField;
-    rec: TRectangle;
-    Button1: TButton;
-    edcolor: TEdit;
     pAislamiento: TLayout;
     lyAislamientoAC: TLayout;
     fechaAislamientoAC: TLabel;
@@ -239,6 +235,25 @@ type
     camasautEnfermeriaPorDni: TStringField;
     camasautEnfermeriaPorNombre: TStringField;
     camasautEnfermeriaFecha: TStringField;
+    botonAltaProbable: TRectangle;
+    Image2: TImage;
+    Label3: TLabel;
+    SpeedButton2: TSpeedButton;
+    reservas: TFDMemTable;
+    reservasidReserva: TIntegerField;
+    reservasidCama: TIntegerField;
+    reservastdocCodigo: TIntegerField;
+    reservasnroDocumento: TStringField;
+    reservasnombrePaciente: TStringField;
+    reservasmotivo: TStringField;
+    reservasreservadaPorDni: TStringField;
+    reservasreservadaPorNombre: TStringField;
+    reservasfechaCancelada: TDateTimeField;
+    reservascanceladaPorDni: TStringField;
+    reservascanceladaPorNombre: TStringField;
+    reservasidMotivoFinReserva: TIntegerField;
+    reservasidSolicitudCambio: TIntegerField;
+    reservasfechaReserva: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);
@@ -246,18 +261,18 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ApagarAlertas(idCama: integer);
     procedure botonCambioCamaClick(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
     procedure crearAlertas(id_cama, id_servicio:integer; dni:string);
     procedure crearAlerta(id_alerta: integer; texto:string);
     procedure obtenerPermisosModulosPaciente(idServicio: integer);
     function permisoModulo(idModulo: integer): integer;
     procedure Cerrar;
     procedure FormCreate(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure botonAislamientosClick(Sender: TObject);
     procedure CargarAislamientosDesdeJson(const JsonStr:string; Aislamientos: TFDMemTable);
     procedure MostrarAislamentos;
     procedure cambiosDeCamaActualizar;
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure actualizarReserva(idCama:integer);
   private
     { Private declarations }
   public
@@ -274,7 +289,7 @@ implementation
 {$R *.fmx}
 
 uses form_Tablero, ModuloDatos, UFunciones, constantes, CambioDeCama_form, CambioDeCamaAdmision_form,
-  FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form;
+  FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form, AltaProbable_form;
 
 procedure Tform_DetallesCama.Actualizar(idCama:integer);
 var
@@ -541,6 +556,21 @@ begin
               botonQuirofano.Visible := false;
             end;
 
+          // ALTA PROBABLE
+          case permisoModulo(10) of
+            0: begin
+              botonAltaProbable.Visible := false;
+            end;
+
+            1: begin
+              botonAltaProbable.Visible := true;
+            end;
+
+            2: begin
+              botonAltaProbable.Visible := true;
+            end;
+          end;
+
 
 
 
@@ -553,6 +583,7 @@ begin
           lyAlertasMedicas.Visible          := false;
           botonQuirofano.Visible            := false;
           recCambioCama.Visible             := false;
+          botonAltaProbable.Visible         := false;
 
           // TAREAS DE REPARACIÓN
           case permisoModulo(6) of
@@ -570,26 +601,7 @@ begin
           end;
 
           // RESERVADAS
-          case permisoModulo(8) of
-            0: begin
-              recReserva.Visible := false;
-            end;
-
-            1: begin
-              recReserva.Visible := true;
-              lb_reserva_observaciones.Text := camasobservaciones.AsString;
-              lb_botonReserva.Text := 'Eliminar Reserva';
-              botonReserva.Visible := false;
-            end;
-
-            2: begin
-              recReserva.Visible := true;
-              lb_reserva_observaciones.Text := camasobservaciones.AsString;
-              lb_botonReserva.Text := 'Eliminar Reserva';
-            end;
-          end;
-
-
+          actualizarReserva(camasidCama.AsInteger);
         end;
 
       // Alertas
@@ -611,6 +623,54 @@ begin
       mensaje := camas.FieldByName('mensaje').AsString + #13 + #13 + 'Recurso: ' + apiRecurso + #13 + 'ID cama: ' + idCama.ToString;
       datos.VerMensaje('ERROR ' + response.StatusCode.ToString,mensaje,'Aceptar','ERROR',0);
     end;
+end;
+
+procedure Tform_DetallesCama.actualizarReserva(idCama:integer);
+var
+  response : IResponse;
+  recurso : String;
+begin
+  recurso := '/tablerocamas/reservas';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idCama', idCama.ToString)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(reservas))
+              .Get;
+
+  if response.StatusCode = 200 then
+    begin
+      if reservas.RecordCount > 0 then
+        begin
+          lb_reserva_observaciones.Text := 'Reservada para: ' + reservasnombrePaciente.AsString +#13+ 'DNI: ' + reservasnroDocumento.AsString;
+          lb_botonReserva.Text := 'Eliminar reserva';
+        end
+      else
+        begin
+          lb_reserva_observaciones.Text := '';
+          lb_botonReserva.Text := 'Reservar cama';
+        end;
+    end
+  else
+    begin
+      datos.VerMensaje('ERROR' + response.StatusCode.ToString,'Ocurrió un error en el método ' + recurso,'Aceptar','ERROR',0);
+    end;
+
+  // muestro u oculto el panel reservas.
+  case permisoModulo(8) of
+    0: begin
+      recReserva.Visible := false;
+    end;
+
+    1: begin
+      recReserva.Visible := true;
+    end;
+
+    2: begin
+      recReserva.Visible := true;
+    end;
+  end;
 end;
 
 procedure Tform_DetallesCama.ApagarAlertas(idCama: integer);
@@ -703,63 +763,6 @@ procedure Tform_DetallesCama.botonSalirClick(Sender: TObject);
 begin
   //formTablero.reloj.Enabled := true;
   Close;
-end;
-
-procedure Tform_DetallesCama.Button1Click(Sender: TObject);
-begin
-  rec.Fill.Color := StrToAlphaColor(edcolor.Text);
-end;
-
-procedure Tform_DetallesCama.Button2Click(Sender: TObject);
-begin
-  if Assigned(contenedorAlertas) then
-      contenedorAlertas.Destroy;
-
-  contenedorAlertas := TLayout.Create(ly_panelCentral);
-  contenedorAlertas.Parent := ly_panelCentral;
-  contenedorAlertas.Name := 'contenedorAlertas';
-  contenedorAlertas.Align := TAlignLayout.Client;
-
-  rAlertas := TRectangle.Create(contenedorAlertas);
-  rAlertas.Parent := contenedorAlertas;
-  rAlertas.Height := 54;
-  rAlertas.Name := 'recAlertas1';
-  rAlertas.Fill.Kind := TbrushKind.Solid;
-  rAlertas.Fill.Color := TAlphaColorRec.Red;
-  rAlertas.Stroke.Kind := TbrushKind.None;
-  rAlertas.Align := TAlignLayout.Top;
-  rAlertas.HitTest := false;
-  rAlertas.CornerType := TCornerType.Round;
-  rAlertas.Corners := [TCorner.TopLeft,TCorner.TopRight,TCorner.BottomLeft,TCorner.BottomRight];
-  rAlertas.XRadius := 5;
-  rAlertas.YRadius := 5;
-
-  // sombra
-  with TShadowEffect.Create(rAlertas) do
-    begin
-      Parent := rAlertas;
-      Name := 'sombraAlerta1';
-      Direction := 45;
-      Distance := 2;
-      Enabled := true;
-      Opacity := 0.6;
-      ShadowColor := TAlphaColorRec.Black;
-      Softness := 0.3;
-    end;
-
-  // etiqueta de color
-  with TLabel.Create(rAlertas) do
-    begin
-      Parent := rAlertas;
-      Align := TAlignLayout.Client;
-      Name := 'lb_textoAlerta1';
-      Text := 'Ingreso de Paciente';
-      StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
-      TextSettings.Font.Size := 15;
-      TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
-      TextSettings.HorzAlign := TTextAlign.Leading;
-      Margins.Left := 10;
-    end;
 end;
 
 procedure Tform_DetallesCama.cambiosDeCamaActualizar;
@@ -1213,6 +1216,18 @@ begin
 
   if permisos.Locate('idModulo', idModulo, []) then
     Result := permisos.FieldByName('controlTotal').AsInteger;
+end;
+
+procedure Tform_DetallesCama.SpeedButton2Click(Sender: TObject);
+begin
+  Application.CreateForm(TformAltaProbable, formAltaProbable);
+  formAltaProbable.Height             := alto;
+  formAltaProbable.Width              := ancho;
+  formAltaProbable.lb_paciente.Text   := camasapellidoPaciente.AsString + ', ' + camasnombrePaciente.AsString;
+  formAltaProbable.lb_cama.Text       := camascama.AsString;
+  formAltaProbable.lb_documento.Text  := camastdocDescripcion.AsString + ': ' + camasnroDocumento.AsString;
+  formAltaProbable.idInternacion      := camasidInternacion.AsInteger;
+  formAltaProbable.ShowModal;
 end;
 
 procedure Tform_DetallesCama.btn_AltaDefinitivaClick(Sender: TObject);

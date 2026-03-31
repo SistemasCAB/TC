@@ -594,7 +594,7 @@ object formTablero: TformTablero
           Size.Width = 27.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 4
+          TabOrder = 3
           Text = 'CC'
           OnClick = botonConsultarCambiosClick
         end
@@ -1019,6 +1019,10 @@ object formTablero: TformTablero
       FieldName = 'altaProbableDniUsuario'
       Size = 255
     end
+    object camasaltaProbableNombreUsuario: TStringField
+      FieldName = 'altaProbableNombreUsuario'
+      Size = 255
+    end
     object camasreservaMotivo: TStringField
       FieldName = 'reservaMotivo'
       Size = 255
@@ -1331,6 +1335,10 @@ object formTablero: TformTablero
     end
     object camas2altaProbableDniUsuario: TStringField
       FieldName = 'altaProbableDniUsuario'
+      Size = 255
+    end
+    object camas2altaProbableNombreUsuario: TStringField
+      FieldName = 'altaProbableNombreUsuario'
       Size = 255
     end
     object camas2reservaMotivo: TStringField

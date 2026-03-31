@@ -21,7 +21,8 @@ uses
   AltaDefinitiva_form in 'AltaDefinitiva_form.pas' {form_AltaDefinitiva},
   Aislamientos_form in 'Aislamientos_form.pas' {formAislamiento},
   DateTimeMaskEdit_unit in 'DateTimeMaskEdit_unit.pas',
-  AutorizacionesPendientes_form in 'AutorizacionesPendientes_form.pas' {form_AutorizacionesPendientes};
+  AutorizacionesPendientes_form in 'AutorizacionesPendientes_form.pas' {form_AutorizacionesPendientes},
+  AltaProbable_form in 'AltaProbable_form.pas' {formAltaProbable};
 
 {$R *.res}
 

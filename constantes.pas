@@ -1687,6 +1687,31 @@ const icono_alta =  'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4
                     'O0ZbD3SNN8RrJF5roe2jBe/LxyK0fYJdI/rWwwgjjDDCCCOMMAKAkP8B7/jMAB9igK4AAAAASUVO'+
                     'RK5CYII=';
 
+// alta probable
+const altaProbable =  'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEnklEQVR4nO2aWYgdRRSGv74ZJ2P0'+
+                      'IaAiIUoi4oILSEQMhOiYFwMBBRdcEYIbuMQlqIkoaKJiJBuKPpi4gDuokCe34PKQJ1FxQSaDD0GU'+
+                      'JGgiIsmYSea21HAqFJXq7qrq6sm92D8U996uqr/q/H36dNWpS4sWLVq0aPH/RaYsP2HBjn4U4Hhg'+
+                      'GXCV/P4AeB7Y50uwZ9tcBpqbX6M4E3gPuMAY5ELgBuBBYKvv4J3+snsSs4CPLeM1zgc+A14ATvIh'+
+                      '6zcBjgO2AKdVtLsH+Ba4voqw3wR4H7jIs+0pwDvAW8DMokb9FAPeBhZH9LsRmFbkDf3iAU9LgIvF'+
+                      'dcDFrr79IMDlwKMJeGa7Lva6AGcBHybgGQN+cVX0sgBqbq8DMxJwqbfCD0WD9CpeA+YnmNty4NWi'+
+                      'yl4V4GbglgQ8jwHryxr0ogDnAJsT8Dwrb49S9JoAaj4vA9Nr8iiXX+k7YC/hSWBBzfmot8atvo1j'+
+                      'V4LXyKpspmxMlOLdSC6NhcAjNTlUpL8ppEOMAOtky6lxtazSlgD/RvApHAO8Ip+x+EfmETSH0Edg'+
+                      'vWW8xiLxhKHIyavt6xmRfRUOAlcCP4d2DBFgA/BASf2lwEcRIgwDdwb2sbEG+CKmo68AG4H7PdoN'+
+                      'iwi+UXwwwStP5Qcej+3sI4DKs90XwDksj4OPCGuB0wO4bewFbqvRv1IA5Vr3RvD6eIKK+ndFcGt0'+
+                      'JSH6Zw2OUgFUkvHhGtyXiQiDjjoV7V+SREUslGd+VaP/JMoEmFOXvESEp4DzavD+WPA2CkaZAGMp'+
+                      'BpBXpCnCQs+AWoT9wFIgTzG5MgE+B35KMYiIoNLVT0hi0/VY+ELFpW8SzavyZOhsEWJWqgFr4jtg'+
+                      'XioydTJU9RYYkbu3s0mrPHEowYLpCPisA3pFhBeBr1OT+q4Ej7YIvwIPNUEcshfQIuxqYiIVuF02'+
+                      'PMkRuhsckXf7VIrwLvBpU+QxGaERWerubmA+Nv6SlHZjiE2JbZftb9OeoP4AsafJAerkBLc37Amf'+
+                      'AG82xH0YdZOi2hNSi7AvcAsejRRZ4SZEeE54G0eqtLia7CWJRBgFVifg8ULKc4HRRJ5wR6qdng9S'+
+                      'H4zUfRzeSJHkCEETJ0OxIuyVk9wpRVNHYzomhKwTVgB/TLH9QSdDmZTc+o3xidFmVJbNXwInV3Bv'+
+                      'AzZJrjBz1OdSMis+5Fa9Ob5XHDEFyMQjioquz0pKx+BS+A24Vg4sTyyYg0pxrVJ5Gfn7Kw4jc+t6'+
+                      '17juKrq+W1ImubQAmaSphiSVPV3qBiRzq4uvEJpzrqzn7waecZwB5HLW+Dtwrky27C4TYPiEUQ5J'+
+                      'OSBFnR+Oq7ZagI4YOyj/yRkyRDCN71QYj/WZy13dJecLV8ipciZBUkX974FTDeMyy3jb9auEMO+6'+
+                      'FkEbP03aaEEmtABd2W+PyfcDBXe/E+AFufVI7JeszmZjTNXmWOBvh3Gm0aZnhLi97QXjYttBfZw/'+
+                      'YAw4Lo3GLCO1EbbBpnFV3mC26zrauQwvC3Z2wREXusb1rkOkSdhvAV0xQTHsKG0baX/PLa9w9XVd'+
+                      'N93fblP03cXVokWLFi1atGhxJID/AK6EMqQ2vsnQAAAAAElFTkSuQmCC';
+
+
 // precaución aislamiento
 const aislamiento = 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz'+
                     'AAAK8AAACvABQqw0mAAAABh0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzT7MfTgAAD45JREFU'+

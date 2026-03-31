@@ -49,9 +49,6 @@ Coordinates=1132,661,80,36
 [camascambioCamaIdSolicitud]
 Coordinates=1132,716,187,36
 
-[edcolor]
-Coordinates=141,1,57,58
-
 [camastdocCodigo]
 Coordinates=1132,771,117,36
 
@@ -229,9 +226,6 @@ Coordinates=1384,111,104,36
 [contenedorAlertas]
 Coordinates=1384,166,119,36
 
-[Button1]
-Coordinates=527,1868,59,58
-
 [lb_indicaciones_no_programadas]
 Coordinates=665,1200,207,58
 
@@ -240,9 +234,6 @@ Coordinates=1384,221,83,36
 
 [camastipoAltaMedica]
 Coordinates=1384,276,137,36
-
-[rec]
-Coordinates=30,1989,40,36
 
 [lb_apellido]
 Coordinates=831,1868,77,58
@@ -309,9 +300,6 @@ Coordinates=1384,1156,131,36
 
 [camassexo]
 Coordinates=1384,1211,79,36
-
-[Button2]
-Coordinates=665,507,59,58
 
 [Rectangle1]
 Coordinates=1384,1266,80,36
@@ -635,12 +623,15 @@ Coordinates=1649,1981,165,36
 Coordinates=1649,2036,213,36
 
 []
-Coordinates=1649,1761,155,36
+Coordinates=527,1868,59,58
 Visible=True
 
 [formAislamiento.disponibles]
 Visible=False
 
 [form_CambioDeCama.motivos]
+Visible=False
+
+[formAltaProbable.altas]
 Visible=False
 
