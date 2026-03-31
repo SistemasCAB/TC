@@ -92,7 +92,7 @@ Coordinates=161,936,134,51
 Coordinates=1679,936,70,33
 
 []
-Coordinates=1570,340,92,87
+Coordinates=341,787,133,33
 Visible=True
 
 [alertasidCama]
@@ -124,9 +124,6 @@ Coordinates=341,683,128,33
 
 [camasfechaIngresoCama]
 Coordinates=341,735,138,33
-
-[camas2fechaAltaMedica]
-Coordinates=341,787,133,33
 
 [camascambioCamaPendiente]
 Coordinates=341,839,159,33
@@ -328,9 +325,6 @@ Coordinates=818,1160,120,33
 
 [camas2reservaCanceladaPorDni]
 Coordinates=834,1212,174,33
-
-[camasfechaAltaMedica]
-Coordinates=818,1264,127,33
 
 [camasreservaPacienteNombre]
 Coordinates=818,1316,164,33

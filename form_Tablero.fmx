@@ -594,7 +594,7 @@ object formTablero: TformTablero
           Size.Width = 27.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 3
+          TabOrder = 4
           Text = 'CC'
           OnClick = botonConsultarCambiosClick
         end

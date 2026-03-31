@@ -111,18 +111,6 @@ type
     Label33: TLabel;
     btn_AltaDefinitiva: TSpeedButton;
     separadorDatosPaciente: TRectangle;
-    recProcedimiento: TRectangle;
-    ShadowEffect7: TShadowEffect;
-    lb_cantidad_procedimientos: TLabel;
-    Label32: TLabel;
-    recMedicacionNoProgramada: TRectangle;
-    ShadowEffect8: TShadowEffect;
-    lb_indicaciones_no_programadas: TLabel;
-    Label35: TLabel;
-    recMedicacionNoAplicada: TRectangle;
-    ShadowEffect9: TShadowEffect;
-    lb_medicacion_no_aplicada: TLabel;
-    Label37: TLabel;
     camas: TFDMemTable;
     apagarAlertasTb: TFDMemTable;
     apagarAlertasTbestado: TFloatField;
@@ -200,7 +188,6 @@ type
     permisosnombreModulo: TStringField;
     permisosdescripcion: TMemoField;
     permisoscontrolTotal: TIntegerField;
-    lyAlertasMedicas: TLayout;
     camassoloAltaMedica: TIntegerField;
     pAislamiento: TLayout;
     lyAislamientoAC: TLayout;
@@ -458,71 +445,71 @@ begin
           MostrarAislamentos;
 
           // ALERTAS MÉDICAS
-          case permisoModulo(5) of
-            0: begin
-              lyAlertasMedicas.Visible := false;
-            end;
-
-            1: begin
-              lyAlertasMedicas.Visible := true;
-              // PROCEDIMIENTOS NO CUMPLIDOS
-              recProcedimiento.Visible          := true;
-              if camasprocedimientosNoCumplidos.AsInteger > 0 then
-                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
-              else
-                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
-
-              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
-
-              // INDICACIONES NO PROGRAMADAS
-              recMedicacionNoProgramada.Visible := true;
-              if camasmedicacionNoProgramada.AsInteger > 0 then
-                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
-              else
-                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
-
-              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
-
-              // MEDICACION NO APLICADA
-              recMedicacionNoAplicada.Visible   := true;
-              if camasmedicacionNoAplicada.AsInteger > 0 then
-                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
-              else
-                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
-
-              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
-            end;
-
-            2: begin
-              lyAlertasMedicas.Visible := true;
-              // PROCEDIMIENTOS NO CUMPLIDOS
-              recProcedimiento.Visible          := true;
-              if camasprocedimientosNoCumplidos.AsInteger > 0 then
-                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
-              else
-                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
-
-              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
-
-              // INDICACIONES NO PROGRAMADAS
-              recMedicacionNoProgramada.Visible := true;
-              if camasmedicacionNoProgramada.AsInteger > 0 then
-                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
-              else
-                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
-
-              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
-
-              // MEDICACION NO APLICADA
-              recMedicacionNoAplicada.Visible   := true;
-              if camasmedicacionNoAplicada.AsInteger > 0 then
-                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
-              else
-                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
-
-              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
-            end;
-          end;
+//          case permisoModulo(5) of
+//            0: begin
+//              lyAlertasMedicas.Visible := false;
+//            end;
+//
+//            1: begin
+//              lyAlertasMedicas.Visible := true;
+//              // PROCEDIMIENTOS NO CUMPLIDOS
+//              recProcedimiento.Visible          := true;
+//              if camasprocedimientosNoCumplidos.AsInteger > 0 then
+//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
+//              else
+//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
+//
+//              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
+//
+//              // INDICACIONES NO PROGRAMADAS
+//              recMedicacionNoProgramada.Visible := true;
+//              if camasmedicacionNoProgramada.AsInteger > 0 then
+//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
+//              else
+//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
+//
+//              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
+//
+//              // MEDICACION NO APLICADA
+//              recMedicacionNoAplicada.Visible   := true;
+//              if camasmedicacionNoAplicada.AsInteger > 0 then
+//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
+//              else
+//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
+//
+//              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
+//            end;
+//
+//            2: begin
+//              lyAlertasMedicas.Visible := true;
+//              // PROCEDIMIENTOS NO CUMPLIDOS
+//              recProcedimiento.Visible          := true;
+//              if camasprocedimientosNoCumplidos.AsInteger > 0 then
+//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
+//              else
+//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
+//
+//              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
+//
+//              // INDICACIONES NO PROGRAMADAS
+//              recMedicacionNoProgramada.Visible := true;
+//              if camasmedicacionNoProgramada.AsInteger > 0 then
+//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
+//              else
+//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
+//
+//              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
+//
+//              // MEDICACION NO APLICADA
+//              recMedicacionNoAplicada.Visible   := true;
+//              if camasmedicacionNoAplicada.AsInteger > 0 then
+//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
+//              else
+//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
+//
+//              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
+//            end;
+//          end;
 
 
 
@@ -580,7 +567,7 @@ begin
           panelPaciente.Visible             := false;
           panelInternacion.Visible          := false;
           panelAislamientos.Visible         := false;
-          lyAlertasMedicas.Visible          := false;
+          //lyAlertasMedicas.Visible          := false;
           botonQuirofano.Visible            := false;
           recCambioCama.Visible             := false;
           botonAltaProbable.Visible         := false;

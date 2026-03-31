@@ -66,8 +66,6 @@ type
     LbPrincipal: TLabel;
     LbSecundaria: TLabel;
     fotoPac: TImage;
-    iconoAlta: TImage;
-    iconoAltaProbable: TImage;
     iconoAislamiento: TImage;
     iconoAislamientoC: TImage;
     iconoAislamientoGC: TImage;
@@ -76,8 +74,7 @@ type
     iconoAislamientoCD: TImage;
     iconoAislamientoSC: TImage;
     lbPrecaucion: TLabel;
-    cruzVerde: TGIFImage;
-
+    lbAlta :TLabel;
   end;
 
 type
@@ -147,7 +144,6 @@ type
     camasplan: TStringField;
     camasnroAfiliado: TStringField;
     camasidInternacion: TIntegerField;
-    camasfechaAltaMedica: TStringField;
     camasprofesionalAltaMedica: TStringField;
     camastipoAltaMedica: TStringField;
     camasfotoPaciente: TMemoField;
@@ -205,7 +201,6 @@ type
     camas2plan: TStringField;
     camas2nroAfiliado: TStringField;
     camas2idInternacion: TIntegerField;
-    camas2fechaAltaMedica: TStringField;
     camas2profesionalAltaMedica: TStringField;
     camas2tipoAltaMedica: TStringField;
     camas2fotoPaciente: TMemoField;
@@ -263,6 +258,8 @@ type
     Rectangle3: TRectangle;
     camasaltaProbableNombreUsuario: TStringField;
     camas2altaProbableNombreUsuario: TStringField;
+    camasfechaAltaMedica: TStringField;
+    camas2fechaAltaMedica: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -277,7 +274,6 @@ type
     procedure botonConsultarCambiosClick(Sender: TObject);
     procedure nuevaAlerta(cama, tipo, idInternacion, paciCodigo: integer);
     procedure verificarIconosAislamientos(idCama: integer);
-    procedure verificarAlertasMedicas(idCama: integer);
     procedure relojParpadeoTimer(Sender: TObject);
     procedure blinking(idCama: string);
     procedure botonConfiguracionClick(Sender: TObject);
@@ -368,30 +364,6 @@ begin
         blinking(alertasidCama.AsString);
         alertas.Next;
       until (alertas.Eof);
-    end;
-end;
-
-procedure TformTablero.verificarAlertasMedicas(idCama: integer);
-var
-  ui:TCamaUI;
-begin
-  // verifica si hay alertas médica, en caso positivo muestra la cruz verde sobre la cama.
-
-  if not FCamasUI.TryGetValue(idCama, ui) then
-    Exit;
-
-  // oculto la cruz verde
-  ui.cruzVerde.Visible := false;
-  ui.cruzVerde.Stop;
-
-  // las alertas medicas solo son visibles para los servicios de enfermería.
-  if (camas2idEstado.AsInteger = 2) and (servicioidTipoInternacion.AsInteger <> 5) then
-    begin
-      if (camas2procedimientosNoCumplidos.AsInteger > 0) or (camas2medicacionNoProgramada.AsInteger > 0) or (camas2medicacionNoAplicada.AsInteger > 0) then
-        begin
-          ui.cruzVerde.Visible := true;
-          ui.cruzVerde.Play;
-        end;
     end;
 end;
 
@@ -533,11 +505,9 @@ var
   lbPrincipal: TLabel;
   lbSecundaria: TLabel;
   fotoPac: TImage;
-  iconoAlta: TImage;
-  iconoAltaProbable: TImage;
+  lb_Alta: TLabel;
   iconoAislamiento, iconoAislamientoC,iconoAislamientoGC, iconoAislamientoAR, iconoAislamientoN, iconoAislamientoCD, iconoAislamientoSC: TImage;
   lbPrecaucion: TLabel;
-  cruzVerde: TGIFImage;
 begin
   LimpiarCacheCamas;
 
@@ -645,57 +615,6 @@ begin
                             HitTest := false;
                           end;
 
-
-                        // Layout Foto
-                        LyFoto := TLayout.Create(Self);
-                        LyFoto.Parent := panelB;
-                        LyFoto.Position.X :=1;
-                        LyFoto.Position.Y := 1;
-                        LyFoto.Width := 80;
-                        LyFoto.Height := 1;
-                        LyFoto.Align := TAlignLayout.Right;
-                        LyFoto.Name := 'lyFoto'+ camasidCama.AsString;
-                        LyFoto.Margins.Top := 5;
-                        LyFoto.Margins.Left := 5;
-                        LyFoto.Margins.Right := 5;
-                        LyFoto.Margins.Bottom := 5;
-                        LyFoto.HitTest := false;
-
-                        pic := camasfotoPaciente.AsString;
-
-                        if camasidEstado.AsInteger = 2 then
-                          begin
-                            // Foto
-                            fotoPac := TImage.Create(Self);
-                            with fotoPac do
-                              begin
-                                Parent := LyFoto;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 1;
-                                Height := 101;
-                                Align := TAlignLayout.Top;
-                                Name := 'FotoPaciente'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-
-                                if camasfotoPaciente.AsString = '' then
-                                  Base64(sin_foto)
-                                else
-                                if verPaciente <> 0 then // tiene permiso para ver datos del paciente?
-                                  begin
-                                    if camasfotoPaciente.AsString = '' then
-                                      Base64(sin_foto)
-                                    else
-                                      Base64(camasfotoPaciente.AsString);
-                                  end
-                                else
-                                  begin
-                                    Base64(sin_foto);
-                                  end;
-                                HitTest := false;
-                              end;
-                          end;
-
                         // Layout Datos
                         LyDatos := TLayout.Create(Self);
                         LyDatos.Parent := panelB;
@@ -716,45 +635,99 @@ begin
                         LyCama.Align := TAlignLayout.Top;
                         LyCama.Name :=  'lyCama'+ camasidCama.AsString;
 
-                        // Ícono Alta Probable
-                        iconoAltaProbable := TImage.Create(Self);
-                        with iconoAltaProbable do
+                        // ALTA MÉDICA
+                        lb_Alta := TLabel.Create(Self);
+                        with lb_Alta do
                           begin
                             Parent := LyCama;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
+                            Name := 'lb_Alta' + camasidCama.AsString;
                             Align := TAlignLayout.Right;
-                            Name := 'IconoAltaProbable'+ camasidCama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(altaProbable);
-                            HitTest := false;
-                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString = '') and (camasaltaProbableFecha.AsString <> '') then
-                              Visible := true
+                            StyledSettings := [TStyledSetting.Family];
+                            TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+                            TextSettings.Font.Size := 14;
+                            TextSettings.WordWrap := true;
+                            Visible := true;
+
+                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString <> '') then
+                              begin
+                                Text := 'ALTA MÉDICA' + #13 + Copy(camasfechaAltaMedica.AsString, 1, 16);
+                                TextSettings.FontColor := TAlphaColorRec.Red;
+
+                              end
                             else
-                              Visible := false;
+                              begin
+                                if camasaltaProbableFecha.AsString <> '' then
+                                  begin
+                                    Text := 'ALTA PROBABLE' + #13 + Copy(camasaltaProbableFecha.AsString, 1, 16);
+                                    TextSettings.FontColor := TAlphaColorRec.Blue;
+                                  end
+                                else
+                                  begin
+                                    Text := '';
+                                  end;
+                              end;
                           end;
 
-                        // Ícono Alta
-                        iconoAlta := TImage.Create(Self);
-                        with iconoAlta do
-                          begin
-                            Parent := LyCama;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Width := 40;
-                            Height := 50;
-                            Align := TAlignLayout.Right;
-                            Name := 'IconoAlta'+ camasidCama.AsString;
-                            WrapMode := TImageWrapMode.Fit;
-                            Base64(icono_alta);
-                            HitTest := false;
-                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString <> '') then
-                              Visible := true
-                            else
-                              Visible := false;
-                          end;
+//                        // ALTA PROBABLE
+//                        lb_AltaProbable := TLabel.Create(Self);
+//                        with lb_AltaProbable do
+//                          begin
+//                            Parent := LyCama;
+//                            Name := 'lb_AltaProbable' + camasidCama.AsString;
+//                            Align := TAlignLayout.Right;
+//                            Text := 'ALTA PROBABLE: ' + #13 + Copy(camasaltaProbableFecha.AsString, 1, 16);
+//
+//                            StyledSettings := [TStyledSetting.Family];
+//                            TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+//                            TextSettings.Font.Size := 14;
+//                            TextSettings.WordWrap := true;
+//                            TextSettings.FontColor := TAlphaColorRec.Blue;
+//                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString = '') and (camasaltaProbableFecha.AsString <> '') then
+//                              Visible := true
+//                            else
+//                              Visible := false;
+//                          end;
+
+
+                        // Ícono Alta Probable
+//                        iconoAltaProbable := TImage.Create(Self);
+//                        with iconoAltaProbable do
+//                          begin
+//                            Parent := LyCama;
+//                            Position.X :=1;
+//                            Position.Y := 1;
+//                            Width := 40;
+//                            Height := 50;
+//                            Align := TAlignLayout.Right;
+//                            Name := 'IconoAltaProbable'+ camasidCama.AsString;
+//                            WrapMode := TImageWrapMode.Fit;
+//                            Base64(altaProbable);
+//                            HitTest := false;
+//                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString = '') and (camasaltaProbableFecha.AsString <> '') then
+//                              Visible := true
+//                            else
+//                              Visible := false;
+//                          end;
+//
+//                        // Ícono Alta
+//                        iconoAlta := TImage.Create(Self);
+//                        with iconoAlta do
+//                          begin
+//                            Parent := LyCama;
+//                            Position.X :=1;
+//                            Position.Y := 1;
+//                            Width := 40;
+//                            Height := 50;
+//                            Align := TAlignLayout.Right;
+//                            Name := 'IconoAlta'+ camasidCama.AsString;
+//                            WrapMode := TImageWrapMode.Fit;
+//                            Base64(icono_alta);
+//                            HitTest := false;
+//                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString <> '') then
+//                              Visible := true
+//                            else
+//                              Visible := false;
+//                          end;
 
 
                         // Número de Cama
@@ -1018,23 +991,6 @@ begin
 
 
 
-                        // Cruz Verde
-                        cruzVerde := TGIFImage.Create(Self);
-                        with cruzVerde do
-                          begin
-                            Parent := panelB;
-                            Position.X :=1;
-                            Position.Y := 1;
-                            Align := TAlignLayout.Contents;
-                            Name := 'cruzVerde'+ camasidCama.AsString;
-                            LoadFromBase64(cruz_verde);
-                            Play;
-                            LoadFromFile('c:\tc\img\cruz-verde.gif');
-                            HitTest := false;
-                            Visible := false;
-                          end;
-
-
                         // Boton
                         botonCama := TSpeedButton.Create(Self);
                         botonCama.Parent := panelB;
@@ -1069,9 +1025,7 @@ begin
                         ui.iconoAislamientoN := iconoAislamientoN;
                         ui.iconoAislamientoCD := iconoAislamientoCD;
                         ui.iconoAislamientoSC := iconoAislamientoSC;
-                        ui.cruzVerde := cruzVerde;
-                        ui.iconoAlta := iconoAlta;
-                        ui.iconoAltaProbable := iconoAltaProbable;
+                        ui.lbAlta := lb_Alta;
                         if permisoModulo(3) = 0 then
                           begin
                             ui.iconoAislamiento := iconoAislamiento;
@@ -1282,36 +1236,40 @@ begin
                   else
                     ui.LbSecundaria.Text := '';
 
-                  // verifico Icono de Alta
+                  // verifico Alta y Alta Probable
                   if camas2idEstado.AsInteger = 2 then
                     begin
                       if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
-                        ui.iconoAlta.Visible := true
+                        begin
+                          // hay epicrisis
+                          ui.lbAlta.Text := 'ALTA MÉDICA' + #13 + Copy(camasfechaAltaMedica.AsString, 1, 16);
+                          ui.lbAlta.FontColor := TAlphaColorRec.Red;
+                        end
                       else
-                        ui.iconoAlta.Visible := false;
+                        begin
+                          // no hay epicrisis
+                          if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
+                            begin
+                              ui.lbAlta.Text := 'ALTA PROBABLE' + #13 + Copy(camas2altaProbableFecha.AsString, 1, 16);
+                            ui.lbAlta.FontColor := TAlphaColorRec.Blue;
+                            end
+                          else
+                            begin
+                              ui.lbAlta.Text := '';
+                            end;
+                        end;
                     end
                   else
                     begin
-                      ui.iconoAlta.Visible := false;
+                      ui.lbAlta.Text := '';
                     end;
 
-                  // verifico Icono de Alta Probable
-                  if camas2idEstado.AsInteger = 2 then
-                    begin
-                      if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
-                        ui.iconoAltaProbable.Visible := true
-                      else
-                        ui.iconoAltaProbable.Visible := false;
-                    end
-                  else
-                    begin
-                      ui.iconoAltaProbable.Visible := false;
-                    end;
+
 
 
                   verificarIconosAislamientos(camas2idCama.AsInteger);
 
-                  verificarAlertasMedicas(camas2idCama.AsInteger);
+                  //verificarAlertasMedicas(camas2idCama.AsInteger);
                 end;
 
               camas2.Next;
@@ -1351,7 +1309,9 @@ begin
                   FieldByName('plan').Value := camas2plan.AsString;
                   FieldByName('nroAfiliado').Value := camas2nroAfiliado.AsString;
                   FieldByName('idInternacion').Value := camas2idInternacion.AsInteger;
+
                   FieldByName('fechaAltaMedica').Value := camas2fechaAltaMedica.AsString;
+
                   FieldByName('profesionalAltaMedica').Value := camas2profesionalAltaMedica.AsString;
                   FieldByName('camaEnAislamiento').Value := camas2camaEnAislamiento.AsString;
                   FieldByName('observaciones').Value := camas2observaciones.AsString;

@@ -67,12 +67,6 @@ Coordinates=1132,936,151,36
 [Label4]
 Coordinates=83,1868,53,58
 
-[lb_cantidad_procedimientos]
-Coordinates=665,584,175,58
-
-[ShadowEffect8]
-Coordinates=1132,991,101,36
-
 [lbTituloApellido]
 Coordinates=227,1373,103,58
 
@@ -148,9 +142,6 @@ Coordinates=398,1868,126,80
 [camasfantasia]
 Coordinates=1132,1541,97,36
 
-[ShadowEffect9]
-Coordinates=1132,1596,101,36
-
 [alertas]
 Coordinates=122,77,81,190
 
@@ -160,17 +151,11 @@ Coordinates=595,1989,71,36
 [camasnroDocumento]
 Coordinates=1132,1651,136,36
 
-[lyAlertasMedicas]
-Coordinates=1132,1706,112,36
-
 [lb_tituloPaciente]
 Coordinates=910,1156,110,58
 
 [lb_reserva_observaciones]
 Coordinates=910,1387,165,58
-
-[recProcedimiento]
-Coordinates=1132,1761,115,36
 
 [Label31]
 Coordinates=79,1658,60,58
@@ -180,9 +165,6 @@ Coordinates=1132,1816,96,36
 
 [camasfotoPaciente]
 Coordinates=1132,1871,124,36
-
-[recMedicacionNoAplicada]
-Coordinates=1132,1926,163,36
 
 [panelAislamientos]
 Coordinates=1132,1981,119,36
@@ -226,9 +208,6 @@ Coordinates=1384,111,104,36
 [contenedorAlertas]
 Coordinates=1384,166,119,36
 
-[lb_indicaciones_no_programadas]
-Coordinates=665,1200,207,58
-
 [camascama]
 Coordinates=1384,221,83,36
 
@@ -237,9 +216,6 @@ Coordinates=1384,276,137,36
 
 [lb_apellido]
 Coordinates=831,1868,77,58
-
-[recMedicacionNoProgramada]
-Coordinates=1384,331,184,36
 
 [pAislamiento]
 Coordinates=1384,386,88,36
@@ -264,9 +240,6 @@ Coordinates=891,1989,57,58
 
 [alertastipo_alerta]
 Coordinates=1384,661,114,36
-
-[ShadowEffect7]
-Coordinates=1384,716,101,36
 
 [camasobservaciones]
 Coordinates=1384,771,135,36
@@ -339,9 +312,6 @@ Coordinates=1384,1486,123,36
 
 [camashabitacion]
 Coordinates=1384,1541,111,36
-
-[Label35]
-Coordinates=665,1123,60,58
 
 [Label22]
 Coordinates=207,1658,60,58
@@ -418,9 +388,6 @@ Coordinates=1266,2085,94,36
 [camasnombrePaciente]
 Coordinates=1117,2085,146,36
 
-[lb_medicacion_no_aplicada]
-Coordinates=665,1585,173,58
-
 [camasfechaIngresoInstitucion]
 Coordinates=928,2085,185,36
 
@@ -465,9 +432,6 @@ Coordinates=1649,111,107,36
 
 [alertasleida]
 Coordinates=0,2049,81,36
-
-[Label32]
-Coordinates=910,1695,60,58
 
 [lb_altaProfesional]
 Coordinates=910,617,117,58
@@ -586,9 +550,6 @@ Coordinates=1649,1156,148,36
 [botonAltaDefinitiva]
 Coordinates=1649,1211,123,36
 
-[Label37]
-Coordinates=596,1868,60,58
-
 [camascambioCamaIdCamaDestino]
 Coordinates=1649,1266,216,36
 
@@ -623,7 +584,7 @@ Coordinates=1649,1981,165,36
 Coordinates=1649,2036,213,36
 
 []
-Coordinates=527,1868,59,58
+Coordinates=1132,1706,112,36
 Visible=True
 
 [formAislamiento.disponibles]
