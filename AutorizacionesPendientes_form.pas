@@ -249,10 +249,39 @@ end;
 procedure Tform_AutorizacionesPendientes.clicBotonAutorizar(sender: TObject);
 var
   idCamasCambiosPendientes: integer;
+  response : IResponse;
+  recurso, body : string;
 begin
   idCamasCambiosPendientes := (sender as TSpeedButton).Tag;
+  recurso := '/tablerocamas/camasCambiosPendientesAutorizar';
 
-  showmessage('Autorizar: ' + idCamasCambiosPendientes.ToString);
+  body := '{'+
+              '"idCamasCambiosPendientes":'+ idCamasCambiosPendientes.ToString +','+
+              '"autEnfermeriaPorDni":"'+ datos.dniLogin +'",'+
+              '"autEnfermeriaPorNombre":"'+ datos.nombreLogin +'"'+
+          '}';
+
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(autorizar))
+              .Post;
+
+  if response.StatusCode = 200 then
+    begin
+      datos.VerMensaje('OK ', autorizarmensaje.AsString,'Aceptar','OK',0);
+
+      ActualizarPendientes;
+      if(pendientes.RecordCount = 0) then
+        Close;
+
+    end
+  else
+    begin
+      datos.VerMensaje('Error ' + response.StatusCode.ToString,'El endpoint ' + recurso + ' ha respondido con status code ' + response.StatusCode.ToString +#13+ '. Mensaje: ' + autorizarmensaje.AsString,'Aceptar','ERROR',0);
+    end;
 end;
 
 procedure Tform_AutorizacionesPendientes.clicBotonNoAutorizar(sender: TObject);

@@ -125,6 +125,9 @@ type
     nuevaSolicitudmensaje: TStringField;
     nuevaSolicitudid_solicitud: TIntegerField;
     motivosactivo: TIntegerField;
+    cambiarCama: TFDMemTable;
+    cambiarCamaestado: TIntegerField;
+    cambiarCamamensaje: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure Actualizar;
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
@@ -361,16 +364,33 @@ end;
 procedure Tform_CambioDeCama.RegistrarCambioDeCama;
 var
   response: IResponse;
+  recurso, body : String;
 begin
+  body := '{'+
+              '"idSolicitudCambio":'+ solicitudidSolicitud.AsString +','+
+              '"realizadoPorDni":"'+ datos.dniLogin +'",'+
+              '"realizadoPorNombre":"'+ datos.nombreLogin +'",'+
+              '"idServicio":'+ datos.servicio.ToString +
+          '}';
+
+  recurso := '/tablerocamas/camasCambiosRegistrar';
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('/cambioCama/eliminarSolicitud')
+              .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_solicitudCambio', solicitudidSolicitud.AsString)
-              .AddParam('dni',datos.dniLogin)
-              .AddParam('nombreUsuario',datos.nombreLogin)
+              .AddBody(body)
               .Accept('application/json')
-              .Adapters(TDataSetSerializeAdapter.New(eliminarSolicitud))
+              .Adapters(TDataSetSerializeAdapter.New(cambiarCama))
               .Post;
+
+  if response.StatusCode = 200 then
+    begin
+      datos.VerMensaje('Cambio de cama registrado',cambiarCamamensaje.AsString,'Aceptar','OK',0);
+      Close;
+    end
+  else
+    begin
+      datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'El servicio ' + recurso + ' ha retornado el siguiente error: ' + cambiarCamamensaje.AsString,'Aceptar','ERROR',0);
+    end;
 end;
 
 procedure Tform_CambioDeCama.SpeedButton1Click(Sender: TObject);

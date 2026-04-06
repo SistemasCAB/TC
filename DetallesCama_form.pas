@@ -70,7 +70,6 @@ type
     lb_fecha_alta_medica: TLabel;
     Label11: TLabel;
     lb_ingreso_cama: TLabel;
-    icono_alta_medica: TImage;
     lb_tipoAlta: TLabel;
     lb_altaProfesional: TLabel;
     Rectangle1: TRectangle;
@@ -241,6 +240,7 @@ type
     reservasidMotivoFinReserva: TIntegerField;
     reservasidSolicitudCambio: TIntegerField;
     reservasfechaReserva: TStringField;
+    camasaltaProbableNombreUsuario: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);
@@ -383,22 +383,33 @@ begin
             1:begin
               lb_id_internacion.Text := 'ID: ' + camasidInternacion.AsString;
               panelInternacion.Visible := true;
-              lb_ingreso_institucion.Text := camasfechaIngresoInstitucion.AsString;
-              lb_ingreso_cama.Text := camasfechaIngresoCama.AsString;
+              lb_ingreso_institucion.Text := Copy(camasfechaIngresoInstitucion.AsString,1,16);
+              lb_ingreso_cama.Text := Copy(camasfechaIngresoCama.AsString,1,16);
 
               if camasfechaAltaMedica.AsString <> '' then
                 begin
-                  icono_alta_medica.Visible := true;
-                  lb_fecha_alta_medica.Text := camasfechaAltaMedica.AsString;
+                  // Hay epicrisis
+                  lb_fecha_alta_medica.Text := 'ALTA MÉDICA: ' + Copy(camasfechaAltaMedica.AsString,1,16);
                   lb_tipoAlta.Text := camastipoAltaMedica.AsString;
                   lb_altaProfesional.Text := camasprofesionalAlta.AsString;
+                  lb_fecha_alta_medica.TextSettings.FontColor := TAlphaColorRec.Red;
                 end
               else
                 begin
-                  icono_alta_medica.Visible := false;
-                  lb_fecha_alta_medica.Text := '';
-                  lb_tipoAlta.Text := '';
-                  lb_altaProfesional.Text := '';
+                  // No hay epicrisis
+                  if camasaltaProbableFecha.AsString <> '' then
+                    begin
+                      lb_fecha_alta_medica.Text := 'ALTA PROBABLE: '+Copy(camasaltaProbableFecha.AsString,1,16);
+                      lb_tipoAlta.Text := camasaltaProbable_tipoAltaProbable.AsString;
+                      lb_altaProfesional.Text := camasaltaProbableNombreUsuario.AsString;
+                      lb_fecha_alta_medica.TextSettings.FontColor := TAlphaColorRec.Blue;
+                    end
+                  else
+                    begin
+                      lb_fecha_alta_medica.Text := '';
+                      lb_tipoAlta.Text := '';
+                      lb_altaProfesional.Text := '';
+                    end;
                 end;
               botonAltaDefinitiva.Visible := false;
             end;
@@ -406,24 +417,33 @@ begin
             2:begin
               lb_id_internacion.Text := 'ID: ' + camasidInternacion.AsString;
               panelInternacion.Visible := true;
-              lb_ingreso_institucion.Text := camasfechaIngresoInstitucion.AsString;
-              lb_ingreso_cama.Text := camasfechaIngresoCama.AsString;
+              lb_ingreso_institucion.Text := Copy(camasfechaIngresoInstitucion.AsString,1,16);
+              lb_ingreso_cama.Text := Copy(camasfechaIngresoCama.AsString,1,16);
 
               if camasfechaAltaMedica.AsString <> '' then
                 begin
-                  icono_alta_medica.Visible := true;
-                  lb_fecha_alta_medica.Text := camasfechaAltaMedica.AsString;
+                  // Hay epicrisis
+                  lb_fecha_alta_medica.Text := 'ALTA MÉDICA: ' + Copy(camasfechaAltaMedica.AsString,1,16);
                   lb_tipoAlta.Text := camastipoAltaMedica.AsString;
                   lb_altaProfesional.Text := camasprofesionalAlta.AsString;
-                  //botonAltaDefinitiva.Visible := true;
+                  lb_fecha_alta_medica.TextSettings.FontColor := TAlphaColorRec.Red;
                 end
               else
                 begin
-                  icono_alta_medica.Visible := false;
-                  lb_fecha_alta_medica.Text := '';
-                  lb_tipoAlta.Text := '';
-                  lb_altaProfesional.Text := '';
-                  //botonAltaDefinitiva.Visible := false;
+                  // No hay epicrisis
+                  if camasaltaProbableFecha.AsString <> '' then
+                    begin
+                      lb_fecha_alta_medica.Text := 'ALTA PROBABLE: '+Copy(camasaltaProbableFecha.AsString,1,16);
+                      lb_tipoAlta.Text := camasaltaProbable_tipoAltaProbable.AsString;
+                      lb_altaProfesional.Text := camasaltaProbableNombreUsuario.AsString;
+                      lb_fecha_alta_medica.TextSettings.FontColor := TAlphaColorRec.Blue;
+                    end
+                  else
+                    begin
+                      lb_fecha_alta_medica.Text := '';
+                      lb_tipoAlta.Text := '';
+                      lb_altaProfesional.Text := '';
+                    end;
                 end;
             end;
           end;
