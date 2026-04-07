@@ -1,305 +1,460 @@
 ﻿[Label3]
-Coordinates=220,606,46,51
+Coordinates=220,606,53,58
 
 [lb_estadoSolicitud]
-Coordinates=317,674,105,51
+Coordinates=317,674,119,58
 
 [lb_solicitado_por]
-Coordinates=486,606,99,51
+Coordinates=486,606,112,58
 
 [solicitudfecha]
-Coordinates=0,781,83,33
+Coordinates=0,781,93,36
 
 [Label6]
-Coordinates=755,674,46,51
+Coordinates=755,674,53,58
 
 [Label20]
-Coordinates=509,674,52,51
+Coordinates=509,674,60,58
 
 [lb_autorizadoNombre]
-Coordinates=924,674,120,51
+Coordinates=924,674,137,58
 
 [botonSalir]
-Coordinates=856,606,65,51
+Coordinates=856,606,73,58
 
 [Rectangle1]
-Coordinates=447,788,69,33
+Coordinates=447,788,80,36
 
 [Rectangle3]
-Coordinates=357,788,69,33
+Coordinates=357,788,80,36
 
 [iconoVentana]
-Coordinates=1141,606,81,51
+Coordinates=1141,606,93,58
 
 [pagina]
-Coordinates=294,788,47,33
+Coordinates=294,788,53,36
 
 [lb_autorizadoFecha]
-Coordinates=724,10,111,51
+Coordinates=724,10,128,58
 
 [Label1]
-Coordinates=1351,674,46,51
+Coordinates=1351,674,53,58
 
 [Label9]
-Coordinates=968,10,46,51
+Coordinates=968,10,53,58
 
 [solicitudestado]
-Coordinates=756,496,89,33
+Coordinates=756,496,100,36
 
 [Rectangle2]
-Coordinates=204,788,69,33
+Coordinates=204,788,80,36
 
 [solicitudmotivo]
-Coordinates=756,606,90,33
+Coordinates=756,606,100,36
 
 [Label7]
-Coordinates=423,606,46,51
+Coordinates=423,606,53,58
 
 [tabSolicitar]
-Coordinates=115,788,70,33
+Coordinates=115,788,79,36
 
 [CalloutPanel1]
-Coordinates=10,788,82,33
+Coordinates=10,788,95,36
 
 [recBotonCambiarCama]
-Coordinates=1424,742,128,33
+Coordinates=1424,742,148,36
 
 [Label13]
-Coordinates=579,674,52,51
+Coordinates=579,674,60,58
 
 [recTituloVentana]
-Coordinates=1302,742,97,33
+Coordinates=1302,742,112,36
 
 [lb_motivo]
-Coordinates=1101,10,62,51
+Coordinates=1101,10,70,58
 
 [Rectangle4]
-Coordinates=1212,742,69,33
+Coordinates=1212,742,80,36
 
 [Label11]
-Coordinates=283,606,52,51
+Coordinates=283,606,60,58
 
 [SpeedButton1]
-Coordinates=211,674,84,51
+Coordinates=211,674,96,58
 
 [SpeedButton4]
-Coordinates=649,674,84,51
+Coordinates=649,674,96,58
 
 [tabSolicitud]
-Coordinates=1120,742,73,33
+Coordinates=1120,742,82,36
 
 [Layout1]
-Coordinates=1050,742,53,33
+Coordinates=1050,742,60,36
 
 [botonCancelarCambio]
-Coordinates=898,742,124,33
+Coordinates=898,742,142,36
 
 [botonSolicitar]
-Coordinates=795,742,83,33
+Coordinates=795,742,93,36
 
 [Label18]
-Coordinates=1391,10,52,51
+Coordinates=1391,10,60,58
 
 [Label12]
-Coordinates=1071,674,52,51
+Coordinates=1071,674,60,58
 
 [Label2]
-Coordinates=730,606,46,51
+Coordinates=730,606,53,58
 
 [lb_idSolicitud]
-Coordinates=10,674,81,51
+Coordinates=10,674,91,58
 
 [botonCambiarCama]
-Coordinates=939,606,112,51
+Coordinates=939,606,129,58
 
 [Label28]
-Coordinates=353,606,52,51
+Coordinates=353,606,60,58
 
 [sombra]
-Coordinates=53,913,51,33
+Coordinates=53,913,57,36
 
 [Label23]
-Coordinates=1281,674,52,51
+Coordinates=1281,674,60,58
 
 [Label16]
-Coordinates=1487,606,52,51
+Coordinates=1487,606,60,58
 
 [Label14]
-Coordinates=1211,674,52,51
+Coordinates=1211,674,60,58
 
 [Label10]
-Coordinates=1141,674,52,51
+Coordinates=1141,674,60,58
 
 [Label15]
-Coordinates=1251,10,52,51
+Coordinates=1251,10,60,58
 
 [Label5]
-Coordinates=1078,606,46,51
+Coordinates=1078,606,53,58
 
 [lb_cama_destino]
-Coordinates=608,606,97,51
+Coordinates=608,606,112,58
 
 [solicitud]
-Coordinates=10,10,115,483
+Coordinates=10,10,127,586
 
 [rectCambioCama]
-Coordinates=671,742,99,33
+Coordinates=671,742,114,36
 
 [Label8]
-Coordinates=793,606,46,51
+Coordinates=793,606,53,58
 
 [lb_fecha_solicitud]
-Coordinates=1244,606,104,51
+Coordinates=1244,606,117,58
 
 [Label4]
-Coordinates=446,674,46,51
+Coordinates=446,674,53,58
 
 [tituloVentana]
-Coordinates=111,674,79,51
+Coordinates=111,674,90,58
 
 [lb_cama_origen]
-Coordinates=1371,606,92,51
+Coordinates=1371,606,106,58
 
 [tabMotivosCambio]
-Coordinates=540,742,106,33
+Coordinates=540,742,121,36
 
 [Label17]
-Coordinates=10,606,52,51
+Coordinates=10,606,60,58
 
 [Rectangle7]
-Coordinates=450,742,69,33
+Coordinates=450,742,80,36
 
 [Label21]
-Coordinates=1181,10,52,51
+Coordinates=1181,10,60,58
 
 [Label25]
-Coordinates=80,606,52,51
+Coordinates=80,606,60,58
 
 [Label22]
-Coordinates=150,606,52,51
+Coordinates=150,606,60,58
 
 [FondoTransparente]
-Coordinates=313,742,111,33
+Coordinates=313,742,127,36
 
 [Rectangle5]
-Coordinates=223,742,69,33
+Coordinates=223,742,80,36
 
 [SpeedButton5]
-Coordinates=862,10,84,51
+Coordinates=862,10,96,58
 
 [Label24]
-Coordinates=1321,10,52,51
+Coordinates=1321,10,60,58
 
 [Label19]
-Coordinates=1031,10,52,51
+Coordinates=1031,10,60,58
 
 [tabCambioVirtual]
-Coordinates=100,742,99,33
+Coordinates=100,742,113,36
 
 [lyCambioACamaVirtual]
-Coordinates=1414,674,128,33
+Coordinates=1414,674,147,36
 
 []
 Coordinates=960,716,88,36
 
 [BindSourceDB1]
-Coordinates=450,10,92,105
+Coordinates=450,10,128,146
 
 [BindingsList1]
-Coordinates=167,395,82,33
+Coordinates=167,395,91,36
 
 [motivos]
-Coordinates=450,10,53,33
+Coordinates=450,10,59,36
 Visible=False
 
 [motivosmotivo]
-Coordinates=382,1076,87,33
+Coordinates=382,1076,97,36
 
 [btn_CancelarSolicitudCambio]
-Coordinates=818,674,160,51
+Coordinates=818,674,184,58
 
 [eliminarSolicitudestado]
-Coordinates=167,318,130,33
+Coordinates=167,318,148,36
 
 [eliminarSolicitudmensaje]
-Coordinates=167,450,138,33
+Coordinates=167,450,158,36
 
 [eliminarSolicitud]
-Coordinates=167,197,97,87
+Coordinates=167,197,109,102
 
 [listaMotivos]
-Coordinates=269,10,89,141
+Coordinates=269,10,107,168
 Visible=True
 
 [botonFinalizarNuevaSolicitud]
-Coordinates=10,742,69,33
+Coordinates=10,742,182,36
 
 [btn_NuevaSolicitud]
-Coordinates=1461,10,84,51
+Coordinates=1461,10,126,58
 
 [solicitudidSolicitud]
-Coordinates=960,276,113,33
+Coordinates=960,276,121,36
 
 [solicitudidInternacion]
-Coordinates=607,913,127,33
+Coordinates=607,913,136,36
 
 [solicitudpaciCodigo]
-Coordinates=960,441,113,33
+Coordinates=960,441,126,36
 
 [solicitudnroDocumento]
-Coordinates=756,1,125,33
+Coordinates=756,1,146,36
 
 [solicitudidCamaOrigen]
-Coordinates=960,331,135,33
+Coordinates=960,331,144,36
 
 [solicitudcamaOrigen]
-Coordinates=756,221,120,33
+Coordinates=756,221,131,36
 
 [solicitudidCamaDestino]
-Coordinates=756,166,140,33
+Coordinates=756,166,149,36
 
 [solicitudcamaDestino]
-Coordinates=756,386,125,33
+Coordinates=756,386,136,36
 
 [solicitudidMotivo]
-Coordinates=756,441,105,33
+Coordinates=756,441,110,36
 
 [solicitudidEstadoSolicitud]
-Coordinates=960,56,152,33
+Coordinates=960,56,161,36
 
 [solicitudsolicitadoPorDni]
-Coordinates=756,111,148,33
+Coordinates=756,111,155,36
 
 [solicitudsolicitadoPorNombre]
-Coordinates=960,606,170,33
+Coordinates=960,606,181,36
 
 [solicitudautorizadoFecha]
-Coordinates=756,56,141,33
+Coordinates=756,56,157,36
 
 [solicitudautorizadoPorDni]
-Coordinates=960,1,152,33
+Coordinates=960,1,161,36
 
 [solicitudautorizadoPorNombre]
-Coordinates=960,496,174,33
+Coordinates=960,496,187,36
 
 [solicitudrealizadoFecha]
-Coordinates=756,826,133,33
+Coordinates=756,826,150,36
 
 [solicitudrealizadoPorDni]
-Coordinates=960,386,144,33
+Coordinates=960,386,153,36
 
 [solicitudrealizadoPorNombre]
-Coordinates=960,166,167,33
+Coordinates=960,166,180,36
 
 [solicitudcanceladoFecha]
-Coordinates=960,661,139,33
+Coordinates=960,661,156,36
 
 [solicitudcanceladoPorDni]
-Coordinates=960,111,150,33
+Coordinates=960,111,160,36
 
 [solicitudcanceladoPorNombre]
-Coordinates=960,221,172,33
+Coordinates=960,221,186,36
 
 [motivosidMotivoCambioCama]
-Coordinates=15,1076,102,33
+Coordinates=15,1076,185,36
+
+[nuevaSolicitudmensaje]
+Coordinates=156,494,147,36
+
+[cambiarCama]
+Coordinates=156,373,94,102
+
+[cambiarCamamensaje]
+Coordinates=156,549,143,36
+
+[nuevaSolicitudid_solicitud]
+Coordinates=274,373,163,36
+
+[nuevaSolicitud]
+Coordinates=156,1,99,102
+
+[motivosactivo]
+Coordinates=156,122,93,36
+
+[cambiarCamaestado]
+Coordinates=475,175,133,36
+
+[camasDisponiblesidCama]
+Coordinates=783,551,163,36
+
+[listaCamas]
+Coordinates=680,130,107,168
+Visible=True
+
+[lb_botonCambioInterno]
+Coordinates=1386,439,148,58
+
+[tabTipoCambio]
+Coordinates=616,1,102,36
+
+[form_DetallesCama.aislamientos]
+Coordinates=1040,797,204,344
+
+[lb_cambioInterno]
+Coordinates=636,816,113,58
+
+[camasDisponiblesidHabitacion]
+Coordinates=951,551,190,36
+
+[Rectangle6]
+Coordinates=699,551,80,36
+
+[recCambioExterno]
+Coordinates=912,893,121,36
+
+[lb_botonCambioExterno]
+Coordinates=1386,285,152,58
+
+[formTablero.permisos]
+Coordinates=475,230,140,168
+
+[lb_cambioExterno]
+Coordinates=1282,516,117,58
+
+[recCambioInterno]
+Coordinates=1282,797,117,36
+
+[botonCambioExterno]
+Coordinates=1282,362,135,58
+
+[botonCambioInterno]
+Coordinates=310,260,131,58
+
+[Label29]
+Coordinates=353,428,60,58
+
+[botonRegistrarCambioAreaCerrada]
+Coordinates=1399,852,217,36
+
+[formTablero.camas2]
+Coordinates=359,2528,170,1400
+
+[form_DetallesCama.camas]
+Coordinates=344,1131,202,1378
+
+[camasDisponiblespiso]
+Coordinates=1386,907,143,36
+
+[form_DetallesCama.fecha]
+Coordinates=1185,87,163,102
+
+[formTablero.versiones]
+Coordinates=475,417,143,168
+
+[Label31]
+Coordinates=353,505,60,58
+
+[formTablero.alertas]
+Coordinates=911,1131,126,80
+
+[formTablero.camas]
+Coordinates=170,1131,170,1400
+
+[SpeedButton2]
+Coordinates=1040,1160,96,58
+
+[camasDisponiblestipoCama]
+Coordinates=1179,439,174,36
+
+[camasDisponibles]
+Coordinates=860,130,119,36
+Visible=False
+
+[form_DetallesCama.reservas]
+Coordinates=656,1112,181,366
+
+[form_DetallesCama.permisos]
+Coordinates=421,862,184,212
+
+[camasDisponiblescama]
+Coordinates=1391,962,150,36
+
+[camasDisponibleshabitacion]
+Coordinates=1307,1017,178,36
+
+[TabCambioInternoCamas]
+Coordinates=1399,1072,161,36
+
+[Rectangle8]
+Coordinates=24,862,80,36
+
+[form_DetallesCama.apagarAlertasTb]
+Coordinates=1399,87,227,102
+
+[Label26]
+Coordinates=587,1112,60,58
+
+[Rectangle10]
+Coordinates=1282,285,87,36
+
+[formTablero.servicio]
+Coordinates=758,881,150,212
+
+[form_DetallesCama.alertas]
+Coordinates=113,862,171,190
+
+[SpeedButton3]
+Coordinates=537,797,96,58
+
+[formTablero.alertasNueva]
+Coordinates=1106,276,163,58
+
+[formTablero.apagarAlertasTB]
+Coordinates=1282,208,184,58
+
+[Label27]
+Coordinates=951,797,60,58
+
+[BindSourceDB2]
+Coordinates=860,130,107,212
 

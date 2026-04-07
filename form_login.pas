@@ -1,7 +1,5 @@
 unit form_login;
-
 interface
-
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
@@ -12,7 +10,6 @@ uses
   REST.Client, Data.Bind.Components, Data.Bind.ObjectScope, FMX.GIFImage,
   FMX.Memo.Types, FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList,
   FMX.Effects;
-
 type
   TformLogin = class(TForm)
     cuenta: TEdit;
@@ -51,18 +48,13 @@ type
   public
     { Public declarations }
   end;
-
 var
   formLogin: TformLogin;
-
 implementation
-
 {$R *.fmx}
-
 uses form_Tablero, ModuloDatos, mensajes_form,
   RESTRequest4D,
   DataSet.Serialize.Adapter.RESTRequest4D;
-
 procedure TformLogin.botonAceptarApplyStyleLookup(Sender: TObject);
   var
   Button: TCustomButton;
@@ -76,12 +68,10 @@ begin
     (TextObj as TText).Margins.Left := 32;
   end;
 end;
-
 procedure TformLogin.botonAceptarClick(Sender: TObject);
 begin
   iniciarSesion(cuenta.Text,clave.Text);
 end;
-
 procedure TformLogin.botonCancelarApplyStyleLookup(Sender: TObject);
 var
   Button: TCustomButton;
@@ -95,31 +85,26 @@ begin
     (TextObj as TText).Margins.Left := 32;
   end;
 end;
-
 procedure TformLogin.botonCancelarClick(Sender: TObject);
 begin
   Application.Terminate;
 end;
-
 procedure TformLogin.claveKeyDown(Sender: TObject; var Key: Word;
   var KeyChar: Char; Shift: TShiftState);
 begin
   if key = vkreturn then
     botonAceptar.OnClick(botonAceptar);
 end;
-
 procedure TformLogin.cuentaKeyDown(Sender: TObject; var Key: Word;
   var KeyChar: Char; Shift: TShiftState);
 begin
   if key = vkreturn then
     clave.SetFocus;
 end;
-
 procedure TformLogin.FormActivate(Sender: TObject);
 begin
   cuenta.SetFocus;
 end;
-
 procedure TformLogin.FormCreate(Sender: TObject);
 begin
   formLogin.Width := 413;
@@ -137,7 +122,6 @@ begin
       lyLogin.Visible := false;
       espere.Visible := true;
       espere.Play;
-
       TThread.CreateAnonymousThread(procedure
       begin
         var response := TRequest.New
@@ -145,7 +129,6 @@ begin
                   .Accept('application/json')
                   .Adapters(TDataSetSerializeAdapter.New(LoginReg))
                   .Post;
-
         TThread.Synchronize(nil, procedure
           begin
             if response.StatusCode = 200 then
@@ -157,7 +140,6 @@ begin
                     datos.Id_Usuario_Markey             := LoginRegId_Usuario.AsInteger;
                     datos.dniLogin                      := LoginRegdni.AsString;
                     datos.nombreLogin                   := LoginRegapellido.AsString + ', ' + LoginRegnombre.AsString;
-
                     Close;
                   end
                 else
@@ -185,6 +167,4 @@ begin
       datos.VerMensaje('ERROR','Primero debe ingresar el usuario y la contraseña','Aceptar','ERROR',0);
     end;
 end;
-
 end.
-

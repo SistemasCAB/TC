@@ -128,6 +128,36 @@ type
     cambiarCama: TFDMemTable;
     cambiarCamaestado: TIntegerField;
     cambiarCamamensaje: TStringField;
+    tabTipoCambio: TTabItem;
+    Rectangle6: TRectangle;
+    recCambioInterno: TRectangle;
+    lb_botonCambioInterno: TLabel;
+    botonCambioInterno: TSpeedButton;
+    Label29: TLabel;
+    lb_cambioInterno: TLabel;
+    recCambioExterno: TRectangle;
+    lb_botonCambioExterno: TLabel;
+    botonCambioExterno: TSpeedButton;
+    lb_cambioExterno: TLabel;
+    TabCambioInternoCamas: TTabItem;
+    Rectangle8: TRectangle;
+    Label26: TLabel;
+    listaCamas: TListView;
+    botonRegistrarCambioAreaCerrada: TRectangle;
+    Label27: TLabel;
+    SpeedButton2: TSpeedButton;
+    Rectangle10: TRectangle;
+    Label31: TLabel;
+    SpeedButton3: TSpeedButton;
+    camasDisponibles: TFDMemTable;
+    camasDisponiblesidCama: TIntegerField;
+    camasDisponiblescama: TStringField;
+    camasDisponiblesidHabitacion: TIntegerField;
+    camasDisponibleshabitacion: TStringField;
+    camasDisponiblespiso: TStringField;
+    camasDisponiblestipoCama: TStringField;
+    BindSourceDB2: TBindSourceDB;
+    LinkListControlToField2: TLinkListControlToField;
     procedure botonSalirClick(Sender: TObject);
     procedure Actualizar;
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
@@ -144,6 +174,9 @@ type
     procedure listaMotivosItemClick(const Sender: TObject; const AItem: TListViewItem);
     procedure btn_NuevaSolicitudClick(Sender: TObject);
     procedure RegistrarCambioDeCama;
+    procedure ActualizarCamasDisponiblesAreaCerrada(idServicio:integer);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -159,7 +192,7 @@ implementation
 
 {$R *.fmx}
 
-uses ModuloDatos, mensajeConfirmacion_form;
+uses ModuloDatos, mensajeConfirmacion_form, DetallesCama_form, form_Tablero;
 
 procedure Tform_CambioDeCama.Actualizar;
 var
@@ -183,6 +216,7 @@ begin
         begin
           // Hay una solicitud
           pagina.TabIndex := 2; // página para ver la solicitud actual.
+
           lb_idSolicitud.Text := solicitudidSolicitud.AsString;
           lb_fecha_solicitud.Text := solicitudfecha.AsString;
           lb_solicitado_por.Text := solicitudsolicitadoPorNombre.AsString;
@@ -220,12 +254,57 @@ begin
       else
         begin
           // No hay una solicitud
-          pagina.TabIndex := 0;
+
+          // verifico si hay epicrisis para habilitar o no el cambio a camas virtuales.
+          if form_DetallesCama.camasfechaAltaMedica.AsString <> '' then
+            lyCambioACamaVirtual.Visible := true
+          else
+            lyCambioACamaVirtual.Visible := false;
+
+
+          // Si es un área cerrada, permito el cambio de camas dentro del área.
+          if datos.cambioCamaAreaCerrada = 1 then
+            begin
+              pagina.TabIndex := 4;
+              lb_CambioInterno.Text := 'Cambiar al paciente a una cama ubicada en ' + formTablero.servicionombreServicio.AsString;
+              lb_CambioExterno.Text := 'Cambiar al paciente a una cama ubicada fuera de ' + formTablero.servicionombreServicio.AsString;
+              lb_botonCambioExterno.Text := 'A una cama fuera de' + #13 + formTablero.servicionombreServicio.AsString;
+              lb_botonCambioInterno.Text := 'A una cama de' + #13 + formTablero.servicionombreServicio.AsString;
+            end
+          else
+            begin
+              pagina.TabIndex := 0;
+            end;
         end;
     end
   else
     begin
       datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,'Ha ocurrido un error en la ejecución del método ' + recurso,'Aceptar','ERROR',0);
+    end;
+end;
+
+procedure Tform_CambioDeCama.ActualizarCamasDisponiblesAreaCerrada(idServicio: integer);
+var
+  response : IResponse;
+  recurso : String;
+begin
+  recurso := '/tablerocamas/camasDisponiblesAreaCerrada';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idServicio',idServicio.ToString)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(camasDisponibles))
+              .Get;
+
+  if (response.StatusCode = 200) and (camasDisponibles.RecordCount > 0) then
+    begin
+      botonRegistrarCambioAreaCerrada.Enabled := true;
+    end
+  else
+    begin
+      botonRegistrarCambioAreaCerrada.Enabled := false;
+      showmessage('Error');
     end;
 end;
 
@@ -395,7 +474,85 @@ end;
 
 procedure Tform_CambioDeCama.SpeedButton1Click(Sender: TObject);
 begin
-  pagina.TabIndex := 1;
+  ActualizarCamasDisponiblesAreaCerrada(datos.servicio);
+  pagina.TabIndex := 5;
+end;
+
+procedure Tform_CambioDeCama.SpeedButton2Click(Sender: TObject);
+var
+  response, response2: IResponse;
+  recurso, recurso2, body, body2: String;
+begin
+// El cambio de cama en el área cerrada se realiza en dos pasos:
+// 1) Crear la solicitud de cambio de cama. La solicitud se crea y se aprueba en el mismo paso.
+//    para esto se llama al método tablerocamas/cambioCamaCrearSolicitudAreaCerrada
+
+// 2) Se registra el cambio de cama de la solicitud creada en el paso 1
+//    para esto se llama el método tablerocamas/camasCambiosRegistrar
+
+
+  // PASO 1: creo la solicitud, la apruebo y reservo la cama destino
+  body := '{'+
+              '"idInternacion":'+idInternacion.ToString+','+
+              '"paciCodigo":' + paciCodigo.ToString  + ','+
+              '"tdocCodigo":'+ tdocCodigo.ToString +','+
+              '"nroDocumento":"'+ nroDocumento +'",'+
+              '"idCamaOrigen":'+ idCamaOrigen.ToString +','+
+              '"idCamaDestino":'+ camasDisponiblesidCama.AsString +','+
+              '"solicitadoPorDni":"'+ datos.dniLogin +'",'+
+              '"solicitadoPorNombre":"'+ datos.nombreLogin +'"'+
+          '}';
+
+  recurso := 'tablerocamas/cambioCamaCrearSolicitudAreaCerrada';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(nuevaSolicitud))
+              .Post;
+
+  if response.StatusCode = 200 then
+    begin
+      // PASO 2: registro el cambio de cama
+      body2 := '{'+
+                  '"idSolicitudCambio":'+ nuevaSolicitudid_solicitud.AsString +','+
+                  '"realizadoPorDni":"'+ datos.dniLogin +'",'+
+                  '"realizadoPorNombre":"'+ datos.nombreLogin +'",'+
+                  '"idServicio":'+ datos.servicio.ToString +
+              '}';
+
+      recurso2 := '/tablerocamas/camasCambiosRegistrar';
+      response2 := TRequest.New.BaseURL(datos.urlTC)
+                  .Resource(recurso2)
+                  .AddHeader('TokenAcceso', datos.tokenAcceso)
+                  .AddBody(body2)
+                  .Accept('application/json')
+                  .Adapters(TDataSetSerializeAdapter.New(cambiarCama))
+                  .Post;
+
+      if response2.StatusCode = 200 then
+        begin
+          datos.VerMensaje('Cambio de cama registrado',cambiarCamamensaje.AsString,'Aceptar','OK',0);
+          Close;
+        end
+      else
+        begin
+          datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'El servicio ' + recurso + ' ha retornado el siguiente error: ' + cambiarCamamensaje.AsString,'Aceptar','ERROR',0);
+        end;
+
+      //Close;
+    end
+  else
+    begin
+      datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'El servicio ' + recurso + ' ha retornado el siguiente error: ' + nuevaSolicitudmensaje.AsString,'Aceptar','ERROR',0);
+    end;
+
+end;
+
+procedure Tform_CambioDeCama.SpeedButton3Click(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure Tform_CambioDeCama.SpeedButton5Click(Sender: TObject);

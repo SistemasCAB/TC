@@ -760,6 +760,7 @@ begin
       form_CambioDeCama.tdocCodigo      := camastdocCodigo.AsInteger;
       form_CambioDeCama.nroDocumento    := camasnroDocumento.AsString;
       form_CambioDeCama.paciCodigo      := camaspaciCodigo.AsInteger;
+
       form_CambioDeCama.ShowModal;
     end;
 

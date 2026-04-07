@@ -57,14 +57,14 @@ object form_CambioDeCama: Tform_CambioDeCama
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                00F2494441545847EDD53B8EC2400C06609B86969A361C804351731B0EB0DD56
-                1C809B20390D527A682892B5BD95D1C424101E1981E4AF9B473CFFCC240A4008
-                2184F0F99879575555DD34CDDEFA5455DBB33210911511892698F91772071291
-                85AA1ED3208688187CA056E38D44645AD7F5C1874831F3167C8656E34D98F9C7
-                2F9E22A23F555DDA7CED0AE41F1A0B336F2E8BBB0C680D4444EB1CD10900E688
-                78F6039661E207C6A2AA6B449C7585B992E164EEBABA323F612C65592A004051
-                14E8C71011B307EA63596EB2AFC2F73F6B48BD6C2FF550BD81D29DD8CEEEF1FF
-                29AFABF6437CA1570DA9D77B42218410C297F8071047B172F0388E4D00000000
+                00F2494441545847EDD53B72C2400C06608986969ADA07C8A1A8731B0E908E8A
+                03701346AE98711F1A0A1B495462D6B21D9BC4DE2133FABA7D58FBEFAE3D0608
+                218410DE1F339FAAAAAA9BA6395B9FAA6A7B560622B22322D104331F20772011
+                2954F53B0D628888C1076A35662422EBBAAE2F3E448A998FE033B41A3361E62F
+                BF788A88EEAAFA61F3B52F907F6829CCBC7F2EEE32A0351011AD73415700D822
+                E2CD0F5886951F588AAA7E22E2A62F4C47869319D5B9323F612965592A004051
+                14E8C71011B3071A62597E645F85EFFFAD29F5B2BDD4530D064A77623B1BE3FF
+                535E5FED97F8427F35A5DEE00985104208FFC4037FCCB166C55B238400000000
                 49454E44AE426082}
               FileName = 'D:\JORGE\DOCUMENTOS\ICONOS\ICONOS\PNG\BLANCOS\Cambio de cama.png'
             end>
@@ -110,10 +110,14 @@ object form_CambioDeCama: Tform_CambioDeCama
         Size.Width = 593.000000000000000000
         Size.Height = 440.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 2
+        TabIndex = 5
         TabOrder = 0
         TabPosition = None
         Sizes = (
+          593s
+          440s
+          593s
+          440s
           593s
           440s
           593s
@@ -142,7 +146,7 @@ object form_CambioDeCama: Tform_CambioDeCama
             Size.PlatformDefault = False
             Stroke.Kind = None
             object botonSolicitar: TRectangle
-              Fill.Color = xFF008795
+              Fill.Color = xFF00558C
               Padding.Left = 5.000000000000000000
               Position.X = 30.000000000000000000
               Position.Y = 130.000000000000000000
@@ -237,7 +241,7 @@ object form_CambioDeCama: Tform_CambioDeCama
                 TabOrder = 0
               end
               object Rectangle4: TRectangle
-                Fill.Color = xFF008795
+                Fill.Color = xFF00558C
                 Padding.Left = 5.000000000000000000
                 Position.X = 30.000000000000000000
                 Position.Y = 86.000000000000000000
@@ -450,7 +454,7 @@ object form_CambioDeCama: Tform_CambioDeCama
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 8.000000000000000000
           Size.Height = 8.000000000000000000
           Size.PlatformDefault = False
@@ -479,7 +483,7 @@ object form_CambioDeCama: Tform_CambioDeCama
               TabOrder = 6
             end
             object recBotonCambiarCama: TRectangle
-              Fill.Color = xFF008795
+              Fill.Color = xFF00558C
               Padding.Left = 5.000000000000000000
               Padding.Right = 5.000000000000000000
               Position.X = 344.000000000000000000
@@ -832,6 +836,244 @@ object form_CambioDeCama: Tform_CambioDeCama
           ExplicitSize.cx = 8.000000000000000000
           ExplicitSize.cy = 8.000000000000000000
         end
+        object tabTipoCambio: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 8.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'tabTipoCambio'
+          object Rectangle6: TRectangle
+            Align = Client
+            Size.Width = 593.000000000000000000
+            Size.Height = 440.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object recCambioInterno: TRectangle
+              Fill.Color = xFF00558C
+              Padding.Left = 5.000000000000000000
+              Position.X = 46.000000000000000000
+              Position.Y = 104.000000000000000000
+              Size.Width = 195.000000000000000000
+              Size.Height = 81.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object lb_botonCambioInterno: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 190.000000000000000000
+                Size.Height = 81.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'lb_botonCambioInterno'
+                TabOrder = 1
+              end
+              object botonCambioInterno: TSpeedButton
+                Align = Contents
+                Size.Width = 195.000000000000000000
+                Size.Height = 81.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = SpeedButton1Click
+              end
+            end
+            object Label29: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 30.000000000000000000
+              Size.Width = 585.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              TextSettings.HorzAlign = Center
+              Text = 'Seleccione a donde desea mover a este paciente'
+              TabOrder = 3
+            end
+            object lb_cambioInterno: TLabel
+              StyledSettings = [Family, FontColor]
+              Position.X = 46.000000000000000000
+              Position.Y = 206.000000000000000000
+              Size.Width = 203.000000000000000000
+              Size.Height = 107.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.VertAlign = Leading
+              Text = 'Cambiar el paciente a una cama ubicada en ...'
+              TabOrder = 1
+            end
+            object recCambioExterno: TRectangle
+              Fill.Color = xFF00558C
+              Padding.Left = 5.000000000000000000
+              Position.X = 342.000000000000000000
+              Position.Y = 104.000000000000000000
+              Size.Width = 195.000000000000000000
+              Size.Height = 81.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object lb_botonCambioExterno: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 190.000000000000000000
+                Size.Height = 81.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'lb_botonCambioExterno'
+                TabOrder = 1
+              end
+              object botonCambioExterno: TSpeedButton
+                Align = Contents
+                Size.Width = 195.000000000000000000
+                Size.Height = 81.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = SpeedButton1Click
+              end
+            end
+            object lb_cambioExterno: TLabel
+              StyledSettings = [Family, FontColor]
+              Position.X = 347.000000000000000000
+              Position.Y = 206.000000000000000000
+              Size.Width = 203.000000000000000000
+              Size.Height = 107.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              TextSettings.VertAlign = Leading
+              Text = 'Cambiar el paciente a una cama ubicada fuera de '
+              TabOrder = 0
+            end
+          end
+        end
+        object TabCambioInternoCamas: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 8.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'TabCambioInternoCamas'
+          object Rectangle8: TRectangle
+            Align = Client
+            Size.Width = 593.000000000000000000
+            Size.Height = 440.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object Label26: TLabel
+              AutoSize = True
+              StyledSettings = [Family, FontColor]
+              Position.X = 8.000000000000000000
+              Position.Y = 8.000000000000000000
+              Size.Width = 561.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Size = 14.000000000000000000
+              Text = 'Seleccione la cama a la cual cambiar al paciente'
+              TabOrder = 1
+            end
+            object listaCamas: TListView
+              ItemAppearanceClassName = 'TListItemAppearance'
+              ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+              HeaderAppearanceClassName = 'TListHeaderObjects'
+              FooterAppearanceClassName = 'TListHeaderObjects'
+              Position.X = 8.000000000000000000
+              Position.Y = 35.000000000000000000
+              Size.Width = 577.000000000000000000
+              Size.Height = 310.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              ItemAppearanceObjects.ItemObjects.Text.WordWrap = True
+              OnItemClick = listaMotivosItemClick
+            end
+            object botonRegistrarCambioAreaCerrada: TRectangle
+              Enabled = False
+              Fill.Color = xFF00558C
+              Padding.Left = 5.000000000000000000
+              Padding.Right = 5.000000000000000000
+              Position.X = 341.000000000000000000
+              Position.Y = 375.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label27: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 130.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Registrar Cambio'
+                TabOrder = 1
+              end
+              object SpeedButton2: TSpeedButton
+                Align = Contents
+                Hint = 'Registrar el cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+                OnClick = SpeedButton2Click
+              end
+            end
+            object Rectangle10: TRectangle
+              Fill.Color = xFF00558C
+              Padding.Left = 5.000000000000000000
+              Position.X = 111.000000000000000000
+              Position.Y = 375.000000000000000000
+              Size.Width = 140.000000000000000000
+              Size.Height = 55.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              Stroke.Thickness = 2.000000000000000000
+              XRadius = 5.000000000000000000
+              YRadius = 5.000000000000000000
+              object Label31: TLabel
+                Align = Client
+                StyledSettings = [Family, Size]
+                Size.Width = 135.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = claWhite
+                TextSettings.HorzAlign = Center
+                Text = 'Cancelar'
+                TabOrder = 1
+              end
+              object SpeedButton3: TSpeedButton
+                Align = Contents
+                Hint = 'Eliminar esta solicitud de cambio de cama'
+                Size.Width = 140.000000000000000000
+                Size.Height = 55.000000000000000000
+                Size.PlatformDefault = False
+                ParentShowHint = False
+                ShowHint = True
+                OnClick = SpeedButton3Click
+              end
+            end
+          end
+        end
       end
     end
   end
@@ -987,6 +1229,15 @@ object form_CambioDeCama: Tform_CambioDeCama
       FillHeaderExpressions = <>
       FillBreakGroups = <>
     end
+    object LinkListControlToField2: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB2
+      FieldName = 'cama'
+      Control = listaCamas
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
   end
   object eliminarSolicitud: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -1041,5 +1292,44 @@ object form_CambioDeCama: Tform_CambioDeCama
       FieldName = 'mensaje'
       Size = 255
     end
+  end
+  object camasDisponibles: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 349
+    Top = 159
+    object camasDisponiblesidCama: TIntegerField
+      FieldName = 'idCama'
+    end
+    object camasDisponiblescama: TStringField
+      FieldName = 'cama'
+      Size = 50
+    end
+    object camasDisponiblesidHabitacion: TIntegerField
+      FieldName = 'idHabitacion'
+    end
+    object camasDisponibleshabitacion: TStringField
+      FieldName = 'habitacion'
+      Size = 50
+    end
+    object camasDisponiblespiso: TStringField
+      FieldName = 'piso'
+      Size = 50
+    end
+    object camasDisponiblestipoCama: TStringField
+      FieldName = 'tipoCama'
+      Size = 10
+    end
+  end
+  object BindSourceDB2: TBindSourceDB
+    DataSet = camasDisponibles
+    ScopeMappings = <>
+    Left = 344
+    Top = 280
   end
 end
