@@ -35,7 +35,6 @@ type
     SpeedButton2: TSpeedButton;
     botonCancelarCambio: TRectangle;
     Label9: TLabel;
-    Label10: TLabel;
     SpeedButton3: TSpeedButton;
     lb_fecha_solicitud: TLabel;
     Label1: TLabel;
@@ -60,23 +59,15 @@ type
     listaCamasDisponibles: TListView;
     Rectangle4: TRectangle;
     Label2: TLabel;
-    Label5: TLabel;
-    SpeedButton1: TSpeedButton;
-    Rectangle5: TRectangle;
-    Label6: TLabel;
-    Label8: TLabel;
-    SpeedButton4: TSpeedButton;
+    btnFinalizar: TSpeedButton;
     tabOrden: TTabItem;
-    TabItem2: TTabItem;
     botonNoAutorizar: TRectangle;
     Label12: TLabel;
-    Label13: TLabel;
     SpeedButton5: TSpeedButton;
     Rectangle7: TRectangle;
     botonSolicitar: TRectangle;
     Label17: TLabel;
     SpeedButton6: TSpeedButton;
-    Label22: TLabel;
     Label24: TLabel;
     Label25: TLabel;
     Rectangle8: TRectangle;
@@ -140,6 +131,10 @@ type
     camasDisponiblesadvertencia: TStringField;
     iconoBotonAutorizar: TImage;
     iconoEditarCambioCama: TImage;
+    Image1: TImage;
+    Image2: TImage;
+    Image3: TImage;
+    Image4: TImage;
     procedure botonSalirClick(Sender: TObject);
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
@@ -147,19 +142,21 @@ type
     procedure FormActivate(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure cancelarSolicitudCambio;
-    procedure actualizarCamasDisponibles;
+    procedure actualizarCamasDisponibles(paciCodigo:integer);
     procedure SpeedButton2Click(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnFinalizarClick(Sender: TObject);
     procedure autorizarCambioDeCama;
     procedure noAutorizarCambioDeCama;
     procedure SpeedButton5Click(Sender: TObject);
     procedure listaCamasDisponiblesUpdateObjects(const Sender: TObject;
       const AItem: TListViewItem);
+    procedure SpeedButton6Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    idInternacion, idCamaOrigen : Integer;
+    idInternacion, idCamaOrigen, paciCodigo : Integer;
+    llamadoPor: string;
   end;
 
 var
@@ -271,7 +268,7 @@ begin
     end;
 end;
 
-procedure Tform_CambioCamaAdmision.actualizarCamasDisponibles;
+procedure Tform_CambioCamaAdmision.actualizarCamasDisponibles(paciCodigo:integer);
 var
   response: IResponse;
   recurso: string;
@@ -280,7 +277,7 @@ begin
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('paciCodigo', solicitudpaciCodigo.AsString)
+              .AddParam('paciCodigo', paciCodigo.ToString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(camasDisponibles))
               .Get;
@@ -296,7 +293,11 @@ begin
         end
       else
         begin
-          pagina.TabIndex := 1;
+          if llamadoPor = 'SolicitudCambio' then
+            pagina.TabIndex := 1 // vuelvo a la pagina de la solicitud de enfermería
+          else
+            pagina.TabIndex := 0; // vuelvo a la página de la orden de cambio de admision.
+
           listaCamasDisponibles.Enabled := false;
           datos.VerMensaje('No hay camas disponibles','En este momento no hay camas disponibles','Aceptar','ERROR',0);
         end;
@@ -313,21 +314,41 @@ var
   recurso:string;
   body:string;
 begin
-  recurso := '/tablerocamas/autorizarCambioCama';
-  body:= '{'+
-            '"idSolicitudCambio":'+ solicitudidSolicitud.AsString +','+
-            '"idCamaDestino":'+ camasDisponiblesidCama.AsString +','+
-            '"autorizadoPorDni":"'+ datos.dniLogin +'",'+
-            '"autorizadoPorNombre":"'+ datos.nombreLogin +'"'+
-          '}';
-  response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource(recurso)
-              .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddBody(body)
-              .Accept('application/json')
-              .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
-              .Post;
-               
+  if llamadoPor = 'SolicitudCambio' then
+    begin
+      recurso := '/tablerocamas/autorizarCambioCama';
+      body:= '{'+
+                '"idSolicitudCambio":'+ solicitudidSolicitud.AsString +','+
+                '"idCamaDestino":'+ camasDisponiblesidCama.AsString +','+
+                '"autorizadoPorDni":"'+ datos.dniLogin +'",'+
+                '"autorizadoPorNombre":"'+ datos.nombreLogin +'"'+
+              '}';
+      response := TRequest.New.BaseURL(datos.urlTC)
+                  .Resource(recurso)
+                  .AddHeader('TokenAcceso', datos.tokenAcceso)
+                  .AddBody(body)
+                  .Accept('application/json')
+                  .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
+                  .Post;
+    end
+  else
+    begin
+      recurso := '/tablerocamas/ordenarCambioCama';
+      body:= '{'+
+                '"idCamaOrigen":'+ idCamaOrigen.ToString +','+
+                '"idCamaDestino":'+ camasDisponiblesidCama.AsString +','+
+                '"autorizadoPorDni":"'+ datos.dniLogin +'",'+
+                '"autorizadoPorNombre":"'+ datos.nombreLogin +'"'+
+              '}';
+      response := TRequest.New.BaseURL(datos.urlTC)
+                  .Resource(recurso)
+                  .AddHeader('TokenAcceso', datos.tokenAcceso)
+                  .AddBody(body)
+                  .Accept('application/json')
+                  .Adapters(TDataSetSerializeAdapter.New(autorizarCambio))
+                  .Post;
+    end;
+
   case response.StatusCode of
     200: begin
       datos.VerMensaje('Cambio de cama Autorizado',autorizarCambiomensaje.AsString,'Aceptar','OK',0);
@@ -453,7 +474,7 @@ begin
     end;
 end;
 
-procedure Tform_CambioCamaAdmision.SpeedButton1Click(Sender: TObject);
+procedure Tform_CambioCamaAdmision.btnFinalizarClick(Sender: TObject);
 var
   resMod:integer;
   mensaje: string;
@@ -483,7 +504,8 @@ end;
 
 procedure Tform_CambioCamaAdmision.SpeedButton2Click(Sender: TObject);
 begin
-  actualizarCamasDisponibles;
+  llamadoPor:= 'SolicitudCambio';
+  actualizarCamasDisponibles(solicitudpaciCodigo.AsInteger);
 end;
 
 procedure Tform_CambioCamaAdmision.SpeedButton3Click(Sender: TObject);
@@ -506,6 +528,12 @@ begin
 
   if(resMod = 6)  then // 6 = mrYes
     noAutorizarCambioDeCama;
+end;
+
+procedure Tform_CambioCamaAdmision.SpeedButton6Click(Sender: TObject);
+begin
+  llamadoPor := 'OrdenarCambio';
+  actualizarCamasDisponibles(paciCodigo);
 end;
 
 end.

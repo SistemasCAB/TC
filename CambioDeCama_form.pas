@@ -33,7 +33,7 @@ type
     Label5: TLabel;
     botonSolicitar: TRectangle;
     Label6: TLabel;
-    SpeedButton1: TSpeedButton;
+    btnSolicitarAutorizacion: TSpeedButton;
     Rectangle2: TRectangle;
     Label4: TLabel;
     recBotonCambiarCama: TRectangle;
@@ -42,7 +42,6 @@ type
     botonCancelarCambio: TRectangle;
     btn_CancelarSolicitudCambio: TSpeedButton;
     Label9: TLabel;
-    Label8: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     lb_fecha_solicitud: TLabel;
@@ -67,9 +66,8 @@ type
     lb_cama_destino: TLabel;
     sombra: TShadowEffect;
     Rectangle4: TRectangle;
-    Label2: TLabel;
+    lb_botonCambioVirtual: TLabel;
     SpeedButton4: TSpeedButton;
-    Label12: TLabel;
     Label13: TLabel;
     solicitud: TFDMemTable;
     solicitudidSolicitud: TWideStringField;
@@ -107,10 +105,6 @@ type
     Label21: TLabel;
     Label22: TLabel;
     btn_NuevaSolicitud: TSpeedButton;
-    Rectangle7: TRectangle;
-    Label24: TLabel;
-    Label25: TLabel;
-    SpeedButton5: TSpeedButton;
     tabCambioVirtual: TTabItem;
     motivos: TFDMemTable;
     motivosidMotivoCambioCama: TIntegerField;
@@ -146,9 +140,6 @@ type
     botonRegistrarCambioAreaCerrada: TRectangle;
     Label27: TLabel;
     SpeedButton2: TSpeedButton;
-    Rectangle10: TRectangle;
-    Label31: TLabel;
-    SpeedButton3: TSpeedButton;
     camasDisponibles: TFDMemTable;
     camasDisponiblesidCama: TIntegerField;
     camasDisponiblescama: TStringField;
@@ -158,6 +149,13 @@ type
     camasDisponiblestipoCama: TStringField;
     BindSourceDB2: TBindSourceDB;
     LinkListControlToField2: TLinkListControlToField;
+    Image1: TImage;
+    Image2: TImage;
+    lyCambioVirtual: TLayout;
+    Label8: TLabel;
+    recCambioVirtual: TRectangle;
+    Label12: TLabel;
+    SpeedButton6: TSpeedButton;
     procedure botonSalirClick(Sender: TObject);
     procedure Actualizar;
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
@@ -167,21 +165,22 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btn_CancelarSolicitudCambioClick(Sender: TObject);
     procedure botonCambiarCamaClick(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure SpeedButton5Click(Sender: TObject);
     procedure crearSolicitudCambio;
     procedure cancelarSolicitudCambio;
     procedure listaMotivosItemClick(const Sender: TObject; const AItem: TListViewItem);
     procedure btn_NuevaSolicitudClick(Sender: TObject);
     procedure RegistrarCambioDeCama;
-    procedure ActualizarCamasDisponiblesAreaCerrada(idServicio:integer);
-    procedure SpeedButton3Click(Sender: TObject);
+    procedure ActualizarCamasDisponiblesAreaCerrada(idServicio, soloAltaMedica:integer);
     procedure SpeedButton2Click(Sender: TObject);
+    procedure btnSolicitarAutorizacionClick(Sender: TObject);
+    procedure botonCambioInternoClick(Sender: TObject);
+    procedure botonCambioExternoClick(Sender: TObject);
+    procedure SpeedButton6Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    idCamaOrigen, idInternacion, tdocCodigo, paciCodigo:integer;
+    idCamaOrigen, idInternacion, tdocCodigo, paciCodigo, epicrisis:integer;
     nroDocumento:string;
   end;
 
@@ -255,16 +254,23 @@ begin
         begin
           // No hay una solicitud
 
-          // verifico si hay epicrisis para habilitar o no el cambio a camas virtuales.
-          if form_DetallesCama.camasfechaAltaMedica.AsString <> '' then
-            lyCambioACamaVirtual.Visible := true
+          // verifico si hay epicrisis para habilitar o no el cambio a camas virtuales soloAltaMedica.
+          if epicrisis = 1 then
+            begin
+              lyCambioACamaVirtual.Visible := true;
+              lyCambioVirtual.Visible := true;
+            end
           else
-            lyCambioACamaVirtual.Visible := false;
+            begin
+              lyCambioACamaVirtual.Visible := false;
+              lyCambioVirtual.Visible := false;
+            end;
 
 
           // Si es un área cerrada, permito el cambio de camas dentro del área.
           if datos.cambioCamaAreaCerrada = 1 then
             begin
+              // Le doy la opción de elegir si cambia al paciente fuera del servicio o dentro del servicio (incluye camas de soloAltaMedica)
               pagina.TabIndex := 4;
               lb_CambioInterno.Text := 'Cambiar al paciente a una cama ubicada en ' + formTablero.servicionombreServicio.AsString;
               lb_CambioExterno.Text := 'Cambiar al paciente a una cama ubicada fuera de ' + formTablero.servicionombreServicio.AsString;
@@ -283,7 +289,7 @@ begin
     end;
 end;
 
-procedure Tform_CambioDeCama.ActualizarCamasDisponiblesAreaCerrada(idServicio: integer);
+procedure Tform_CambioDeCama.ActualizarCamasDisponiblesAreaCerrada(idServicio, soloAltaMedica:integer);
 var
   response : IResponse;
   recurso : String;
@@ -293,6 +299,7 @@ begin
               .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
               .AddParam('idServicio',idServicio.ToString)
+              .AddParam('soloAltaMedica',soloAltaMedica.ToString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(camasDisponibles))
               .Get;
@@ -325,6 +332,17 @@ begin
   RegistrarCambioDeCama;
 end;
 
+procedure Tform_CambioDeCama.botonCambioExternoClick(Sender: TObject);
+begin
+  pagina.TabIndex := 1;
+end;
+
+procedure Tform_CambioDeCama.botonCambioInternoClick(Sender: TObject);
+begin
+  ActualizarCamasDisponiblesAreaCerrada(datos.servicio,0);
+  pagina.TabIndex := 5;
+end;
+
 procedure Tform_CambioDeCama.botonSalirClick(Sender: TObject);
 begin
   Close;
@@ -338,6 +356,12 @@ end;
 procedure Tform_CambioDeCama.botonSalirMouseMove(Sender: TObject;  Shift: TShiftState; X, Y: Single);
 begin
   botonSalir.FontColor := TAlphaColorRec.Red;
+end;
+
+procedure Tform_CambioDeCama.btnSolicitarAutorizacionClick(Sender: TObject);
+begin
+    //ActualizarCamasDisponiblesAreaCerrada(datos.servicio,0);
+  pagina.TabIndex := 1;
 end;
 
 procedure Tform_CambioDeCama.btn_CancelarSolicitudCambioClick(Sender: TObject);
@@ -432,6 +456,7 @@ end;
 
 procedure Tform_CambioDeCama.FormCreate(Sender: TObject);
 begin
+  lb_botonCambioVirtual.Text := 'Cambio' + #13 +'Virtual';
   ActualizarMotivos;
 end;
 
@@ -470,12 +495,6 @@ begin
     begin
       datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'El servicio ' + recurso + ' ha retornado el siguiente error: ' + cambiarCamamensaje.AsString,'Aceptar','ERROR',0);
     end;
-end;
-
-procedure Tform_CambioDeCama.SpeedButton1Click(Sender: TObject);
-begin
-  ActualizarCamasDisponiblesAreaCerrada(datos.servicio);
-  pagina.TabIndex := 5;
 end;
 
 procedure Tform_CambioDeCama.SpeedButton2Click(Sender: TObject);
@@ -550,14 +569,10 @@ begin
 
 end;
 
-procedure Tform_CambioDeCama.SpeedButton3Click(Sender: TObject);
+procedure Tform_CambioDeCama.SpeedButton6Click(Sender: TObject);
 begin
-  Close;
-end;
-
-procedure Tform_CambioDeCama.SpeedButton5Click(Sender: TObject);
-begin
-    pagina.TabIndex := 0;
+  ActualizarCamasDisponiblesAreaCerrada(datos.servicio,1); // busco las camas soloAltaMedica
+  pagina.TabIndex := 5;
 end;
 
 end.

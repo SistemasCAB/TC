@@ -593,3 +593,6 @@ Visible=False
 [formAltaProbable.altas]
 Visible=False
 
+[form_CambioCamaAdmision.camasDisponibles]
+Visible=False
+

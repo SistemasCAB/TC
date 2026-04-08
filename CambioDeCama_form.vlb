@@ -79,9 +79,6 @@ Coordinates=1212,742,80,36
 [Label11]
 Coordinates=283,606,60,58
 
-[SpeedButton1]
-Coordinates=211,674,96,58
-
 [SpeedButton4]
 Coordinates=649,674,96,58
 
@@ -99,12 +96,6 @@ Coordinates=795,742,93,36
 
 [Label18]
 Coordinates=1391,10,60,58
-
-[Label12]
-Coordinates=1071,674,60,58
-
-[Label2]
-Coordinates=730,606,53,58
 
 [lb_idSolicitud]
 Coordinates=10,674,91,58
@@ -145,9 +136,6 @@ Coordinates=10,10,127,586
 [rectCambioCama]
 Coordinates=671,742,114,36
 
-[Label8]
-Coordinates=793,606,53,58
-
 [lb_fecha_solicitud]
 Coordinates=1244,606,117,58
 
@@ -166,14 +154,8 @@ Coordinates=540,742,121,36
 [Label17]
 Coordinates=10,606,60,58
 
-[Rectangle7]
-Coordinates=450,742,80,36
-
 [Label21]
 Coordinates=1181,10,60,58
-
-[Label25]
-Coordinates=80,606,60,58
 
 [Label22]
 Coordinates=150,606,60,58
@@ -183,12 +165,6 @@ Coordinates=313,742,127,36
 
 [Rectangle5]
 Coordinates=223,742,80,36
-
-[SpeedButton5]
-Coordinates=862,10,96,58
-
-[Label24]
-Coordinates=1321,10,60,58
 
 [Label19]
 Coordinates=1031,10,60,58
@@ -200,7 +176,7 @@ Coordinates=100,742,113,36
 Coordinates=1414,674,147,36
 
 []
-Coordinates=960,716,88,36
+Coordinates=1282,285,87,36
 
 [BindSourceDB1]
 Coordinates=450,10,128,146
@@ -355,9 +331,6 @@ Coordinates=912,893,121,36
 [lb_botonCambioExterno]
 Coordinates=1386,285,152,58
 
-[formTablero.permisos]
-Coordinates=475,230,140,168
-
 [lb_cambioExterno]
 Coordinates=1282,516,117,58
 
@@ -376,9 +349,6 @@ Coordinates=353,428,60,58
 [botonRegistrarCambioAreaCerrada]
 Coordinates=1399,852,217,36
 
-[formTablero.camas2]
-Coordinates=359,2528,170,1400
-
 [form_DetallesCama.camas]
 Coordinates=344,1131,202,1378
 
@@ -387,18 +357,6 @@ Coordinates=1386,907,143,36
 
 [form_DetallesCama.fecha]
 Coordinates=1185,87,163,102
-
-[formTablero.versiones]
-Coordinates=475,417,143,168
-
-[Label31]
-Coordinates=353,505,60,58
-
-[formTablero.alertas]
-Coordinates=911,1131,126,80
-
-[formTablero.camas]
-Coordinates=170,1131,170,1400
 
 [SpeedButton2]
 Coordinates=1040,1160,96,58
@@ -434,27 +392,18 @@ Coordinates=1399,87,227,102
 [Label26]
 Coordinates=587,1112,60,58
 
-[Rectangle10]
-Coordinates=1282,285,87,36
-
-[formTablero.servicio]
-Coordinates=758,881,150,212
-
 [form_DetallesCama.alertas]
 Coordinates=113,862,171,190
-
-[SpeedButton3]
-Coordinates=537,797,96,58
-
-[formTablero.alertasNueva]
-Coordinates=1106,276,163,58
-
-[formTablero.apagarAlertasTB]
-Coordinates=1282,208,184,58
 
 [Label27]
 Coordinates=951,797,60,58
 
 [BindSourceDB2]
 Coordinates=860,130,107,212
+
+[lb_botonCambioVirtual]
+Coordinates=730,606,53,58
+
+[btnSolicitarAutorizacion]
+Coordinates=211,674,96,58
 

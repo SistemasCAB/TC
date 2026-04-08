@@ -748,6 +748,7 @@ begin
       form_CambioCamaAdmision.Width         := ancho;
       form_CambioCamaAdmision.idCamaOrigen  := idCama;
       form_CambioCamaAdmision.idInternacion := camasidInternacion.AsInteger;
+      form_CambioCamaAdmision.paciCodigo    := camaspaciCodigo.AsInteger;
       form_CambioCamaAdmision.ShowModal;
     end
   else
@@ -760,6 +761,10 @@ begin
       form_CambioDeCama.tdocCodigo      := camastdocCodigo.AsInteger;
       form_CambioDeCama.nroDocumento    := camasnroDocumento.AsString;
       form_CambioDeCama.paciCodigo      := camaspaciCodigo.AsInteger;
+      if camasfechaAltaMedica.AsString <> '' then
+        form_CambioDeCama.epicrisis := 1
+      else
+        form_CambioDeCama.epicrisis := 0;
 
       form_CambioDeCama.ShowModal;
     end;

@@ -155,36 +155,36 @@ begin
 
       // 2) Doy el alta en Markey y en las tablas locales del tablero (todo lo hace este método AltaDefinitiva de la api)
 
-      apiRecurso := '/tablerocamas/altaDefinitiva';
-      body := '{'+
-              '"idCama":'+idCama.ToString+','+
-              '"idHabitacion":'+id_habitacion.ToString+','+
-              '"idInternacion":'+form_DetallesCama.camasidInternacion.AsString+','+
-              '"paciCodigo":'+paciCodigo.ToString+','+
-              '"fechaAltaDefinitiva":"'+fechaAltaEfectiva+'",'+
-              '"dni":"'+datos.dniLogin+'",'+
-              '"nombreUsuario":"'+datos.nombreLogin+'",'+
-              '"idServicio":'+datos.servicio.ToString+''+
-              '}';
-      response := TRequest.New.BaseURL(datos.urlTC)
-                           .Resource(apiRecurso)
-                           .AddHeader('TokenAcceso', datos.tokenAcceso)
-                           .AddBody(body)
-                           .Accept('application/json')
-                           .Adapters(TDataSetSerializeAdapter.New(alta))
-                           .Post;
-
-      if response.StatusCode = 200 then
-        begin
-          datos.VerMensaje('ALTA EXITOSA',altamensaje.AsString,'Aceptar','OK',0);
-
-          form_DetallesCama.Cerrar;
-          Close;
-        end
-      else
-        begin
-          datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,altamensaje.AsString,'Aceptar','ERROR',0);
-        end;
+//      apiRecurso := '/tablerocamas/altaDefinitiva';
+//      body := '{'+
+//              '"idCama":'+idCama.ToString+','+
+//              '"idHabitacion":'+id_habitacion.ToString+','+
+//              '"idInternacion":'+form_DetallesCama.camasidInternacion.AsString+','+
+//              '"paciCodigo":'+paciCodigo.ToString+','+
+//              '"fechaAltaDefinitiva":"'+fechaAltaEfectiva+'",'+
+//              '"dni":"'+datos.dniLogin+'",'+
+//              '"nombreUsuario":"'+datos.nombreLogin+'",'+
+//              '"idServicio":'+datos.servicio.ToString+''+
+//              '}';
+//      response := TRequest.New.BaseURL(datos.urlTC)
+//                           .Resource(apiRecurso)
+//                           .AddHeader('TokenAcceso', datos.tokenAcceso)
+//                           .AddBody(body)
+//                           .Accept('application/json')
+//                           .Adapters(TDataSetSerializeAdapter.New(alta))
+//                           .Post;
+//
+//      if response.StatusCode = 200 then
+//        begin
+//          datos.VerMensaje('ALTA EXITOSA',altamensaje.AsString,'Aceptar','OK',0);
+//
+//          form_DetallesCama.Cerrar;
+//          Close;
+//        end
+//      else
+//        begin
+//          datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,altamensaje.AsString,'Aceptar','ERROR',0);
+//        end;
     end;
 end;
 
