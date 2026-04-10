@@ -128,14 +128,6 @@ var
 begin
   // ejecuto el alta en Markey, luego de la confirmación del usuario.
 
-
-  {
-    Consideraciones respecto a la fecha y hora de alta:
-   Si la cama en la que está el paciente es una cama soloAltaMedica (virtuales para alta médica), entonces la fecha de egreso
-   debe ser la fecha en la que el paciente ingresó a la cama actual.
-   Si es otra cama, la fecha de egreso será la fecha y hora será la que ingresó el enfermero.
-  }
-
   mensaje := '¿Está seguro que desea dar el alta a esta paciente?' + #13 + 'Al hacerlo esta internación se cerrará y no podrá registrar nada más en la historia clínica.';
 
   if datos.MensajeConfirmacion('Confirme su decisión', mensaje,'Si, dar el alta','No','PREGUNTA', ancho, alto) = 6 then
@@ -144,47 +136,48 @@ begin
       dt := EditFechaHora.GetDateTime;
       fechaAltaEfectiva := FormatDateTime('yyyy-mm-dd hh:nn:ss', dt);
 
-      if soloAltaMedica = 1 then // es una cama soloAltaMedica
-        begin
-          if strtodatetime(fechaIngresoCama) < dt then
-            fechaAltaEfectiva := fechaIngresoCama
-          else
-            fechaAltaEfectiva := FormatDateTime('yyyy-mm-dd hh:nn:ss', dt);
-        end;
+
+//      if soloAltaMedica = 1 then // es una cama soloAltaMedica
+//        begin
+//          if strtodatetime(fechaIngresoCama) < dt then
+//            fechaAltaEfectiva := fechaIngresoCama
+//          else
+//            fechaAltaEfectiva := FormatDateTime('yyyy-mm-dd hh:nn:ss', dt);
+//        end;
 
 
       // 2) Doy el alta en Markey y en las tablas locales del tablero (todo lo hace este método AltaDefinitiva de la api)
 
-//      apiRecurso := '/tablerocamas/altaDefinitiva';
-//      body := '{'+
-//              '"idCama":'+idCama.ToString+','+
-//              '"idHabitacion":'+id_habitacion.ToString+','+
-//              '"idInternacion":'+form_DetallesCama.camasidInternacion.AsString+','+
-//              '"paciCodigo":'+paciCodigo.ToString+','+
-//              '"fechaAltaDefinitiva":"'+fechaAltaEfectiva+'",'+
-//              '"dni":"'+datos.dniLogin+'",'+
-//              '"nombreUsuario":"'+datos.nombreLogin+'",'+
-//              '"idServicio":'+datos.servicio.ToString+''+
-//              '}';
-//      response := TRequest.New.BaseURL(datos.urlTC)
-//                           .Resource(apiRecurso)
-//                           .AddHeader('TokenAcceso', datos.tokenAcceso)
-//                           .AddBody(body)
-//                           .Accept('application/json')
-//                           .Adapters(TDataSetSerializeAdapter.New(alta))
-//                           .Post;
-//
-//      if response.StatusCode = 200 then
-//        begin
-//          datos.VerMensaje('ALTA EXITOSA',altamensaje.AsString,'Aceptar','OK',0);
-//
-//          form_DetallesCama.Cerrar;
-//          Close;
-//        end
-//      else
-//        begin
-//          datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,altamensaje.AsString,'Aceptar','ERROR',0);
-//        end;
+      apiRecurso := '/tablerocamas/altaDefinitiva';
+      body := '{'+
+              '"idCama":'+idCama.ToString+','+
+              '"idHabitacion":'+id_habitacion.ToString+','+
+              '"idInternacion":'+form_DetallesCama.camasidInternacion.AsString+','+
+              '"paciCodigo":'+paciCodigo.ToString+','+
+              '"fechaAltaDefinitiva":"'+fechaAltaEfectiva+'",'+
+              '"dni":"'+datos.dniLogin+'",'+
+              '"nombreUsuario":"'+datos.nombreLogin+'",'+
+              '"idServicio":'+datos.servicio.ToString+''+
+              '}';
+      response := TRequest.New.BaseURL(datos.urlTC)
+                           .Resource(apiRecurso)
+                           .AddHeader('TokenAcceso', datos.tokenAcceso)
+                           .AddBody(body)
+                           .Accept('application/json')
+                           .Adapters(TDataSetSerializeAdapter.New(alta))
+                           .Post;
+
+      if response.StatusCode = 200 then
+        begin
+          datos.VerMensaje('ALTA EXITOSA',altamensaje.AsString,'Aceptar','OK',0);
+
+          form_DetallesCama.Cerrar;
+          Close;
+        end
+      else
+        begin
+          datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,altamensaje.AsString,'Aceptar','ERROR',0);
+        end;
     end;
 end;
 
