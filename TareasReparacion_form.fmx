@@ -1,0 +1,490 @@
+object formTareasReparacion: TformTareasReparacion
+  Left = 0
+  Top = 0
+  Caption = 'Tareas de Reparaci'#243'n'
+  ClientHeight = 658
+  ClientWidth = 1177
+  Position = ScreenCenter
+  Transparency = True
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object FondoTransparente: TRectangle
+    Align = Client
+    Fill.Color = claBlack
+    Opacity = 0.800000011920929000
+    Size.Width = 1177.000000000000000000
+    Size.Height = 658.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle1: TRectangle
+    Align = Center
+    Size.Width = 1151.000000000000000000
+    Size.Height = 629.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object recTituloVentana: TRectangle
+      Align = Top
+      Fill.Color = xFF00558C
+      Size.Width = 1151.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object tituloVentana: TLabel
+        Align = Client
+        StyledSettings = [Family]
+        Size.Width = 1151.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00060000000000000004000000}
+        TextSettings.FontColor = claWhitesmoke
+        TextSettings.HorzAlign = Center
+        Text = 'TAREAS DE REPARACI'#211'N'
+        TabOrder = 2
+        object iconoVentana: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                02F3494441545847ED98BB8A14411486CFA99E197647CC3451110C7D0705235F
+                41F0128B81E06262EA03182982A16F20229A8882B1206C22A88B78410515DD99
+                75AAEBF61F839ED6EE333DD79D590CFC6082FA4F5DFEAEAE3A553D44FF59013D
+                8F4BDB0E5F4244821460F84B09B01EBDBEC375DD6E25F41D5E9626A691077CD3
+                ED97CA4E8E677AD069F888CFBA9F49B016260188B06AC15C574444AA656AA833
+                09A38571FCF278D2D4AD8F7817126C4C7021E1BD8E1311C584EF5A1B47C310CD
+                F8885E3BE3FD5A9F054024CBCC4C0F3F53252222C3D4D55A09200990A4F51263
+                9AE6B699990D31D7EB2688E72159665A59665A657992B9A551EE9A98907C94E7
+                3AAE89119B29E14F86D0F15D3334E3B53E8D9860E73134F32B2322CA0CB7B536
+                0D26EA686D1273195A082606045A1EC7CC8662922D2AB6FF551D1B470E1C6766
+                0EA00F3AB614E65D4779C48F79D6CFDCD88017109141C02D1DD3E41E1B52D4DD
+                D2B1A5E2222C44C405DCD6B1121B71598AABC8EAF31115EB68307C7DF9684C7E
+                0E6351C756860D72AA4C7825097F93A088888B38A3DB2D9D81C7A36AF69D048A
+                59C2B6C53DDDCFAE1904DC99D548132E22F6F3F16B6E66BC97133121EA0116C5
+                4538E770568F5365ECB5C0057CEDB4F880D697810DF2A9DB3187B54EE332B50D
+                78B52A334444EB6D3EB4E3F146EB346E866495D9B5821539DA35A676AC8CCC50
+                1EB09A73A7014EB439A2692126209BE3CAB91B12445AEAAE5D2B0038B85766A8
+                B85FF1C0E17C55AB19B281EE56CB7B01882E56CB3543C264ABE5BD8089FA5AAB
+                9107F4CB444644E4131ED4B2DB0294E79CF5B84F950F0617470FE74606016FCB
+                8EAA7A88853E0F79C06BD5472E85B98F55BD6464DB131175DBE6984F726E1069
+                A31658203B418DD18F74C626B9B0DE3147AA7AC9D41DD5F338D9CDE829331933
+                FCD340846827C84D037A484C260839110ACCD46EB7684D4027F675F81A0F9F21
+                254986C9FCF07CFAC03A3FD663CC8D8F7032BC4EF888F4D3E286AEA3D9CE71C5
+                47A4F2D5598F5C44D674BD3D4744D6FE09238BF21B0D7D954D9D96D8BA000000
+                0049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\mantenimiento.png'
+            end>
+          Align = Left
+          HitTest = False
+          Size.Width = 49.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+        object botonSalir: TSpeedButton
+          Align = Right
+          StyledSettings = []
+          Hint = 'Salir'
+          Position.X = 1103.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+          Text = #62480
+          TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+          TextSettings.Font.Size = 30.000000000000000000
+          TextSettings.FontColor = claWhite
+          OnClick = botonSalirClick
+        end
+      end
+    end
+    object lyBotones: TLayout
+      Align = Top
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Position.X = 10.000000000000000000
+      Position.Y = 60.000000000000000000
+      Size.Width = 1131.000000000000000000
+      Size.Height = 55.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object recBotonEliminarTarea: TRectangle
+        Align = Left
+        Fill.Color = claRed
+        Padding.Left = 5.000000000000000000
+        Position.X = 340.000000000000000000
+        Size.Width = 140.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        Stroke.Thickness = 2.000000000000000000
+        XRadius = 5.000000000000000000
+        YRadius = 5.000000000000000000
+        object lb_BotonEliminarTarea: TLabel
+          Align = Client
+          StyledSettings = [Family, Size]
+          Locked = True
+          Size.Width = 87.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Cancelar Tarea'
+          TabOrder = 1
+        end
+        object botonEliminarTarea: TSpeedButton
+          Align = Contents
+          Hint = 'Eliminar esta solicitud de cambio de cama'
+          Locked = True
+          Size.Width = 140.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+        end
+        object Image3: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                016C494441545847EDD7214E03411805E0F726554D150720C572001C8E80C020
+                100485C160B80406C9153801E104A4168DA5C52109823440FE876036597EA63B
+                DB6D2190CC673679B39DBEEDCC261DA068461FB421E948D231803E008B7188D7
+                5108E1B476FBCF923430B33BCD60666333DBF79F6BAB7AAAD624F549AEFBBC42
+                724872E0F3B6662E99A42D499B00DE6AF114C01AC9935AF68DA42B00B72EEE01
+                9884102E5D9E2769CFCCC67E39161597F3DC7F5F5D72C924ED901CFA7C5171CE
+                6D9FD72597CCCC0E00EC0278A9BD45CBD003F0104238F3037F56F217AA33B38D
+                F8649D91EC03B821F9EEC7E6226975599BDBCC0EFDFC29C94D5D91644BDCDC53
+                1FA43416F21B9A51C7ACD5CB912BF4EB4AA19C5228A714CA2985724AA19C5228
+                A714CA298572FE5721925F4E1BD51FF68E59AB934B632100CF92263E9C579CE3
+                D5E7298D85483E01B89074EFC7DA8A654621846B3F96923D28E2F3B0B802A0D7
+                F6E45091144806928F7EACE8EA0398003C138F4B19C50000000049454E44AE42
+                6082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\Eliminar.png'
+            end>
+          Align = Left
+          Position.X = 5.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+      end
+      object recBotonActualizar: TRectangle
+        Align = Left
+        Fill.Color = xFF00558C
+        Padding.Left = 5.000000000000000000
+        Padding.Right = 5.000000000000000000
+        Size.Width = 140.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        Stroke.Thickness = 2.000000000000000000
+        XRadius = 5.000000000000000000
+        YRadius = 5.000000000000000000
+        object lb_botonActualizar: TLabel
+          Align = Client
+          StyledSettings = [Family, Size]
+          Locked = True
+          Size.Width = 82.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Actualizar'
+          TabOrder = 1
+        end
+        object botonActuazliar: TSpeedButton
+          Align = Contents
+          Hint = 'Registrar el cambio de cama'
+          Locked = True
+          Size.Width = 140.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+          OnClick = botonActuazliarClick
+        end
+        object Image1: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                029E494441545847EDD7BD6BD4601C07F04B0EE9EED8FF40290882427170D13A
+                B9BABA08EE0EAE3AB88B2E52EC201DC4CD828B2038286ED531D2487A25794AEE
+                DA275E9AF449EFE9F3E67026E4BE977B7F99FA999227DFDFEF094F2EDC935AED
+                C285250BC3F08110829B11A494328AA247583F3794D24F38E9B818633FB1DFD4
+                0821EB38C1B45AADD606F69F08A5F423369D1563EC17CE3396388E77B1D9BC70
+                CE9B8CB1DFC61883F3566AB55A1FB04915A5943C3B3BFB4529BD9324C953CE79
+                A09492981B06E7EEE379DE0D2C424992BCC43A94A6E95BACAB82757DA4940A8B
+                729CF310F3A370CE9BD8A70CF33D08219B58903B3D3DFD8AF97131C6BE61BF5C
+                14458F315F504A692C30DD95F98BD94960BFB276BBFDBC9CB5F303D775376CDB
+                B6CA17732B2B2B97716C5C66C463D15A93F2797143ABABABEFCB1772711CBFC0
+                B179B22C6BBDE73C3F9052EA7ABDDEB7429665F58DCD02570CFB172718AC7597
+                53D6EBF54B38BE48C523ABC218FB8E634B83BF7ED3FD33BC85B9451BBA42B66D
+                5FC3B1A5C1D531C698344D7731B7347833C6182384E8606ED18AB74C6B6DAADE
+                707C2D17ADF80D753A9DA4F752D7D1D1D1131C5B0ACFF3EEE323CB61765AD837
+                E7BAEE5DCCD66AFF1F5B959393939937E9599679D8D77437791AB385C3C3C377
+                58906B369BAF303FAE388E77B05F2E08822DCCF710420CDCA0B5DBED1F981F25
+                CBB23FD82727845098EFE338CE752C2C534A6942C843AC4394D267588BF6F6F6
+                6E625D25DFF7DF6031D25A9B2CCB8E29A5DB8D46E3CAC1C1C1D5388E77CECFCF
+                33CC5669341AAF71DEA1C230FC824DE6250CC3CF38DF587CDF1FB8C79E96EFFB
+                9B38CF441CC75913424CF4AD55454AA91CC759C3FE530B82606BD047C0305A6B
+                4308D9C67E73E3BAEEED344D8FA594036F4E4AA91863D1FEFEFE3DACBF30AB7F
+                F6A95E9CF2215B830000000049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\Actualizar.png'
+            end>
+          Align = Left
+          Position.X = 5.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+      end
+      object separador1: TLayout
+        Align = Left
+        Position.X = 140.000000000000000000
+        Size.Width = 30.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+      end
+      object Layout1: TLayout
+        Align = Left
+        Position.X = 310.000000000000000000
+        Size.Width = 30.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+      end
+      object recBotonNuevaTarea: TRectangle
+        Align = Left
+        Fill.Color = xFF00558C
+        Padding.Left = 5.000000000000000000
+        Padding.Right = 5.000000000000000000
+        Position.X = 170.000000000000000000
+        Size.Width = 140.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        Stroke.Thickness = 2.000000000000000000
+        XRadius = 5.000000000000000000
+        YRadius = 5.000000000000000000
+        object lb_botonNuevaTarea: TLabel
+          Align = Client
+          StyledSettings = [Family, Size]
+          Locked = True
+          Size.Width = 82.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Nueva Tarea'
+          TabOrder = 1
+        end
+        object botonNuevaTarea: TSpeedButton
+          Align = Contents
+          Hint = 'Registrar el cambio de cama'
+          Locked = True
+          Size.Width = 140.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+        end
+        object Image2: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                0060494441545847EDD4310AC0300CC5D0B8F7BFB3BB161390298598A2377A08
+                22C35F4BFA99A887AECCCC7A7B8A88576F5FF5709A41C42062101917B41D2F1A
+                BD2FD5011DF743061183884164BB431DB455755FBAC6FD9041C42062103148D2
+                69378CE00C3427FF8D5A0000000049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\mas.png'
+            end>
+          Align = Left
+          Position.X = 5.000000000000000000
+          Size.Width = 48.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+      end
+    end
+    object ly_Tareas: TLayout
+      Align = Client
+      Margins.Left = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Size.Width = 1131.000000000000000000
+      Size.Height = 494.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+    end
+  end
+  object tareas: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 671
+    Top = 203
+    object tareasidTarea: TIntegerField
+      FieldName = 'idTarea'
+    end
+    object tareasfecha: TStringField
+      FieldName = 'fecha'
+      Size = 50
+    end
+    object tareasidCama: TIntegerField
+      FieldName = 'idCama'
+    end
+    object tareascama: TStringField
+      FieldName = 'cama'
+      Size = 50
+    end
+    object tareashabitacion: TStringField
+      FieldName = 'habitacion'
+      Size = 50
+    end
+    object tareaspiso: TStringField
+      FieldName = 'piso'
+      Size = 50
+    end
+    object tareascamaEnAislamiento: TIntegerField
+      FieldName = 'camaEnAislamiento'
+    end
+    object tareasestadoCama: TStringField
+      FieldName = 'estadoCama'
+      Size = 50
+    end
+    object tareassexoPaciente: TStringField
+      FieldName = 'sexoPaciente'
+    end
+    object tareassolicitadaPorDni: TStringField
+      FieldName = 'solicitadaPorDni'
+      Size = 50
+    end
+    object tareassolicitadaPorNombre: TStringField
+      FieldName = 'solicitadaPorNombre'
+      Size = 255
+    end
+    object tareasidServicioSolicita: TIntegerField
+      FieldName = 'idServicioSolicita'
+    end
+    object tareasnombreServicio: TStringField
+      FieldName = 'nombreServicio'
+      Size = 255
+    end
+    object tareasiniciada: TStringField
+      FieldName = 'iniciada'
+      Size = 50
+    end
+    object tareasiniciadaPorDni: TStringField
+      FieldName = 'iniciadaPorDni'
+      Size = 50
+    end
+    object tareasiniciadaPorNombre: TStringField
+      FieldName = 'iniciadaPorNombre'
+      Size = 255
+    end
+    object tareascancelada: TStringField
+      FieldName = 'cancelada'
+      Size = 50
+    end
+    object tareascanceladaPorDni: TStringField
+      FieldName = 'canceladaPorDni'
+      Size = 50
+    end
+    object tareascanceladaPorNombre: TStringField
+      FieldName = 'canceladaPorNombre'
+      Size = 255
+    end
+    object tareasidEstadoTareas: TIntegerField
+      FieldName = 'idEstadoTareas'
+    end
+    object tareasestado: TStringField
+      FieldName = 'estado'
+      Size = 50
+    end
+    object tareasidReparacion: TIntegerField
+      FieldName = 'idReparacion'
+    end
+    object tareasreparacion: TStringField
+      FieldName = 'reparacion'
+      Size = 255
+    end
+    object tareasidCategoria: TIntegerField
+      FieldName = 'idCategoria'
+    end
+    object tareascategoria: TStringField
+      FieldName = 'categoria'
+      Size = 255
+    end
+    object tareasinhabilitaHab: TIntegerField
+      FieldName = 'inhabilitaHab'
+    end
+    object tareaslimpiezaPosterior: TIntegerField
+      FieldName = 'limpiezaPosterior'
+    end
+    object tareasbloqueaCama: TIntegerField
+      FieldName = 'bloqueaCama'
+    end
+    object tareasidPrioridad: TIntegerField
+      FieldName = 'idPrioridad'
+    end
+    object tareasprioridad: TStringField
+      FieldName = 'prioridad'
+      Size = 50
+    end
+    object tareasticket: TIntegerField
+      FieldName = 'ticket'
+    end
+    object tareasdetalleTicket: TMemoField
+      FieldName = 'detalleTicket'
+      BlobType = ftMemo
+    end
+  end
+end

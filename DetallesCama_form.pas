@@ -260,6 +260,7 @@ type
     procedure cambiosDeCamaActualizar;
     procedure SpeedButton2Click(Sender: TObject);
     procedure actualizarReserva(idCama:integer);
+    procedure botonReparacionClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -276,7 +277,8 @@ implementation
 {$R *.fmx}
 
 uses form_Tablero, ModuloDatos, UFunciones, constantes, CambioDeCama_form, CambioDeCamaAdmision_form,
-  FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form, AltaProbable_form;
+  FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form, AltaProbable_form,
+  TareasReparacion_form;
 
 procedure Tform_DetallesCama.Actualizar(idCama:integer);
 var
@@ -770,6 +772,15 @@ begin
     end;
 
   Actualizar(idCama);
+end;
+
+procedure Tform_DetallesCama.botonReparacionClick(Sender: TObject);
+begin
+  Application.CreateForm(TformTareasReparacion, formTareasReparacion);
+  formTareasReparacion.Height := alto;
+  formTareasReparacion.Width  := ancho;
+  formTareasReparacion.idCama := idCama;
+  formTareasReparacion.ShowModal;
 end;
 
 procedure Tform_DetallesCama.botonSalirClick(Sender: TObject);

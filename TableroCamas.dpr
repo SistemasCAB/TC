@@ -22,7 +22,9 @@ uses
   Aislamientos_form in 'Aislamientos_form.pas' {formAislamiento},
   DateTimeMaskEdit_unit in 'DateTimeMaskEdit_unit.pas',
   AutorizacionesPendientes_form in 'AutorizacionesPendientes_form.pas' {form_AutorizacionesPendientes},
-  AltaProbable_form in 'AltaProbable_form.pas' {formAltaProbable};
+  AltaProbable_form in 'AltaProbable_form.pas' {formAltaProbable},
+  TareasReparacion_form in 'TareasReparacion_form.pas' {formTareasReparacion},
+  TareasReparacionDetalle_form in 'TareasReparacionDetalle_form.pas' {form_TareasReparacionDetalle};
 
 {$R *.res}
 
@@ -38,10 +40,5 @@ begin
   Application.Initialize;
   Application.CreateForm(Tdatos, datos);
   Application.CreateForm(TformTablero, formTablero);
-  //Application.CreateForm(TformAislamiento, formAislamiento);
-  //Application.CreateForm(Tform_AltaDefinitiva, form_AltaDefinitiva);
-  //Application.CreateForm(Tform_mensajeConfirmacion, form_mensajeConfirmacion);
-  //Application.CreateForm(Tform_CambioCamaAdmision, form_CambioCamaAdmision);
-  //Application.CreateForm(TformLogin, formLogin);
   Application.Run;
 end.

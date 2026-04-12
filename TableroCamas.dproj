@@ -342,6 +342,14 @@
             <Form>formAltaProbable</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="TareasReparacion_form.pas">
+            <Form>formTareasReparacion</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="TareasReparacionDetalle_form.pas">
+            <Form>form_TareasReparacionDetalle</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -443,12 +451,6 @@
                 <DeployFile LocalName="Win64\Debug\TableroCamas.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
                         <RemoteName>TableroCamas.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Win64\Debug\TableroCamas.rsm" Configuration="Debug" Class="DebugSymbols">
-                    <Platform Name="Win64">
-                        <RemoteName>TableroCamas.rsm</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
