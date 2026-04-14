@@ -57,13 +57,13 @@
     <Transaction>2026/03/30 15:48:07.000.364,=C:\TC\Unit1.pas</Transaction>
     <Transaction>2026/03/30 15:48:58.000.741,C:\TC\Unit1.pas=C:\TC\AltaProbable_form.pas</Transaction>
     <Transaction>2026/03/30 15:48:58.000.741,C:\TC\Unit1.fmx=C:\TC\AltaProbable_form.fmx</Transaction>
-    <Transaction>2026/04/12 10:02:27.843,=C:\TC\Unit1.pas</Transaction>
-    <Transaction>2026/04/12 10:25:26.774,C:\TC\TareasReparacion_form.pas=C:\TC\Unit1.pas</Transaction>
-    <Transaction>2026/04/12 10:25:26.774,C:\TC\TareasReparacion_form.fmx=C:\TC\Unit1.fmx</Transaction>
-    <Transaction>2026/04/12 11:40:58.532,=C:\TC\Unit1.pas</Transaction>
-    <Transaction>2026/04/12 11:41:11.791,=C:\TC\Unit1.pas</Transaction>
-    <Transaction>2026/04/12 11:41:55.234,C:\TC\TareasReparacionDetalle_form.pas=C:\TC\Unit1.pas</Transaction>
-    <Transaction>2026/04/12 11:41:55.234,C:\TC\TareasReparacionDetalle_form.fmx=C:\TC\Unit1.fmx</Transaction>
+    <Transaction>2026/04/12 10:02:27.000.843,=C:\TC\Unit1.pas</Transaction>
+    <Transaction>2026/04/12 10:25:26.000.774,C:\TC\TareasReparacion_form.fmx=C:\TC\Unit1.fmx</Transaction>
+    <Transaction>2026/04/12 10:25:26.000.774,C:\TC\TareasReparacion_form.pas=C:\TC\Unit1.pas</Transaction>
+    <Transaction>2026/04/12 11:40:58.000.532,=C:\TC\Unit1.pas</Transaction>
+    <Transaction>2026/04/12 11:41:11.000.791,=C:\TC\Unit1.pas</Transaction>
+    <Transaction>2026/04/12 11:41:55.000.234,C:\TC\TareasReparacionDetalle_form.pas=C:\TC\Unit1.pas</Transaction>
+    <Transaction>2026/04/12 11:41:55.000.234,C:\TC\TareasReparacionDetalle_form.fmx=C:\TC\Unit1.fmx</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5" Android64="" Android=""/>

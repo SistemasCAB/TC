@@ -22,20 +22,15 @@ type
     iconoVentana: TImage;
     botonSalir: TSpeedButton;
     lyBotones: TLayout;
-    recBotonEliminarTarea: TRectangle;
-    lb_BotonEliminarTarea: TLabel;
-    botonEliminarTarea: TSpeedButton;
     recBotonActualizar: TRectangle;
     lb_botonActualizar: TLabel;
     botonActuazliar: TSpeedButton;
     separador1: TLayout;
-    Layout1: TLayout;
     recBotonNuevaTarea: TRectangle;
     lb_botonNuevaTarea: TLabel;
     botonNuevaTarea: TSpeedButton;
     Image1: TImage;
     Image2: TImage;
-    Image3: TImage;
     ly_Tareas: TLayout;
     tareas: TFDMemTable;
     tareasidTarea: TIntegerField;
@@ -98,20 +93,17 @@ uses TareasReparacionDetalle_form, ModuloDatos;
 // --------------------------------
 //  Constantes de la grilla
 // --------------------------------
-
 const
   COL_HEADERS: array[0..8] of string = (
     'ID Tarea', 'Reparación', 'Estado', 'Prioridad', 'Solicitada el', 'Solicitada por',
     'Iniciada el', 'Iniciada por',
     'Ticket'
   );
-
   COL_WIDTHS: array[0..8] of Integer = (
     70, 200, 110, 90,
     110, 140, 110, 140,
     90
   );
-
   // Nombres de los campos en el FDMemTable "tareas"
   FIELD_NAMES: array[0..8] of string = (
     'idTarea', 'reparacion', 'estado','prioridad','fecha', 'solicitadaPorNombre',
@@ -131,36 +123,28 @@ var
   I   : Integer;
 begin
   if not Assigned(MemTable) then Exit;
-
   // Guardar referencia para usarla en el evento CellClick
   FMemTable := MemTable;
-
   FGrilla.BeginUpdate;
   try
     FGrilla.RowCount := MemTable.RecordCount;
-
     MemTable.DisableControls;
     try
       MemTable.First;
       Row := 0;
-
       while not MemTable.Eof do
       begin
         for I := 0 to High(FIELD_NAMES) do
           FGrilla.Cells[I, Row] := MemTable.FieldByName(FIELD_NAMES[I]).AsString;
-
         MemTable.Next;
         Inc(Row);
       end;
-
     finally
       MemTable.EnableControls;
     end;
-
   finally
     FGrilla.EndUpdate;
   end;
-
   // Seleccionar el primer registro si la tabla tiene datos
   if MemTable.RecordCount > 0 then
   begin
@@ -185,9 +169,7 @@ begin
   if not Assigned(FMemTable) then Exit;
   if FMemTable.RecordCount = 0 then Exit;
   if Row < 0 then Exit;
-
   FMemTable.RecNo := Row + 1;
-
   Application.CreateForm(Tform_TareasReparacionDetalle, form_TareasReparacionDetalle);
   form_TareasReparacionDetalle.idTarea := tareasidTarea.AsInteger;
   form_TareasReparacionDetalle.ShowModal;
@@ -206,7 +188,6 @@ begin
   // Texto de los botones
   lb_botonActualizar.Text := 'Actualizar' +#13+'Tareas';
   lb_botonNuevaTarea.Text := 'Nueva' +#13+'Tarea';
-  lb_botonEliminarTarea.Text := 'Cancelar' +#13+'Tarea';
 
   // Crear TStringGrid dinámicamente dentro de ly_Tareas
   FGrilla             := TStringGrid.Create(Self);
@@ -221,7 +202,6 @@ begin
   //FGrilla.OnCellClick := GrillaCellClick;
   FGrilla.OnCellClick    := nil;              // un clic solo selecciona, sin acción extra
   FGrilla.OnCellDblClick := GrillaCellDblClick;
-
   // Crear columnas
   for I := 0 to High(COL_HEADERS) do
   begin
