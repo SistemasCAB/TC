@@ -22,9 +22,9 @@ type
     iconoVentana: TImage;
     botonSalir: TSpeedButton;
     lyBotones: TLayout;
-    recBotonCerrarTicket: TRectangle;
-    lb_botonCerrarTicket: TLabel;
-    botonCerrarTicket: TSpeedButton;
+    recBotonCancelarTarea: TRectangle;
+    lb_botonCancelarTarea: TLabel;
+    botonCancelarTarea: TSpeedButton;
     Image1: TImage;
     separador1: TLayout;
     ly_Tareas: TLayout;
@@ -91,13 +91,18 @@ type
     Label5: TLabel;
     Layout1: TLayout;
     Label7: TLabel;
+    tareaurlRecibido: TStringField;
+    tareaurlEnviado: TStringField;
+    cancelar: TFDMemTable;
+    cancelarestado: TIntegerField;
+    cancelarmensaje: TStringField;
     procedure FormActivate(Sender: TObject);
     procedure botonSalirClick(Sender: TObject);
     procedure ActualizarTarea(idTarea:integer);
     procedure CargarDetallesDesdeJson(const JsonStr: string; detalles: TFDMemTable);
     procedure MostrarDetalles;
     procedure FormCreate(Sender: TObject);
-    procedure botonCerrarTicketClick(Sender: TObject);
+    procedure botonCancelarTareaClick(Sender: TObject);
     procedure botonTicketClick(Sender: TObject);
   private
     { Private declarations }
@@ -136,7 +141,7 @@ begin
 
   if response.StatusCode = 200 then
     begin
-      lbTicket.Text := 'Ticket Nº ' + tareaticket.AsString + ' - Cama: ' + tareacama.AsString + ' Categoría: ' + tareacategoria.AsString;
+      lbTicket.Text := 'Ticket Nº ' + tareaticket.AsString + ' - Cama: ' + tareacama.AsString + ' - Categoría: ' + tareacategoria.AsString;
       lb_reparacion.Text := tareareparacion.AsString;
       lb_prioridad.Text := tareaprioridad.AsString;
       lb_estado.Text := uppercase(tareaestado.AsString);
@@ -157,18 +162,44 @@ begin
     end
   else
     begin
-      datos.VerMensaje('Error ' + response.StatusCode.ToString ,'No fue obtener esta tarea.' + #13 + 'Endpoint: ' + recurso,'Aceptar','ERROR',0);
+      datos.VerMensaje('Error ' + response.StatusCode.ToString ,'No fue posible obtener esta tarea.' + #13 + 'Endpoint: ' + recurso,'Aceptar','ERROR',0);
     end;
 end;
 
-procedure Tform_TareasReparacionDetalle.botonCerrarTicketClick(Sender: TObject);
+procedure Tform_TareasReparacionDetalle.botonCancelarTareaClick(Sender: TObject);
 var
   mensaje : string;
+  response : IResponse;
+  body, recurso: string;
 begin
   mensaje:= '¿Está seguro que desea cancelar esta tarea de reparación?';
-  if datos.MensajeConfirmacion('Confirme su decisión',mensaje,'Si. Estoy seguro','Cancelar','WARNING',ancho,alto) = 6 then
+  if datos.MensajeConfirmacion('Confirme su decisión',mensaje,'Si. Estoy seguro','No. Salir','WARNING',ancho,alto) = 6 then
     begin
-      showmessage('cancelando...');
+      recurso := '/tablerocamas/tareaIniciarFinalizarCancelar';
+      body := '{'+
+                  '"idTarea":'+ tareaidTarea.AsString +','+
+                  '"idUsuario":1,'+
+                  '"idServicio":'+datos.servicio.ToString +','+
+                  '"accion":"cancelar"'+
+              '}';
+
+      response := TRequest.New.BaseURL(datos.urlTC)
+                  .Resource(recurso )
+                  .AddHeader('TokenAcceso', datos.tokenAcceso)
+                  .AddBody(body)
+                  .Accept('application/json')
+                  .Adapters(TDataSetSerializeAdapter.New(cancelar))
+                  .Post;
+
+      if response.StatusCode = 200 then
+        begin
+          formTareasReparacion.ObtenerTareas;
+          Close;
+        end
+      else
+        begin
+          datos.VerMensaje('Error ' + response.StatusCode.ToString ,'No fue posible cancelar esta tarea.' + #13 + 'Endpoint: ' + recurso+ 'Error: ' + cancelarmensaje.AsString,'Aceptar','ERROR',0);
+        end;
     end;
 
 end;
@@ -179,8 +210,16 @@ begin
 end;
 
 procedure Tform_TareasReparacionDetalle.botonTicketClick(Sender: TObject);
+var
+  url : PWideChar;
 begin
-  ShellExecute(0, 'open', 'https://www.google.com', nil, nil, SW_SHOWNORMAL);
+  if datos.servicio = 2 then // si es el servicio mantenimiento
+    url := PWideChar(tareaurlRecibido.AsString)
+  else
+    url := PWideChar(tareaurlEnviado.AsString);
+
+  ShellExecute(0, 'open', url, nil, nil, SW_SHOWNORMAL);
+  Close;
 end;
 
 procedure Tform_TareasReparacionDetalle.CargarDetallesDesdeJson(const JsonStr: string; detalles: TFDMemTable);

@@ -780,6 +780,7 @@ begin
   formTareasReparacion.Height := alto;
   formTareasReparacion.Width  := ancho;
   formTareasReparacion.idCama := idCama;
+  formTareasReparacion.tituloVentana.Text := 'TAREAS DE REPARACIÓN DE LA CAMA ' + camascama.AsString;
   formTareasReparacion.ShowModal;
 end;
 
@@ -1097,8 +1098,10 @@ end;
 
 procedure Tform_DetallesCama.FormCreate(Sender: TObject);
 begin
-  alto := form_DetallesCama.Height;
-  ancho := form_DetallesCama.Width;
+  alto := formTablero.Height;
+  ancho := formTablero.Width;
+//  alto := form_DetallesCama.Height;
+//  ancho := form_DetallesCama.Width;
 end;
 
 procedure Tform_DetallesCama.MostrarAislamentos;

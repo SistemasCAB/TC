@@ -557,7 +557,7 @@ begin
         end
       else
         begin
-          datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'El servicio ' + recurso + ' ha retornado el siguiente error: ' + cambiarCamamensaje.AsString,'Aceptar','ERROR',0);
+          datos.VerMensaje('ERROR ' + response2.StatusCode.ToString,'El servicio ' + recurso2 + ' ha retornado el siguiente error: ' + cambiarCamamensaje.AsString,'Aceptar','ERROR',0);
         end;
 
       //Close;

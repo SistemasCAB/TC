@@ -88,7 +88,7 @@ implementation
 
 {$R *.fmx}
 
-uses TareasReparacionDetalle_form, ModuloDatos;
+uses TareasReparacionDetalle_form, ModuloDatos, form_Tablero;
 
 // --------------------------------
 //  Constantes de la grilla
@@ -172,6 +172,8 @@ begin
   FMemTable.RecNo := Row + 1;
   Application.CreateForm(Tform_TareasReparacionDetalle, form_TareasReparacionDetalle);
   form_TareasReparacionDetalle.idTarea := tareasidTarea.AsInteger;
+  form_TareasReparacionDetalle.Height := formTablero.Height;
+  form_TareasReparacionDetalle.width := formTablero.width;
   form_TareasReparacionDetalle.ShowModal;
 end;
 
