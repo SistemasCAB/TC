@@ -41,7 +41,7 @@ uses
   Data.Bind.EngExt,
   Fmx.Bind.DBEngExt,
   Data.Bind.DBScope,
-  Inifiles, FMX.Effects,
+  FMX.Effects,
   RESTRequest4D,
   DataSet.Serialize.Adapter.RESTRequest4D;
 
@@ -85,14 +85,15 @@ uses ModuloDatos, form_Tablero;
 procedure Tform_ServiciosCambio.ActualizarServicios;
 var
   response: IResponse;
-  apiRecurso:string;
+  recurso:string;
   e:boolean;
 begin
   // Obtengo los servicios
-  apiRecurso := '/tablerocamas/servicios';
+  recurso := '/tablerocamas/serviciosUsuario';
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource(apiRecurso)
+              .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idUsuario',datos.idUsuario.toString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(servicios))
               .Get;
@@ -105,7 +106,7 @@ begin
   else
     begin
       listaServicios.Enabled := false;
-      datos.VerMensaje('Error ' + response.StatusCode.ToString, 'El endpoint ' + datos.urlTC + apiRecurso + ' ha retornado el status code ' + response.StatusCode.ToString ,'Aceptar','error',0)
+      datos.VerMensaje('Error ' + response.StatusCode.ToString, 'El endpoint ' + datos.urlTC + recurso + ' ha retornado el status code ' + response.StatusCode.ToString ,'Aceptar','error',0)
     end;
 end;
 
@@ -118,13 +119,8 @@ begin
 end;
 
 procedure Tform_ServiciosCambio.listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
-var
-  archivo :TInifile;
 begin
-  archivo := TIniFile.Create('c:\tc\config.ini');
-  archivo.WriteInteger('TABLERO','servicio',serviciosidServicio.AsInteger);
-  archivo.Free;
-  datos.actualizarConfiguracion; // vuelvo a leer los datos del archivo de configuración
+  datos.servicio := serviciosidServicio.AsInteger;
   formTablero.ActualizarServicio;
   formTablero.ActualizarCamas;
   Close;

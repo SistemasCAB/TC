@@ -70,6 +70,7 @@ type
     procedure ObtenerTareas;
     procedure botonActuazliarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure botonNuevaTareaClick(Sender: TObject);
   private
     { Private declarations }
     FGrilla    : TStringGrid;
@@ -88,7 +89,8 @@ implementation
 
 {$R *.fmx}
 
-uses TareasReparacionDetalle_form, ModuloDatos, form_Tablero;
+uses TareasReparacionDetalle_form, ModuloDatos, form_Tablero,
+  TareaRepracionCrear_form;
 
 // --------------------------------
 //  Constantes de la grilla
@@ -157,6 +159,12 @@ end;
 procedure TformTareasReparacion.botonActuazliarClick(Sender: TObject);
 begin
   ObtenerTareas;
+end;
+
+procedure TformTareasReparacion.botonNuevaTareaClick(Sender: TObject);
+begin
+  Application.CreateForm(Tform_TareaRepracionCrear, form_TareaRepracionCrear);
+  form_TareaRepracionCrear.ShowModal;
 end;
 
 procedure TformTareasReparacion.botonSalirClick(Sender: TObject);

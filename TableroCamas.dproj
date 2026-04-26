@@ -350,6 +350,10 @@
             <Form>form_TareasReparacionDetalle</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="TareaRepracionCrear_form.pas">
+            <Form>form_TareaRepracionCrear</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

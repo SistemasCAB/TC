@@ -24,7 +24,8 @@ uses
   AutorizacionesPendientes_form in 'AutorizacionesPendientes_form.pas' {form_AutorizacionesPendientes},
   AltaProbable_form in 'AltaProbable_form.pas' {formAltaProbable},
   TareasReparacion_form in 'TareasReparacion_form.pas' {formTareasReparacion},
-  TareasReparacionDetalle_form in 'TareasReparacionDetalle_form.pas' {form_TareasReparacionDetalle};
+  TareasReparacionDetalle_form in 'TareasReparacionDetalle_form.pas' {form_TareasReparacionDetalle},
+  TareaRepracionCrear_form in 'TareaRepracionCrear_form.pas' {form_TareaRepracionCrear};
 
 {$R *.res}
 

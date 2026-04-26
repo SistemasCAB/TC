@@ -260,6 +260,13 @@ type
     camas2altaProbableNombreUsuario: TStringField;
     camasfechaAltaMedica: TStringField;
     camas2fechaAltaMedica: TStringField;
+    lb_usuarioDocumento: TLabel;
+    serviciosUsuario: TFDMemTable;
+    serviciosUsuarioidServicio: TIntegerField;
+    serviciosUsuarionombreServicio: TStringField;
+    serviciosUsuarioidTipoInternacion: TIntegerField;
+    serviciosUsuariocambioCamaAreaCerrada: TIntegerField;
+    serviciosUsuariogestionaCamas: TIntegerField;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -1478,7 +1485,12 @@ begin
       botonMenu.Visible  := false;
     end;
 
-  if datos.cambiarServicio = 1 then
+//  if datos.cambiarServicio = 1 then
+//    botonCambiarServicio.Enabled := true
+//  else
+//    botonCambiarServicio.Enabled := false;
+
+  if serviciosUsuario.RecordCount > 1 then
     botonCambiarServicio.Enabled := true
   else
     botonCambiarServicio.Enabled := false;

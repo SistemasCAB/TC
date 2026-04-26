@@ -43,6 +43,9 @@ type
     cambioCamaAreaCerrada:integer; //indica si en el servicio se puede hacer cambios de cama sin autorización de Admisión por ser un área cerrada.
     gestionaCamas:integer; // indica que este servicio tiene capacidad para autorizar los cambios de cama (como Admisión y Egresos)
     pendientes:integer;
+    idUsuario:integer;
+    dniLogin:string;
+    nombreLogin:string;
 
     urlTC:string;
     tokenAcceso:string;
@@ -54,9 +57,6 @@ type
 
     //Markey
     url, APIKey:string;
-    Id_Usuario_Markey : Integer;
-    dniLogin:string;
-    nombreLogin:string;
   end;
 
 var
@@ -110,7 +110,6 @@ begin
   tokenAcceso     := archivo.ReadString('API','tokenAcceso','');
 
   autologin       := archivo.ReadInteger('TABLERO','autologin',0);
-  servicio        := archivo.ReadInteger('TABLERO','servicio',10);
   fullscreen      := archivo.ReadInteger('TABLERO','fullscreen',0);
   segundos        := archivo.ReadInteger('TABLERO','actualizar',30);
   cambiarServicio := archivo.ReadInteger('TABLERO','cambiarServicios',0);
