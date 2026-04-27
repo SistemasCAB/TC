@@ -164,6 +164,7 @@ end;
 procedure TformTareasReparacion.botonNuevaTareaClick(Sender: TObject);
 begin
   Application.CreateForm(Tform_TareaRepracionCrear, form_TareaRepracionCrear);
+  form_TareaRepracionCrear.idCama := idCama;
   form_TareaRepracionCrear.ShowModal;
 end;
 

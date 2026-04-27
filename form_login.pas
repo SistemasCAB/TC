@@ -34,11 +34,9 @@ type
     LoginReg: TFDMemTable;
     GIFImage1: TGIFImage;
     ShadowEffect1: TShadowEffect;
-    lbTipoDocumento: TLabel;
     documentos: TFDMemTable;
     documentostdocCodigo: TIntegerField;
     documentostdocDescripcion: TStringField;
-    tipoDocumento: TComboBox;
     Rectangle1: TRectangle;
     Image1: TImage;
     lbTitulo: TLabel;
@@ -62,6 +60,7 @@ type
     LoginRegaplicacion: TStringField;
     LoginRegservicios: TMemoField;
     LoginRegmensaje: TStringField;
+    Image3: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure botonCancelarApplyStyleLookup(Sender: TObject);
@@ -90,26 +89,26 @@ implementation
 uses form_Tablero, ModuloDatos, mensajes_form;
 
 procedure TformLogin.ActualizarTiposDocumentos;
-var
-  response : IResponse;
-  recurso : String;
+//var
+//  response : IResponse;
+//  recurso : String;
 begin
-  recurso := '/tablerocamas/tiposDocumentos';
-  response := TRequest.New.BaseURL(datos.urlTC)
-                          .Resource(recurso)
-                          .AddHeader('TokenAcceso', datos.tokenAcceso)
-                          .Accept('application/json')
-                          .Adapters(TDataSetSerializeAdapter.New(documentos))
-                          .Get;
-
-  if response.StatusCode <> 200 then
-    begin
-      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Ocurrió un error al intentar obtener los tipos de documentos','Ok','ERROR',0);
-    end
-  else
-    begin
-      CargarComboBox;
-    end;
+//  recurso := '/tablerocamas/tiposDocumentos';
+//  response := TRequest.New.BaseURL(datos.urlTC)
+//                          .Resource(recurso)
+//                          .AddHeader('TokenAcceso', datos.tokenAcceso)
+//                          .Accept('application/json')
+//                          .Adapters(TDataSetSerializeAdapter.New(documentos))
+//                          .Get;
+//
+//  if response.StatusCode <> 200 then
+//    begin
+//      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Ocurrió un error al intentar obtener los tipos de documentos','Ok','ERROR',0);
+//    end
+//  else
+//    begin
+//      CargarComboBox;
+//    end;
 end;
 
 procedure TformLogin.botonAceptarApplyStyleLookup(Sender: TObject);
@@ -127,7 +126,8 @@ begin
 end;
 procedure TformLogin.botonAceptarClick(Sender: TObject);
 begin
-  iniciarSesion(cuenta.Text,clave.Text, tdocCodigo);
+  //iniciarSesion(cuenta.Text,clave.Text, tdocCodigo);
+  iniciarSesion(cuenta.Text,clave.Text, 1); // por defecto tdocCodigo = 1 = DNI
 end;
 
 procedure TformLogin.botonCancelarApplyStyleLookup(Sender: TObject);
@@ -149,22 +149,22 @@ begin
 end;
 
 procedure TformLogin.CargarComboBox;
-var
-  Item: TComboItem;
+//var
+//  Item: TComboItem;
 begin
-  tipoDocumento.Items.Clear;
-  documentos.First;
-  while not documentos.Eof do
-  begin
-    // Crear un objeto nuevo para este registro
-    Item := TComboItem.Create;
-    // Copiar los datos del registro al objeto
-    Item.ID          := documentostdocCodigo.AsInteger;
-    Item.Descripcion := documentostdocDescripcion.AsString;
-    // Agregar al ComboBox: el texto visible + el objeto adjunto
-    tipoDocumento.Items.AddObject(Item.Descripcion, Item);
-    documentos.Next;
-  end;
+//  tipoDocumento.Items.Clear;
+//  documentos.First;
+//  while not documentos.Eof do
+//  begin
+//    // Crear un objeto nuevo para este registro
+//    Item := TComboItem.Create;
+//    // Copiar los datos del registro al objeto
+//    Item.ID          := documentostdocCodigo.AsInteger;
+//    Item.Descripcion := documentostdocDescripcion.AsString;
+//    // Agregar al ComboBox: el texto visible + el objeto adjunto
+//    tipoDocumento.Items.AddObject(Item.Descripcion, Item);
+//    documentos.Next;
+//  end;
 end;
 
 procedure TformLogin.CargarServiciosDesdeJson(const JsonStr: string; tablaServicios: TFDMemTable);
@@ -246,7 +246,7 @@ procedure TformLogin.FormCreate(Sender: TObject);
 begin
   lb_version.Text := 'Versión: ' + datos.GetAppVersion().ToString;
 
-  ActualizarTiposDocumentos
+  // ActualizarTiposDocumentos
 end;
 
 procedure TformLogin.FormDestroy(Sender: TObject);
@@ -328,31 +328,31 @@ begin
     end;
 end;
 procedure TformLogin.LiberarItemsCombo;
-var
-  i: Integer;
+//var
+//  i: Integer;
 begin
-  for i := 0 to tipoDocumento.Items.Count - 1 do
-  begin
-    // Liberar cada objeto adjunto
-    tipoDocumento.Items.Objects[i].Free;
-  end;
-  tipoDocumento.Items.Clear;
+//  for i := 0 to tipoDocumento.Items.Count - 1 do
+//  begin
+//    // Liberar cada objeto adjunto
+//    tipoDocumento.Items.Objects[i].Free;
+//  end;
+//  tipoDocumento.Items.Clear;
 end;
 
 procedure TformLogin.tipoDocumentoChange(Sender: TObject);
-var
-  ItemSeleccionado: TComboItem;
+//var
+//  ItemSeleccionado: TComboItem;
 begin
-  // Verificar que haya algo seleccionado
-  if tipoDocumento.ItemIndex < 0 then
-    Exit; // No hay nada seleccionado, salir
-  // Recuperar el objeto adjunto al ítem seleccionado
-  // El cast (TComboItem) es necesario porque Items.Objects devuelve TObject
-  ItemSeleccionado := TComboItem(tipoDocumento.Items.Objects[tipoDocumento.ItemIndex]);
-//  ShowMessage('ID seleccionado: ' + ItemSeleccionado.ID.ToString);
-//  ShowMessage('Descripción: '     + ItemSeleccionado.Descripcion);
-  tdocCodigo := ItemSeleccionado.ID;
-  recBotonAceptar.Enabled := true;
+//  // Verificar que haya algo seleccionado
+//  if tipoDocumento.ItemIndex < 0 then
+//    Exit; // No hay nada seleccionado, salir
+//  // Recuperar el objeto adjunto al ítem seleccionado
+//  // El cast (TComboItem) es necesario porque Items.Objects devuelve TObject
+//  ItemSeleccionado := TComboItem(tipoDocumento.Items.Objects[tipoDocumento.ItemIndex]);
+////  ShowMessage('ID seleccionado: ' + ItemSeleccionado.ID.ToString);
+////  ShowMessage('Descripción: '     + ItemSeleccionado.Descripcion);
+//  tdocCodigo := ItemSeleccionado.ID;
+//  recBotonAceptar.Enabled := true;
 end;
 
 end.
