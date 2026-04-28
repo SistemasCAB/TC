@@ -261,6 +261,7 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     procedure actualizarReserva(idCama:integer);
     procedure botonReparacionClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -278,7 +279,7 @@ implementation
 
 uses form_Tablero, ModuloDatos, UFunciones, constantes, CambioDeCama_form, CambioDeCamaAdmision_form,
   FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form, AltaProbable_form,
-  TareasReparacion_form;
+  TareasReparacion_form, Reservas_form;
 
 procedure Tform_DetallesCama.Actualizar(idCama:integer);
 var
@@ -1243,6 +1244,14 @@ begin
 
   if permisos.Locate('idModulo', idModulo, []) then
     Result := permisos.FieldByName('controlTotal').AsInteger;
+end;
+
+procedure Tform_DetallesCama.SpeedButton1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tform_Reservas, form_Reservas);
+  form_Reservas.idCama := camasidCama.AsInteger;
+  form_Reservas.tituloVentana.Text := 'RESERVAR CAMA ' + camascama.AsString;
+  form_Reservas.ShowModal;
 end;
 
 procedure Tform_DetallesCama.SpeedButton2Click(Sender: TObject);

@@ -251,7 +251,7 @@ end;
 
 procedure TformLogin.FormDestroy(Sender: TObject);
 begin
-  LiberarItemsCombo;
+//  LiberarItemsCombo;
 end;
 
 procedure TformLogin.iniciarSesion(cuenta, clave: string; tipoDocumento:integer);

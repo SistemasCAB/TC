@@ -25,7 +25,8 @@ uses
   AltaProbable_form in 'AltaProbable_form.pas' {formAltaProbable},
   TareasReparacion_form in 'TareasReparacion_form.pas' {formTareasReparacion},
   TareasReparacionDetalle_form in 'TareasReparacionDetalle_form.pas' {form_TareasReparacionDetalle},
-  TareaRepracionCrear_form in 'TareaRepracionCrear_form.pas' {form_TareaRepracionCrear};
+  TareaRepracionCrear_form in 'TareaRepracionCrear_form.pas' {form_TareaRepracionCrear},
+  Reservas_form in 'Reservas_form.pas' {form_Reservas};
 
 {$R *.res}
 
