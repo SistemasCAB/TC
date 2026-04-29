@@ -33,6 +33,7 @@ type
     { Private declarations }
   public
     // Tablero
+    idAplicacion: Integer;
     versionActual:integer;
     autologin, servicio:integer;
     archivo : TIniFile;
@@ -102,6 +103,8 @@ end;
 
 procedure Tdatos.actualizarConfiguracion;
 begin
+  idAplicacion    := 4; // identifica la aplicación en la tabla aplicaciones.
+
   archivo         := TIniFile.Create('c:\tc\config.ini');
   url             := archivo.ReadString('API','url','https://clinicaadventista.markey.com.ar/APIMarkeyCAB');
   APIKey          := archivo.ReadString('API','APIKey','');

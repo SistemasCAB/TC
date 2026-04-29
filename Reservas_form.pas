@@ -9,8 +9,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, FMX.ListBox, FMX.Edit,
-  RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D
-  ;
+  RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D,
+  System.JSON;
 
 type
   // Primero declarás la clase auxiliar
@@ -64,7 +64,7 @@ type
     Label3: TLabel;
     Label4: TLabel;
     recBuscar: TRectangle;
-    SpeedButton2: TSpeedButton;
+    btnBuscarPaciente: TSpeedButton;
     Image5: TImage;
     Label5: TLabel;
     lb_pacienteDatos: TLabel;
@@ -73,7 +73,33 @@ type
     documentostdocDescripcion: TStringField;
     Label6: TLabel;
     Label8: TLabel;
-    Edit1: TEdit;
+    edt_motivo: TEdit;
+    resultadoReserva: TFDMemTable;
+    resultadoReservaestado: TIntegerField;
+    resultadoReservamensaje: TStringField;
+    Label9: TLabel;
+    lb_reservaPaciente: TLabel;
+    lb_reservaDocumento: TLabel;
+    lb_usuario: TLabel;
+    Label11: TLabel;
+    lb_usuarioDocumento: TLabel;
+    lb_fechaReserva: TLabel;
+    etiquetaEstado: TRectangle;
+    reserva: TFDMemTable;
+    reservaidReserva: TIntegerField;
+    reservaidCama: TIntegerField;
+    reservafechaReserva: TStringField;
+    reservatdocCodigo: TIntegerField;
+    reservanroDocumento: TStringField;
+    reservanombrePaciente: TStringField;
+    reservamovito: TStringField;
+    reservareservadaPorDni: TStringField;
+    reservareservadaPorNombre: TStringField;
+    reservafechaCancelada: TStringField;
+    reservacanceladaPorDni: TStringField;
+    reservacanceladaPorNombre: TStringField;
+    reservaidMotivoFinReserva: TIntegerField;
+    reservaidSolicitudCambio: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure botonSalirClick(Sender: TObject);
     procedure ActualizaTiposDocumentos;
@@ -81,8 +107,13 @@ type
     procedure LiberarItemsCombo;
     procedure listaTiposDocumentosChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
+    procedure btnBuscarPacienteClick(Sender: TObject);
     procedure botonBuscarPacienteClick(Sender: TObject);
+    procedure crearReserva;
+    procedure botonReservarClick(Sender: TObject);
+    procedure Actualizar;
+    procedure FormActivate(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,7 +132,50 @@ implementation
 
 {$R *.fmx}
 
-uses form_Tablero, ModuloDatos;
+uses form_Tablero, ModuloDatos, DetallesCama_form, UFunciones;
+
+procedure Tform_Reservas.Actualizar;
+var
+  response: IResponse;
+  recurso: string;
+begin
+  recurso := '/tablerocamas/reservas';
+  response := TRequest.New.BaseURL(datos.urlTC)
+                          .Resource(recurso)
+                          .AddHeader('TokenAcceso', datos.tokenAcceso)
+                          .Accept('application/json')
+                          .AddParam('idCama', idCama.ToString)
+                          .Adapters(TDataSetSerializeAdapter.New(reserva))
+                          .Get;
+
+  if response.StatusCode <> 200 then
+    begin
+      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Ocurrió un error al intentar obtener los datos de la reserva','Aceptar','ERROR',0);
+    end
+  else
+    begin
+      if(reserva.RecordCount = 0) then // no hay reservas para esta cama
+        begin
+          pagina.TabIndex := 0;
+        end
+      else // hay una reserva para esta cama
+        begin
+          pagina.TabIndex := 1;
+
+          lb_reservaPaciente.Text     := reservanombrePaciente.AsString;
+          lb_reservaDocumento.Text    := reservanroDocumento.AsString;
+
+          lb_usuario.Text             := reservareservadaPorNombre.AsString;
+          lb_usuarioDocumento.Text    := 'DNI: ' + reservareservadaPorDni.AsString;
+          lb_fechaReserva.Text        := reservafechaReserva.AsString;
+
+          etiquetaEstado.Fill.Color := TAlphaColor(StrToAlphaColor('#00ffff'));
+        end;
+    end;
+
+
+
+end;
 
 procedure Tform_Reservas.ActualizaTiposDocumentos;
 var
@@ -118,7 +192,7 @@ begin
 
   if response.StatusCode <> 200 then
     begin
-      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Ocurrió un error al intentar obtener los tipos de documentos','Ok','ERROR',0);
+      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Ocurrió un error al intentar obtener los tipos de documentos','Aceptar','ERROR',0);
     end
   else
     begin
@@ -132,6 +206,11 @@ begin
   panelBuscarPaciente.Height := 121;
   panelBuscarPaciente.Visible := true;
   panelBuscarPaciente.BringToFront;
+end;
+
+procedure Tform_Reservas.botonReservarClick(Sender: TObject);
+begin
+  crearReserva;
 end;
 
 procedure Tform_Reservas.botonSalirClick(Sender: TObject);
@@ -156,6 +235,61 @@ begin
     listaTiposDocumentos.Items.AddObject(Item.Descripcion, Item);
     documentos.Next;
   end;
+end;
+
+procedure Tform_Reservas.crearReserva;
+var
+  response: IResponse;
+  recurso,body:string;
+  json: TJSONObject;
+  mensajeError:string;
+begin
+  if(tdocCodigo = 0) or (nroDocumento = '') or (nombrePaciente = '') or (edt_motivo.Text = '') then
+    begin
+      mensajeError := 'Datos obligatorios:' +#13+ '- Tipo de documento'+#13+'- Número de documento'+#13+'- Nombre y apellido del paciente'+#13+'- Motivo de la reserva';
+      datos.VerMensaje('Faltan datos obligatorios.' ,mensajeError,'Aceptar','ERROR',0);
+      Exit;
+    end;
+
+  json := TJSONObject.Create;
+  try
+    json.AddPair('idCama', TJSONNumber.Create(idCama));
+    json.AddPair('tdocCodigo', TJSONNumber.Create(tdocCodigo));
+    json.AddPair('nroDocumento', nroDocumento);
+    json.AddPair('nombrePaciente', nombrePaciente);
+    json.AddPair('motivo', edt_motivo.Text);
+    json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
+    json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
+    body := json.ToJSON;
+  finally
+    json.Free;
+  end;
+
+  recurso := '/tablerocamas/reservas';
+  response := TRequest.New.BaseURL(datos.urlTC)
+                          .Resource(recurso)
+                          .AddHeader('TokenAcceso', datos.tokenAcceso)
+                          .AddBody(body)
+                          .Accept('application/json')
+                          .Adapters(TDataSetSerializeAdapter.New(resultadoReserva))
+                          .Post;
+
+  if response.StatusCode <> 200 then
+    begin
+      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Error: ' + resultadoReservamensaje.AsString,'Aceptar','ERROR',0);
+    end
+  else
+    begin
+      form_DetallesCama.Actualizar(idCama);
+      datos.VerMensaje('CAMA RESEVADA' ,resultadoReservamensaje.AsString,'Aceptar','OK',0);
+      Actualizar;
+      pagina.TabIndex:= 1;
+    end;
+end;
+
+procedure Tform_Reservas.FormActivate(Sender: TObject);
+begin
+  Actualizar;
 end;
 
 procedure Tform_Reservas.FormCreate(Sender: TObject);
@@ -201,7 +335,27 @@ begin
   recBuscar.Enabled := true;
 end;
 
-procedure Tform_Reservas.SpeedButton2Click(Sender: TObject);
+procedure Tform_Reservas.SpeedButton1Click(Sender: TObject);
+var
+  mensaje:string;
+begin
+  if reservaidSolicitudCambio.AsInteger > 0 then
+    begin
+      mensaje:= '¿Está seguro que desea eliminar esta reserva de cama?' + #13 + #13 + 'Al hacerlo se cancelará la solicitud de cambio de cama correspondiente';
+    end
+  else
+    begin
+      mensaje:= '¿Está seguro que desea eliminar esta reserva de cama?';
+    end;
+
+
+  if datos.MensajeConfirmacion('Confirme su decisión',mensaje,'Si. Estoy seguro','No eliminar','WARNING',form_Reservas.Width,form_Reservas.Height) = 6 then
+    begin
+
+    end;
+end;
+
+procedure Tform_Reservas.btnBuscarPacienteClick(Sender: TObject);
 var
   response : IResponse;
   recurso  : String;
@@ -237,8 +391,9 @@ begin
   lb_paciente.Text := pacientesapellido.AsString + ', ' + pacientesnombre.AsString;
   lb_documento.Text := pacientestdocDescripcion.AsString + ': ' + pacientesnroDocumento.AsString;
   lb_pacienteDatos.Text := 'Fecha de nacimiento: '+ pacientesfechaNacimiento.AsString +'    Sexo: ' + pacientessexo.AsString;
-  nroDocumento := pacientesnroDocumento.AsString;
+
   tdocCodigo := pacientestdocCodigo.AsInteger;
+  nroDocumento := pacientesnroDocumento.AsString;
   nombrePaciente := pacientesapellido.AsString + ', ' + pacientesnombre.AsString;
 
   recBotonReservar.Enabled := true;
