@@ -34,7 +34,7 @@ type
     TabReservar: TTabItem;
     recBotonEliminar: TRectangle;
     Label1: TLabel;
-    SpeedButton1: TSpeedButton;
+    botonEliminar: TSpeedButton;
     Image2: TImage;
     recBotonReservar: TRectangle;
     Label7: TLabel;
@@ -92,7 +92,6 @@ type
     reservatdocCodigo: TIntegerField;
     reservanroDocumento: TStringField;
     reservanombrePaciente: TStringField;
-    reservamovito: TStringField;
     reservareservadaPorDni: TStringField;
     reservareservadaPorNombre: TStringField;
     reservafechaCancelada: TStringField;
@@ -100,6 +99,12 @@ type
     reservacanceladaPorNombre: TStringField;
     reservaidMotivoFinReserva: TIntegerField;
     reservaidSolicitudCambio: TIntegerField;
+    resultadoCancelar: TFDMemTable;
+    resultadoCancelarestado: TIntegerField;
+    resultadoCancelarmensaje: TStringField;
+    reservamotivo: TStringField;
+    reservatdocDescripcion: TStringField;
+    lb_motivo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure botonSalirClick(Sender: TObject);
     procedure ActualizaTiposDocumentos;
@@ -113,7 +118,7 @@ type
     procedure botonReservarClick(Sender: TObject);
     procedure Actualizar;
     procedure FormActivate(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure botonEliminarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -163,11 +168,13 @@ begin
           pagina.TabIndex := 1;
 
           lb_reservaPaciente.Text     := reservanombrePaciente.AsString;
-          lb_reservaDocumento.Text    := reservanroDocumento.AsString;
+          lb_reservaDocumento.Text    := reservatdocDescripcion.AsString + ': ' + reservanroDocumento.AsString;
+          lb_fechaReserva.Text        := 'Fecha: ' + Copy(reservafechaReserva.AsString,1,16);
+          lb_motivo.Text              := 'Motivo: '+reservamotivo.AsString;
 
           lb_usuario.Text             := reservareservadaPorNombre.AsString;
           lb_usuarioDocumento.Text    := 'DNI: ' + reservareservadaPorDni.AsString;
-          lb_fechaReserva.Text        := reservafechaReserva.AsString;
+
 
           etiquetaEstado.Fill.Color := TAlphaColor(StrToAlphaColor('#00ffff'));
         end;
@@ -203,7 +210,7 @@ end;
 procedure Tform_Reservas.botonBuscarPacienteClick(Sender: TObject);
 begin
   recBotonReservar.Enabled := false;
-  panelBuscarPaciente.Height := 121;
+  panelBuscarPaciente.Height := 200;
   panelBuscarPaciente.Visible := true;
   panelBuscarPaciente.BringToFront;
 end;
@@ -335,9 +342,11 @@ begin
   recBuscar.Enabled := true;
 end;
 
-procedure Tform_Reservas.SpeedButton1Click(Sender: TObject);
+procedure Tform_Reservas.botonEliminarClick(Sender: TObject);
 var
-  mensaje:string;
+  response : IResponse;
+  recurso, body, mensaje:String;
+  json: TJSONObject;
 begin
   if reservaidSolicitudCambio.AsInteger > 0 then
     begin
@@ -351,6 +360,39 @@ begin
 
   if datos.MensajeConfirmacion('Confirme su decisión',mensaje,'Si. Estoy seguro','No eliminar','WARNING',form_Reservas.Width,form_Reservas.Height) = 6 then
     begin
+      json := TJSONObject.Create;
+      try
+        json.AddPair('idReserva', TJSONNumber.Create(reservaidReserva.AsInteger));
+        json.AddPair('idMotivo', TJSONNumber.Create(1)); // Cancelada por el usuario
+        json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
+        json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
+        json.AddPair('idServicio',TJSONNumber.Create(datos.servicio));
+        body := json.ToJSON;
+      finally
+        json.Free;
+      end;
+
+      recurso := '/tablerocamas/reservas';
+      response := TRequest.New.BaseURL(datos.urlTC)
+                              .Resource(recurso)
+                              .AddHeader('TokenAcceso', datos.tokenAcceso)
+                              .AddBody(body)
+                              .Accept('application/json')
+                              .Adapters(TDataSetSerializeAdapter.New(resultadoCancelar))
+                              .Patch;
+
+      if response.StatusCode = 200 then
+        begin
+          //showmessage(resultadoCancelarmensaje.AsString);
+
+          form_DetallesCama.Actualizar(idCama);
+          datos.VerMensaje('RESERVA CANCELADA' ,resultadoCancelarmensaje.AsString,'Aceptar','OK',0);
+          Close;
+        end
+      else
+        begin
+          datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Error: ' + resultadoCancelarmensaje.AsString,'Aceptar','ERROR',0);
+        end;
 
     end;
 end;

@@ -358,6 +358,10 @@
             <Form>form_Reservas</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="EnviarQuirofano_form.pas">
+            <Form>form_EnviarQuirofano</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

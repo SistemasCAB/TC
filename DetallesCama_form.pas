@@ -262,6 +262,7 @@ type
     procedure actualizarReserva(idCama:integer);
     procedure botonReparacionClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -279,7 +280,7 @@ implementation
 
 uses form_Tablero, ModuloDatos, UFunciones, constantes, CambioDeCama_form, CambioDeCamaAdmision_form,
   FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form, AltaProbable_form,
-  TareasReparacion_form, Reservas_form;
+  TareasReparacion_form, Reservas_form, EnviarQuirofano_form;
 
 procedure Tform_DetallesCama.Actualizar(idCama:integer);
 var
@@ -654,7 +655,7 @@ begin
       if reservas.RecordCount > 0 then
         begin
           lb_reserva_observaciones.Text := 'Reservada para: ' + reservasnombrePaciente.AsString +#13+ 'DNI: ' + reservasnroDocumento.AsString;
-          lb_botonReserva.Text := 'Eliminar reserva';
+          lb_botonReserva.Text := 'Ver reserva';
         end
       else
         begin
@@ -1264,6 +1265,16 @@ begin
   formAltaProbable.lb_documento.Text  := camastdocDescripcion.AsString + ': ' + camasnroDocumento.AsString;
   formAltaProbable.idInternacion      := camasidInternacion.AsInteger;
   formAltaProbable.ShowModal;
+end;
+
+procedure Tform_DetallesCama.SpeedButton3Click(Sender: TObject);
+begin
+  Application.CreateForm(Tform_EnviarQuirofano, form_EnviarQuirofano);
+  form_EnviarQuirofano.lb_paciente.text := camasapellidoPaciente.AsString + ' , ' + camasnombrePaciente.AsString;
+  form_EnviarQuirofano.lb_documento.Text := camastdocDescripcion.AsString + ': ' + camasnroDocumento.AsString;
+  form_EnviarQuirofano.lb_pacienteDatos.Text := 'Sexo: ' + camassexo.AsString;
+  form_EnviarQuirofano.lb_reservaCama.Text := 'Reservar la cama ' + camascama.AsString;
+  form_EnviarQuirofano.Showmodal;
 end;
 
 procedure Tform_DetallesCama.btn_AltaDefinitivaClick(Sender: TObject);
