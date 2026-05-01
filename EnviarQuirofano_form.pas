@@ -46,14 +46,19 @@ type
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
     LinkListControlToField1: TLinkListControlToField;
+    resultado: TFDMemTable;
+    resultadoestado: TIntegerField;
+    resultadomensaje: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ActualizarCamas;
-    procedure recBotonEnviarClick(Sender: TObject);
+    procedure enviarAQuirofano;
+    procedure botonReservarClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    idCama:integer;
   end;
 
 var
@@ -63,7 +68,7 @@ implementation
 
 {$R *.fmx}
 
-uses form_Tablero, ModuloDatos;
+uses form_Tablero, ModuloDatos, DetallesCama_form;
 
 procedure Tform_EnviarQuirofano.ActualizarCamas;
 var
@@ -87,9 +92,65 @@ begin
     end;
 end;
 
+procedure Tform_EnviarQuirofano.botonReservarClick(Sender: TObject);
+begin
+  enviarAQuirofano;
+end;
+
 procedure Tform_EnviarQuirofano.botonSalirClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure Tform_EnviarQuirofano.enviarAQuirofano;
+var
+  response : IResponse;
+  recurso,body:String;
+  json: TJSONObject;
+  reservarCama : integer;
+begin
+  if swReservarCama.IsChecked then
+    begin
+      reservarCama := 1;
+    end
+  else
+    begin
+      reservarCama := 0;
+    end;
+
+  json := TJSONObject.Create;
+  try
+    json.AddPair('idCamaOrigen', TJSONNumber.Create(idCama));
+    json.AddPair('idCamaDestino', TJSONNumber.Create(camasidCama.AsInteger));
+    json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
+    json.AddPair('idServicio',  TJSONNumber.Create(datos.servicio));
+    json.AddPair('reservarCama',  TJSONNumber.Create(reservarCama));
+    json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
+    body := json.ToJSON;
+  finally
+    json.Free;
+  end;
+
+  recurso := '/tablerocamas/enviarQuirofano';
+  response := TRequest.New.BaseURL(datos.urlTC)
+                          .Resource(recurso)
+                          .AddHeader('TokenAcceso', datos.tokenAcceso)
+                          .AddBody(body)
+                          .Accept('application/json')
+                          .Adapters(TDataSetSerializeAdapter.New(resultado))
+                          .Post;
+
+  if response.StatusCode <> 200 then
+    begin
+      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Error: ' + resultadomensaje.AsString,'Aceptar','ERROR',0);
+    end
+  else
+    begin
+      form_DetallesCama.Actualizar(idCama);
+      datos.VerMensaje('CAMA RESEVADA' ,resultadomensaje.AsString,'Aceptar','OK',0);
+      Close;
+    end;
+
 end;
 
 procedure Tform_EnviarQuirofano.FormCreate(Sender: TObject);
@@ -98,49 +159,6 @@ begin
   form_EnviarQuirofano.Width  := formTablero.Width;
 
   ActualizarCamas;
-end;
-
-procedure Tform_EnviarQuirofano.recBotonEnviarClick(Sender: TObject);
-var
-  response : IResponse;
-  recurso,body:String;
-  json: TJSONObject;
-begin
-  json := TJSONObject.Create;
-  try
-    json.AddPair('idCama', TJSONNumber.Create(idCama));
-    json.AddPair('tdocCodigo', TJSONNumber.Create(tdocCodigo));
-    json.AddPair('nroDocumento', nroDocumento);
-    json.AddPair('nombrePaciente', nombrePaciente);
-    json.AddPair('motivo', edt_motivo.Text);
-    json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
-    json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
-    body := json.ToJSON;
-  finally
-    json.Free;
-  end;
-
-  recurso := '/tablerocamas/reservas';
-  response := TRequest.New.BaseURL(datos.urlTC)
-                          .Resource(recurso)
-                          .AddHeader('TokenAcceso', datos.tokenAcceso)
-                          .AddBody(body)
-                          .Accept('application/json')
-                          .Adapters(TDataSetSerializeAdapter.New(resultadoReserva))
-                          .Post;
-
-  if response.StatusCode <> 200 then
-    begin
-      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Error: ' + resultadoReservamensaje.AsString,'Aceptar','ERROR',0);
-    end
-  else
-    begin
-      form_DetallesCama.Actualizar(idCama);
-      datos.VerMensaje('CAMA RESEVADA' ,resultadoReservamensaje.AsString,'Aceptar','OK',0);
-      Actualizar;
-      pagina.TabIndex:= 1;
-    end;
-
 end;
 
 end.

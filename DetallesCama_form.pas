@@ -1274,6 +1274,7 @@ begin
   form_EnviarQuirofano.lb_documento.Text := camastdocDescripcion.AsString + ': ' + camasnroDocumento.AsString;
   form_EnviarQuirofano.lb_pacienteDatos.Text := 'Sexo: ' + camassexo.AsString;
   form_EnviarQuirofano.lb_reservaCama.Text := 'Reservar la cama ' + camascama.AsString;
+  form_EnviarQuirofano.idCama := camasidCama.AsInteger;
   form_EnviarQuirofano.Showmodal;
 end;
 
