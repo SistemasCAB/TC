@@ -128,12 +128,6 @@ type
     lb_alertasTexto: TLabel;
     contenedorAlertas: TLayout;
     alertas: TFDMemTable;
-    alertasid_alerta: TWideStringField;
-    alertasid_tipo_alerta: TWideStringField;
-    alertastipo_alerta: TWideStringField;
-    alertasid_cama: TWideStringField;
-    alertasfecha: TWideStringField;
-    alertasleida: TWideStringField;
     camasidCama: TWideStringField;
     camascama: TWideStringField;
     camasidHabitacion: TWideStringField;
@@ -241,6 +235,11 @@ type
     reservasidSolicitudCambio: TIntegerField;
     reservasfechaReserva: TStringField;
     camasaltaProbableNombreUsuario: TStringField;
+    alertasidAlerta: TIntegerField;
+    alertasidTipoAlerta: TIntegerField;
+    alertastipoAlerta: TStringField;
+    alertasidCama: TIntegerField;
+    alertasfecha: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);
@@ -248,8 +247,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ApagarAlertas(idCama: integer);
     procedure botonCambioCamaClick(Sender: TObject);
-    procedure crearAlertas(id_cama, id_servicio:integer; dni:string);
-    procedure crearAlerta(id_alerta: integer; texto:string);
+    procedure crearAlertas(idCama, idServicio: integer; filtro: string);
+    procedure crearAlerta(idAlerta: integer; texto:string);
     procedure obtenerPermisosModulosPaciente(idServicio: integer);
     function permisoModulo(idModulo: integer): integer;
     procedure Cerrar;
@@ -626,7 +625,7 @@ begin
 
       if camascantidadAlertas.AsInteger > 0 then
         begin
-          crearAlertas(idCama,datos.servicio,datos.dniLogin);
+          crearAlertas(idCama,datos.servicio,'pendientes');
         end;
     end
   else
@@ -687,14 +686,29 @@ end;
 procedure Tform_DetallesCama.ApagarAlertas(idCama: integer);
 var
   response : IResponse;
+  recurso, body:String;
+  json : TJsonObject;
 begin
   // marca como leidas todas las alertas de esta cama.
+  // solo son las alertas que este servicio recibe, no todas las alertas recibidas en esta cama para otros servicios.
+
+  json := TJSONObject.Create;
+  try
+    json.AddPair('idCama', TJSONNumber.Create(idCama));
+    json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
+    json.AddPair('idServicio',  TJSONNumber.Create(datos.servicio));
+    json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
+    body := json.ToJSON;
+  finally
+    json.Free;
+  end;
+
+  recurso := '/tablerocamas/apagarAlertasServicio';
+
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('tablerocamas/apagarAlertas')
+              .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('idCama', idCama.ToString)
-              .AddParam('leidaPorDni', datos.dniLogin)
-              .AddParam('leidaPorNombre',datos.nombreLogin)
+              .AddBody(body)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(apagaralertastb))
               .Post;
@@ -1020,12 +1034,12 @@ begin
   Close;
 end;
 
-procedure Tform_DetallesCama.crearAlerta(id_alerta: integer; texto:string);
+procedure Tform_DetallesCama.crearAlerta(idAlerta: integer; texto:string);
 begin
   rAlertas := TRectangle.Create(contenedorAlertas);
   rAlertas.Parent := contenedorAlertas;
   rAlertas.Height := 54;
-  rAlertas.Name := 'recAlertas' + id_alerta.ToString;
+  rAlertas.Name := 'recAlertas' + idAlerta.ToString;
   rAlertas.Fill.Kind := TbrushKind.Solid;
   rAlertas.Fill.Color := TAlphaColorRec.Red;
   rAlertas.Stroke.Kind := TbrushKind.None;
@@ -1040,7 +1054,7 @@ begin
   with TShadowEffect.Create(rAlertas) do
     begin
       Parent := rAlertas;
-      Name := 'sombraAlerta' + id_alerta.ToString;
+      Name := 'sombraAlerta' + idAlerta.ToString;
       Direction := 45;
       Distance := 2;
       Enabled := true;
@@ -1054,7 +1068,7 @@ begin
     begin
       Parent := rAlertas;
       Align := TAlignLayout.Client;
-      Name := 'lb_textoAlerta'  + id_alerta.ToString;
+      Name := 'lb_textoAlerta'  + idAlerta.ToString;
       Text := texto;
       StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
       TextSettings.Font.Size := 15;
@@ -1064,17 +1078,19 @@ begin
     end;
 end;
 
-procedure Tform_DetallesCama.crearAlertas(id_cama, id_servicio: integer; dni: string);
+procedure Tform_DetallesCama.crearAlertas(idCama, idServicio: integer; filtro: string);
 var
   response: IResponse;
+  recurso: String;
 begin
   // crea las alertas que recibe esta cama.
+  recurso := '/tablerocamas/alertas';
   response := TRequest.New.BaseURL(datos.urlTC)
-              .Resource('alertas/ver')
+              .Resource(recurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
-              .AddParam('id_cama', id_cama.ToString)
-              .AddParam('id_servicio', id_servicio.ToString)
-              .AddParam('dni', dni)
+              .AddParam('idCama', idCama.ToString)
+              .AddParam('idServicio', idServicio.ToString)
+              .AddParam('filtro', filtro)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(alertas))
               .Get;
@@ -1085,7 +1101,7 @@ begin
         begin
           alertas.First;
           repeat
-            crearAlerta(alertasid_alerta.AsInteger,alertastipo_alerta.AsString);
+            crearAlerta(alertasidAlerta.AsInteger,alertastipoAlerta.AsString);
             alertas.Next;
           until alertas.Eof;
         end;

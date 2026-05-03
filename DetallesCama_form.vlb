@@ -73,9 +73,6 @@ Coordinates=227,1373,103,58
 [botonCambioCama]
 Coordinates=910,771,125,58
 
-[alertasid_alerta]
-Coordinates=1132,1046,103,36
-
 [Label29]
 Coordinates=53,77,60,58
 
@@ -184,9 +181,6 @@ Coordinates=436,1989,158,36
 [btn_AltaDefinitiva]
 Coordinates=910,540,115,58
 
-[alertasid_cama]
-Coordinates=327,1989,102,36
-
 [camasidHabitacion]
 Coordinates=198,1989,123,36
 
@@ -238,9 +232,6 @@ Coordinates=1384,606,124,36
 [Image4]
 Coordinates=891,1989,57,58
 
-[alertastipo_alerta]
-Coordinates=1384,661,114,36
-
 [camasobservaciones]
 Coordinates=1384,771,135,36
 
@@ -267,9 +258,6 @@ Coordinates=665,78,112,58
 
 [apagarAlertasTb]
 Coordinates=665,155,110,102
-
-[alertasid_tipo_alerta]
-Coordinates=1384,1156,131,36
 
 [camassexo]
 Coordinates=1384,1211,79,36
@@ -427,14 +415,8 @@ Coordinates=85,2085,97,36
 [camascobertura]
 Coordinates=1649,111,107,36
 
-[alertasleida]
-Coordinates=0,2049,81,36
-
 [lb_altaProfesional]
 Coordinates=910,617,117,58
-
-[alertasfecha]
-Coordinates=1649,166,85,36
 
 [lb_botonCambioCama]
 Coordinates=425,1310,142,58
@@ -581,7 +563,7 @@ Coordinates=1649,1981,165,36
 Coordinates=1649,2036,213,36
 
 []
-Coordinates=0,0,122,58
+Coordinates=1132,1046,103,36
 Visible=True
 
 [formAislamiento.disponibles]
