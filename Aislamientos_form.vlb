@@ -1,9 +1,6 @@
 ﻿[formulario]
 Coordinates=643,348,65,33
 
-[botonSalir]
-Coordinates=73,166,65,51
-
 [FondoTransparente]
 Coordinates=506,348,111,33
 
@@ -15,9 +12,6 @@ Coordinates=219,166,81,51
 
 [tituloVentana]
 Coordinates=694,234,79,51
-
-[Label5]
-Coordinates=458,234,46,51
 
 [botonNuevoAislamiento]
 Coordinates=346,348,132,33
@@ -76,7 +70,7 @@ Coordinates=10,302,76,33
 Coordinates=10,166,46,51
 
 []
-Coordinates=920,20,111,146
+Coordinates=73,166,65,51
 Visible=True
 
 [btnGrabar]

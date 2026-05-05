@@ -24,13 +24,11 @@ type
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
-    botonSalir: TSpeedButton;
     pagina: TTabControl;
     tabAislamientos: TTabItem;
     Layout3: TLayout;
     botonNuevoAislamiento: TRectangle;
     lbBtnNuevoAislamiento: TLabel;
-    Label5: TLabel;
     btnNuevoAislamiento: TSpeedButton;
     tabNuevoAislamiento: TTabItem;
     Layout2: TLayout;
@@ -71,8 +69,10 @@ type
     ListView1: TListView;
     BindSourceDB1: TBindSourceDB;
     LinkListControlToField1: TLinkListControlToField;
+    Image2: TImage;
+    botonSalir: TSpeedButton;
+    Image3: TImage;
     procedure ActualizarAislamientos();
-    procedure botonSalirClick(Sender: TObject);
     procedure crearAislamiento(id, idAislamiento, kpc: integer; FechaDesde: string);
     procedure FormActivate(Sender: TObject);
     procedure noHayAislamientos;
@@ -81,6 +81,7 @@ type
     procedure ActualizarDisponibles(idInternacion: integer);
     procedure btnGrabarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
     procedure clicBotonEliminar(sender:TObject);

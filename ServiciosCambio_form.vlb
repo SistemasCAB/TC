@@ -11,11 +11,8 @@ Coordinates=893,992,51,51
 Coordinates=640,280,89,141
 Visible=True
 
-[SpeedButton1]
-Coordinates=970,992,84,51
-
 []
-Coordinates=361,739,82,33
+Coordinates=970,992,84,51
 Visible=False
 
 [formTablero.camasCli2]

@@ -19,9 +19,6 @@ Coordinates=509,674,60,58
 [lb_autorizadoNombre]
 Coordinates=924,674,137,58
 
-[botonSalir]
-Coordinates=856,606,73,58
-
 [Rectangle1]
 Coordinates=447,788,80,36
 
@@ -76,9 +73,6 @@ Coordinates=1101,10,70,58
 [Rectangle4]
 Coordinates=1212,742,80,36
 
-[Label11]
-Coordinates=283,606,60,58
-
 [SpeedButton4]
 Coordinates=649,674,96,58
 
@@ -118,9 +112,6 @@ Coordinates=1487,606,60,58
 [Label14]
 Coordinates=1211,674,60,58
 
-[Label10]
-Coordinates=1141,674,60,58
-
 [Label15]
 Coordinates=1251,10,60,58
 
@@ -157,9 +148,6 @@ Coordinates=10,606,60,58
 [Label21]
 Coordinates=1181,10,60,58
 
-[Label22]
-Coordinates=150,606,60,58
-
 [FondoTransparente]
 Coordinates=313,742,127,36
 
@@ -176,7 +164,7 @@ Coordinates=100,742,113,36
 Coordinates=1414,674,147,36
 
 []
-Coordinates=1282,285,87,36
+Coordinates=856,606,73,58
 
 [BindSourceDB1]
 Coordinates=450,10,128,146

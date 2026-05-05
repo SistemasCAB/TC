@@ -22,7 +22,6 @@ type
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
-    botonSalir: TSpeedButton;
     Layout1: TLayout;
     pagina: TTabControl;
     tabSeleccionarCama: TTabItem;
@@ -135,7 +134,8 @@ type
     Image2: TImage;
     Image3: TImage;
     Image4: TImage;
-    procedure botonSalirClick(Sender: TObject);
+    botonSalir: TSpeedButton;
+    Image5: TImage;
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
     procedure Actualizar;
@@ -151,6 +151,7 @@ type
     procedure listaCamasDisponiblesUpdateObjects(const Sender: TObject;
       const AItem: TListViewItem);
     procedure SpeedButton6Click(Sender: TObject);
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
   public

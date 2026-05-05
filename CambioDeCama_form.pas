@@ -42,8 +42,6 @@ type
     botonCancelarCambio: TRectangle;
     btn_CancelarSolicitudCambio: TSpeedButton;
     Label9: TLabel;
-    Label10: TLabel;
-    Label11: TLabel;
     lb_fecha_solicitud: TLabel;
     Label1: TLabel;
     lb_solicitado_por: TLabel;
@@ -51,7 +49,6 @@ type
     lb_idSolicitud: TLabel;
     Label15: TLabel;
     lb_motivo: TLabel;
-    botonSalir: TSpeedButton;
     rectCambioCama: TRectangle;
     CalloutPanel1: TCalloutPanel;
     lb_cama_origen: TLabel;
@@ -103,7 +100,6 @@ type
     listaMotivos: TListView;
     botonFinalizarNuevaSolicitud: TRectangle;
     Label21: TLabel;
-    Label22: TLabel;
     btn_NuevaSolicitud: TSpeedButton;
     tabCambioVirtual: TTabItem;
     motivos: TFDMemTable;
@@ -156,7 +152,12 @@ type
     recCambioVirtual: TRectangle;
     Label12: TLabel;
     SpeedButton6: TSpeedButton;
-    procedure botonSalirClick(Sender: TObject);
+    Image3: TImage;
+    Image4: TImage;
+    Image5: TImage;
+    Image6: TImage;
+    botonSalir: TSpeedButton;
+    Image7: TImage;
     procedure Actualizar;
     procedure botonSalirMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure botonSalirMouseLeave(Sender: TObject);
@@ -176,6 +177,7 @@ type
     procedure botonCambioInternoClick(Sender: TObject);
     procedure botonCambioExternoClick(Sender: TObject);
     procedure SpeedButton6Click(Sender: TObject);
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
   public

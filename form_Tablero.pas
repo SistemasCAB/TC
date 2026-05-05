@@ -267,6 +267,8 @@ type
     serviciosUsuarioidTipoInternacion: TIntegerField;
     serviciosUsuariocambioCamaAreaCerrada: TIntegerField;
     serviciosUsuariogestionaCamas: TIntegerField;
+    botonSalirFullScreen: TSpeedButton;
+    Image3: TImage;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -295,6 +297,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure LimpiarCacheCamas;
     procedure botonAutorizarClick(Sender: TObject);
+    procedure botonSalirFullScreenClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -347,6 +350,11 @@ begin
 end;
 
 procedure TformTablero.botonSalirClick(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure TformTablero.botonSalirFullScreenClick(Sender: TObject);
 begin
   Application.Terminate;
 end;
@@ -1439,8 +1447,6 @@ end;
 procedure TformTablero.FormActivate(Sender: TObject);
 begin
   lb_menu_version.Text := 'Versión: ' + datos.GetAppVersion().ToString;
-  // analizar si ActualizarServicio debo moverlo al evento OnShow antes de ActualizarCamas
-  // ActualizarServicio;
 end;
 
 procedure TformTablero.FormCreate(Sender: TObject);
@@ -1469,6 +1475,7 @@ begin
 
   if datos.autologin = 0 then
     begin
+      botonSalirFullScreen.Visible := false;
       barraTitulo.Height := 64;
       panelLogin.Visible := true;
       botonMenu.Visible  := true;
@@ -1483,6 +1490,7 @@ begin
       barraTitulo.Height := 40;
       panelLogin.Visible := false;
       botonMenu.Visible  := false;
+      botonSalirFullScreen.Visible := true;
     end;
 
 //  if datos.cambiarServicio = 1 then

@@ -21,7 +21,6 @@ type
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
-    botonSalir: TSpeedButton;
     Layout1: TLayout;
     Rectangle2: TRectangle;
     Label4: TLabel;
@@ -49,10 +48,12 @@ type
     resultado: TFDMemTable;
     resultadoestado: TIntegerField;
     resultadomensaje: TStringField;
+    botonSalir: TSpeedButton;
+    Image3: TImage;
     procedure ActualizarAltasMedicas;
-    procedure botonSalirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnAceptarClick(Sender: TObject);
+    procedure botonSalirClick(Sender: TObject);
 
   private
     { Private declarations }

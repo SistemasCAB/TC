@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Android64</Platform>
         <TargetedPlatforms>693267</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>TableroCamas.dpr</MainSource>
@@ -356,11 +356,9 @@
         </DCCReference>
         <DCCReference Include="Reservas_form.pas">
             <Form>form_Reservas</Form>
-            <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="EnviarQuirofano_form.pas">
             <Form>form_EnviarQuirofano</Form>
-            <FormType>fmx</FormType>
         </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">

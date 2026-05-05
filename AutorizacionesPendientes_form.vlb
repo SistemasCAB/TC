@@ -61,11 +61,8 @@ Coordinates=305,146,93,58
 [SpeedButton6]
 Coordinates=80,146,96,58
 
-[botonSalir]
-Coordinates=86,78,73,58
-
 []
-Coordinates=10,282,80,36
+Coordinates=86,78,73,58
 Visible=True
 
 [tabCambioCamas]

@@ -76,9 +76,6 @@ Coordinates=460,256,53,58
 [Label3]
 Coordinates=10,256,53,58
 
-[botonSalir]
-Coordinates=73,256,73,58
-
 [SpeedButton3]
 Coordinates=570,188,96,58
 
@@ -147,7 +144,7 @@ Coordinates=818,324,80,36
 Coordinates=479,10,60,58
 
 []
-Coordinates=710,392,59,33
+Coordinates=73,256,73,58
 
 [lb_autorizadoFecha]
 Coordinates=593,256,128,58

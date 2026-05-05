@@ -16,7 +16,7 @@ object form_ServiciosCambio: Tform_ServiciosCambio
   object FondoTransparente: TRectangle
     Align = Client
     Fill.Color = claBlack
-    Opacity = 0.800000011920929000
+    Opacity = 0.400000005960464500
     Size.Width = 494.000000000000000000
     Size.Height = 670.000000000000000000
     Size.PlatformDefault = False
@@ -37,7 +37,7 @@ object form_ServiciosCambio: Tform_ServiciosCambio
       object lbTitulo: TLabel
         Align = Client
         StyledSettings = [Family]
-        Size.Width = 351.000000000000000000
+        Size.Width = 357.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 18.000000000000000000
@@ -46,18 +46,59 @@ object form_ServiciosCambio: Tform_ServiciosCambio
         Text = 'CAMBIAR DE SERVICIO'
         TabOrder = 0
       end
-      object SpeedButton1: TSpeedButton
+      object botonSalir: TSpeedButton
         Align = Right
-        StyledSettings = [Family]
-        Position.X = 366.000000000000000000
-        Size.Width = 51.000000000000000000
+        StyledSettings = []
+        Hint = 'Salir'
+        Padding.Top = 4.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Position.X = 372.000000000000000000
+        Size.Width = 45.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
-        Text = 'X'
-        TextSettings.Font.Size = 18.000000000000000000
-        TextSettings.Font.StyleExt = {00060000000000000004000000}
+        ParentShowHint = False
+        ShowHint = True
+        TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+        TextSettings.Font.Size = 30.000000000000000000
         TextSettings.FontColor = claWhite
-        OnClick = SpeedButton1Click
+        OnClick = botonSalirClick
+        object Image3: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                01BC494441545847EDD7BD4E1B411405E035C5CAEE702C90F80952922282274A
+                1AA8110DBC4564A5887B3A7ABA08F10069226828A08A9417C0DD302BEFDC7328
+                A018CE0CB256F24A18EDD7F9DE7B66C6B277ED2D8A4EE7BD23599AD9C47B7FCF
+                9678EFA766362159EAFE0933FBA50BB4E887EEDFD382F7FEBEDFEF7FD07A1BAA
+                AA9A0E0683515C4B0E44925A6B53AFD77B718695F8C55BD01D689EE53F108073
+                929B24470026DA2F9E66C645510C496E03F8ADFD46F446A100BCB84C019C38E7
+                4092CE39037024FD755D2316CF66694001F8A4190007CEB90700DF33BDAFBA46
+                4CE7131A5021843F24879A03B09EA98D4208D7BA464C33090DE484106E006C68
+                3606E0635DD7B79A559A4B68E035755DFF23F959F3C5F3C7349BCDFE6B2647B3
+                8DAFB218C9E4A767E1F41DE434F8C8EE34AB3497D0800A21FC7DE54BBD96A98D
+                485EE91A31CD2434A000EC6A06C0BE73CE01F896E9EDE91A319D4F684001D88A
+                E7011CCB8DF150FA5F748D583C9BA50165661700B6490ECDECA7F6F9343326B9
+                4A72C7CC2EB51FD3FD93AB2437D4A6EE0F5A53DD81E6490E5455D5546B6DC9ED
+                951CA82CCB33ADB5A52CCB53AD25A247E9A9DE3316A5D1A374A7B3EC1E019E3B
+                BD226CB814820000000049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\Boton Salir.png'
+            end>
+          Align = Client
+          Locked = True
+          HitTest = False
+          Size.Width = 45.000000000000000000
+          Size.Height = 42.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
       end
     end
     object listaServicios: TListView
@@ -118,8 +159,8 @@ object form_ServiciosCambio: Tform_ServiciosCambio
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 20
-    Top = 5
+    Left = 52
+    Top = 141
     object LinkListControlToField1: TLinkListControlToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1

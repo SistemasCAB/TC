@@ -84,7 +84,7 @@ implementation
 
 {$R *.fmx}
 
-uses ModuloDatos, DetallesCama_form;
+uses ModuloDatos, DetallesCama_form, form_Tablero;
 
 { Tform_AltaDefinitiva }
 
@@ -137,15 +137,6 @@ begin
       fechaAltaEfectiva := FormatDateTime('yyyy-mm-dd hh:nn:ss', dt);
 
 
-//      if soloAltaMedica = 1 then // es una cama soloAltaMedica
-//        begin
-//          if strtodatetime(fechaIngresoCama) < dt then
-//            fechaAltaEfectiva := fechaIngresoCama
-//          else
-//            fechaAltaEfectiva := FormatDateTime('yyyy-mm-dd hh:nn:ss', dt);
-//        end;
-
-
       // 2) Doy el alta en Markey y en las tablas locales del tablero (todo lo hace este método AltaDefinitiva de la api)
 
       apiRecurso := '/tablerocamas/altaDefinitiva';
@@ -188,8 +179,8 @@ end;
 
 procedure Tform_AltaDefinitiva.FormCreate(Sender: TObject);
 begin
-  alto := form_DetallesCama.Height;
-  ancho := form_DetallesCama.Width;
+  alto := formTablero.Height;
+  ancho := formTablero.Width;
 
   EditFechaHora := TDateTimeMaskEdit.Create(Self);
   EditFechaHora.Parent := LyDatosAlta;

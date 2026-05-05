@@ -25,7 +25,6 @@ type
     tabServicios: TTabItem;
     tabConexion: TTabItem;
     listaServicios: TListView;
-    SpeedButton1: TSpeedButton;
     serviciosCli: TRESTClient;
     serviciosReq: TRESTRequest;
     serviciosRes: TRESTResponse;
@@ -85,10 +84,11 @@ type
     camascama: TWideStringField;
     camasid_habitacion: TWideStringField;
     camashabitacion: TWideStringField;
+    botonSalir: TSpeedButton;
+    Image3: TImage;
     procedure botonSalirClick(Sender: TObject);
     procedure paginaChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
     procedure ActualizarServicios;
     procedure botonActualizarServiciosClick(Sender: TObject);
     procedure ActualizarCamasDisponibles;
@@ -243,11 +243,6 @@ end;
 procedure Tform_Configuracion.paginaChange(Sender: TObject);
 begin
   lbTitulo.Text := 'CONFIGURACIÓN - ' + pagina.Tabs[pagina.TabIndex].Text;
-end;
-
-procedure Tform_Configuracion.SpeedButton1Click(Sender: TObject);
-begin
-  Close;
 end;
 
 end.

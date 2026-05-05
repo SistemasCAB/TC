@@ -112,6 +112,7 @@ begin
   urlTC           := archivo.ReadString('API','urlTC','http://10.99.8.106/cab/public/v2');
   tokenAcceso     := archivo.ReadString('API','tokenAcceso','');
 
+  servicio        := archivo.ReadInteger('TABLERO','servicio',1);
   autologin       := archivo.ReadInteger('TABLERO','autologin',0);
   fullscreen      := archivo.ReadInteger('TABLERO','fullscreen',0);
   segundos        := archivo.ReadInteger('TABLERO','actualizar',30);

@@ -1,9 +1,6 @@
 ﻿[altastipoAltaMedica]
 Coordinates=512,232,127,36
 
-[botonSalir]
-Coordinates=619,188,73,58
-
 [fecha]
 Coordinates=523,10,138,58
 
@@ -82,7 +79,7 @@ Coordinates=440,256,99,36
 Coordinates=339,256,91,36
 
 []
-Coordinates=116,380,91,36
+Coordinates=619,188,73,58
 
 [BindSourceDB1]
 Coordinates=1140,50,106,124

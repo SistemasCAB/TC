@@ -1118,8 +1118,6 @@ procedure Tform_DetallesCama.FormCreate(Sender: TObject);
 begin
   alto := formTablero.Height;
   ancho := formTablero.Width;
-//  alto := form_DetallesCama.Height;
-//  ancho := form_DetallesCama.Width;
 end;
 
 procedure Tform_DetallesCama.MostrarAislamentos;

@@ -21,7 +21,6 @@ type
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
-    botonSalir: TSpeedButton;
     Layout1: TLayout;
     pagina: TTabControl;
     tabOpciones: TTabItem;
@@ -122,12 +121,14 @@ type
     autorizar: TFDMemTable;
     autorizarestado: TIntegerField;
     autorizarmensaje: TStringField;
-    procedure botonSalirClick(Sender: TObject);
+    botonSalir: TSpeedButton;
+    Image13: TImage;
     procedure btn_AutorizarCambioCamaClick(Sender: TObject);
     procedure ActualizarPendientes;
     procedure FormActivate(Sender: TObject);
     procedure mostrarCambiosDeCamaPendientes;
     procedure ActualizarPacientesHabitacion(idHabitacion:integer);
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
     procedure clicBotonAutorizar(sender:TObject);

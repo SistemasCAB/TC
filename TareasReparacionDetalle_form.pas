@@ -20,7 +20,6 @@ type
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
-    botonSalir: TSpeedButton;
     lyBotones: TLayout;
     recBotonCancelarTarea: TRectangle;
     lb_botonCancelarTarea: TLabel;
@@ -96,14 +95,16 @@ type
     cancelar: TFDMemTable;
     cancelarestado: TIntegerField;
     cancelarmensaje: TStringField;
+    botonSalir: TSpeedButton;
+    Image3: TImage;
     procedure FormActivate(Sender: TObject);
-    procedure botonSalirClick(Sender: TObject);
     procedure ActualizarTarea(idTarea:integer);
     procedure CargarDetallesDesdeJson(const JsonStr: string; detalles: TFDMemTable);
     procedure MostrarDetalles;
     procedure FormCreate(Sender: TObject);
     procedure botonCancelarTareaClick(Sender: TObject);
     procedure botonTicketClick(Sender: TObject);
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
   public

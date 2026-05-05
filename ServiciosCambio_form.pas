@@ -50,7 +50,6 @@ type
     Rectangle1: TRectangle;
     recTitulo: TRectangle;
     lbTitulo: TLabel;
-    SpeedButton1: TSpeedButton;
     listaServicios: TListView;
     ShadowEffect1: TShadowEffect;
     FondoTransparente: TRectangle;
@@ -63,10 +62,12 @@ type
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
     LinkListControlToField1: TLinkListControlToField;
-    procedure SpeedButton1Click(Sender: TObject);
+    botonSalir: TSpeedButton;
+    Image3: TImage;
     procedure FormActivate(Sender: TObject);
     procedure listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
     procedure ActualizarServicios;
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -110,6 +111,11 @@ begin
     end;
 end;
 
+procedure Tform_ServiciosCambio.botonSalirClick(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure Tform_ServiciosCambio.FormActivate(Sender: TObject);
 var
   e:boolean;
@@ -123,11 +129,6 @@ begin
   datos.servicio := serviciosidServicio.AsInteger;
   formTablero.ActualizarServicio;
   formTablero.ActualizarCamas;
-  Close;
-end;
-
-procedure Tform_ServiciosCambio.SpeedButton1Click(Sender: TObject);
-begin
   Close;
 end;
 

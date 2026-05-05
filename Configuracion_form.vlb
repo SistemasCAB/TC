@@ -7,9 +7,6 @@ Coordinates=1205,10,128,177
 [formTablero.camasRes]
 Coordinates=654,10,128,303
 
-[SpeedButton1]
-Coordinates=10,1136,84,51
-
 [recTitulo]
 Coordinates=980,1136,57,33
 
@@ -54,7 +51,7 @@ Coordinates=960,1230,47,33
 Coordinates=960,1190,75,33
 
 []
-Coordinates=1284,1320,104,123
+Coordinates=10,1136,84,51
 Visible=True
 
 [serviciosCli]

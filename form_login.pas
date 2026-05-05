@@ -68,11 +68,7 @@ type
     procedure claveKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure cuentaKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure iniciarSesion(cuenta, clave: string; tipoDocumento:integer);
-    procedure ActualizarTiposDocumentos;
-    procedure CargarComboBox;
-    procedure tipoDocumentoChange(Sender: TObject);
-    procedure LiberarItemsCombo;
-    procedure FormDestroy(Sender: TObject);
+    procedure iniciarSesion_v2(cuenta, clave: string; tipoDocumento:integer);
     procedure botonCancelarClick(Sender: TObject);
     procedure botonAceptarClick(Sender: TObject);
     procedure CargarServiciosDesdeJson(const JsonStr:string; tablaServicios: TFDMemTable);
@@ -87,29 +83,6 @@ var
 implementation
 {$R *.fmx}
 uses form_Tablero, ModuloDatos, mensajes_form;
-
-procedure TformLogin.ActualizarTiposDocumentos;
-//var
-//  response : IResponse;
-//  recurso : String;
-begin
-//  recurso := '/tablerocamas/tiposDocumentos';
-//  response := TRequest.New.BaseURL(datos.urlTC)
-//                          .Resource(recurso)
-//                          .AddHeader('TokenAcceso', datos.tokenAcceso)
-//                          .Accept('application/json')
-//                          .Adapters(TDataSetSerializeAdapter.New(documentos))
-//                          .Get;
-//
-//  if response.StatusCode <> 200 then
-//    begin
-//      datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Ocurrió un error al intentar obtener los tipos de documentos','Ok','ERROR',0);
-//    end
-//  else
-//    begin
-//      CargarComboBox;
-//    end;
-end;
 
 procedure TformLogin.botonAceptarApplyStyleLookup(Sender: TObject);
   var
@@ -126,8 +99,8 @@ begin
 end;
 procedure TformLogin.botonAceptarClick(Sender: TObject);
 begin
-  //iniciarSesion(cuenta.Text,clave.Text, tdocCodigo);
-  iniciarSesion(cuenta.Text,clave.Text, 1); // por defecto tdocCodigo = 1 = DNI
+  //iniciarSesion(cuenta.Text,clave.Text, 1); // por defecto tdocCodigo = 1 = DNI
+  iniciarSesion_v2(cuenta.Text,clave.Text, 1); // por defecto tdocCodigo = 1 = DNI
 end;
 
 procedure TformLogin.botonCancelarApplyStyleLookup(Sender: TObject);
@@ -146,25 +119,6 @@ end;
 procedure TformLogin.botonCancelarClick(Sender: TObject);
 begin
   Application.Terminate;
-end;
-
-procedure TformLogin.CargarComboBox;
-//var
-//  Item: TComboItem;
-begin
-//  tipoDocumento.Items.Clear;
-//  documentos.First;
-//  while not documentos.Eof do
-//  begin
-//    // Crear un objeto nuevo para este registro
-//    Item := TComboItem.Create;
-//    // Copiar los datos del registro al objeto
-//    Item.ID          := documentostdocCodigo.AsInteger;
-//    Item.Descripcion := documentostdocDescripcion.AsString;
-//    // Agregar al ComboBox: el texto visible + el objeto adjunto
-//    tipoDocumento.Items.AddObject(Item.Descripcion, Item);
-//    documentos.Next;
-//  end;
 end;
 
 procedure TformLogin.CargarServiciosDesdeJson(const JsonStr: string; tablaServicios: TFDMemTable);
@@ -191,6 +145,12 @@ begin
     JsonArray := JsonValue as TJSONArray;
 
     try
+      if JsonArray.Count = 0 then
+        begin
+          datos.VerMensaje('SERVICIO NO DEFINIDO', 'Este usuario no tiene definido ningún servicio. No podrá usar esta aplicación.', 'Aceptar', 'ERROR',0);
+          Application.Terminate;
+        end;
+
       for I := 0 to JsonArray.Count - 1 do
       begin
         if not (JsonArray.Items[I] is TJSONObject) then
@@ -245,13 +205,6 @@ end;
 procedure TformLogin.FormCreate(Sender: TObject);
 begin
   lb_version.Text := 'Versión: ' + datos.GetAppVersion().ToString;
-
-  // ActualizarTiposDocumentos
-end;
-
-procedure TformLogin.FormDestroy(Sender: TObject);
-begin
-//  LiberarItemsCombo;
 end;
 
 procedure TformLogin.iniciarSesion(cuenta, clave: string; tipoDocumento:integer);
@@ -327,32 +280,125 @@ begin
       datos.VerMensaje('ERROR','Primero debe ingresar el usuario y la contraseña','Aceptar','ERROR',0);
     end;
 end;
-procedure TformLogin.LiberarItemsCombo;
-//var
-//  i: Integer;
-begin
-//  for i := 0 to tipoDocumento.Items.Count - 1 do
-//  begin
-//    // Liberar cada objeto adjunto
-//    tipoDocumento.Items.Objects[i].Free;
-//  end;
-//  tipoDocumento.Items.Clear;
-end;
 
-procedure TformLogin.tipoDocumentoChange(Sender: TObject);
-//var
-//  ItemSeleccionado: TComboItem;
+procedure TformLogin.iniciarSesion_v2(cuenta, clave: string; tipoDocumento: integer);
+var
+  mensaje: TForm_mensajes;
 begin
-//  // Verificar que haya algo seleccionado
-//  if tipoDocumento.ItemIndex < 0 then
-//    Exit; // No hay nada seleccionado, salir
-//  // Recuperar el objeto adjunto al ítem seleccionado
-//  // El cast (TComboItem) es necesario porque Items.Objects devuelve TObject
-//  ItemSeleccionado := TComboItem(tipoDocumento.Items.Objects[tipoDocumento.ItemIndex]);
-////  ShowMessage('ID seleccionado: ' + ItemSeleccionado.ID.ToString);
-////  ShowMessage('Descripción: '     + ItemSeleccionado.Descripcion);
-//  tdocCodigo := ItemSeleccionado.ID;
-//  recBotonAceptar.Enabled := true;
+  if (cuenta = '') or (clave = '') then
+  begin
+    datos.VerMensaje('ERROR', 'Primero debe ingresar el usuario y la contraseña', 'Aceptar', 'ERROR', 0);
+    Exit;
+  end;
+
+  lyLogin.Visible := false;
+  espere.Visible  := true;
+  espere.Play;
+
+  TThread.CreateAnonymousThread(
+    procedure
+    var
+      response: IResponse;
+      recurso, body: string;
+      // Capturamos todo lo necesario en variables locales del hilo
+      statusCode: Integer;
+      content: string;
+    begin
+      try
+        recurso := '/tablerocamas/login';
+        body := '{'
+          + '"tdocCodigo":'  + tipoDocumento.ToString + ','
+          + '"nroDocumento":"' + cuenta + '",'
+          + '"clave":"'        + clave  + '",'
+          + '"idAplicacion":4'
+          + '}';
+
+        response := TRequest.New
+          .BaseURL(datos.urlTC)
+          .Resource(recurso)
+          .AddHeader('TokenAcceso', datos.tokenAcceso)
+          .AddBody(body)
+          .Accept('application/json')
+          .Adapters(TDataSetSerializeAdapter.New(LoginReg))
+          .Post;
+
+        // Guardamos lo que necesitamos ANTES de ir al hilo principal
+        statusCode := response.StatusCode;
+        content    := response.Content;
+
+      except
+        on E: Exception do
+        begin
+          // Capturamos el mensaje de error para mostrarlo en el hilo principal
+          content    := E.Message;
+          statusCode := -1;
+        end;
+      end;
+
+      // Queue NO bloquea el hilo secundario (a diferencia de Synchronize)
+      TThread.Queue(nil,
+        procedure
+        var
+          JsonValue: TJSONValue;
+          JsonArray: TJSONArray;
+          JsonObj: TJSONObject;
+          ServiciosArray: TJSONArray;
+        begin
+          try
+            if statusCode = 200 then
+            begin
+              formTablero.lb_usuarioActivo.Text    := LoginRegapellido.AsString + ', ' + LoginRegnombre.AsString;
+              formTablero.lb_usuarioDocumento.Text := LoginRegtdocDescripcion.AsString + ': ' + LoginRegnroDocumento.AsString;
+              datos.idUsuario                      := LoginRegidUsuario.AsInteger;
+              datos.dniLogin                       := LoginRegnroDocumento.AsString;
+              datos.nombreLogin                    := LoginRegapellido.AsString + ', ' + LoginRegnombre.AsString;
+
+              JsonValue := TJSONObject.ParseJSONValue(content);
+              try
+                if Assigned(JsonValue) and (JsonValue is TJSONArray) then
+                begin
+                  JsonArray := JsonValue as TJSONArray;
+                  if JsonArray.Count > 0 then
+                  begin
+                    JsonObj := JsonArray.Items[0] as TJSONObject;
+                    ServiciosArray := JsonObj.GetValue<TJSONArray>('servicios');
+                    if Assigned(ServiciosArray) then
+                      CargarServiciosDesdeJson(ServiciosArray.ToJSON, formTablero.serviciosUsuario);
+                  end;
+                end;
+              finally
+                JsonValue.Free; // evita memory leak
+              end;
+
+              datos.servicio := formTablero.serviciosUsuarioidServicio.AsInteger;
+              formTablero.ActualizarServicio;
+              //formTablero.ConsultarCambios;
+              Close;
+            end
+            else
+            begin
+              lyLogin.Visible := true;
+              espere.Visible  := false;
+              espere.Stop;
+
+              if statusCode = -1 then
+                datos.VerMensaje('ERROR DE RED', content, 'Aceptar', 'ERROR', 0)
+              else
+                datos.VerMensaje('ACCESO DENEGADO', LoginRegmensaje.AsString, 'Aceptar', 'ERROR', 0);
+            end;
+          except
+            on E: Exception do
+            begin
+              lyLogin.Visible := true;
+              espere.Visible  := false;
+              espere.Stop;
+              datos.VerMensaje('ERROR', E.Message, 'Aceptar', 'ERROR', 0);
+            end;
+          end;
+        end
+      );
+    end
+  ).Start;
 end;
 
 end.
