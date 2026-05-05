@@ -9,6 +9,7 @@ object formAltaProbable: TformAltaProbable
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
   OnCreate = FormCreate
   DesignerMasterStyle = 0
   object FondoTransparente: TRectangle
@@ -21,21 +22,21 @@ object formAltaProbable: TformAltaProbable
   end
   object FORMULARIO: TRectangle
     Align = Center
-    Size.Width = 450.000000000000000000
+    Size.Width = 508.000000000000000000
     Size.Height = 589.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     object recTituloVentana: TRectangle
       Align = Top
       Fill.Color = xFF00558C
-      Size.Width = 450.000000000000000000
+      Size.Width = 508.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       object tituloVentana: TLabel
         Align = Client
         StyledSettings = [Family]
-        Size.Width = 450.000000000000000000
+        Size.Width = 508.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 18.000000000000000000
@@ -54,28 +55,29 @@ object formAltaProbable: TformAltaProbable
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                028D494441545847ED97316B15411485CF9DD9448DA8890A0AB67662632D58DB
-                09621015D426F803D2590882955D2C24D8081682687E8420086A23D808292CD2
-                8424A804631EF7CEB178BB61F6BABCDDBCE411857CF0787BCFD9D939BB3B7761
-                807D76484AE9AAAA2EA9EA17EF75C5CCE65475D9CC5E7A6FDB98D9024BBCD715
-                555D274955FDE53D4FF04203E2852148E5BF3AFD2FBA04FA6E666B66B6E68D6D
-                B05C8E5FF686A776F724C7013C34B3EB008E004008612684F006FDD7F788E4BD
-                7C4C0716638C1745A44772CACC3E009802B02E22AF4308F745E4B71F04F4277C
-                5CAD978A94D2CDCC9FF37E1BAABA58DE28524AC755F567EE9BD9933C43ED9591
-                BC95D7002022BDACCC8FBBD20360E85FCBFC35485ECB6BBF860EBA1A244F6565
-                7EDC95499213E5F13100879C3F9E17B535A4AA2B31C613B966661B22320F6032
-                847027F7BA6266EF45E42DC9CB31C6F3CE5B2D8AE26455FB403F007C15916F99
-                5C00380C8000D6B316DE0E1300C6CAD7B5518924CF01385314C5D1FAE925AADA
-                4B29DDF0FAA848293D50D5DA0DFA354400079C3632488E95736EE103ED390303
-                E5DF8B8ADDD49B1818682FD80FD4C6FF15481AD84DBD8981817C67B0A56BBCC6
-                16BD898181F682FD406DFC0B816A0B7C6020DF19D2D2355E93161D408831760F
-                E43B8343744D4AE982AABE53D515555DCD7E6B2467017CF263B650D5CD94D2DD
-                AAF693728840243FFA73335E912CF2F3073EA15DE2AC17D07F72F322322D22B5
-                CDE3C8039999792DA5F42CC6D8B8BF1B79204F4A693EC638E3F50A1F48F2FDB7
-                EF0C69EF9A8194611A9F4C850F94009C76DA4E11740C03FF5122F9DCCCA64308
-                B30096726F184444CC6C41445EC4186F7BBF895AA094D211924F495E0110736F
-                4808E07308E1520861D39BFB0CC31F3B077769CB9B78500000000049454E44AE
-                426082}
+                02AE494441545847ED97B16B154110C66776EFDED348345141C1D64E6CAC056B
+                3B410CA282DA04FF807416826065170B09368285209A3F421004B5116C841416
+                6942F25009C699DB9DB17877616F3CDE5D5EF288427EF07837DFB777F7EDDDCE
+                C1021CB04B44E42A33AF1645F1C57A5D89312E12D15A8CF1A5F5764C8C71594B
+                ACD71522DA545525A25FD6B3382B348056180329FF83D1FFA24BA0EFCC3C60E6
+                8135BAE29C5B63E681736ECD7A96DAEC55B507000F8BA2B8AEAAD30000799ECF
+                3BE7DEC0F0F53D0A21DC4BCF69C37BBFE2BDBF8888ACAAB321840F22328B889B
+                DEFBD7CEB9FB88F8DB9E0730BCE1E36ABD5488C8CDC45FB47E1B4551AC941305
+                11394E443F533FC6F824CD507B6521845B690D0080889C94E971571800220CAF
+                15ED354208D7D2DAAEA143A606553D9594E9712744644655A7CAF218001C3643
+                7A69515B4344B4DEEBF54EA41A336F6559B6040033CEB93BA9D79518E37B447C
+                ABAA97BDF7E7538F9937FAFDFEC9AAB6817E78EFBF22E2B744CE00E008002800
+                6C262DBC13A600202F5FD756258AC8391139D3EFF78FD6879710118BC80DAB4F
+                0A11794044B509DA35A400D037DAC450D5BCBCE73636D0BE333250FABDA8D84B
+                BD899181F68383406DFC5F81B081BDD49B1819C87686B6748DD5B4456F6264A0
+                FDE020501BFF42A0DA021F19C87606B6748DD5B0450700D7EBF5BA07B29DA163
+                748D885C0821BC23A27522DA487E8310C202007CB2E76C4344242277ABDADE54
+                C708A4AA1FEDD88457AA9AA5E3473EA13DE2AC1560F8E49610710E116B9BC789
+                0762E668351179E6BD6FDCDF4D3C90454496BCF7F356AFB08130DD7FDBCEC0F6
+                AE194919A6F1C954D8400200A78DB65B103A8601FB5152D5E7CC3C97E7F90200
+                ACA6DE38202232F37296652FBCF7B7ADDF442D90884CABEAD310C21500F0A937
+                26EABDFFEC9CBBE49C236B1E300E7F00384182C1D0A510C60000000049454E44
+                AE426082}
               FileName = 
                 'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                 '\calendario.png'
@@ -93,7 +95,7 @@ object formAltaProbable: TformAltaProbable
           Hint = 'Salir'
           Padding.Top = 4.000000000000000000
           Padding.Bottom = 4.000000000000000000
-          Position.X = 405.000000000000000000
+          Position.X = 463.000000000000000000
           Size.Width = 45.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
@@ -113,21 +115,21 @@ object formAltaProbable: TformAltaProbable
                 PNG = {
                   89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                   93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                  01BD494441545847EDD7B14E1B411405D0758A95DDC5ACB094C420418A887C51
-                  D224759426F90B6451E09E8E9E0E213E204D040D05A922E5077097999577DEBD
-                  144E31BE33C85A899520DAD3F9BD7767C6B277ED2D8A5EEF7F47B234B3B9F7FE
-                  8E1DF1DE2FCC6C4EB2D4FD136676AC0B74E850F71F68C17B7F371C0EB7B4DE85
-                  BAAE17A3D1A88A6BC98148526B5D1A0C066B677811BF780AFA036DF2FC0F04E0
-                  8CE46B921580B9F68BD5CCAC288A31C9298073EDB7A2370A0560ED3205F0DD39
-                  079274CE1980AFD29FE81AB178364B030AC09E66007C76CE39001F33BD77BA46
-                  4CE7131A5021841F24C79A0330C9D4AA10C2B5AE11D34C42033921841B00AF34
-                  1B03B0D334CDAD6695E6121A7848D334BF49EE6BBEF8F7312D97CB3F9AC9D16C
-                  EBAB2C4632F9E97974FA0E725A7C64BF34AB3497D0800A21FC7CE04BBD9DA955
-                  24AF748D9866121A50000E3403E09373EE2F800F99DE7B5D23A6F3090D28006F
-                  E27900DFE4C6F845FA6F758D583C9BA50165661700A624C76676A47DAE666624
-                  5F92DC35B34BEDC774FFE42AC90D75A9FF83D6567FA04D9203D575BDD05A5772
-                  7B25072ACBF2546B5D29CBF2446B89E8517AA1F78CC7D2EA51BAD77BEEEE015F
-                  E5BD34D9DCC1DF0000000049454E44AE426082}
+                  01BB494441545847EDD7314B23411806E0CD154BD25D0C27E8A9A01672F78BB4
+                  D15A6CF45F885898DECEDE4EC41F60235E73C55909FE01D30C3A4B76BEF7B5D0
+                  627C6744165CD0639F2EDFF7BD331392DD648BA2D3F9DF912CCD6CECBDBF674B
+                  BCF713331B932C75FF84991DE9022DDAD7FD7B5AF0DEDFF7FBFD19ADB7A1AAAA
+                  C9603018C5B5E44024A9B536F57ABD5767F816BFF80CBA03BDE7EB1F08C029C9
+                  7992230063ED17CF330745510C492E0038D37E237AA350005E5DA600F69C7320
+                  49E79C01D891FEACAE118B67B334A0002C6B06C09673EE11C046A6B7A66BC474
+                  3EA1011542B82439D41C80D94C6D1442F8A36BC43493D0404E08E12F8039CDC6
+                  002CD675FD4FB34A73090DBCA5AEEB5B922B9A2F5E3EA6E9747AA7991CCD36BE
+                  CA6224939F9E0FA7EF20A7C14776A359A5B984065408E1EA8D2FF58F4C6D44F2
+                  5AD7886926A10105E09766006C3AE71E00AC677ABF758D98CE2734A000FC8CE7
+                  01ECCA8D715BFAABBA462C9ECDD28032B373000B24876676A87D3ECF1C90FC4E
+                  72C9CC2EB41FD3FD93AB2437D4A6EE0F5A53DD81DE931CA8AAAA89D6DA92DB2B
+                  39505996275A6B4B5996C75A4B448FD213BD677C94468FD29DCE57F7041AF6BC
+                  FE0334A82E0000000049454E44AE426082}
                 FileName = 
                   'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                   '\Boton Salir.png'
@@ -143,28 +145,405 @@ object formAltaProbable: TformAltaProbable
         end
       end
     end
-    object Layout1: TLayout
+    object pagina: TTabControl
       Align = Client
-      Margins.Left = 10.000000000000000000
-      Margins.Top = 10.000000000000000000
-      Margins.Right = 10.000000000000000000
-      Margins.Bottom = 10.000000000000000000
-      Size.Width = 430.000000000000000000
-      Size.Height = 519.000000000000000000
+      Size.Width = 508.000000000000000000
+      Size.Height = 539.000000000000000000
       Size.PlatformDefault = False
+      TabIndex = 0
       TabOrder = 1
-      object Rectangle2: TRectangle
-        Align = Client
-        Corners = []
-        Size.Width = 430.000000000000000000
-        Size.Height = 519.000000000000000000
+      TabPosition = None
+      Sizes = (
+        508s
+        539s
+        508s
+        539s)
+      object tabVer: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        Size.Width = 8.000000000000000000
+        Size.Height = 8.000000000000000000
         Size.PlatformDefault = False
-        Stroke.Kind = None
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'tabVer'
+        ExplicitSize.cx = 8.000000000000000000
+        ExplicitSize.cy = 8.000000000000000000
+        object Label6: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 13.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Cama'
+          TabOrder = 10
+        end
+        object lb_editarCama: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 13.000000000000000000
+          Size.Width = 155.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = '000X'
+          TabOrder = 11
+        end
+        object Label9: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 43.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Paciente:'
+          TabOrder = 12
+        end
+        object lb_editarPaciente: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 43.000000000000000000
+          Size.Width = 377.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = 'APELLIDO Y NOMBRE DEL PACIENTE'
+          TabOrder = 13
+        end
+        object Label11: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 74.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Documento:'
+          TabOrder = 6
+        end
+        object lb_editarDocumento: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 74.000000000000000000
+          Size.Width = 369.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = 'DNI: 99988877'
+          TabOrder = 9
+        end
+        object Label13: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 105.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Fecha de alta'
+          TabOrder = 3
+        end
+        object Label16: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 139.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Tipo de Alta'
+          TabOrder = 2
+        end
+        object lb_editarFechaAlta: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 105.000000000000000000
+          Size.Width = 369.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = 'DNI: 99988877'
+          TabOrder = 8
+        end
+        object lb_editarTipoAlta: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 139.000000000000000000
+          Size.Width = 369.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = 'DNI: 99988877'
+          TabOrder = 7
+        end
+        object Rectangle1: TRectangle
+          Fill.Color = xFF00558C
+          Padding.Left = 5.000000000000000000
+          Padding.Right = 5.000000000000000000
+          Position.X = 316.000000000000000000
+          Position.Y = 461.000000000000000000
+          Size.Width = 140.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+          Stroke.Thickness = 2.000000000000000000
+          XRadius = 5.000000000000000000
+          YRadius = 5.000000000000000000
+          object Label20: TLabel
+            Align = Client
+            StyledSettings = [Family, Size]
+            Locked = True
+            Size.Width = 81.000000000000000000
+            Size.Height = 55.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claWhite
+            TextSettings.HorzAlign = Center
+            Text = 'Editar'
+            TabOrder = 1
+          end
+          object botonEditar: TSpeedButton
+            Align = Contents
+            Hint = 'Registrar el cambio de cama'
+            Locked = True
+            Size.Width = 140.000000000000000000
+            Size.Height = 55.000000000000000000
+            Size.PlatformDefault = False
+            ParentShowHint = False
+            ShowHint = True
+            OnClick = botonEditarClick
+          end
+          object Image2: TImage
+            MultiResBitmap.Height = 38
+            MultiResBitmap.Width = 36
+            MultiResBitmap = <
+              item
+                Width = 36
+                Height = 38
+                PNG = {
+                  89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                  93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  02C7494441545847ED97CDAB4E5114C6D75E274418E9968909EA1249FE025706
+                  5228CA4491010303D747981849C20429B32BA24C9898FA48CA1F4037038CDC14
+                  265CD777CFF318BCCE6D9F75CF79BFC440EFAF4E9DBDD67AF67ECEDEFBBC67BF
+                  6603060CE80F497B003C03F016C05D924B63CD3F41D23C00A71400F051D270AC
+                  FFEB905C1CCD94007817EB530CE490DC2269C4CC16C59C99594AE9794AE94C4A
+                  89319723691DC927EE3E3BE6524A6D3D98B53A5804E0717CA23A009C8E7A6BF5
+                  7182E4C6B24D720D80AF41FBB9AAAA41920378910BDB01E056EC83E491324F72
+                  59165F0DE05BAEAF2A6B20793217A835E81B001335D73D494B82FE68907F20B9
+                  22CBAF291300CEE6DA5A00BCCC049F48AE97344B5211AFA8AD3123B5FA9922B9
+                  3CABDBD495196B19FA92757423E69BC897A9810F2457465D47004C953D00B812
+                  F375903C561DBB2D95258E780C9859FE0ACFC9EE6B217928A5D4D5F493BC6E66
+                  1F63BC2D0026CB47013016F339248F571FBE1900E7A3BE2BBA3544F27075C866
+                  005C88FAAEE9C610C9FDD5219B01702EEA7BA2932149F3AA433603E062D477A2
+                  6E53B745D2D618AB83E485A2280EE63149B5DFC49C7E0CED8CB108C94B45511C
+                  2ADB92E6037844F235806B923A7F504BDA2D19C9B900BE5717A64ADD0626B92B
+                  AF21B936D694F43A43DBEA8E1025BF976934C6CD6C41682F0CED697A3224697A
+                  1972483E94B4375FA6C0F7D0FE11DAD3F464C8CC26CA1B920F248D4A5A5E14C5
+                  88BB5FAD96F6474F86DC7DA7A41D92561545B1C1DD2FBAFBCB58F727D419CA8F
+                  155FB37B4B29FD74F7DBEE3E9EC7BBA0D24FC3B8660D89FC951CCAEEFB26A514
+                  3775E34971C6EF018071775F69AD7DF2D3DDF749BA1F4E01BD302C69CCDDA78F
+                  1D9286DCFD7DB5ACC50C43240FA4942E8798FA35E4EE959325C93B45516CCF63
+                  1DE9F61F47AF009824D9761BCC98216B4D692279D3CC3637D5F4C1D394D26E77
+                  7F15130306FCD7FC02F38F34CFBC529A1E0000000049454E44AE426082}
+                FileName = 
+                  'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                  '\Editar.png'
+              end>
+            Align = Left
+            Locked = True
+            Position.X = 5.000000000000000000
+            Size.Width = 49.000000000000000000
+            Size.Height = 55.000000000000000000
+            Size.PlatformDefault = False
+            WrapMode = Place
+          end
+        end
+        object Label8: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 203.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Creado por:'
+          TabOrder = 1
+        end
+        object lb_editarCreadoPor: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 203.000000000000000000
+          Size.Width = 369.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Operador'
+          TabOrder = 5
+        end
+        object lb_editarCreadoFecha: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 230.000000000000000000
+          Size.Width = 369.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Operador'
+          TabOrder = 4
+        end
+        object Label12: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 230.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Creado por:'
+          TabOrder = 0
+        end
+        object recBotonEliminar: TRectangle
+          Fill.Color = claCrimson
+          Padding.Left = 5.000000000000000000
+          Padding.Right = 5.000000000000000000
+          Position.X = 55.000000000000000000
+          Position.Y = 461.000000000000000000
+          Size.Width = 140.000000000000000000
+          Size.Height = 55.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+          Stroke.Thickness = 2.000000000000000000
+          XRadius = 5.000000000000000000
+          YRadius = 5.000000000000000000
+          object Label10: TLabel
+            Align = Client
+            StyledSettings = [Family, Size]
+            Locked = True
+            Size.Width = 81.000000000000000000
+            Size.Height = 55.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claWhite
+            TextSettings.HorzAlign = Center
+            Text = 'Eliminar'
+            TabOrder = 1
+          end
+          object botonEliminar: TSpeedButton
+            Align = Contents
+            Hint = 'Registrar el cambio de cama'
+            Locked = True
+            Size.Width = 140.000000000000000000
+            Size.Height = 55.000000000000000000
+            Size.PlatformDefault = False
+            ParentShowHint = False
+            ShowHint = True
+            OnClick = botonEliminarClick
+          end
+          object Image4: TImage
+            MultiResBitmap.Height = 38
+            MultiResBitmap.Width = 36
+            MultiResBitmap = <
+              item
+                Width = 36
+                Height = 38
+                PNG = {
+                  89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                  93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  0176494441545847EDD7214E03411406E0F7BF5635551C8014CB017038020283
+                  4010140683E112182457E0048413905A349616872408D200F33F04B3C9F2D876
+                  A6DB422099CF34F9A73BFBB7339BEC8814B3C10739CCEC88E4B188F4448431D6
+                  F839EC743AA7B5AFFF2C33EB8710EE6C8A10C288E4BEBF2E57F5ABB299594F55
+                  D77D5E51D50180BECF734D5D3233DB22B909E0AD164FCC6C4D554F6AD93724AF
+                  00DCBAB82B226355BD74799A99ED8510467E39161542188510CEFDFDEA1A978C
+                  E48EAA0E7CBEA838E7B6CFEB1A978CE48199ED8AC84BED295A862E8007553DF3
+                  037F56E33F544772236EC8D600F444E406C0BB1F9B8B99AD2E6B73933CF4F337
+                  69DCD41533E31237F7C4074D6616F21B1A51CB2CEBE14815FA75A5504A299452
+                  0AA5944229A5504A2994520AA5944229FFAB10802FA78DEA85BD659675729959
+                  48449E498E7D38AF38C7ABCF9BCC2C04E009C005C97B3F962B9619AAEAB51F6B
+                  923C28CAE7A42BF1189C7572A898990250008F7EAC68EB033EC242041B58672C
+                  0000000049454E44AE426082}
+                FileName = 
+                  'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                  '\Eliminar.png'
+              end>
+            Align = Left
+            Locked = True
+            Position.X = 5.000000000000000000
+            Size.Width = 49.000000000000000000
+            Size.Height = 55.000000000000000000
+            Size.PlatformDefault = False
+            WrapMode = Place
+          end
+        end
+      end
+      object tabEditar: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 8.000000000000000000
+        Size.Height = 8.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'tabEditar'
+        ExplicitSize.cx = 8.000000000000000000
+        ExplicitSize.cy = 8.000000000000000000
+        object Label14: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Cama'
+          TabOrder = 5
+        end
+        object lb_cama: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 155.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = '000X'
+          TabOrder = 6
+        end
         object Label4: TLabel
           AutoSize = True
           StyledSettings = [Family, FontColor]
-          Position.X = 8.000000000000000000
-          Position.Y = 28.000000000000000000
+          Position.X = 26.000000000000000000
+          Position.Y = 30.000000000000000000
           Size.Width = 89.000000000000000000
           Size.Height = 19.000000000000000000
           Size.PlatformDefault = False
@@ -172,12 +551,111 @@ object formAltaProbable: TformAltaProbable
           Text = 'Paciente:'
           TabOrder = 7
         end
+        object lb_paciente: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 30.000000000000000000
+          Size.Width = 377.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = 'APELLIDO Y NOMBRE DEL PACIENTE'
+          TabOrder = 8
+        end
+        object Label1: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 54.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Documento:'
+          TabOrder = 3
+        end
+        object lb_documento: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 120.000000000000000000
+          Position.Y = 54.000000000000000000
+          Size.Width = 483.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Text = 'DNI: 99988877'
+          TabOrder = 4
+        end
+        object Label2: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 87.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Fecha de alta'
+          TabOrder = 2
+        end
+        object Label3: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 194.000000000000000000
+          Position.Y = 87.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Hora de alta'
+          TabOrder = 0
+        end
+        object fecha: TDateEdit
+          Date = 46147.000000000000000000
+          TodayDefault = True
+          Position.X = 26.000000000000000000
+          Position.Y = 114.000000000000000000
+          TabOrder = 9
+        end
+        object hora: TTimeEdit
+          Time = 0.416666666666666700
+          Position.X = 194.000000000000000000
+          Position.Y = 114.000000000000000000
+          TabOrder = 10
+        end
+        object Label5: TLabel
+          AutoSize = True
+          StyledSettings = [Family, FontColor]
+          Position.X = 26.000000000000000000
+          Position.Y = 147.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          Text = 'Tipo de Alta'
+          TabOrder = 1
+        end
+        object listaAltas: TListView
+          ItemAppearanceClassName = 'TListItemAppearance'
+          ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+          HeaderAppearanceClassName = 'TListHeaderObjects'
+          FooterAppearanceClassName = 'TListHeaderObjects'
+          Position.X = 26.000000000000000000
+          Position.Y = 174.000000000000000000
+          Size.Width = 455.000000000000000000
+          Size.Height = 259.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 11
+        end
         object botonAceptar: TRectangle
           Fill.Color = xFF00558C
           Padding.Left = 5.000000000000000000
           Padding.Right = 5.000000000000000000
-          Position.X = 271.000000000000000000
-          Position.Y = 455.000000000000000000
+          Position.X = 316.000000000000000000
+          Position.Y = 461.000000000000000000
           Size.Width = 140.000000000000000000
           Size.Height = 55.000000000000000000
           Size.PlatformDefault = False
@@ -188,18 +666,20 @@ object formAltaProbable: TformAltaProbable
           object Label7: TLabel
             Align = Client
             StyledSettings = [Family, Size]
+            Locked = True
             Size.Width = 81.000000000000000000
             Size.Height = 55.000000000000000000
             Size.PlatformDefault = False
             TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.FontColor = claWhite
             TextSettings.HorzAlign = Center
-            Text = 'Aceptar'
+            Text = 'Grabar'
             TabOrder = 1
           end
           object btnAceptar: TSpeedButton
             Align = Contents
             Hint = 'Registrar el cambio de cama'
+            Locked = True
             Size.Width = 140.000000000000000000
             Size.Height = 55.000000000000000000
             Size.PlatformDefault = False
@@ -217,158 +697,35 @@ object formAltaProbable: TformAltaProbable
                 PNG = {
                   89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                   93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                  01F5494441545847EDD63DAF0C611806E073969C1C61452444C12FE0D4844AA2
-                  91100AC989C22914C42FD0522A25120A2A423482C24723E20F48E814A2112442
-                  C457707F28CCCAB83376676767B79AAB9C7DEEE779E77DB399776EAED3E98C4F
-                  529FE46500CF485EB4BD256B66C6F602C97B2E01F04AD2F1AC9D099257CB8B29
-                  23795D523F335343F27C2E2291BC94B9A990B492C3AB90BC9DD9D649DA01E04B
-                  0E4F00DE4A5ACA7CAB24F5013CCFE109C01B49DB33DF3A9257727802F049D2EE
-                  CC8E246949D249493BF3B72AB60FE7F02A920E657624497B017CF49F37FA21E9
-                  68D69449DA04E0750E4F924E6776244907017CAF68762C6B0748DEC8FA44F266
-                  E646B2BD6FD83F44D24A66241DC9BA04E085A48D991D4AD2D6C1310D2369B994
-                  D90CE05DD69401F82569CFBFD36A90B42B9BFD4FB12BAB867D1A06489ECD59B5
-                  485A43F25636AC02E09BEDC7F93C01786ABB97B36A93B49EE4A36CDC0400363A
-                  AA647B91E4DD1C302E92E7B2776392D6927C9043EA02F0D2F686EC3B91E2A6D7
-                  E8F8241DC87EAD68727C24AF659F5615C7F730075701F041D2B6ECD1BA318EEF
-                  4466A7A6B8B0DFC9150C00789299A9B3DD237901C0D758CCCF995CB892ED79DB
-                  0BB6CF00F85C2CE6BDA465DB3DDBF399A9A369EE2FDB8B924E91BC2F69FF449F
-                  8762E7F3D9D86CAFB6BD6ED2B72B767DA21E9D4EA7AEDFFE975D4A2C1D4F2300
-                  00000049454E44AE426082}
+                  0208494441545847EDD63FAF0D511405F0F71E7979C2159110059F8057132A89
+                  464228242F0AAF50109F404BA9944828A808D1080A9E46C41790D02944234884
+                  887F7B66CE5A4B61AE8C9571FFCC9D7BABF99573F7DAFBCC39B9993337D7E974
+                  C647B207E07A4AE92580AB927678CDCC485A04F04815799EBF2579DA6B6702C0
+                  CDEA62AA00DC26D9F3CCD400B8EC8B7000AE796E2A48AEFAF03A00EE7BB67524
+                  F744C4771FEEB22CFB4072D9F3AD22D94B29BDF2E12ECBB2F724777BBE75006E
+                  F87017115F49EEF7EC502497499E25B9D77FAB23E9B80FAF43F2986787227930
+                  22BEE8CF1B65244F7A4D15C96D799EBFF3E18EE479CF0E45F26844FCAA6976CA
+                  6BFB00DCF17A07E0AEE786927468D03F84E4AA67489EF03A5714C56B925B3D3B
+                  10C99DFD631A84E44A25B33DCBB28F5E53151105C903FF4E1B01C97DDEEC7FCA
+                  5D5937E8D3D007E0A2CF1A09C90D00EE79C33A11F153D2337FEE524A2F242DF8
+                  AC9191DC0CE0A9376E2222D0E8A89CA425000F7DC0B8005CF2DE8D91DC0860CD
+                  878CAA288A3792B678DF899437BD46C747F288F76B4593E30370CBFBB4AA3CBE
+                  273EB84E447C26B9CB7BB46E8CE33BE3D9A9292FEC0F7C057D29A5E79E993A49
+                  0B00AE44C48FEA6222229FC985CB499A97B428E942447C2B17F389E48AA40549
+                  F39E1945D3DC5F9296489E03F098E4E1893E0FE5CEFBB3B1495A2F69D3A46F57
+                  EEFA443D3A9DCEA87E035F405C698FDF545D0000000049454E44AE426082}
                 FileName = 
                   'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                   '\Aceptar.png'
               end>
             Align = Left
+            Locked = True
             Position.X = 5.000000000000000000
             Size.Width = 49.000000000000000000
             Size.Height = 55.000000000000000000
             Size.PlatformDefault = False
             WrapMode = Place
           end
-        end
-        object lb_paciente: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 102.000000000000000000
-          Position.Y = 28.000000000000000000
-          Size.Width = 483.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          Text = 'APELLIDO Y NOMBRE DEL PACIENTE'
-          TabOrder = 8
-        end
-        object Label1: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 8.000000000000000000
-          Position.Y = 52.000000000000000000
-          Size.Width = 89.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          Text = 'Documento:'
-          TabOrder = 3
-        end
-        object lb_documento: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 102.000000000000000000
-          Position.Y = 52.000000000000000000
-          Size.Width = 483.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          Text = 'DNI: 99988877'
-          TabOrder = 4
-        end
-        object Label14: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 8.000000000000000000
-          Position.Y = 3.000000000000000000
-          Size.Width = 89.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          Text = 'Cama'
-          TabOrder = 5
-        end
-        object lb_cama: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 102.000000000000000000
-          Position.Y = 3.000000000000000000
-          Size.Width = 155.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          Text = '000X'
-          TabOrder = 6
-        end
-        object fecha: TDateEdit
-          Date = 46146.000000000000000000
-          TodayDefault = True
-          Position.X = 8.000000000000000000
-          Position.Y = 112.000000000000000000
-          TabOrder = 9
-        end
-        object hora: TTimeEdit
-          Time = 0.416666666666666700
-          Position.X = 176.000000000000000000
-          Position.Y = 112.000000000000000000
-          TabOrder = 10
-        end
-        object Label2: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 8.000000000000000000
-          Position.Y = 85.000000000000000000
-          Size.Width = 89.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          Text = 'Fecha de alta'
-          TabOrder = 2
-        end
-        object Label3: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 176.000000000000000000
-          Position.Y = 85.000000000000000000
-          Size.Width = 89.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          Text = 'Hora de alta'
-          TabOrder = 0
-        end
-        object listaAltas: TListView
-          ItemAppearanceClassName = 'TListItemAppearance'
-          ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
-          HeaderAppearanceClassName = 'TListHeaderObjects'
-          FooterAppearanceClassName = 'TListHeaderObjects'
-          Position.X = 8.000000000000000000
-          Position.Y = 184.000000000000000000
-          Size.Width = 414.000000000000000000
-          Size.Height = 249.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 11
-        end
-        object Label5: TLabel
-          AutoSize = True
-          StyledSettings = [Family, FontColor]
-          Position.X = 8.000000000000000000
-          Position.Y = 157.000000000000000000
-          Size.Width = 89.000000000000000000
-          Size.Height = 19.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 14.000000000000000000
-          Text = 'Tipo de Alta'
-          TabOrder = 1
         end
       end
     end
@@ -381,7 +738,7 @@ object formAltaProbable: TformAltaProbable
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 387
+    Left = 67
     Top = 384
     object altasidTipoAltaMedica: TIntegerField
       FieldName = 'idTipoAltaMedica'
@@ -394,14 +751,14 @@ object formAltaProbable: TformAltaProbable
   object BindSourceDB1: TBindSourceDB
     DataSet = altas
     ScopeMappings = <>
-    Left = 472
-    Top = 320
+    Left = 824
+    Top = 136
   end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 20
-    Top = 5
+    Left = 44
+    Top = 45
     object LinkListControlToField1: TLinkListControlToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
@@ -420,14 +777,51 @@ object formAltaProbable: TformAltaProbable
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 507
-    Top = 453
+    Left = 795
+    Top = 485
     object resultadoestado: TIntegerField
       FieldName = 'estado'
     end
     object resultadomensaje: TStringField
       FieldName = 'mensaje'
       Size = 255
+    end
+  end
+  object altaProbable: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 804
+    Top = 251
+    object altaProbableidInternacion: TIntegerField
+      FieldName = 'idInternacion'
+    end
+    object altaProbableidTipoAltaProbable: TIntegerField
+      FieldName = 'idTipoAltaProbable'
+    end
+    object altaProbabletipoAltaProbable: TStringField
+      FieldName = 'tipoAltaProbable'
+      Size = 255
+    end
+    object altaProbablecreadoPorDni: TStringField
+      FieldName = 'creadoPorDni'
+      Size = 50
+    end
+    object altaProbablecreadoPorNombre: TStringField
+      FieldName = 'creadoPorNombre'
+      Size = 255
+    end
+    object altaProbablefechaAltaProbable: TStringField
+      FieldName = 'fechaAltaProbable'
+      Size = 50
+    end
+    object altaProbablecreadoFecha: TStringField
+      FieldName = 'creadoFecha'
+      Size = 50
     end
   end
 end

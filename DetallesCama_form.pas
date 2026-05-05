@@ -1272,12 +1272,12 @@ end;
 procedure Tform_DetallesCama.SpeedButton2Click(Sender: TObject);
 begin
   Application.CreateForm(TformAltaProbable, formAltaProbable);
-  formAltaProbable.Height             := alto;
-  formAltaProbable.Width              := ancho;
   formAltaProbable.lb_paciente.Text   := camasapellidoPaciente.AsString + ', ' + camasnombrePaciente.AsString;
   formAltaProbable.lb_cama.Text       := camascama.AsString;
   formAltaProbable.lb_documento.Text  := camastdocDescripcion.AsString + ': ' + camasnroDocumento.AsString;
   formAltaProbable.idInternacion      := camasidInternacion.AsInteger;
+  formAltaProbable.idCama             := camasidCama.AsInteger;
+  formAltaProbable.cama               := camascama.AsString;
   formAltaProbable.ShowModal;
 end;
 

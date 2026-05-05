@@ -20,7 +20,6 @@ type
     recTituloVentana: TRectangle;
     tituloVentana: TLabel;
     iconoVentana: TImage;
-    botonSalir: TSpeedButton;
     lyBotones: TLayout;
     recBotonActualizar: TRectangle;
     lb_botonActualizar: TLabel;
@@ -65,12 +64,14 @@ type
     tareasprioridad: TStringField;
     tareasticket: TIntegerField;
     tareasdetalleTicket: TMemoField;
-    procedure botonSalirClick(Sender: TObject);
+    botonSalir: TSpeedButton;
+    Image3: TImage;
     procedure FormCreate(Sender: TObject);
     procedure ObtenerTareas;
     procedure botonActuazliarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure botonNuevaTareaClick(Sender: TObject);
+    procedure botonSalirClick(Sender: TObject);
   private
     { Private declarations }
     FGrilla    : TStringGrid;
