@@ -247,7 +247,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ApagarAlertas(idCama: integer);
     procedure botonCambioCamaClick(Sender: TObject);
-    procedure crearAlertas(idCama, idServicio: integer; filtro: string);
+    procedure mostrarAlertas(idCama, idServicio: integer; filtro: string);
     procedure crearAlerta(idAlerta: integer; texto:string);
     procedure obtenerPermisosModulosPaciente(idServicio: integer);
     function permisoModulo(idModulo: integer): integer;
@@ -467,75 +467,6 @@ begin
 
           MostrarAislamentos;
 
-          // ALERTAS MÉDICAS
-//          case permisoModulo(5) of
-//            0: begin
-//              lyAlertasMedicas.Visible := false;
-//            end;
-//
-//            1: begin
-//              lyAlertasMedicas.Visible := true;
-//              // PROCEDIMIENTOS NO CUMPLIDOS
-//              recProcedimiento.Visible          := true;
-//              if camasprocedimientosNoCumplidos.AsInteger > 0 then
-//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
-//              else
-//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
-//
-//              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
-//
-//              // INDICACIONES NO PROGRAMADAS
-//              recMedicacionNoProgramada.Visible := true;
-//              if camasmedicacionNoProgramada.AsInteger > 0 then
-//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
-//              else
-//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
-//
-//              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
-//
-//              // MEDICACION NO APLICADA
-//              recMedicacionNoAplicada.Visible   := true;
-//              if camasmedicacionNoAplicada.AsInteger > 0 then
-//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
-//              else
-//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
-//
-//              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
-//            end;
-//
-//            2: begin
-//              lyAlertasMedicas.Visible := true;
-//              // PROCEDIMIENTOS NO CUMPLIDOS
-//              recProcedimiento.Visible          := true;
-//              if camasprocedimientosNoCumplidos.AsInteger > 0 then
-//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Red
-//              else
-//                lb_cantidad_procedimientos.FontColor := TAlphaColorRec.Grey;
-//
-//              lb_cantidad_procedimientos.Text := camasprocedimientosNoCumplidos.AsString;
-//
-//              // INDICACIONES NO PROGRAMADAS
-//              recMedicacionNoProgramada.Visible := true;
-//              if camasmedicacionNoProgramada.AsInteger > 0 then
-//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Red
-//              else
-//                lb_indicaciones_no_programadas.FontColor := TAlphaColorRec.Grey;
-//
-//              lb_indicaciones_no_programadas.Text := camasmedicacionNoProgramada.AsString;
-//
-//              // MEDICACION NO APLICADA
-//              recMedicacionNoAplicada.Visible   := true;
-//              if camasmedicacionNoAplicada.AsInteger > 0 then
-//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Red
-//              else
-//                lb_medicacion_no_aplicada.FontColor := TAlphaColorRec.Grey;
-//
-//              lb_medicacion_no_aplicada.Text := camasmedicacionNoAplicada.AsString;
-//            end;
-//          end;
-
-
-
           // PANEL RESERVA
           recReserva.Visible := false;
 
@@ -614,18 +545,20 @@ begin
           actualizarReserva(camasidCama.AsInteger);
         end;
 
-      // Alertas
+
+
+      // ALERTAS
       if Assigned(contenedorAlertas) then
         contenedorAlertas.Destroy;
 
-      contenedorAlertas := TLayout.Create(ly_panelCentral);
+      contenedorAlertas := TLayout.Create(Self);
       contenedorAlertas.Parent := ly_panelCentral;
       contenedorAlertas.Name := 'contenedorAlertas';
       contenedorAlertas.Align := TAlignLayout.Client;
 
       if camascantidadAlertas.AsInteger > 0 then
         begin
-          crearAlertas(idCama,datos.servicio,'pendientes');
+          mostrarAlertas(idCama,datos.servicio,'pendientes');
         end;
     end
   else
@@ -1036,7 +969,8 @@ end;
 
 procedure Tform_DetallesCama.crearAlerta(idAlerta: integer; texto:string);
 begin
-  rAlertas := TRectangle.Create(contenedorAlertas);
+  //rAlertas := TRectangle.Create(contenedorAlertas);
+  rAlertas := TRectangle.Create(Self);
   rAlertas.Parent := contenedorAlertas;
   rAlertas.Height := 54;
   rAlertas.Name := 'recAlertas' + idAlerta.ToString;
@@ -1078,12 +1012,15 @@ begin
     end;
 end;
 
-procedure Tform_DetallesCama.crearAlertas(idCama, idServicio: integer; filtro: string);
+procedure Tform_DetallesCama.mostrarAlertas(idCama, idServicio: integer; filtro: string);
 var
   response: IResponse;
   recurso: String;
 begin
   // crea las alertas que recibe esta cama.
+
+  // filtro puede valer: todas, leidas, pendientes
+
   recurso := '/tablerocamas/alertas';
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(recurso)
@@ -1111,7 +1048,11 @@ end;
 procedure Tform_DetallesCama.FormClose(Sender: TObject;  var Action: TCloseAction);
 begin
   // apago todas las alertas de esta cama
-  ApagarAlertas(idCama);
+
+  if alertas.RecordCount > 0 then
+  // con esto solo apagaría las alertas que se cargaron al abrir el formulario.
+  // No se apagarian las alertas creadas mientras el formulario estaba abierto.
+    ApagarAlertas(idCama);
 end;
 
 procedure Tform_DetallesCama.FormCreate(Sender: TObject);

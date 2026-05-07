@@ -388,7 +388,7 @@ var
 begin
   if FCamasUI.TryGetValue(idCama, ui) then
     begin
-      if permisoModulo(3) = 0 then
+      if permisoModulo(3) = 0 then // no tiene permiso para ver los aislamientos del paciente
         begin
           if camas2camaEnAislamiento.AsInteger = 1 then
             begin
@@ -396,32 +396,53 @@ begin
               ui.iconoAislamiento.Visible := true;
               ui.lbPrecaucion.Text := 'AISLAMIENTO';
             end
+          else
+            begin
+              if Assigned(ui.iconoAislamiento) then
+                ui.iconoAislamiento.Visible := false;
+              if Assigned(ui.lbPrecaucion) then
+                ui.lbPrecaucion.Text := '';
+            end;
         end
       else
         begin
-          if camas2idEstado.AsInteger = 2 then
-            begin
-                if (camas2aislamiento_contacto.AsString <> '') and (camas2kpc.AsInteger = 1) then
-                  ui.iconoAislamientoC.Base64(aislamientoKPC)
-                else
-                  ui.iconoAislamientoC.Base64(aislamientoAC);
+          // tiene permiso para ver los aislamientos del paciente
 
-                ui.iconoAislamientoC.Visible  := camas2aislamiento_contacto.AsString <> '';
-                ui.iconoAislamientoAR.Visible := camas2aislamiento_respiratorio.AsString <> '';
-                ui.iconoAislamientoGC.Visible := camas2aislamiento_gota.AsString <> '';
-                ui.iconoAislamientoN.Visible  := camas2aislamiento_neutropenico.AsString <> '';
-                ui.iconoAislamientoCD.Visible := camas2aislamiento_cd.AsString <> '';
-                ui.iconoAislamientoSC.Visible := camas2aislamiento_sc.AsString <> '';
-              end
-            else
-              begin
-                ui.iconoAislamientoC.Visible  := false;
-                ui.iconoAislamientoAR.Visible := false;
-                ui.iconoAislamientoGC.Visible := false;
-                ui.iconoAislamientoN.Visible  := false;
-                ui.iconoAislamientoCD.Visible := false;
-                ui.iconoAislamientoSC.Visible := false;
-              end;
+          if camas2camaEnAislamiento.AsInteger = 1 then
+            begin
+              if camas2idEstado.AsInteger = 2 then // la cama está ocupada
+                begin
+                    if (camas2aislamiento_contacto.AsString <> '') and (camas2kpc.AsInteger = 1) then
+                      ui.iconoAislamientoC.Base64(aislamientoKPC)
+                    else
+                      ui.iconoAislamientoC.Base64(aislamientoAC);
+
+                    ui.iconoAislamientoC.Visible  := camas2aislamiento_contacto.AsString <> '';
+                    ui.iconoAislamientoAR.Visible := camas2aislamiento_respiratorio.AsString <> '';
+                    ui.iconoAislamientoGC.Visible := camas2aislamiento_gota.AsString <> '';
+                    ui.iconoAislamientoN.Visible  := camas2aislamiento_neutropenico.AsString <> '';
+                    ui.iconoAislamientoCD.Visible := camas2aislamiento_cd.AsString <> '';
+                    ui.iconoAislamientoSC.Visible := camas2aislamiento_sc.AsString <> '';
+                  end
+                else
+                  begin
+                    ui.iconoAislamientoC.Visible  := false;
+                    ui.iconoAislamientoAR.Visible := false;
+                    ui.iconoAislamientoGC.Visible := false;
+                    ui.iconoAislamientoN.Visible  := false;
+                    ui.iconoAislamientoCD.Visible := false;
+                    ui.iconoAislamientoSC.Visible := false;
+                  end;
+            end
+          else
+            begin
+              ui.iconoAislamientoC.Visible  := false;
+              ui.iconoAislamientoAR.Visible := false;
+              ui.iconoAislamientoGC.Visible := false;
+              ui.iconoAislamientoN.Visible  := false;
+              ui.iconoAislamientoCD.Visible := false;
+              ui.iconoAislamientoSC.Visible := false;
+            end;
         end;
     end;
 end;
@@ -440,7 +461,7 @@ begin
   // inserta una alerta de acuerdo a los parámetros recibidos.
 
   response := TRequest.New.BaseURL(datos.urlTC)
-                      .Resource('tablerocamas/alertaNueva')
+                      .Resource('tablerocamas/nuevaAlerta')
                       .AddHeader('TokenAcceso', datos.tokenAcceso)
                       .AddParam('idCama', cama.ToString)
                       .AddParam('idTipoAlerta', tipo.ToString)
@@ -682,67 +703,6 @@ begin
                                   end;
                               end;
                           end;
-
-//                        // ALTA PROBABLE
-//                        lb_AltaProbable := TLabel.Create(Self);
-//                        with lb_AltaProbable do
-//                          begin
-//                            Parent := LyCama;
-//                            Name := 'lb_AltaProbable' + camasidCama.AsString;
-//                            Align := TAlignLayout.Right;
-//                            Text := 'ALTA PROBABLE: ' + #13 + Copy(camasaltaProbableFecha.AsString, 1, 16);
-//
-//                            StyledSettings := [TStyledSetting.Family];
-//                            TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
-//                            TextSettings.Font.Size := 14;
-//                            TextSettings.WordWrap := true;
-//                            TextSettings.FontColor := TAlphaColorRec.Blue;
-//                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString = '') and (camasaltaProbableFecha.AsString <> '') then
-//                              Visible := true
-//                            else
-//                              Visible := false;
-//                          end;
-
-
-                        // Ícono Alta Probable
-//                        iconoAltaProbable := TImage.Create(Self);
-//                        with iconoAltaProbable do
-//                          begin
-//                            Parent := LyCama;
-//                            Position.X :=1;
-//                            Position.Y := 1;
-//                            Width := 40;
-//                            Height := 50;
-//                            Align := TAlignLayout.Right;
-//                            Name := 'IconoAltaProbable'+ camasidCama.AsString;
-//                            WrapMode := TImageWrapMode.Fit;
-//                            Base64(altaProbable);
-//                            HitTest := false;
-//                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString = '') and (camasaltaProbableFecha.AsString <> '') then
-//                              Visible := true
-//                            else
-//                              Visible := false;
-//                          end;
-//
-//                        // Ícono Alta
-//                        iconoAlta := TImage.Create(Self);
-//                        with iconoAlta do
-//                          begin
-//                            Parent := LyCama;
-//                            Position.X :=1;
-//                            Position.Y := 1;
-//                            Width := 40;
-//                            Height := 50;
-//                            Align := TAlignLayout.Right;
-//                            Name := 'IconoAlta'+ camasidCama.AsString;
-//                            WrapMode := TImageWrapMode.Fit;
-//                            Base64(icono_alta);
-//                            HitTest := false;
-//                            if (verPaciente <> 0) and (camasfechaAltaMedica.AsString <> '') then
-//                              Visible := true
-//                            else
-//                              Visible := false;
-//                          end;
 
 
                         // Número de Cama
@@ -1116,279 +1076,273 @@ begin
                         .Adapters(TDataSetSerializeAdapter.New(camas2))
                         .Get;
 
-    if response.StatusCode = 200 then
+    if response.StatusCode <> 200 then
+    begin
+      datos.VerMensaje('ERROR ' + response.statusCode.ToString  ,'El WS '+ datos.urlTC + recursoCamas +' a retornado el siguiente código de estado: ' + response.StatusCode.ToString,'Aceptar','ERROR',0);
+      exit;
+    end;
+
+    // si la cantidad de camas es distinta
+    if camas2.RecordCount <> camas.RecordCount then
+    begin
+      // la cantidad de camas no es la misma. Actualizo todo.
+      ActualizarCamas;
+    end;
+
+
+
+    alertas.Close;
+    alertas.Open;
+
+    // apago todas las alertas de las camas que están disponibles.
+    if TInterlocked.CompareExchange(FApagandoAlertas, 1, 0) <> 0 then
+      Exit;
+
+    TTask.Run(
+      procedure
       begin
-        if camas2.RecordCount = camas.RecordCount then  // si la cantidad de camas no cambió
-          begin
-            // verifico si cambió algún dato de la cama, para actualizarlo.
-            camas2.First;
-            camas.First;
-            cambios := 0;
-
-            alertas.Close;
-            alertas.Open;
-
-            // apago todas las alertas de las camas que están disponibles.
-            if TInterlocked.CompareExchange(FApagandoAlertas, 1, 0) <> 0 then
-              Exit;
-
-            TTask.Run(
-              procedure
-              begin
-                try
-                  apagarAlertasCamasDisponibles;
-                finally
-                  TInterlocked.Exchange(FApagandoAlertas, 0);
-                end;
-              end);
+        try
+          apagarAlertasCamasDisponibles;
+        finally
+          TInterlocked.Exchange(FApagandoAlertas, 0);
+        end;
+      end);
 
 
-            repeat
-              idCama := camas2idCama.AsInteger;
+    // verifico si cambió algún dato de la cama, para actualizarlo.
+    camas2.First;
+    camas.First;
+    cambios := 0;
 
-              if not FCamasUI.TryGetValue(idCama, ui) then
-                Exit;
+    repeat
+      idCama := camas2idCama.AsInteger;
 
-              if not Assigned(ui) then
-                Exit;
+      if not FCamasUI.TryGetValue(idCama, ui) then
+        Exit;
+
+      if not Assigned(ui) then
+        Exit;
 
 
-              // apago cualquier alerta que haya quedado en rojo
-              ui.PanelB.Fill.Color := TAlphaColorRec.White;
+      // apago cualquier alerta que haya quedado en rojo
+      ui.PanelB.Fill.Color := TAlphaColorRec.White;
 
-              // verifico si hubo ingreso de paciente o alta médica. Si hubo cambios, ingreso una alerta en la tabla alertas
-              // y luego ingreso un registro en alertas (tabla local)
+      // verifico si hubo ingreso de paciente o alta médica. Si hubo cambios, ingreso una alerta en la tabla CAB.dbo.alertas
+      // y luego ingreso un registro en alertas (memTable local)
 
-              nueva_alerta := 0;
+      nueva_alerta := 0;
 
-              if camas2idEstado.AsInteger = 2 then
+      // si la cama está ocupada
+      if camas2idEstado.AsInteger = 2 then
+        begin
+          if camasidEstado.AsInteger <> 2 then
+            begin
+              // alerta ingreso de paciente.
+              nuevaAlerta(camas2idCama.AsInteger,1,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+              nueva_alerta := nueva_alerta + 1;
+            end;
+
+          // si el médico indicó el alta médica
+          if camas2fechaAltaMedica.AsString <> '' then
+            begin
+              if ((camasfechaAltaMedica.AsString <> camas2fechaAltaMedica.AsString)) then
                 begin
-                  if camasidEstado.AsInteger <> 2 then
-                    begin
-                      // alerta ingreso de paciente.
-                      nuevaAlerta(camas2idCama.AsInteger,1,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
-                      nueva_alerta := nueva_alerta + 1;
-                    end;
-
-                  // si el médico indicó el alta médica
-                  if camas2fechaAltaMedica.AsString <> '' then
-                    begin
-                      if ((camasfechaAltaMedica.AsString <> camas2fechaAltaMedica.AsString)) then
-                        begin
-                          // inserto una alerta de alta medica
-                          nuevaAlerta(camas2idCama.AsInteger,2,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
-                          nueva_alerta := nueva_alerta + 1;
-                        end;
-                    end;
-
-                  // si el médico indicó el alta probable
-                  if camas2altaProbableFecha.AsString <> '' then
-                    begin
-                      if ((camasaltaProbableFecha.AsString <> camas2altaProbableFecha.AsString)) then
-                        begin
-                          // inserto una alerta de alta medica
-                          nuevaAlerta(camas2idCama.AsInteger,15,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
-                          nueva_alerta := nueva_alerta + 1;
-                        end;
-                    end;
+                  // inserto una alerta de alta medica
+                  nuevaAlerta(camas2idCama.AsInteger,2,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+                  nueva_alerta := nueva_alerta + 1;
                 end;
+            end;
 
-              // si la cama no está disponible y si hay alertas para esta cama, agrego en la tabla alertas el id de la cama.
-              // guardaré en la tabla alertas, el id de las camas que tienen alertas para luego ejecutar la alerta.
-              if(camas2idEstado.AsInteger <> 1) and ((camas2alertas.AsInteger > 0) or (nueva_alerta = 1)) then
+          // si el médico indicó el alta probable
+          if camas2altaProbableFecha.AsString <> '' then
+            begin
+              if ((camasaltaProbableFecha.AsString <> camas2altaProbableFecha.AsString)) then
                 begin
-                  alertas.Append;
-                  alertas.Fields[0].AsInteger := camas2idCama.AsInteger;
-                  alertas.Post;
+                  // inserto una alerta de alta probable
+                  nuevaAlerta(camas2idCama.AsInteger,15,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+                  nueva_alerta := nueva_alerta + 1;
                 end;
+            end;
+        end;
+
+      // Si hay alertas para esta cama, agrego en la tabla alertas (memTable) el id de la cama.
+      // guardaré en la tabla alertas, el id de las camas que tienen alertas para luego ejecutar la alerta.
+      if(camas2alertas.AsInteger > 0) or (nueva_alerta = 1) then
+        begin
+          alertas.Append;
+          alertas.Fields[0].AsInteger := camas2idCama.AsInteger;
+          alertas.Post;
+        end;
+
+      // si cambió el idCama
+      if camasidCama.AsInteger <> camas2idCama.AsInteger then
+        begin
+          cambios := cambios + 1;
+        end
+      else
+        begin
+          // ACTUALIZO LA CAMA CON LA NUEVA INFORMACIÓN AUNQUE NO HAYA CAMBIADO.
 
 
-              // si cambió el idCama
-              if camasidCama.AsInteger <> camas2idCama.AsInteger then
+          // pinto la cama de color violeta si hay cambios de cama y es admision (si el servicio tiene gestionaCamas = 1)
+
+          if (datos.gestionaCamas = 1) and (camas2cambioCamaPendiente.AsInteger = 1) then
+            begin
+              ui.PanelB.Fill.Kind := TbrushKind.Solid;
+              ui.PanelB.Fill.Color := TAlphaColorRec.Darkorchid; // color violeta.
+            end;
+
+
+          // pinto la etiqueta del color correspondiente según el estado de la cama
+          ui.etiqueta.Fill.Kind := TbrushKind.Solid;
+          ui.etiqueta.Fill.Color := TAlphaColor(StrToAlphaColor(camas2color.AsString));
+
+          // coloco el nro de cama en el label lbNroCama
+          ui.lbNroCama.Text := camas2cama.AsString;
+
+          // completo la linea principal
+          if camas2idEstado.AsInteger = 2 then
+            begin
+              if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
+                ui.LbPrincipal.Text := camas2apellidoPaciente.AsString  + ', ' + camas2nombrePaciente.AsString
+              else
+                ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
+            end
+           else
+            ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
+
+          // completo la linea secundaria
+          if camas2idEstado.AsInteger = 2 then
+            begin
+              if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
+                ui.LbSecundaria.Text := 'DNI: ' + camas2nroDocumento.AsString
+              else
+                ui.LbSecundaria.Text := '';
+            end
+          else
+            ui.LbSecundaria.Text := '';
+
+          // verifico Alta y Alta Probable
+          if camas2idEstado.AsInteger = 2 then
+            begin
+              if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
                 begin
-                  cambios := cambios + 1;
+                  // hay epicrisis
+                  ui.lbAlta.Text := 'ALTA MÉDICA' + #13 + Copy(camasfechaAltaMedica.AsString, 1, 16);
+                  ui.lbAlta.FontColor := TAlphaColorRec.Red;
                 end
               else
                 begin
-                  // ACTUALIZO LA CAMA CON LA NUEVA INFORMACIÓN AUNQUE NO HAYA CAMBIADO.
-
-
-                  // pinto la cama de color violeta si hay cambios de cama y es admision (si el servicio tiene gestionaCamas = 1)
-
-                  if (datos.gestionaCamas = 1) and (camas2cambioCamaPendiente.AsInteger = 1) then
+                  // no hay epicrisis
+                  if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
                     begin
-                      ui.PanelB.Fill.Kind := TbrushKind.Solid;
-                      ui.PanelB.Fill.Color := TAlphaColorRec.Darkorchid; // color violeta.
-                    end;
-
-
-                  // pinto la etiqueta del color correspondiente según el estado de la cama
-                  ui.etiqueta.Fill.Kind := TbrushKind.Solid;
-                  ui.etiqueta.Fill.Color := TAlphaColor(StrToAlphaColor(camas2color.AsString));
-
-                  // coloco el nro de cama en el label lbNroCama
-                  ui.lbNroCama.Text := camas2cama.AsString;
-
-                  // completo la linea principal
-                  if camas2idEstado.AsInteger = 2 then
-                    begin
-                      if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
-                        ui.LbPrincipal.Text := camas2apellidoPaciente.AsString  + ', ' + camas2nombrePaciente.AsString
-                      else
-                        ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
-                    end
-                   else
-                    ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
-
-                  // completo la linea secundaria
-                  if camas2idEstado.AsInteger = 2 then
-                    begin
-                      if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
-                        ui.LbSecundaria.Text := 'DNI: ' + camas2nroDocumento.AsString
-                      else
-                        ui.LbSecundaria.Text := '';
-                    end
-                  else
-                    ui.LbSecundaria.Text := '';
-
-                  // verifico Alta y Alta Probable
-                  if camas2idEstado.AsInteger = 2 then
-                    begin
-                      if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
-                        begin
-                          // hay epicrisis
-                          ui.lbAlta.Text := 'ALTA MÉDICA' + #13 + Copy(camasfechaAltaMedica.AsString, 1, 16);
-                          ui.lbAlta.FontColor := TAlphaColorRec.Red;
-                        end
-                      else
-                        begin
-                          // no hay epicrisis
-                          if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
-                            begin
-                              ui.lbAlta.Text := 'ALTA PROBABLE' + #13 + Copy(camas2altaProbableFecha.AsString, 1, 16);
-                            ui.lbAlta.FontColor := TAlphaColorRec.Blue;
-                            end
-                          else
-                            begin
-                              ui.lbAlta.Text := '';
-                            end;
-                        end;
+                      ui.lbAlta.Text := 'ALTA PROBABLE' + #13 + Copy(camas2altaProbableFecha.AsString, 1, 16);
+                    ui.lbAlta.FontColor := TAlphaColorRec.Blue;
                     end
                   else
                     begin
                       ui.lbAlta.Text := '';
                     end;
-
-
-
-
-                  verificarIconosAislamientos(camas2idCama.AsInteger);
-
-                  //verificarAlertasMedicas(camas2idCama.AsInteger);
                 end;
+            end
+          else
+            begin
+              ui.lbAlta.Text := '';
+            end;
 
-              camas2.Next;
-              camas.Next;
-            until (camas2.Eof);
+          verificarIconosAislamientos(camas2idCama.AsInteger);
+        end;
 
-            if cambios > 0 then
-              ActualizarCamas;
+      camas2.Next;
+      camas.Next;
+    until (camas2.Eof);
+
+    if cambios > 0 then
+      ActualizarCamas;
 
 
-            // actualizo la tabla camas para que tenga la misma información que camas2
-            camas2.First;
-            camas.Close;
-            camas.Open;
-            repeat
-              with camas do
-                begin
-                  Append;
-                  FieldByName('idCama').Value := camas2idCama.AsInteger;
-                  FieldByName('cama').Value := camas2cama.AsString;
-                  FieldByName('idHabitacion').Value := camas2idHabitacion.AsInteger;
-                  FieldByName('habitacion').Value := camas2habitacion.AsString;
-                  FieldByName('piso').Value := camas2piso.AsString;
-                  FieldByName('idEstado').Value := camas2idEstado.AsInteger;
-                  FieldByName('estado').Value := camas2estado.AsString;
-                  FieldByName('color').Value := camas2color.AsString;
-                  FieldByName('paciCodigo').Value := camas2paciCodigo.AsInteger;
-                  FieldByName('nombrePaciente').Value := camas2nombrePaciente.AsString;
-                  FieldByName('apellidoPaciente').Value := camas2apellidoPaciente.AsString;
-                  FieldByName('tdocCodigo').Value := camas2tdocCodigo.AsInteger;
-                  FieldByName('nroDocumento').Value := camas2nroDocumento.AsString;
-                  FieldByName('sexo').Value := camas2sexo.AsString;
-                  FieldByName('fechaIngresoInstitucion').Value := camas2fechaIngresoInstitucion.AsString;
-                  FieldByName('fechaIngresoCama').Value := camas2fechaIngresoCama.AsString;
-                  FieldByName('cobertura').Value := camas2cobertura.AsString;
-                  FieldByName('fantasia').Value := camas2fantasia.AsString;
-                  FieldByName('plan').Value := camas2plan.AsString;
-                  FieldByName('nroAfiliado').Value := camas2nroAfiliado.AsString;
-                  FieldByName('idInternacion').Value := camas2idInternacion.AsInteger;
+    // actualizo la tabla camas para que tenga la misma información que camas2
+    camas2.First;
+    camas.Close;
+    camas.Open;
+    repeat
+      with camas do
+        begin
+          Append;
+          FieldByName('idCama').Value := camas2idCama.AsInteger;
+          FieldByName('cama').Value := camas2cama.AsString;
+          FieldByName('idHabitacion').Value := camas2idHabitacion.AsInteger;
+          FieldByName('habitacion').Value := camas2habitacion.AsString;
+          FieldByName('piso').Value := camas2piso.AsString;
+          FieldByName('idEstado').Value := camas2idEstado.AsInteger;
+          FieldByName('estado').Value := camas2estado.AsString;
+          FieldByName('color').Value := camas2color.AsString;
+          FieldByName('paciCodigo').Value := camas2paciCodigo.AsInteger;
+          FieldByName('nombrePaciente').Value := camas2nombrePaciente.AsString;
+          FieldByName('apellidoPaciente').Value := camas2apellidoPaciente.AsString;
+          FieldByName('tdocCodigo').Value := camas2tdocCodigo.AsInteger;
+          FieldByName('nroDocumento').Value := camas2nroDocumento.AsString;
+          FieldByName('sexo').Value := camas2sexo.AsString;
+          FieldByName('fechaIngresoInstitucion').Value := camas2fechaIngresoInstitucion.AsString;
+          FieldByName('fechaIngresoCama').Value := camas2fechaIngresoCama.AsString;
+          FieldByName('cobertura').Value := camas2cobertura.AsString;
+          FieldByName('fantasia').Value := camas2fantasia.AsString;
+          FieldByName('plan').Value := camas2plan.AsString;
+          FieldByName('nroAfiliado').Value := camas2nroAfiliado.AsString;
+          FieldByName('idInternacion').Value := camas2idInternacion.AsInteger;
 
-                  FieldByName('fechaAltaMedica').Value := camas2fechaAltaMedica.AsString;
+          FieldByName('fechaAltaMedica').Value := camas2fechaAltaMedica.AsString;
 
-                  FieldByName('profesionalAltaMedica').Value := camas2profesionalAltaMedica.AsString;
-                  FieldByName('camaEnAislamiento').Value := camas2camaEnAislamiento.AsString;
-                  FieldByName('observaciones').Value := camas2observaciones.AsString;
-                  FieldByName('procedimientosNoCumplidos').Value := camas2procedimientosNoCumplidos.AsString;
-                  FieldByName('medicacionNoProgramada').Value := camas2medicacionNoProgramada.AsString;
-                  FieldByName('medicacionNoAplicada').Value := camas2medicacionNoAplicada.asString;
+          FieldByName('profesionalAltaMedica').Value := camas2profesionalAltaMedica.AsString;
+          FieldByName('camaEnAislamiento').Value := camas2camaEnAislamiento.AsString;
+          FieldByName('observaciones').Value := camas2observaciones.AsString;
+          FieldByName('procedimientosNoCumplidos').Value := camas2procedimientosNoCumplidos.AsString;
+          FieldByName('medicacionNoProgramada').Value := camas2medicacionNoProgramada.AsString;
+          FieldByName('medicacionNoAplicada').Value := camas2medicacionNoAplicada.asString;
 
-                  FieldByName('kpc').Value := camas2kpc.AsInteger;
-                  FieldByName('aislamiento_contacto').Value := camas2aislamiento_contacto.AsString;
-                  FieldByName('aislamiento_gota').Value := camas2aislamiento_gota.AsString;
-                  FieldByName('aislamiento_respiratorio').Value := camas2aislamiento_respiratorio.AsString;
-                  FieldByName('aislamiento_neutropenico').Value := camas2aislamiento_neutropenico.AsString;
-                  FieldByName('aislamiento_cd').Value := camas2aislamiento_cd.AsString;
-                  FieldByName('aislamiento_sc').Value := camas2aislamiento_sc.AsString;
+          FieldByName('kpc').Value := camas2kpc.AsInteger;
+          FieldByName('aislamiento_contacto').Value := camas2aislamiento_contacto.AsString;
+          FieldByName('aislamiento_gota').Value := camas2aislamiento_gota.AsString;
+          FieldByName('aislamiento_respiratorio').Value := camas2aislamiento_respiratorio.AsString;
+          FieldByName('aislamiento_neutropenico').Value := camas2aislamiento_neutropenico.AsString;
+          FieldByName('aislamiento_cd').Value := camas2aislamiento_cd.AsString;
+          FieldByName('aislamiento_sc').Value := camas2aislamiento_sc.AsString;
 
-                  FieldByName('tipoAltaMedica').Value := camas2tipoAltaMedica.AsString;
-                  FieldByName('acompanante').Value := camas2acompanante.AsInteger;
-                  FieldByName('observacionesAcompanante').Value := camas2observacionesAcompanante.AsString;
-                  FieldByName('orden').Value := camas2orden.AsInteger;
-                  FieldByName('cambioCamaPendiente').Value := camas2cambioCamaPendiente.AsInteger;
-                  FieldByName('alertas').Value := camas2alertas.AsInteger;
-                  FieldByName('tareasPendientes').Value := camas2tareasPendientes.AsInteger;
-                  FieldByName('altaProbableFecha').Value := camas2altaProbableFecha.AsString;
-                  FieldByName('altaProbableTipo').Value := camas2altaProbableTipo.AsString;
-                  FieldByName('altaProbableDniUsuario').Value := camas2altaProbableDniUsuario.AsInteger;
-                  FieldByName('altaProbableNombreUsuario').Value := camas2altaProbableNombreUsuario.AsString;
-                  FieldByName('reservaMotivo').Value := camas2reservaMotivo.AsString;
-                  FieldByName('reservaFecha').Value := camas2reservaFecha.AsString;
-                  FieldByName('reservadaPorDni').Value := camas2reservadaPorDni.AsInteger;
-                  FieldByName('reservadaPorNombre').Value := camas2reservadaPorNombre.AsString;
-                  FieldByName('idReserva').Value := camas2idReserva.AsInteger;
-                  FieldByName('reservaFechaCancelada').Value := camas2reservaFechaCancelada.AsString;
-                  FieldByName('reservaCanceladaPorDni').Value := camas2reservaCanceladaPorDni.AsInteger;
-                  FieldByName('reservaCanceladaPorNombre').Value := camas2reservaCanceladaPorNombre.AsString;
-                  FieldByName('reservaPacienteDni').Value := camas2reservaPacienteDni.AsString;
-                  FieldByName('reservaPacienteNombre').Value := camas2reservaPacienteNombre.AsString;
-                  FieldByName('idMotivoFinReserva').Value := camas2idMotivoFinReserva.AsInteger;
-                  FieldByName('reservaIdSolicitudCambio').Value := camas2reservaIdSolicitudCambio.AsInteger;
-                  FieldByName('fotoPaciente').Value := camas2fotoPaciente.AsString;
-                  Post;
-                end;
-              camas2.Next;
-            until (camas2.Eof);
+          FieldByName('tipoAltaMedica').Value := camas2tipoAltaMedica.AsString;
+          FieldByName('acompanante').Value := camas2acompanante.AsInteger;
+          FieldByName('observacionesAcompanante').Value := camas2observacionesAcompanante.AsString;
+          FieldByName('orden').Value := camas2orden.AsInteger;
+          FieldByName('cambioCamaPendiente').Value := camas2cambioCamaPendiente.AsInteger;
+          FieldByName('alertas').Value := camas2alertas.AsInteger;
+          FieldByName('tareasPendientes').Value := camas2tareasPendientes.AsInteger;
+          FieldByName('altaProbableFecha').Value := camas2altaProbableFecha.AsString;
+          FieldByName('altaProbableTipo').Value := camas2altaProbableTipo.AsString;
+          FieldByName('altaProbableDniUsuario').Value := camas2altaProbableDniUsuario.AsInteger;
+          FieldByName('altaProbableNombreUsuario').Value := camas2altaProbableNombreUsuario.AsString;
+          FieldByName('reservaMotivo').Value := camas2reservaMotivo.AsString;
+          FieldByName('reservaFecha').Value := camas2reservaFecha.AsString;
+          FieldByName('reservadaPorDni').Value := camas2reservadaPorDni.AsInteger;
+          FieldByName('reservadaPorNombre').Value := camas2reservadaPorNombre.AsString;
+          FieldByName('idReserva').Value := camas2idReserva.AsInteger;
+          FieldByName('reservaFechaCancelada').Value := camas2reservaFechaCancelada.AsString;
+          FieldByName('reservaCanceladaPorDni').Value := camas2reservaCanceladaPorDni.AsInteger;
+          FieldByName('reservaCanceladaPorNombre').Value := camas2reservaCanceladaPorNombre.AsString;
+          FieldByName('reservaPacienteDni').Value := camas2reservaPacienteDni.AsString;
+          FieldByName('reservaPacienteNombre').Value := camas2reservaPacienteNombre.AsString;
+          FieldByName('idMotivoFinReserva').Value := camas2idMotivoFinReserva.AsInteger;
+          FieldByName('reservaIdSolicitudCambio').Value := camas2reservaIdSolicitudCambio.AsInteger;
+          FieldByName('fotoPaciente').Value := camas2fotoPaciente.AsString;
+          Post;
+        end;
+      camas2.Next;
+    until (camas2.Eof);
 
-            // ejecuto las alertas.
-            // si hay alertas (tabla alertas) ejecuto el timer que las mostrará
-            if alertas.RecordCount > 0 then
-              relojParpadeo.Enabled := true
-            else
-              relojParpadeo.Enabled := false;
-          end
-        else
-          begin
-            // la cantidad de camas no es la misma. Actualizo todo.
-            ActualizarCamas;
-          end;
-      end
+    // ejecuto las alertas.
+    // si hay alertas (tabla alertas) ejecuto el timer que las mostrará
+    if alertas.RecordCount > 0 then
+      relojParpadeo.Enabled := true
     else
-      begin
-        // mensaje mostrando el código de error que devolvío la api.
-        datos.VerMensaje('ERROR ' + response.statusCode.ToString  ,'El WS '+ datos.urlTC + recursoCamas +' a retornado el siguiente código de estado: ' + response.StatusCode.ToString,'Aceptar','ERROR',0);
-      end;
+      relojParpadeo.Enabled := false;
   except
     on E:Exception do
       begin
