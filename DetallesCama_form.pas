@@ -240,12 +240,18 @@ type
     alertastipoAlerta: TStringField;
     alertasidCama: TIntegerField;
     alertasfecha: TStringField;
+    alertasApagar: TFDMemTable;
+    alertasApagaridAlerta: TIntegerField;
+    alertasApagaridTipoAlerta: TIntegerField;
+    alertasApagartipoAlerta: TStringField;
+    alertasApagaridCama: TIntegerField;
+    alertasApagarfecha: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);
     procedure btn_AltaDefinitivaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure ApagarAlertas(idCama: integer);
+    procedure ApagarAlertas;
     procedure botonCambioCamaClick(Sender: TObject);
     procedure mostrarAlertas(idCama, idServicio: integer; filtro: string);
     procedure crearAlerta(idAlerta: integer; texto:string);
@@ -262,6 +268,7 @@ type
     procedure botonReparacionClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
+    procedure cargarAlertasApagar(idCama,idServicio: integer; filtro:string);
   private
     { Private declarations }
   public
@@ -616,27 +623,42 @@ begin
   end;
 end;
 
-procedure Tform_DetallesCama.ApagarAlertas(idCama: integer);
+procedure Tform_DetallesCama.ApagarAlertas;
 var
   response : IResponse;
   recurso, body:String;
-  json : TJsonObject;
+  jsonObj  : TJSONObject;
+  jsonArr  : TJSONArray;
 begin
   // marca como leidas todas las alertas de esta cama.
   // solo son las alertas que este servicio recibe, no todas las alertas recibidas en esta cama para otros servicios.
 
-  json := TJSONObject.Create;
+  if alertasApagar.RecordCount = 0 then
+    exit;
+
+  jsonObj := TJSONObject.Create;
+  jsonArr := TJSONArray.Create;
   try
-    json.AddPair('idCama', TJSONNumber.Create(idCama));
-    json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
-    json.AddPair('idServicio',  TJSONNumber.Create(datos.servicio));
-    json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
-    body := json.ToJSON;
+    alertasApagar.First;
+    while not alertasApagar.EOF do
+    begin
+      jsonArr.Add(alertasApagaridAlerta.AsInteger);
+      alertasApagar.Next;
+    end;
+
+    // Datos adicionales + array de IDs
+    jsonObj.AddPair('idUsuario',    TJSONNumber.Create(datos.idUsuario));
+    jsonObj.AddPair('idAplicacion', TJSONNumber.Create(datos.idAplicacion));
+    jsonObj.AddPair('idServicio', TJSONNumber.Create(datos.servicio));
+    jsonObj.AddPair('idAlertas',    jsonArr);
+
+    body := jsonObj.ToJSON;
+
   finally
-    json.Free;
+    jsonObj.Free;
   end;
 
-  recurso := '/tablerocamas/apagarAlertasServicio';
+  recurso := '/tablerocamas/apagarAlertasLote';
 
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(recurso)
@@ -899,6 +921,37 @@ begin
   end;
 end;
 
+procedure Tform_DetallesCama.cargarAlertasApagar(idCama, idServicio: integer;  filtro: string);
+var
+  response: IResponse;
+  recurso: String;
+begin
+  {cargo en la tabla alertasApagar todas las alertas que recibe esta cama al momento de abrir el formulario.
+   Todas estas alertas son las que luego apagaré.
+   No apagaré las alertas que la cama reciba mientras el formulario está abierto.
+  }
+
+  // filtro puede valer: todas, leidas, pendientes
+
+  recurso := '/tablerocamas/alertas';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idCama', idCama.ToString)
+              .AddParam('idServicio', idServicio.ToString)
+              .AddParam('filtro', filtro)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(alertasApagar))
+              .Get;
+
+  if response.StatusCode <> 200 then
+    begin
+      datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'No se pudo cargar las alertas de esta cama (procedure: cargarAlertasApagar).','Aceptar','ERROR',0);
+    end;
+
+  //showmessage('Cantidad de alertas: '+alertasApagar.RecordCount.ToString);
+end;
+
 //procedure Tform_DetallesCama.CargarAislamientosDesdeJson(const JsonStr: string; Aislamientos: TFDMemTable);
 //var
 //  JsonArray: TJSONArray;
@@ -1049,10 +1102,9 @@ procedure Tform_DetallesCama.FormClose(Sender: TObject;  var Action: TCloseActio
 begin
   // apago todas las alertas de esta cama
 
-  if alertas.RecordCount > 0 then
   // con esto solo apagaría las alertas que se cargaron al abrir el formulario.
   // No se apagarian las alertas creadas mientras el formulario estaba abierto.
-    ApagarAlertas(idCama);
+  ApagarAlertas;
 end;
 
 procedure Tform_DetallesCama.FormCreate(Sender: TObject);

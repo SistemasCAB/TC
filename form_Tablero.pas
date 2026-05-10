@@ -510,6 +510,9 @@ begin
       form_DetallesCama.idCama := idCama;
       form_DetallesCama.Height  := formTablero.Height;
       form_DetallesCama.Width   := formTablero.Width;
+
+      form_DetallesCama.cargarAlertasApagar(idCama, datos.servicio, 'pendientes');
+
       form_DetallesCama.Actualizar(idCama);
       form_DetallesCama.Showmodal;
 
@@ -1570,7 +1573,7 @@ procedure TformTablero.apagarAlertasCamasDisponibles();
 var
   response : IResponse;
 begin
-  // marca como leidas todas las alertas de esta camas disponibles.
+  // marca como leidas todas las alertas de las camas disponibles.
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource('tablerocamas/apagarAlertasCamasDisponibles')
               .AddHeader('TokenAcceso', datos.tokenAcceso)
