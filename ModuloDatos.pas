@@ -121,7 +121,7 @@ begin
   col             := archivo.ReadInteger('TABLERO','columnas',4);
   alto            := archivo.ReadInteger('TABLERO','altura',100);
   pad             := archivo.ReadInteger('TABLERO','padding',5);
-  pendientes      := archivo.ReadInteger('TABLERO','versolotareaspendientes',0);
+  //pendientes      := archivo.ReadInteger('TABLERO','versolotareaspendientes',0);
 
   servidorSQL     := archivo.ReadString('SQL','servidor','10.99.8.8');
   baseDatos       := archivo.ReadString('SQL','base','CAB');

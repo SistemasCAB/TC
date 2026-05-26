@@ -279,6 +279,7 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <Icon_MainIcon>C:\TableroCamas\TableroCamas_Icon3.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -359,6 +360,10 @@
         </DCCReference>
         <DCCReference Include="EnviarQuirofano_form.pas">
             <Form>form_EnviarQuirofano</Form>
+        </DCCReference>
+        <DCCReference Include="FiltrarCamas_form.pas">
+            <Form>formFiltrarCamas</Form>
+            <FormType>fmx</FormType>
         </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">

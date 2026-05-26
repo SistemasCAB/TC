@@ -64,6 +64,7 @@ type
     LinkListControlToField1: TLinkListControlToField;
     botonSalir: TSpeedButton;
     Image3: TImage;
+    serviciostareasPendientes: TIntegerField;
     procedure FormActivate(Sender: TObject);
     procedure listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
     procedure ActualizarServicios;

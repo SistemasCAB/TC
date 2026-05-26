@@ -602,15 +602,12 @@ object formTablero: TformTablero
         TextSettings.HorzAlign = Center
         Text = 'NOMBRE DEL SERVICIO'
         TabOrder = 2
-        object botonConsultarCambios: TButton
-          Position.X = 80.000000000000000000
-          Position.Y = 8.000000000000000000
-          Size.Width = 27.000000000000000000
-          Size.Height = 22.000000000000000000
+        object SpeedButton1: TSpeedButton
+          Align = Left
+          Size.Width = 123.000000000000000000
+          Size.Height = 61.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 3
-          Text = 'CC'
-          OnClick = botonConsultarCambiosClick
+          OnClick = SpeedButton1Click
         end
       end
       object botonSalirFullScreen: TSpeedButton
@@ -639,21 +636,21 @@ object formTablero: TformTablero
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                01BF494441545847EDD7B16E13411405D035C5CAEE301696204EA48402C11725
-                0DD4110DF90B6451C47DBAF47411E203681034145045CA0FD8D25822B3F2CEBB
-                97C214933B63592B792512EDE9FCDEBB3363D9BBF61645A7F3D0912CCD6CE6BD
-                9FB325DEFB8599CD4896BA7FC2CCCE7581167DD0FD7B5AF0DECFFBFDFE13ADB7
-                A1AAAAC5603018C5B5E44024A9B536F57ABD3B677814BFF81F7407DAE6FE1F08
-                C02792CF498E00CCB45FAC67A645510C494E005C69BF11BD512800772E530067
-                CE3990A473CE00BC93FE58D788C5B3591A50000E3503E0AD73EE16C049A6F752
-                D788E97C42032A84F095E4507300C699DA2884F043D7886926A1819C10C24F00
-                CF341B03B05FD7F52FCD2ACD2534B0495DD7D7248F345FFCFB9856ABD58D6672
-                34DBF82A8B914C7E7A764EDF414E838FECB76695E6121A5021846F1BBED44F33
-                B511C9EFBA464C33090D2800AF3403E0CD72B9FC03E038D37BAD6BC4743EA101
-                05602F9E07F05E6E8CA7D27FA16BC4E2D92C0D2833FB0C60427268661FB5CFF5
-                CC94E463920766F645FB31DD3FB94A72436DEAFEA035D51D689BE44055552DB4
-                D696DC5EC981CAB2BCD45A5BCAB2BCD05A227A945EE83D63571A3D4A773AF7DD
-                5FB1F4BCDD435AB4410000000049454E44AE426082}
+                01BF494441545847EDD7BD4E1B411405E035C5CAEE70AC58E2578214283C1169
+                A04669C25B2044817B3AFA7428CA03A44149932254487981B52C4B302BEFDC73
+                28A0189F19CB5A899500EDD7F9DE7B66C6B277EDCDB256EBBD23999BD9C83957
+                B021CEB9B1998D48E6BA7FC4CC2E7481069DEAFE1D2D38E78A6EB7FB41EB4D28
+                CB72DCEBF506612D3A10496AAD499D4E67EE0C2BE18BD7A03DD0326FFF4000BE
+                935C27390030D27EF634739665599FE426806BEDD7A2370A0560EE3205705214
+                0548B2280A03F055FA435D2314CE26694001D8D10C80A3C964F200E04BA2B7A7
+                6B84743EA201E5BDFF45B2AF3900C3446DE0BDFFA36B843413D1408AF7FE2F80
+                35CD86006C5555F54FB34A73110D2C5255D51DC95DCD67CF1FD36C36FBAF9914
+                CDD6BECA4224A39F9E17A7EF20A5C64776AB59A5B9880694F7FE66C197FA63A2
+                3620F95BD7086926A20105E0B366001C4EA7D37B000789DEBEAE11D2F9880614
+                808D701EC037B9311E4BFF93AE110A679334A0CCEC07804D927D333BD73E9F66
+                CE48AE92DC36B39FDA0FE9FED155921A6A52FB07ADAEF640CB44072ACB72ACB5
+                A6A4F68A0E94E7F995D69A92E7F9A5D622C1A3F458EF192FA5D6A374ABF5D63D
+                028757BCAAE54A7D330000000049454E44AE426082}
               FileName = 
                 'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                 '\Boton Salir.png'
@@ -715,7 +712,6 @@ object formTablero: TformTablero
       end
       object botonFiltrarPorEstado: TSpeedButton
         Align = Top
-        Enabled = False
         StyledSettings = [Family, Size]
         Position.Y = 51.000000000000000000
         Size.Width = 180.000000000000000000
@@ -724,6 +720,7 @@ object formTablero: TformTablero
         Text = 'Filtrar Camas por Estado'
         TextSettings.Font.StyleExt = {00070000000000000004000000}
         TextSettings.FontColor = claWhitesmoke
+        OnClick = botonFiltrarPorEstadoClick
       end
       object menuSeparador2: TRectangle
         Align = Top
@@ -802,7 +799,7 @@ object formTablero: TformTablero
           Size.Height = 15.000000000000000000
           Size.PlatformDefault = False
           TextSettings.FontColor = claWhitesmoke
-          Text = 'dd-mm-yyyy hh:mm:ss'
+          Text = '20-05-2026 13:14:00'
           TabOrder = 0
         end
       end
@@ -1485,6 +1482,9 @@ object formTablero: TformTablero
     object serviciogestionaCamas: TIntegerField
       FieldName = 'gestionaCamas'
     end
+    object serviciotareasPendientes: TIntegerField
+      FieldName = 'tareasPendientes'
+    end
     object serviciopermisos: TMemoField
       FieldName = 'permisos'
       BlobType = ftMemo
@@ -1515,6 +1515,34 @@ object formTablero: TformTablero
     end
     object serviciosUsuariogestionaCamas: TIntegerField
       FieldName = 'gestionaCamas'
+    end
+  end
+  object alertaAtendida: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 788
+    Top = 617
+    object alertaAtendidaidTipoAlerta: TIntegerField
+      FieldName = 'idTipoAlerta'
+    end
+    object alertaAtendidatipoAlerta: TStringField
+      FieldName = 'tipoAlerta'
+      Size = 255
+    end
+    object alertaAtendidaidServicio: TIntegerField
+      FieldName = 'idServicio'
+    end
+    object alertaAtendidanombreServicio: TStringField
+      FieldName = 'nombreServicio'
+      Size = 255
+    end
+    object alertaAtendidaatendida: TIntegerField
+      FieldName = 'atendida'
     end
   end
 end

@@ -3,7 +3,7 @@ object form_Configuracion: Tform_Configuracion
   Top = 0
   Caption = 'Configuraci'#243'n'
   ClientHeight = 769
-  ClientWidth = 1185
+  ClientWidth = 1354
   Fill.Color = xD8000000
   Fill.Kind = Solid
   Position = ScreenCenter
@@ -14,9 +14,17 @@ object form_Configuracion: Tform_Configuracion
   OnCreate = FormCreate
   OnClose = FormClose
   DesignerMasterStyle = 0
-  object Formulario: TRectangle
+  object FondoTransparente: TRectangle
+    Align = Client
+    Fill.Color = claBlack
+    Opacity = 0.400000005960464500
+    Size.Width = 1354.000000000000000000
+    Size.Height = 769.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object FORMULARIO: TRectangle
     Align = Center
-    Size.Width = 1083.000000000000000000
+    Size.Width = 1295.000000000000000000
     Size.Height = 673.000000000000000000
     Size.PlatformDefault = False
     object contenedorPrincipal: TLayout
@@ -25,14 +33,14 @@ object form_Configuracion: Tform_Configuracion
       Margins.Top = 10.000000000000000000
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 10.000000000000000000
-      Size.Width = 1063.000000000000000000
+      Size.Width = 1275.000000000000000000
       Size.Height = 603.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       object pagina: TTabControl
         Align = Client
         FullSize = True
-        Size.Width = 1063.000000000000000000
+        Size.Width = 1275.000000000000000000
         Size.Height = 603.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 35.000000000000000000
@@ -41,15 +49,9 @@ object form_Configuracion: Tform_Configuracion
         TabPosition = PlatformDefault
         OnChange = paginaChange
         Sizes = (
-          1063s
+          1275s
           568s
-          1063s
-          568s
-          1063s
-          568s
-          1063s
-          568s
-          1063s
+          1275s
           568s)
         object tabServicios: TTabItem
           CustomIcon = <
@@ -58,91 +60,31 @@ object form_Configuracion: Tform_Configuracion
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           StyledSettings = [Family, Size, FontColor]
           IsSelected = True
-          Size.Width = 212.000000000000000000
+          Size.Width = 636.000000000000000000
           Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
           TabOrder = 0
-          Text = 'SERVICIOS'
+          Text = 'SERVICIOS - CAMAS'
           ExplicitSize.cx = 530.000000000000000000
           ExplicitSize.cy = 35.000000000000000000
           object contenedorTabServicios: TLayout
             Align = Client
             Margins.Top = 10.000000000000000000
-            Size.Width = 1063.000000000000000000
+            Size.Width = 1275.000000000000000000
             Size.Height = 558.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            object listaServicios: TListView
-              ItemAppearanceClassName = 'TListItemAppearance'
-              ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
-              HeaderAppearanceClassName = 'TListHeaderObjects'
-              FooterAppearanceClassName = 'TListHeaderObjects'
-              Align = Left
-              Size.Width = 297.000000000000000000
-              Size.Height = 558.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 1
-              OnItemClick = listaServiciosItemClick
-            end
-            object Layout1: TLayout
-              Align = Left
-              Margins.Left = 20.000000000000000000
-              Margins.Right = 20.000000000000000000
-              Position.X = 317.000000000000000000
-              Size.Width = 123.000000000000000000
+            object Layout5: TLayout
+              Align = Client
+              Size.Width = 1275.000000000000000000
               Size.Height = 558.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
-              object Layout3: TLayout
-                Align = Top
-                Position.Y = 55.000000000000000000
-                Size.Width = 123.000000000000000000
-                Size.Height = 27.000000000000000000
-                Size.PlatformDefault = False
-                TabOrder = 0
-              end
-              object botonActualizarServicio: TRectangle
-                Align = Top
-                Fill.Color = xFF00558C
-                Size.Width = 123.000000000000000000
-                Size.Height = 55.000000000000000000
-                Size.PlatformDefault = False
-                Stroke.Kind = None
-                Stroke.Thickness = 2.000000000000000000
-                XRadius = 5.000000000000000000
-                YRadius = 5.000000000000000000
-                object Label4: TLabel
-                  Align = Client
-                  StyledSettings = [Family, Size]
-                  Size.Width = 123.000000000000000000
-                  Size.Height = 55.000000000000000000
-                  Size.PlatformDefault = False
-                  TextSettings.Font.StyleExt = {00070000000000000004000000}
-                  TextSettings.FontColor = claWhite
-                  TextSettings.HorzAlign = Center
-                  Text = 'Actualizar Servicios'
-                  TabOrder = 1
-                end
-                object botonActualizarServicios: TSpeedButton
-                  Align = Contents
-                  Size.Width = 123.000000000000000000
-                  Size.Height = 55.000000000000000000
-                  Size.PlatformDefault = False
-                  OnClick = botonActualizarServiciosClick
-                end
-              end
-            end
-            object Layout5: TLayout
-              Align = Client
-              Size.Width = 603.000000000000000000
-              Size.Height = 558.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 2
               object Layout6: TLayout
                 Align = Top
-                Size.Width = 603.000000000000000000
-                Size.Height = 121.000000000000000000
+                Size.Width = 1275.000000000000000000
+                Size.Height = 113.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
                 object Label6: TLabel
@@ -161,92 +103,43 @@ object form_Configuracion: Tform_Configuracion
                   Size.Width = 57.000000000000000000
                   Size.Height = 27.000000000000000000
                   Size.PlatformDefault = False
-                  TabOrder = 2
+                  TabOrder = 3
                 end
                 object Label5: TLabel
                   Position.X = 24.000000000000000000
                   Position.Y = 16.000000000000000000
                   Text = 'Nombre del servicio'
-                  TabOrder = 1
+                  TabOrder = 2
                 end
-                object botonGuardar: TRectangle
-                  Fill.Color = xFF00558C
-                  Position.X = 505.000000000000000000
-                  Position.Y = 66.000000000000000000
-                  Size.Width = 82.000000000000000000
-                  Size.Height = 40.000000000000000000
-                  Size.PlatformDefault = False
-                  Stroke.Kind = None
-                  Stroke.Thickness = 2.000000000000000000
-                  XRadius = 5.000000000000000000
-                  YRadius = 5.000000000000000000
-                  object Label7: TLabel
-                    Align = Client
-                    StyledSettings = [Family, Size]
-                    Size.Width = 82.000000000000000000
-                    Size.Height = 40.000000000000000000
-                    Size.PlatformDefault = False
-                    TextSettings.Font.StyleExt = {00070000000000000004000000}
-                    TextSettings.FontColor = claWhite
-                    TextSettings.HorzAlign = Center
-                    Text = 'Guardar'
-                    TabOrder = 1
-                  end
-                  object SpeedButton5: TSpeedButton
-                    Align = Contents
-                    Size.Width = 82.000000000000000000
-                    Size.Height = 40.000000000000000000
-                    Size.PlatformDefault = False
-                  end
-                end
-                object edt_nombreServicio: TEdit
-                  Touch.InteractiveGestures = [LongTap, DoubleTap]
-                  TabOrder = 3
-                  ReadOnly = True
-                  TextSettings.Font.StyleExt = {00070000000000000004000000}
-                  Position.X = 24.000000000000000000
-                  Position.Y = 36.000000000000000000
-                  Size.Width = 417.000000000000000000
+                object comboServiciosCamas: TComboBox
+                  Position.X = 152.000000000000000000
+                  Position.Y = 16.000000000000000000
+                  Size.Width = 537.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
-                  StyledSettings = [Family, Size, FontColor]
-                  OnChange = edt_nombreServicioChange
+                  TabOrder = 4
+                  OnChange = comboServiciosCamasChange
                 end
-                object botonEliminar: TRectangle
-                  Fill.Color = claCrimson
-                  Position.X = 505.000000000000000000
+                object lb_idServicio: TLabel
+                  Position.X = 704.000000000000000000
                   Position.Y = 16.000000000000000000
-                  Size.Width = 82.000000000000000000
-                  Size.Height = 40.000000000000000000
+                  Text = 'ID Servicio: xxxx'
+                  TabOrder = 1
+                end
+                object Rectangle1: TRectangle
+                  Fill.Kind = None
+                  Position.X = 23.000000000000000000
+                  Position.Y = 56.000000000000000000
+                  Size.Width = 61.000000000000000000
+                  Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   Stroke.Kind = None
-                  Stroke.Thickness = 2.000000000000000000
-                  XRadius = 5.000000000000000000
-                  YRadius = 5.000000000000000000
-                  object Label2: TLabel
-                    Align = Client
-                    StyledSettings = [Family, Size]
-                    Size.Width = 82.000000000000000000
-                    Size.Height = 40.000000000000000000
-                    Size.PlatformDefault = False
-                    TextSettings.Font.StyleExt = {00070000000000000004000000}
-                    TextSettings.FontColor = claWhite
-                    TextSettings.HorzAlign = Center
-                    Text = 'Elminar'
-                    TabOrder = 1
-                  end
-                  object SpeedButton3: TSpeedButton
-                    Align = Contents
-                    Size.Width = 82.000000000000000000
-                    Size.Height = 40.000000000000000000
-                    Size.PlatformDefault = False
-                  end
                 end
               end
               object Layout7: TLayout
                 Align = Client
-                Size.Width = 603.000000000000000000
-                Size.Height = 437.000000000000000000
+                Size.Width = 1275.000000000000000000
+                Size.Height = 445.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 1
                 object Layout8: TLayout
@@ -256,10 +149,10 @@ object form_Configuracion: Tform_Configuracion
                   Position.X = 245.000000000000000000
                   Position.Y = 33.000000000000000000
                   Size.Width = 79.000000000000000000
-                  Size.Height = 404.000000000000000000
+                  Size.Height = 412.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
-                  object Rectangle4: TRectangle
+                  object recQuitarCama: TRectangle
                     Fill.Color = xFF00558C
                     Position.Y = 198.000000000000000000
                     Size.Width = 79.000000000000000000
@@ -282,15 +175,16 @@ object form_Configuracion: Tform_Configuracion
                       Text = 'Quitar'
                       TabOrder = 1
                     end
-                    object serviciosBotonQuitar: TSpeedButton
+                    object botonQuitarCama: TSpeedButton
                       Align = Contents
                       Locked = True
                       Size.Width = 79.000000000000000000
                       Size.Height = 40.000000000000000000
                       Size.PlatformDefault = False
+                      OnClick = botonQuitarCamaClick
                     end
                   end
-                  object Rectangle7: TRectangle
+                  object recAgregarCama: TRectangle
                     Fill.Color = xFF00558C
                     Position.Y = 125.000000000000000000
                     Size.Width = 79.000000000000000000
@@ -313,20 +207,21 @@ object form_Configuracion: Tform_Configuracion
                       Text = 'Agregar'
                       TabOrder = 1
                     end
-                    object serviciosBotonAgregar: TSpeedButton
+                    object botonAgregarCama: TSpeedButton
                       Align = Contents
                       Locked = True
                       Size.Width = 79.000000000000000000
                       Size.Height = 40.000000000000000000
                       Size.PlatformDefault = False
+                      OnClick = botonAgregarCamaClick
                     end
                   end
                 end
-                object ListBox1: TListBox
+                object listaCamasServicio: TListBox
                   Align = Left
                   Position.Y = 33.000000000000000000
                   Size.Width = 225.000000000000000000
-                  Size.Height = 404.000000000000000000
+                  Size.Height = 412.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 2
                   DisableFocusEffect = True
@@ -334,14 +229,14 @@ object form_Configuracion: Tform_Configuracion
                   DefaultItemStyles.GroupHeaderStyle = ''
                   DefaultItemStyles.GroupFooterStyle = ''
                   Viewport.Width = 221.000000000000000000
-                  Viewport.Height = 400.000000000000000000
+                  Viewport.Height = 408.000000000000000000
                 end
                 object listaCamasDisponibles: TListBox
                   Align = Left
                   Position.X = 344.000000000000000000
                   Position.Y = 33.000000000000000000
                   Size.Width = 225.000000000000000000
-                  Size.Height = 404.000000000000000000
+                  Size.Height = 412.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 1
                   DisableFocusEffect = True
@@ -349,11 +244,11 @@ object form_Configuracion: Tform_Configuracion
                   DefaultItemStyles.GroupHeaderStyle = ''
                   DefaultItemStyles.GroupFooterStyle = ''
                   Viewport.Width = 221.000000000000000000
-                  Viewport.Height = 400.000000000000000000
+                  Viewport.Height = 408.000000000000000000
                 end
                 object Layout9: TLayout
                   Align = Top
-                  Size.Width = 603.000000000000000000
+                  Size.Width = 1275.000000000000000000
                   Size.Height = 33.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 3
@@ -380,63 +275,194 @@ object form_Configuracion: Tform_Configuracion
             end
           end
         end
-        object tabConexion: TTabItem
+        object tabAlertas: TTabItem
           CustomIcon = <
             item
             end>
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           StyledSettings = [Family, Size, FontColor]
           IsSelected = False
-          Size.Width = 212.000000000000000000
+          Size.Width = 637.000000000000000000
           Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
           TabOrder = 0
-          Text = 'CONEXI'#211'N'
+          Text = 'SERVICIOS - ALERTAS'
           ExplicitSize.cx = 531.000000000000000000
           ExplicitSize.cy = 35.000000000000000000
-        end
-        object fichaCamas: TTabItem
-          CustomIcon = <
-            item
-            end>
-          IsSelected = False
-          Size.Width = 212.000000000000000000
-          Size.Height = 35.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = ''
-          TabOrder = 0
-          Text = 'CAMAS'
-          ExplicitSize.cx = 212.000000000000000000
-          ExplicitSize.cy = 35.000000000000000000
-        end
-        object HABITACIONES: TTabItem
-          CustomIcon = <
-            item
-            end>
-          IsSelected = False
-          Size.Width = 212.000000000000000000
-          Size.Height = 35.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = ''
-          TabOrder = 0
-          Text = 'HABITACIONES'
-          ExplicitSize.cx = 212.000000000000000000
-          ExplicitSize.cy = 35.000000000000000000
-        end
-        object TabItem3: TTabItem
-          CustomIcon = <
-            item
-            end>
-          IsSelected = False
-          Size.Width = 213.000000000000000000
-          Size.Height = 35.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = ''
-          TabOrder = 0
-          Text = 'TabItem3'
-          ExplicitSize.cx = 213.000000000000000000
-          ExplicitSize.cy = 35.000000000000000000
+          object Layout2: TLayout
+            Align = Client
+            Margins.Top = 10.000000000000000000
+            Size.Width = 1275.000000000000000000
+            Size.Height = 558.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object Layout11: TLayout
+              Align = Client
+              Size.Width = 1275.000000000000000000
+              Size.Height = 558.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              object Layout12: TLayout
+                Align = Top
+                Size.Width = 1275.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                object Label12: TLabel
+                  Position.X = 16.000000000000000000
+                  Position.Y = 9.000000000000000000
+                  Text = 'Nombre del servicio'
+                  TabOrder = 0
+                end
+                object comboServicios: TComboBox
+                  Position.X = 144.000000000000000000
+                  Position.Y = 8.000000000000000000
+                  Size.Width = 481.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  OnChange = comboServiciosChange
+                end
+              end
+              object Layout13: TLayout
+                Align = Client
+                Size.Width = 1275.000000000000000000
+                Size.Height = 514.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                object Layout14: TLayout
+                  Align = Left
+                  Margins.Left = 20.000000000000000000
+                  Margins.Right = 20.000000000000000000
+                  Position.X = 597.000000000000000000
+                  Position.Y = 33.000000000000000000
+                  Size.Width = 79.000000000000000000
+                  Size.Height = 481.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  object recBotonQuitarAlerta: TRectangle
+                    Fill.Color = xFF00558C
+                    Position.Y = 198.000000000000000000
+                    Size.Width = 79.000000000000000000
+                    Size.Height = 40.000000000000000000
+                    Size.PlatformDefault = False
+                    Stroke.Kind = None
+                    Stroke.Thickness = 2.000000000000000000
+                    XRadius = 5.000000000000000000
+                    YRadius = 5.000000000000000000
+                    object Label15: TLabel
+                      Align = Client
+                      StyledSettings = [Family, Size]
+                      Locked = True
+                      Size.Width = 79.000000000000000000
+                      Size.Height = 40.000000000000000000
+                      Size.PlatformDefault = False
+                      TextSettings.Font.StyleExt = {00070000000000000004000000}
+                      TextSettings.FontColor = claWhite
+                      TextSettings.HorzAlign = Center
+                      Text = 'Quitar'
+                      TabOrder = 1
+                    end
+                    object BotonQuitarAlerta: TSpeedButton
+                      Align = Contents
+                      Locked = True
+                      Size.Width = 79.000000000000000000
+                      Size.Height = 40.000000000000000000
+                      Size.PlatformDefault = False
+                      OnClick = BotonQuitarAlertaClick
+                    end
+                  end
+                  object recBotonAgregarAlerta: TRectangle
+                    Fill.Color = xFF00558C
+                    Position.Y = 125.000000000000000000
+                    Size.Width = 79.000000000000000000
+                    Size.Height = 40.000000000000000000
+                    Size.PlatformDefault = False
+                    Stroke.Kind = None
+                    Stroke.Thickness = 2.000000000000000000
+                    XRadius = 5.000000000000000000
+                    YRadius = 5.000000000000000000
+                    object Label16: TLabel
+                      Align = Client
+                      StyledSettings = [Family, Size]
+                      Locked = True
+                      Size.Width = 79.000000000000000000
+                      Size.Height = 40.000000000000000000
+                      Size.PlatformDefault = False
+                      TextSettings.Font.StyleExt = {00070000000000000004000000}
+                      TextSettings.FontColor = claWhite
+                      TextSettings.HorzAlign = Center
+                      Text = 'Agregar'
+                      TabOrder = 1
+                    end
+                    object BotonAgregarAlerta: TSpeedButton
+                      Align = Contents
+                      Locked = True
+                      Size.Width = 79.000000000000000000
+                      Size.Height = 40.000000000000000000
+                      Size.PlatformDefault = False
+                      OnClick = BotonAgregarAlertaClick
+                    end
+                  end
+                end
+                object listaAlertasServicio: TListBox
+                  Align = Left
+                  Position.Y = 33.000000000000000000
+                  Size.Width = 577.000000000000000000
+                  Size.Height = 481.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 2
+                  DisableFocusEffect = True
+                  DefaultItemStyles.ItemStyle = ''
+                  DefaultItemStyles.GroupHeaderStyle = ''
+                  DefaultItemStyles.GroupFooterStyle = ''
+                  Viewport.Width = 573.000000000000000000
+                  Viewport.Height = 477.000000000000000000
+                end
+                object Layout15: TLayout
+                  Align = Top
+                  Size.Width = 1275.000000000000000000
+                  Size.Height = 33.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 3
+                  object Label17: TLabel
+                    Position.X = 8.000000000000000000
+                    Position.Y = 8.000000000000000000
+                    Size.Width = 193.000000000000000000
+                    Size.Height = 17.000000000000000000
+                    Size.PlatformDefault = False
+                    Text = 'Alertas que atiende este servicio'
+                    TabOrder = 3
+                  end
+                  object Label18: TLabel
+                    Position.X = 696.000000000000000000
+                    Position.Y = 8.000000000000000000
+                    Size.Width = 201.000000000000000000
+                    Size.Height = 17.000000000000000000
+                    Size.PlatformDefault = False
+                    Text = 'Alertas disponibles'
+                    TabOrder = 2
+                  end
+                end
+                object listaAlertasDisponibles: TListBox
+                  Align = Left
+                  Position.X = 696.000000000000000000
+                  Position.Y = 33.000000000000000000
+                  Size.Width = 577.000000000000000000
+                  Size.Height = 481.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  DisableFocusEffect = True
+                  DefaultItemStyles.ItemStyle = ''
+                  DefaultItemStyles.GroupHeaderStyle = ''
+                  DefaultItemStyles.GroupFooterStyle = ''
+                  Viewport.Width = 573.000000000000000000
+                  Viewport.Height = 477.000000000000000000
+                end
+              end
+            end
+          end
         end
       end
     end
@@ -444,14 +470,14 @@ object form_Configuracion: Tform_Configuracion
       Align = Top
       Fill.Color = xFF00558C
       Padding.Left = 15.000000000000000000
-      Size.Width = 1083.000000000000000000
+      Size.Width = 1295.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       object lbTitulo: TLabel
         Align = Client
         StyledSettings = [Family]
-        Size.Width = 1023.000000000000000000
+        Size.Width = 1235.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 18.000000000000000000
@@ -466,7 +492,7 @@ object form_Configuracion: Tform_Configuracion
         Hint = 'Salir'
         Padding.Top = 4.000000000000000000
         Padding.Bottom = 4.000000000000000000
-        Position.X = 1038.000000000000000000
+        Position.X = 1250.000000000000000000
         Size.Width = 45.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
@@ -486,21 +512,21 @@ object form_Configuracion: Tform_Configuracion
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                01BC494441545847EDD7BD4E1B411405E035C5CAEE702C90F80952922282274A
-                1AA8110DBC4564A5887B3A7ABA08F10069226828A08A9417C0DD302BEFDC7328
-                A018CE0CB256F24A18EDD7F9DE7B66C6B277ED2D8A4EE7BD23599AD9C47B7FCF
-                9678EFA766362159EAFE0933FBA50BB4E887EEDFD382F7FEBEDFEF7FD07A1BAA
-                AA9A0E0683515C4B0E44925A6B53AFD77B718695F8C55BD01D689EE53F108073
-                929B24470026DA2F9E66C645510C496E03F8ADFD46F446A100BCB84C019C38E7
-                4092CE39037024FD755D2316CF66694001F8A4190007CEB90700DF33BDAFBA46
-                4CE7131A5021843F24879A03B09EA98D4208D7BA464C33090DE484106E006C68
-                3606E0635DD7B79A559A4B68E035755DFF23F959F3C5F3C7349BCDFE6B2647B3
-                8DAFB218C9E4A767E1F41DE434F8C8EE34AB3497D0800A21FC7DE54BBD96A98D
-                485EE91A31CD2434A000EC6A06C0BE73CE01F896E9EDE91A319D4F684001D88A
-                E7011CCB8DF150FA5F748D583C9BA50165661700B6490ECDECA7F6F9343326B9
-                4A72C7CC2EB51FD3FD93AB2437D4A6EE0F5A53DD81E6490E5455D5546B6DC9ED
-                951CA82CCB33ADB5A52CCB53AD25A247E9A9DE3316A5D1A374A7B3EC1E019E3B
-                BD226CB814820000000049454E44AE426082}
+                01BB494441545847EDD7314B23411806E0CD154BD25D0C27E8A9A01672F78BB4
+                D15A6CF45F885898DECEDE4EC41F60235E73C55909FE01D30C3A4B76BEF7B5D0
+                627C6744165CD0639F2EDFF7BD331392DD648BA2D3F9DF912CCD6CECBDBF674B
+                BCF713331B932C75FF84991DE9022DDAD7FD7B5AF0DEDFF7FBFD19ADB7A1AAAA
+                C9603018C5B5E44024A9B536F57ABD5767F816BFF80CBA03BDE7EB1F08C029C9
+                7992230063ED17CF330745510C492E0038D37E237AA350005E5DA600F69C7320
+                49E79C01D891FEACAE118B67B334A0002C6B06C09673EE11C046A6B7A66BC474
+                3EA1011542B82439D41C80D94C6D1442F8A36BC43493D0404E08E12F8039CDC6
+                002CD675FD4FB34A73090DBCA5AEEB5B922B9A2F5E3EA6E9747AA7991CCD36BE
+                CA6224939F9E0FA7EF20A7C14776A359A5B984065408E1EA8D2FF58F4C6D44F2
+                5AD7886926A10105E09766006C3AE71E00AC677ABF758D98CE2734A000FC8CE7
+                01ECCA8D715BFAABBA462C9ECDD28032B373000B24876676A87D3ECF1C90FC4E
+                72C9CC2EB41FD3FD93AB2437D4A6EE0F5A53DD81DE931CA8AAAA89D6DA92DB2B
+                39505996275A6B4B5996C75A4B448FD213BD677C94468FD29DCE57F7041AF6BC
+                FE0334A82E0000000049454E44AE426082}
               FileName = 
                 'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                 '\Boton Salir.png'
@@ -516,221 +542,243 @@ object form_Configuracion: Tform_Configuracion
       end
     end
   end
-  object serviciosCli: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://10.99.8.107/tc/public/api'
-    Params = <>
-    RaiseExceptionOn500 = False
-    SynchronizedEvents = False
-    Left = 216
-    Top = 264
-  end
-  object serviciosReq: TRESTRequest
-    Client = serviciosCli
-    Params = <
-      item
-        Kind = pkHTTPHEADER
-        Name = 'TokenAcceso'
-        Value = 
-          'cv44uu1depYrgYVwq7S6W7wC0F2OfjbZQvJ9Ay4wqY8qn1jDufmfZszW2V8bnnSa' +
-          'sGtHJMQyBVjQzZGC361iOMZGEU9jYTFUYxv2jZ6yZh7QoHEfb59kWgohM1FoB5aB'
-      end>
-    Resource = 'servicios/ver'
-    Response = serviciosRes
-    SynchronizedEvents = False
-    Left = 216
-    Top = 320
-  end
-  object serviciosRes: TRESTResponse
-    Left = 216
-    Top = 376
-  end
-  object serviciosDSA: TRESTResponseDataSetAdapter
-    Dataset = servicios
-    FieldDefs = <>
-    Response = serviciosRes
-    Left = 216
-    Top = 432
-  end
   object servicios: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
     ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
-    UpdateOptions.LockWait = True
-    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 216
-    Top = 488
-    object serviciosid_servicio: TWideStringField
-      FieldName = 'id_servicio'
-      Size = 255
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 157
+    Top = 337
+    object serviciosidServicio: TIntegerField
+      FieldName = 'idServicio'
     end
-    object serviciosnombreServicio: TWideStringField
+    object serviciosnombreServicio: TStringField
       FieldName = 'nombreServicio'
       Size = 255
     end
-    object serviciostipo_internacion: TWideStringField
-      FieldName = 'tipo_internacion'
-      Size = 255
+    object serviciosidTipoInternacion: TIntegerField
+      FieldName = 'idTipoInternacion'
     end
-    object servicioscambioCama_areaCerrada: TWideStringField
-      FieldName = 'cambioCama_areaCerrada'
-      Size = 255
+    object servicioscambioCamaAreaCerrada: TIntegerField
+      FieldName = 'cambioCamaAreaCerrada'
     end
-    object serviciosid_tipoInternacion: TWideStringField
-      FieldName = 'id_tipoInternacion'
-      Size = 255
+    object serviciosgestionaCama: TIntegerField
+      FieldName = 'gestionaCama'
     end
-    object serviciosTipoInternacion: TWideStringField
-      FieldName = 'TipoInternacion'
-      Size = 255
+    object serviciostareasPendientes: TIntegerField
+      FieldName = 'tareasPendientes'
     end
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = servicios
     ScopeMappings = <>
-    Left = 144
-    Top = 552
+    Left = 96
+    Top = 8
   end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 148
-    Top = 501
-    object LinkListControlToField1: TLinkListControlToField
+    Left = 188
+    Top = 65533
+    object LinkListControlToField2: TLinkListControlToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      FieldName = 'nombreServicio'
-      Control = listaServicios
+      DataSource = BindSourceDB2
+      FieldName = 'cama'
+      Control = listaCamasServicio
       FillExpressions = <>
       FillHeaderExpressions = <>
       FillBreakGroups = <>
     end
-    object LinkControlToField1: TLinkControlToField
+    object LinkListControlToField3: TLinkListControlToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      FieldName = 'nombreServicio'
-      Control = edt_nombreServicio
-      Track = False
+      DataSource = BindSourceDB3
+      FieldName = 'cama'
+      Control = listaCamasDisponibles
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
     end
-    object LinkControlToField2: TLinkControlToField
+    object LinkListControlToField4: TLinkListControlToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      FieldName = 'cambioCama_areaCerrada'
-      Control = areaCerrada
-      Track = True
+      DataSource = BindSourceDB4
+      FieldName = 'tipoAlerta'
+      Control = listaAlertasServicio
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+    object LinkListControlToField5: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB5
+      FieldName = 'tipoAlerta'
+      Control = listaAlertasDisponibles
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
     end
   end
-  object camasCli: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://10.99.8.107/tc/public/api/camas/obtenerCamas'
-    Params = <>
-    SynchronizedEvents = False
-    Left = 584
-    Top = 336
-  end
-  object camasReq: TRESTRequest
-    AssignedValues = [rvConnectTimeout, rvReadTimeout]
-    Client = camasCli
-    Params = <
-      item
-        Kind = pkHTTPHEADER
-        Name = 'TokenAcceso'
-        Value = 
-          'cv44uu1depYrgYVwq7S6W7wC0F2OfjbZQvJ9Ay4wqY8qn1jDufmfZszW2V8bnnSa' +
-          'sGtHJMQyBVjQzZGC361iOMZGEU9jYTFUYxv2jZ6yZh7QoHEfb59kWgohM1FoB5aB'
-      end
-      item
-        Name = 'idservicio'
-        Value = '10'
-      end
-      item
-        Name = 'tareasPendientes'
-        Value = '0'
-      end
-      item
-        Name = 'id_estado'
-        Value = '0'
-      end
-      item
-        Name = 'modo'
-        Value = 'pro'
-      end>
-    Response = camasRes
-    SynchronizedEvents = False
-    Left = 584
-    Top = 384
-  end
-  object camasRes: TRESTResponse
-    ContentType = 'application/json'
-    Left = 584
-    Top = 440
-  end
-  object camasDSA: TRESTResponseDataSetAdapter
-    Active = True
-    Dataset = camas
-    FieldDefs = <>
-    Response = camasRes
-    Left = 584
-    Top = 488
-  end
-  object camas: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id_cama'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cama'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id_habitacion'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'habitacion'
-        DataType = ftWideString
-        Size = 255
-      end>
-    IndexDefs = <>
+  object camasServicio: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
     ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
-    UpdateOptions.LockWait = True
-    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 584
-    Top = 544
-    object camasid_cama: TWideStringField
-      FieldName = 'id_cama'
-      Size = 255
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 625
+    Top = 515
+    object camasServicioidCama: TIntegerField
+      FieldName = 'idCama'
     end
-    object camascama: TWideStringField
+    object camasServiciocama: TStringField
       FieldName = 'cama'
-      Size = 255
+      Size = 50
     end
-    object camasid_habitacion: TWideStringField
-      FieldName = 'id_habitacion'
-      Size = 255
+    object camasServicioidHabitacion: TIntegerField
+      FieldName = 'idHabitacion'
     end
-    object camashabitacion: TWideStringField
+    object camasServiciohabitacion: TStringField
       FieldName = 'habitacion'
+      Size = 50
+    end
+    object camasServiciotipoCama: TStringField
+      FieldName = 'tipoCama'
+      Size = 1
+    end
+    object camasServiciopiso: TStringField
+      FieldName = 'piso'
+      Size = 50
+    end
+    object camasServiciosoloAltaMedica: TIntegerField
+      FieldName = 'soloAltaMedica'
+    end
+  end
+  object BindSourceDB2: TBindSourceDB
+    DataSet = camasServicio
+    ScopeMappings = <>
+    Left = 568
+    Top = 248
+  end
+  object camasDisponiblesServicio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 937
+    Top = 547
+    object camasDisponiblesServicioidCama: TIntegerField
+      FieldName = 'idCama'
+    end
+    object camasDisponiblesServiciocama: TStringField
+      FieldName = 'cama'
+      Size = 50
+    end
+    object camasDisponiblesServicioidHabitacion: TIntegerField
+      FieldName = 'idHabitacion'
+    end
+    object camasDisponiblesServiciohabitacion: TStringField
+      FieldName = 'habitacion'
+      Size = 50
+    end
+    object camasDisponiblesServiciopiso: TStringField
+      FieldName = 'piso'
+      Size = 50
+    end
+    object camasDisponiblesServiciotipoCama: TStringField
+      FieldName = 'tipoCama'
+      Size = 1
+    end
+    object camasDisponiblesServiciosoloAltaMedica: TIntegerField
+      FieldName = 'soloAltaMedica'
+    end
+  end
+  object BindSourceDB3: TBindSourceDB
+    DataSet = camasDisponiblesServicio
+    ScopeMappings = <>
+    Left = 464
+    Top = 240
+  end
+  object resultados: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 1177
+    Top = 539
+    object resultadosestado: TIntegerField
+      FieldName = 'estado'
+    end
+    object resultadosmensaje: TStringField
+      FieldName = 'mensaje'
       Size = 255
     end
+  end
+  object alertasServicio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 351
+    Top = 382
+    object alertasServicioidServicio: TIntegerField
+      FieldName = 'idServicio'
+    end
+    object alertasServicioidTipoAlerta: TIntegerField
+      FieldName = 'idTipoAlerta'
+    end
+    object alertasServiciotipoAlerta: TStringField
+      FieldName = 'tipoAlerta'
+      Size = 255
+    end
+    object alertasServiciodescripcion: TStringField
+      FieldName = 'descripcion'
+      Size = 255
+    end
+  end
+  object alertasDisponibles: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 1087
+    Top = 350
+    object alertasDisponiblesidTipoAlerta: TIntegerField
+      FieldName = 'idTipoAlerta'
+    end
+    object alertasDisponiblestipoAlerta: TStringField
+      FieldName = 'tipoAlerta'
+      Size = 255
+    end
+    object alertasDisponiblesdescripcion: TStringField
+      FieldName = 'descripcion'
+      Size = 255
+    end
+  end
+  object BindSourceDB4: TBindSourceDB
+    DataSet = alertasServicio
+    ScopeMappings = <>
+    Left = 240
+    Top = 560
+  end
+  object BindSourceDB5: TBindSourceDB
+    DataSet = alertasDisponibles
+    ScopeMappings = <>
+    Left = 312
+    Top = 560
   end
 end

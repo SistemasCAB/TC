@@ -85,14 +85,11 @@ Coordinates=1671,10,40,51
 [espere]
 Coordinates=10,1004,47,33
 
-[botonConsultarCambios]
-Coordinates=161,936,134,51
-
 [contenedor]
 Coordinates=1679,936,70,33
 
 []
-Coordinates=341,787,133,33
+Coordinates=161,936,134,51
 Visible=True
 
 [alertasidCama]
@@ -550,4 +547,22 @@ Coordinates=933,1881,146,159
 
 [form_DetallesCama.camas]
 Coordinates=591,1666,168,1113
+
+[form_Configuracion.servicios]
+Visible=False
+
+[form_Configuracion.camasServicio]
+Visible=False
+
+[form_Configuracion.camasDisponiblesServicio]
+Visible=False
+
+[form_Configuracion.alertasServicio]
+Visible=False
+
+[form_Configuracion.alertasDisponibles]
+Visible=False
+
+[form_ServiciosCambio.servicios]
+Visible=False
 

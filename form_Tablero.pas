@@ -52,7 +52,9 @@ uses
   System.Generics.Collections, // agrego el diccionario al form
 
   System.SyncObjs,System.Threading, FMX.ListView.Types,
-  FMX.ListView.Appearances, FMX.ListView.Adapters.Base, FMX.ListView;
+  FMX.ListView.Appearances, FMX.ListView.Adapters.Base, FMX.ListView,
+
+  WinApi.Windows, WinApi.ShellAPI, System.IOUtils;
 
 type
   TCamaUI = class
@@ -110,7 +112,6 @@ type
     contenedor: TScrollBox;
     barra: TProgressBar;
     espere: TGIFImage;
-    botonConsultarCambios: TButton;
     botonConfiguracion: TSpeedButton;
     menuSeparador5: TRectangle;
     camas: TFDMemTable;
@@ -269,6 +270,14 @@ type
     serviciosUsuariogestionaCamas: TIntegerField;
     botonSalirFullScreen: TSpeedButton;
     Image3: TImage;
+    alertaAtendida: TFDMemTable;
+    alertaAtendidaidTipoAlerta: TIntegerField;
+    alertaAtendidatipoAlerta: TStringField;
+    alertaAtendidaidServicio: TIntegerField;
+    alertaAtendidanombreServicio: TStringField;
+    alertaAtendidaatendida: TIntegerField;
+    serviciotareasPendientes: TIntegerField;
+    SpeedButton1: TSpeedButton;
     procedure botonSalirClick(Sender: TObject);
     procedure btnMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -280,7 +289,6 @@ type
     procedure ActualizarCamas;
     procedure FormShow(Sender: TObject);
     procedure Espera(comando:string);
-    procedure botonConsultarCambiosClick(Sender: TObject);
     procedure nuevaAlerta(cama, tipo, idInternacion, paciCodigo: integer);
     procedure verificarIconosAislamientos(idCama: integer);
     procedure relojParpadeoTimer(Sender: TObject);
@@ -299,6 +307,10 @@ type
     procedure botonAutorizarClick(Sender: TObject);
     procedure botonSalirFullScreenClick(Sender: TObject);
 
+    function insertarNuevaAlerta(cama, tipo, idInternacion, paciCodigo: integer):integer;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure botonFiltrarPorEstadoClick(Sender: TObject);
+
   private
     { Private declarations }
     FApagandoAlertas: Integer;
@@ -316,6 +328,7 @@ type
     LyFoto, LyDatos, LyIconos, LyCama : TLayout;
     botonCama : TSpeedButton;
     verPaciente:integer;
+    filtroEstadoCamas:integer;
   end;
 
 var
@@ -327,7 +340,7 @@ implementation
 
 uses form_login, ModuloDatos, constantes, DetallesCama_form, Configuracion_form, ServiciosCambio_form, UFunciones,
   FMX.Image.Base64, RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D,
-  AutorizacionesPendientes_form;
+  AutorizacionesPendientes_form, FiltrarCamas_form;
 
 function TformTablero.permisoModulo(idModulo: integer): integer;
 begin
@@ -380,6 +393,11 @@ begin
         alertas.Next;
       until (alertas.Eof);
     end;
+end;
+
+procedure TformTablero.SpeedButton1Click(Sender: TObject);
+begin
+  ConsultarCambios;
 end;
 
 procedure TformTablero.verificarIconosAislamientos(idCama: integer);
@@ -456,11 +474,27 @@ end;
 
 procedure TformTablero.nuevaAlerta(cama, tipo, idInternacion, paciCodigo: integer);
 var
+  response1 : IResponse;
   response: IResponse;
 begin
   // inserta una alerta de acuerdo a los parámetros recibidos.
+  // primero verifico si el servicio actual atiende este tipo de alerta (ingreso de paciente), sino no ingreso la alerta.
 
-  response := TRequest.New.BaseURL(datos.urlTC)
+  response1 := TRequest.New.BaseURL(datos.urlTC)
+                      .Resource('tablerocamas/alertaAtendidaPorServicio')
+                      .AddHeader('TokenAcceso', datos.tokenAcceso)
+                      .AddParam('idTipoAlerta', '1')
+                      .AddParam('idServicio', datos.servicio.ToString)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(alertaAtendida))
+                      .Post;
+
+  if response1.StatusCode = 200 then
+    begin
+      if alertaAtendida.RecordCount > 0 then
+        begin
+          // el servicio atiende este tipo de alerta, entonces agrego la alerta.
+          response := TRequest.New.BaseURL(datos.urlTC)
                       .Resource('tablerocamas/nuevaAlerta')
                       .AddHeader('TokenAcceso', datos.tokenAcceso)
                       .AddParam('idCama', cama.ToString)
@@ -470,6 +504,8 @@ begin
                       .Accept('application/json')
                       .Adapters(TDataSetSerializeAdapter.New(alertasNueva))
                       .Post;
+        end;
+    end;
 end;
 
 procedure TformTablero.btnMenuClick(Sender: TObject);
@@ -484,15 +520,29 @@ procedure TformTablero.botonConfiguracionClick(Sender: TObject);
 begin
   RelojConsultarCambios.Enabled := false;
   lyMenuLateral.Visible := false;
-  Application.CreateForm(Tform_Configuracion, form_Configuracion);
-  form_Configuracion.Height := formTablero.Height;
-  form_Configuracion.Width := formTablero.Width;
-  form_Configuracion.ShowModal;
+
+  if permisoModulo(11) = 2 then
+    begin
+      Application.CreateForm(Tform_Configuracion, form_Configuracion);
+      form_Configuracion.Height := formTablero.Height;
+      form_Configuracion.Width := formTablero.Width;
+      form_Configuracion.ShowModal;
+    end
+  else
+    begin
+      datos.VerMensaje('Acceso denegado','No estás autorizado a usar este módulo del sistemas','Aceptar','ERROR',0);
+    end;
 end;
 
-procedure TformTablero.botonConsultarCambiosClick(Sender: TObject);
+procedure TformTablero.botonFiltrarPorEstadoClick(Sender: TObject);
 begin
-  ConsultarCambios;
+  RelojConsultarCambios.Enabled := false;
+  lyMenuLateral.Visible := false;
+
+  Application.CreateForm(TformFiltrarCamas, formFiltrarCamas);
+  formFiltrarCamas.Height := formTablero.Height;
+  formFiltrarCamas.Width := formTablero.Width;
+  formFiltrarCamas.ShowModal;
 end;
 
 procedure TformTablero.clicBotonCama(sender: TObject);
@@ -582,6 +632,7 @@ begin
               .AddHeader('TokenAcceso', datos.tokenAcceso)
               .AddParam('idServicio', datos.servicio.ToString)
               .AddParam('tareasPendientes', datos.pendientes.ToString)
+              .AddParam('idEstado', filtroEstadoCamas.ToString)
               .Accept('application/json')
               .Adapters(TDataSetSerializeAdapter.New(camas))
               .Get;
@@ -1029,7 +1080,12 @@ begin
             else
               begin
                 if datos.pendientes = 0 then
-                    datos.VerMensaje('No hay camas para vizualisar','Verifique que los filtros aplicados sean los correctos y que el tablero esté configurado para el servicio correcto.','Aceptar','INFO',0);
+                    datos.VerMensaje('No hay camas para vizualisar','Verifique que los filtros aplicados sean los correctos y que el tablero esté configurado para el servicio correcto.','Aceptar','INFO',0)
+                else
+                  begin
+                    // no hay camas con tareas pendientes. No hago nada, solo espero hasta la próxima actualización.
+                    Espera('stop');
+                  end;
               end;
           end
         else
@@ -1085,267 +1141,282 @@ begin
       exit;
     end;
 
-    // si la cantidad de camas es distinta
-    if camas2.RecordCount <> camas.RecordCount then
-    begin
-      // la cantidad de camas no es la misma. Actualizo todo.
-      ActualizarCamas;
-    end;
-
-
-
-    alertas.Close;
-    alertas.Open;
-
-    // apago todas las alertas de las camas que están disponibles.
-    if TInterlocked.CompareExchange(FApagandoAlertas, 1, 0) <> 0 then
-      Exit;
-
-    TTask.Run(
-      procedure
+    if camas2.RecordCount > 0 then
       begin
-        try
-          apagarAlertasCamasDisponibles;
-        finally
-          TInterlocked.Exchange(FApagandoAlertas, 0);
-        end;
-      end);
-
-
-    // verifico si cambió algún dato de la cama, para actualizarlo.
-    camas2.First;
-    camas.First;
-    cambios := 0;
-
-    repeat
-      idCama := camas2idCama.AsInteger;
-
-      if not FCamasUI.TryGetValue(idCama, ui) then
-        Exit;
-
-      if not Assigned(ui) then
-        Exit;
-
-
-      // apago cualquier alerta que haya quedado en rojo
-      ui.PanelB.Fill.Color := TAlphaColorRec.White;
-
-      // verifico si hubo ingreso de paciente o alta médica. Si hubo cambios, ingreso una alerta en la tabla CAB.dbo.alertas
-      // y luego ingreso un registro en alertas (memTable local)
-
-      nueva_alerta := 0;
-
-      // si la cama está ocupada
-      if camas2idEstado.AsInteger = 2 then
+        // si la cantidad de camas es distinta
+        if camas2.RecordCount <> camas.RecordCount then
         begin
-          if camasidEstado.AsInteger <> 2 then
-            begin
-              // alerta ingreso de paciente.
-              nuevaAlerta(camas2idCama.AsInteger,1,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
-              nueva_alerta := nueva_alerta + 1;
-            end;
+          // la cantidad de camas no es la misma. Actualizo todo.
+          ActualizarCamas;
+        end;
 
-          // si el médico indicó el alta médica
-          if camas2fechaAltaMedica.AsString <> '' then
+
+
+        alertas.Close;
+        alertas.Open;
+
+        // apago todas las alertas de las camas que están disponibles.
+        if TInterlocked.CompareExchange(FApagandoAlertas, 1, 0) <> 0 then
+          begin
+          Exit;
+          end;
+
+        TTask.Run(
+          procedure
+          begin
+            try
+              apagarAlertasCamasDisponibles;
+            finally
+              TInterlocked.Exchange(FApagandoAlertas, 0);
+            end;
+          end);
+
+
+        // verifico si cambió algún dato de la cama, para actualizarlo.
+        camas2.First;
+        camas.First;
+        cambios := 0;
+
+        repeat
+          idCama := camas2idCama.AsInteger;
+
+          if not FCamasUI.TryGetValue(idCama, ui) then
+            Exit;
+
+          if not Assigned(ui) then
+            Exit;
+
+
+          // apago cualquier alerta que haya quedado en rojo
+          ui.PanelB.Fill.Color := TAlphaColorRec.White;
+
+          // verifico si hubo ingreso de paciente o alta médica. Si hubo cambios, ingreso una alerta en la tabla CAB.dbo.alertas
+          // y luego ingreso un registro en alertas (memTable local)
+
+          nueva_alerta := 0;
+
+          // si la cama está ocupada
+          if camas2idEstado.AsInteger = 2 then
             begin
-              if ((camasfechaAltaMedica.AsString <> camas2fechaAltaMedica.AsString)) then
+              if camasidEstado.AsInteger <> 2 then
                 begin
-                  // inserto una alerta de alta medica
-                  nuevaAlerta(camas2idCama.AsInteger,2,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
-                  nueva_alerta := nueva_alerta + 1;
+                  // alerta ingreso de paciente.
+                  // La alerta la ingresaré solo si el servicio atiende alerta de tipo ingreso de paciente.
+                  //nuevaAlerta(camas2idCama.AsInteger,1,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+                  if insertarNuevaAlerta(camas2idCama.AsInteger,1,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger) = 1 then
+                    nueva_alerta := nueva_alerta + 1;
+                end;
+
+              // si el médico indicó el alta médica
+              if camas2fechaAltaMedica.AsString <> '' then
+                begin
+                  if ((camasfechaAltaMedica.AsString <> camas2fechaAltaMedica.AsString)) then
+                    begin
+                      // inserto una alerta de alta medica
+                      //nuevaAlerta(camas2idCama.AsInteger,2,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+                      if insertarNuevaAlerta(camas2idCama.AsInteger,2,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger) = 1 then
+                      nueva_alerta := nueva_alerta + 1;
+                    end;
+                end;
+
+              // si el médico indicó el alta probable
+              if camas2altaProbableFecha.AsString <> '' then
+                begin
+                  if ((camasaltaProbableFecha.AsString <> camas2altaProbableFecha.AsString)) then
+                    begin
+                      // inserto una alerta de alta probable
+                      //nuevaAlerta(camas2idCama.AsInteger,15,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
+                      if insertarNuevaAlerta(camas2idCama.AsInteger,15,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger) = 1 then
+                      nueva_alerta := nueva_alerta + 1;
+                    end;
                 end;
             end;
 
-          // si el médico indicó el alta probable
-          if camas2altaProbableFecha.AsString <> '' then
+          // Si hay alertas para esta cama, agrego en la tabla alertas (memTable) el id de la cama.
+          // guardaré en la tabla alertas, el id de las camas que tienen alertas para luego ejecutar la alerta.
+          if(camas2alertas.AsInteger > 0) or (nueva_alerta = 1) then
             begin
-              if ((camasaltaProbableFecha.AsString <> camas2altaProbableFecha.AsString)) then
-                begin
-                  // inserto una alerta de alta probable
-                  nuevaAlerta(camas2idCama.AsInteger,15,camas2idInternacion.AsInteger,camas2paciCodigo.AsInteger);
-                  nueva_alerta := nueva_alerta + 1;
-                end;
-            end;
-        end;
-
-      // Si hay alertas para esta cama, agrego en la tabla alertas (memTable) el id de la cama.
-      // guardaré en la tabla alertas, el id de las camas que tienen alertas para luego ejecutar la alerta.
-      if(camas2alertas.AsInteger > 0) or (nueva_alerta = 1) then
-        begin
-          alertas.Append;
-          alertas.Fields[0].AsInteger := camas2idCama.AsInteger;
-          alertas.Post;
-        end;
-
-      // si cambió el idCama
-      if camasidCama.AsInteger <> camas2idCama.AsInteger then
-        begin
-          cambios := cambios + 1;
-        end
-      else
-        begin
-          // ACTUALIZO LA CAMA CON LA NUEVA INFORMACIÓN AUNQUE NO HAYA CAMBIADO.
-
-
-          // pinto la cama de color violeta si hay cambios de cama y es admision (si el servicio tiene gestionaCamas = 1)
-
-          if (datos.gestionaCamas = 1) and (camas2cambioCamaPendiente.AsInteger = 1) then
-            begin
-              ui.PanelB.Fill.Kind := TbrushKind.Solid;
-              ui.PanelB.Fill.Color := TAlphaColorRec.Darkorchid; // color violeta.
+              alertas.Append;
+              alertas.Fields[0].AsInteger := camas2idCama.AsInteger;
+              alertas.Post;
             end;
 
-
-          // pinto la etiqueta del color correspondiente según el estado de la cama
-          ui.etiqueta.Fill.Kind := TbrushKind.Solid;
-          ui.etiqueta.Fill.Color := TAlphaColor(StrToAlphaColor(camas2color.AsString));
-
-          // coloco el nro de cama en el label lbNroCama
-          ui.lbNroCama.Text := camas2cama.AsString;
-
-          // completo la linea principal
-          if camas2idEstado.AsInteger = 2 then
+          // si cambió el idCama
+          if camasidCama.AsInteger <> camas2idCama.AsInteger then
             begin
-              if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
-                ui.LbPrincipal.Text := camas2apellidoPaciente.AsString  + ', ' + camas2nombrePaciente.AsString
-              else
-                ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
-            end
-           else
-            ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
-
-          // completo la linea secundaria
-          if camas2idEstado.AsInteger = 2 then
-            begin
-              if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
-                ui.LbSecundaria.Text := 'DNI: ' + camas2nroDocumento.AsString
-              else
-                ui.LbSecundaria.Text := '';
+              cambios := cambios + 1;
             end
           else
-            ui.LbSecundaria.Text := '';
-
-          // verifico Alta y Alta Probable
-          if camas2idEstado.AsInteger = 2 then
             begin
-              if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
+              // ACTUALIZO LA CAMA CON LA NUEVA INFORMACIÓN AUNQUE NO HAYA CAMBIADO.
+
+
+              // pinto la cama de color violeta si hay cambios de cama y es admision (si el servicio tiene gestionaCamas = 1)
+
+              if (datos.gestionaCamas = 1) and (camas2cambioCamaPendiente.AsInteger = 1) then
                 begin
-                  // hay epicrisis
-                  ui.lbAlta.Text := 'ALTA MÉDICA' + #13 + Copy(camasfechaAltaMedica.AsString, 1, 16);
-                  ui.lbAlta.FontColor := TAlphaColorRec.Red;
+                  ui.PanelB.Fill.Kind := TbrushKind.Solid;
+                  ui.PanelB.Fill.Color := TAlphaColorRec.Darkorchid; // color violeta.
+                end;
+
+
+              // pinto la etiqueta del color correspondiente según el estado de la cama
+              ui.etiqueta.Fill.Kind := TbrushKind.Solid;
+              ui.etiqueta.Fill.Color := TAlphaColor(StrToAlphaColor(camas2color.AsString));
+
+              // coloco el nro de cama en el label lbNroCama
+              ui.lbNroCama.Text := camas2cama.AsString;
+
+              // completo la linea principal
+              if camas2idEstado.AsInteger = 2 then
+                begin
+                  if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
+                    ui.LbPrincipal.Text := camas2apellidoPaciente.AsString  + ', ' + camas2nombrePaciente.AsString
+                  else
+                    ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
+                end
+               else
+                ui.LbPrincipal.Text := uppercase(camas2estado.AsString);
+
+              // completo la linea secundaria
+              if camas2idEstado.AsInteger = 2 then
+                begin
+                  if verPaciente <> 0 then // tiene permisos para ver los datos del paciente
+                    ui.LbSecundaria.Text := 'DNI: ' + camas2nroDocumento.AsString
+                  else
+                    ui.LbSecundaria.Text := '';
                 end
               else
+                ui.LbSecundaria.Text := '';
+
+              // verifico Alta y Alta Probable
+              if camas2idEstado.AsInteger = 2 then
                 begin
-                  // no hay epicrisis
-                  if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
+                  if (verPaciente <> 0) and (camas2fechaAltaMedica.AsString <> '') then
                     begin
-                      ui.lbAlta.Text := 'ALTA PROBABLE' + #13 + Copy(camas2altaProbableFecha.AsString, 1, 16);
-                    ui.lbAlta.FontColor := TAlphaColorRec.Blue;
+                      // hay epicrisis
+                      ui.lbAlta.Text := 'ALTA MÉDICA' + #13 + Copy(camasfechaAltaMedica.AsString, 1, 16);
+                      ui.lbAlta.FontColor := TAlphaColorRec.Red;
                     end
                   else
                     begin
-                      ui.lbAlta.Text := '';
+                      // no hay epicrisis
+                      if (verPaciente <> 0) and (camas2altaProbableFecha.AsString <> '') and (camas2fechaAltaMedica.AsString = '') then
+                        begin
+                          ui.lbAlta.Text := 'ALTA PROBABLE' + #13 + Copy(camas2altaProbableFecha.AsString, 1, 16);
+                        ui.lbAlta.FontColor := TAlphaColorRec.Blue;
+                        end
+                      else
+                        begin
+                          ui.lbAlta.Text := '';
+                        end;
                     end;
+                end
+              else
+                begin
+                  ui.lbAlta.Text := '';
                 end;
-            end
-          else
-            begin
-              ui.lbAlta.Text := '';
+
+              verificarIconosAislamientos(camas2idCama.AsInteger);
             end;
 
-          verificarIconosAislamientos(camas2idCama.AsInteger);
-        end;
+          camas2.Next;
+          camas.Next;
+        until (camas2.Eof);
 
-      camas2.Next;
-      camas.Next;
-    until (camas2.Eof);
-
-    if cambios > 0 then
-      ActualizarCamas;
+        if cambios > 0 then
+          ActualizarCamas;
 
 
-    // actualizo la tabla camas para que tenga la misma información que camas2
-    camas2.First;
-    camas.Close;
-    camas.Open;
-    repeat
-      with camas do
-        begin
-          Append;
-          FieldByName('idCama').Value := camas2idCama.AsInteger;
-          FieldByName('cama').Value := camas2cama.AsString;
-          FieldByName('idHabitacion').Value := camas2idHabitacion.AsInteger;
-          FieldByName('habitacion').Value := camas2habitacion.AsString;
-          FieldByName('piso').Value := camas2piso.AsString;
-          FieldByName('idEstado').Value := camas2idEstado.AsInteger;
-          FieldByName('estado').Value := camas2estado.AsString;
-          FieldByName('color').Value := camas2color.AsString;
-          FieldByName('paciCodigo').Value := camas2paciCodigo.AsInteger;
-          FieldByName('nombrePaciente').Value := camas2nombrePaciente.AsString;
-          FieldByName('apellidoPaciente').Value := camas2apellidoPaciente.AsString;
-          FieldByName('tdocCodigo').Value := camas2tdocCodigo.AsInteger;
-          FieldByName('nroDocumento').Value := camas2nroDocumento.AsString;
-          FieldByName('sexo').Value := camas2sexo.AsString;
-          FieldByName('fechaIngresoInstitucion').Value := camas2fechaIngresoInstitucion.AsString;
-          FieldByName('fechaIngresoCama').Value := camas2fechaIngresoCama.AsString;
-          FieldByName('cobertura').Value := camas2cobertura.AsString;
-          FieldByName('fantasia').Value := camas2fantasia.AsString;
-          FieldByName('plan').Value := camas2plan.AsString;
-          FieldByName('nroAfiliado').Value := camas2nroAfiliado.AsString;
-          FieldByName('idInternacion').Value := camas2idInternacion.AsInteger;
+        // actualizo la tabla camas para que tenga la misma información que camas2
+        camas2.First;
+        camas.Close;
+        camas.Open;
+        repeat
+          with camas do
+            begin
+              Append;
+              FieldByName('idCama').Value := camas2idCama.AsInteger;
+              FieldByName('cama').Value := camas2cama.AsString;
+              FieldByName('idHabitacion').Value := camas2idHabitacion.AsInteger;
+              FieldByName('habitacion').Value := camas2habitacion.AsString;
+              FieldByName('piso').Value := camas2piso.AsString;
+              FieldByName('idEstado').Value := camas2idEstado.AsInteger;
+              FieldByName('estado').Value := camas2estado.AsString;
+              FieldByName('color').Value := camas2color.AsString;
+              FieldByName('paciCodigo').Value := camas2paciCodigo.AsInteger;
+              FieldByName('nombrePaciente').Value := camas2nombrePaciente.AsString;
+              FieldByName('apellidoPaciente').Value := camas2apellidoPaciente.AsString;
+              FieldByName('tdocCodigo').Value := camas2tdocCodigo.AsInteger;
+              FieldByName('nroDocumento').Value := camas2nroDocumento.AsString;
+              FieldByName('sexo').Value := camas2sexo.AsString;
+              FieldByName('fechaIngresoInstitucion').Value := camas2fechaIngresoInstitucion.AsString;
+              FieldByName('fechaIngresoCama').Value := camas2fechaIngresoCama.AsString;
+              FieldByName('cobertura').Value := camas2cobertura.AsString;
+              FieldByName('fantasia').Value := camas2fantasia.AsString;
+              FieldByName('plan').Value := camas2plan.AsString;
+              FieldByName('nroAfiliado').Value := camas2nroAfiliado.AsString;
+              FieldByName('idInternacion').Value := camas2idInternacion.AsInteger;
 
-          FieldByName('fechaAltaMedica').Value := camas2fechaAltaMedica.AsString;
+              FieldByName('fechaAltaMedica').Value := camas2fechaAltaMedica.AsString;
 
-          FieldByName('profesionalAltaMedica').Value := camas2profesionalAltaMedica.AsString;
-          FieldByName('camaEnAislamiento').Value := camas2camaEnAislamiento.AsString;
-          FieldByName('observaciones').Value := camas2observaciones.AsString;
-          FieldByName('procedimientosNoCumplidos').Value := camas2procedimientosNoCumplidos.AsString;
-          FieldByName('medicacionNoProgramada').Value := camas2medicacionNoProgramada.AsString;
-          FieldByName('medicacionNoAplicada').Value := camas2medicacionNoAplicada.asString;
+              FieldByName('profesionalAltaMedica').Value := camas2profesionalAltaMedica.AsString;
+              FieldByName('camaEnAislamiento').Value := camas2camaEnAislamiento.AsString;
+              FieldByName('observaciones').Value := camas2observaciones.AsString;
+              FieldByName('procedimientosNoCumplidos').Value := camas2procedimientosNoCumplidos.AsString;
+              FieldByName('medicacionNoProgramada').Value := camas2medicacionNoProgramada.AsString;
+              FieldByName('medicacionNoAplicada').Value := camas2medicacionNoAplicada.asString;
 
-          FieldByName('kpc').Value := camas2kpc.AsInteger;
-          FieldByName('aislamiento_contacto').Value := camas2aislamiento_contacto.AsString;
-          FieldByName('aislamiento_gota').Value := camas2aislamiento_gota.AsString;
-          FieldByName('aislamiento_respiratorio').Value := camas2aislamiento_respiratorio.AsString;
-          FieldByName('aislamiento_neutropenico').Value := camas2aislamiento_neutropenico.AsString;
-          FieldByName('aislamiento_cd').Value := camas2aislamiento_cd.AsString;
-          FieldByName('aislamiento_sc').Value := camas2aislamiento_sc.AsString;
+              FieldByName('kpc').Value := camas2kpc.AsInteger;
+              FieldByName('aislamiento_contacto').Value := camas2aislamiento_contacto.AsString;
+              FieldByName('aislamiento_gota').Value := camas2aislamiento_gota.AsString;
+              FieldByName('aislamiento_respiratorio').Value := camas2aislamiento_respiratorio.AsString;
+              FieldByName('aislamiento_neutropenico').Value := camas2aislamiento_neutropenico.AsString;
+              FieldByName('aislamiento_cd').Value := camas2aislamiento_cd.AsString;
+              FieldByName('aislamiento_sc').Value := camas2aislamiento_sc.AsString;
 
-          FieldByName('tipoAltaMedica').Value := camas2tipoAltaMedica.AsString;
-          FieldByName('acompanante').Value := camas2acompanante.AsInteger;
-          FieldByName('observacionesAcompanante').Value := camas2observacionesAcompanante.AsString;
-          FieldByName('orden').Value := camas2orden.AsInteger;
-          FieldByName('cambioCamaPendiente').Value := camas2cambioCamaPendiente.AsInteger;
-          FieldByName('alertas').Value := camas2alertas.AsInteger;
-          FieldByName('tareasPendientes').Value := camas2tareasPendientes.AsInteger;
-          FieldByName('altaProbableFecha').Value := camas2altaProbableFecha.AsString;
-          FieldByName('altaProbableTipo').Value := camas2altaProbableTipo.AsString;
-          FieldByName('altaProbableDniUsuario').Value := camas2altaProbableDniUsuario.AsInteger;
-          FieldByName('altaProbableNombreUsuario').Value := camas2altaProbableNombreUsuario.AsString;
-          FieldByName('reservaMotivo').Value := camas2reservaMotivo.AsString;
-          FieldByName('reservaFecha').Value := camas2reservaFecha.AsString;
-          FieldByName('reservadaPorDni').Value := camas2reservadaPorDni.AsInteger;
-          FieldByName('reservadaPorNombre').Value := camas2reservadaPorNombre.AsString;
-          FieldByName('idReserva').Value := camas2idReserva.AsInteger;
-          FieldByName('reservaFechaCancelada').Value := camas2reservaFechaCancelada.AsString;
-          FieldByName('reservaCanceladaPorDni').Value := camas2reservaCanceladaPorDni.AsInteger;
-          FieldByName('reservaCanceladaPorNombre').Value := camas2reservaCanceladaPorNombre.AsString;
-          FieldByName('reservaPacienteDni').Value := camas2reservaPacienteDni.AsString;
-          FieldByName('reservaPacienteNombre').Value := camas2reservaPacienteNombre.AsString;
-          FieldByName('idMotivoFinReserva').Value := camas2idMotivoFinReserva.AsInteger;
-          FieldByName('reservaIdSolicitudCambio').Value := camas2reservaIdSolicitudCambio.AsInteger;
-          FieldByName('fotoPaciente').Value := camas2fotoPaciente.AsString;
-          Post;
-        end;
-      camas2.Next;
-    until (camas2.Eof);
+              FieldByName('tipoAltaMedica').Value := camas2tipoAltaMedica.AsString;
+              FieldByName('acompanante').Value := camas2acompanante.AsInteger;
+              FieldByName('observacionesAcompanante').Value := camas2observacionesAcompanante.AsString;
+              FieldByName('orden').Value := camas2orden.AsInteger;
+              FieldByName('cambioCamaPendiente').Value := camas2cambioCamaPendiente.AsInteger;
+              FieldByName('alertas').Value := camas2alertas.AsInteger;
+              FieldByName('tareasPendientes').Value := camas2tareasPendientes.AsInteger;
+              FieldByName('altaProbableFecha').Value := camas2altaProbableFecha.AsString;
+              FieldByName('altaProbableTipo').Value := camas2altaProbableTipo.AsString;
+              FieldByName('altaProbableDniUsuario').Value := camas2altaProbableDniUsuario.AsInteger;
+              FieldByName('altaProbableNombreUsuario').Value := camas2altaProbableNombreUsuario.AsString;
+              FieldByName('reservaMotivo').Value := camas2reservaMotivo.AsString;
+              FieldByName('reservaFecha').Value := camas2reservaFecha.AsString;
+              FieldByName('reservadaPorDni').Value := camas2reservadaPorDni.AsInteger;
+              FieldByName('reservadaPorNombre').Value := camas2reservadaPorNombre.AsString;
+              FieldByName('idReserva').Value := camas2idReserva.AsInteger;
+              FieldByName('reservaFechaCancelada').Value := camas2reservaFechaCancelada.AsString;
+              FieldByName('reservaCanceladaPorDni').Value := camas2reservaCanceladaPorDni.AsInteger;
+              FieldByName('reservaCanceladaPorNombre').Value := camas2reservaCanceladaPorNombre.AsString;
+              FieldByName('reservaPacienteDni').Value := camas2reservaPacienteDni.AsString;
+              FieldByName('reservaPacienteNombre').Value := camas2reservaPacienteNombre.AsString;
+              FieldByName('idMotivoFinReserva').Value := camas2idMotivoFinReserva.AsInteger;
+              FieldByName('reservaIdSolicitudCambio').Value := camas2reservaIdSolicitudCambio.AsInteger;
+              FieldByName('fotoPaciente').Value := camas2fotoPaciente.AsString;
+              Post;
+            end;
+          camas2.Next;
+        until (camas2.Eof);
 
-    // ejecuto las alertas.
-    // si hay alertas (tabla alertas) ejecuto el timer que las mostrará
-    if alertas.RecordCount > 0 then
-      relojParpadeo.Enabled := true
+        // ejecuto las alertas.
+        // si hay alertas (tabla alertas) ejecuto el timer que las mostrará
+        if alertas.RecordCount > 0 then
+          relojParpadeo.Enabled := true
+        else
+          relojParpadeo.Enabled := false;
+      end
     else
-      relojParpadeo.Enabled := false;
+      begin
+        ActualizarCamas;
+      end;
+
+
   except
     on E:Exception do
       begin
@@ -1382,6 +1453,11 @@ begin
       // la versión no es la correcta
       datos.VerMensaje('Versión del sistema incorrecta',versionesmensaje.AsString,'Aceptar','ERROR',0);
       Application.Terminate;
+    end
+  else
+    begin
+      lb_menu_version.Text := 'Versión: ' + versionesversionActual.AsString;
+      lb_version_fecha.Text := versionesfecha.AsString;
     end;
 end;
 
@@ -1417,6 +1493,7 @@ begin
   barra.Max := datos.segundos;
   barra.Value := 0;
 
+  filtroEstadoCamas := 0; // por defecto obtendrá todas las camas. El valor es el del campo idEstado de tabla camasEstados
 
   if datos.fullscreen = 1 then
     begin
@@ -1449,11 +1526,6 @@ begin
       botonMenu.Visible  := false;
       botonSalirFullScreen.Visible := true;
     end;
-
-//  if datos.cambiarServicio = 1 then
-//    botonCambiarServicio.Enabled := true
-//  else
-//    botonCambiarServicio.Enabled := false;
 
   if serviciosUsuario.RecordCount > 1 then
     botonCambiarServicio.Enabled := true
@@ -1555,6 +1627,7 @@ begin
       nombreServicio.TextSettings.FontColor := TAlphaColorRec.White;
       datos.cambioCamaAreaCerrada := serviciocambioCamaAreaCerrada.AsInteger;
       datos.gestionaCamas := serviciogestionaCamas.AsInteger;
+      datos.pendientes := serviciotareasPendientes.AsInteger;
 
 
       JsonValue := TJSONObject.ParseJSONValue(response.Content);
@@ -1567,6 +1640,52 @@ begin
     begin
       datos.VerMensaje('ERROR ' +response.StatusCode.ToString ,'Ocurrió un error en el recurso ' + datos.urlTC + recurso ,'Aceptar','ERROR',0);
     end;
+end;
+
+function TformTablero.insertarNuevaAlerta(cama, tipo, idInternacion,  paciCodigo: integer): integer;
+var
+  response1 : IResponse;
+  response: IResponse;
+  alertaInsertada : integer;
+begin
+  {
+   inserta una alerta de acuerdo a los parámetros recibidos.
+   primero verifico si el servicio actual atiende este tipo de alerta (ingreso de paciente), sino no ingreso la alerta.
+   Si la alerta fue agregada, entonces retorna 1, sino retorno 0
+  }
+
+  alertaInsertada := 0;
+
+  response1 := TRequest.New.BaseURL(datos.urlTC)
+                      .Resource('tablerocamas/alertaAtendidaPorServicio')
+                      .AddHeader('TokenAcceso', datos.tokenAcceso)
+                      .AddParam('idTipoAlerta', tipo.ToString)
+                      .AddParam('idServicio', datos.servicio.ToString)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(alertaAtendida))
+                      .Post;
+
+  if response1.StatusCode = 200 then
+    begin
+      if alertaAtendida.RecordCount > 0 then
+        begin
+          // el servicio atiende este tipo de alerta, entonces agrego la alerta.
+          response := TRequest.New.BaseURL(datos.urlTC)
+                      .Resource('tablerocamas/nuevaAlerta')
+                      .AddHeader('TokenAcceso', datos.tokenAcceso)
+                      .AddParam('idCama', cama.ToString)
+                      .AddParam('idTipoAlerta', tipo.ToString)
+                      .AddParam('paciCodigo', paciCodigo.ToString)
+                      .AddParam('idInternacion', idInternacion.ToString)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(alertasNueva))
+                      .Post;
+          if(response.StatusCode = 200) then
+            alertaInsertada := 1;
+        end;
+    end;
+
+   insertarNuevaAlerta := alertaInsertada;
 end;
 
 procedure TformTablero.apagarAlertasCamasDisponibles();

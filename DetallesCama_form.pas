@@ -649,8 +649,9 @@ begin
     // Datos adicionales + array de IDs
     jsonObj.AddPair('idUsuario',    TJSONNumber.Create(datos.idUsuario));
     jsonObj.AddPair('idAplicacion', TJSONNumber.Create(datos.idAplicacion));
-    jsonObj.AddPair('idServicio', TJSONNumber.Create(datos.servicio));
     jsonObj.AddPair('idAlertas',    jsonArr);
+    jsonObj.AddPair('idServicio', TJSONNumber.Create(datos.servicio));
+
 
     body := jsonObj.ToJSON;
 
@@ -670,7 +671,7 @@ begin
 
   if response.StatusCode <> 200 then
     begin
-      datos.VerMensaje('ERROR' + response.StatusCode.ToString,'No fue posible apagar las alertas de esta cama','Aceptar','ERROR',0);
+      datos.VerMensaje('ERROR ' + response.StatusCode.ToString,'No fue posible apagar las alertas de esta cama','Aceptar','ERROR',0);
     end;
 end;
 

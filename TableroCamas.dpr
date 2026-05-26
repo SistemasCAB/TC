@@ -27,7 +27,8 @@ uses
   TareasReparacionDetalle_form in 'TareasReparacionDetalle_form.pas' {form_TareasReparacionDetalle},
   TareaRepracionCrear_form in 'TareaRepracionCrear_form.pas' {form_TareaRepracionCrear},
   Reservas_form in 'Reservas_form.pas' {form_Reservas},
-  EnviarQuirofano_form in 'EnviarQuirofano_form.pas' {form_EnviarQuirofano};
+  EnviarQuirofano_form in 'EnviarQuirofano_form.pas' {form_EnviarQuirofano},
+  FiltrarCamas_form in 'FiltrarCamas_form.pas' {formFiltrarCamas};
 
 {$R *.res}
 

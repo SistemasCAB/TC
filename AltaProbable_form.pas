@@ -207,16 +207,18 @@ begin
               .Adapters(TDataSetSerializeAdapter.New(resultado))
               .Post;
 
-  if response.StatusCode = 200 then
-    begin
-       datos.VerMensaje('ALTA PROBABLE GRABADA' ,resultadomensaje.AsString,'Aceptar','OK',0);
+  case response.StatusCode of
+    200: begin
+      datos.VerMensaje('ALTA PROBABLE GRABADA' ,resultadomensaje.AsString,'Aceptar','OK',0);
        form_DetallesCama.Actualizar(idCama);
        Close;
-    end
-  else
-    begin
-      datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,'Ha ocurrido un error en la ejecución del método ' + recurso + #13 + resultadomensaje.AsString,'Aceptar','ERROR',0);
     end;
+    422: begin
+        datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,resultadomensaje.AsString,'Aceptar','ERROR',0);
+    end;
+    else
+      datos.VerMensaje('ERROR ' + response.StatusCode.ToString ,'Ha ocurrido un error en la ejecución del método ' + recurso + #13 + resultadomensaje.AsString,'Aceptar','ERROR',0);
+  end;
 end;
 
 procedure TformAltaProbable.EliminarAltaProbable;
