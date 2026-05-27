@@ -1123,108 +1123,101 @@ begin
   while pAislamiento.ChildrenCount > 0 do
     pAislamiento.Children[0].Free;
 
-  if permisoModulo(3) = 0 then
-    begin
-      panelAislamientos.Visible := false;
-    end
-  else
-    begin
-      panelAislamientos.Visible := true;
+    panelAislamientos.Visible := true;
 
-      if(aislamientos.RecordCount > 0) then
-        begin
-          aislamientos.First;
-          repeat
-            // creo los objetos para cada tipo de aislamiento que tiene el paciente.
+    if(aislamientos.RecordCount > 0) then
+      begin
+        aislamientos.First;
+        repeat
+          // creo los objetos para cada tipo de aislamiento que tiene el paciente.
 
-            if aislamientosestado.AsString = 'Vigente' then
-              begin
-                // Layout aislamiento
-            lyAisl := TLayout.Create(pAislamiento);
-            lyAisl.Parent := pAislamiento;
-            lyAisl.name := 'lyAislamiento'+ aislamientosidPacienteAislamiento.AsString;
-            lyAisl.width := 82;
-            lyAisl.Align := TAlignLayout.Left;
+          if aislamientosestado.AsString = 'Vigente' then
+            begin
+              // Layout aislamiento
+          lyAisl := TLayout.Create(pAislamiento);
+          lyAisl.Parent := pAislamiento;
+          lyAisl.name := 'lyAislamiento'+ aislamientosidPacienteAislamiento.AsString;
+          lyAisl.width := 82;
+          lyAisl.Align := TAlignLayout.Left;
 
 
-            // Ícono Aislamiento
-            with TImage.Create(lyAisl) do
+          // Ícono Aislamiento
+          with TImage.Create(lyAisl) do
+            begin
+              Parent := lyAisl;
+              Height := 50;
+              Align := TAlignLayout.Top;
+              Name := 'iconoAislamiento'+ aislamientosidPacienteAislamiento.AsString;
+              WrapMode := TImageWrapMode.Fit;
+              HitTest := false;
+              case aislamientosidAislamiento.AsInteger of
+                1: begin
+                  if aislamientoskpc.AsInteger = 1 then
+                    Base64(aislamientoKPC)
+                  else
+                    Base64(aislamientoAC);
+                end;
+
+                2: begin
+                  Base64(aislamientoAR);
+                end;
+
+                3: begin
+                  Base64(aislamientoAG);
+                end;
+                4: begin
+                  Base64(aislamientoAN);
+                end;
+                5: begin
+                  Base64(aislamientoCD);
+                end;
+                6: begin
+                  Base64(aislamientoSC);
+                end;
+              end;
+            end;
+
+            // Fecha del aislamiento
+            with TLabel.Create(lyAisl) do
               begin
                 Parent := lyAisl;
-                Height := 50;
-                Align := TAlignLayout.Top;
-                Name := 'iconoAislamiento'+ aislamientosidPacienteAislamiento.AsString;
-                WrapMode := TImageWrapMode.Fit;
+                Height := 37;
+                Width := 82;
+                Align := TAlignLayout.Bottom;
                 HitTest := false;
-                case aislamientosidAislamiento.AsInteger of
-                  1: begin
-                    if aislamientoskpc.AsInteger = 1 then
-                      Base64(aislamientoKPC)
-                    else
-                      Base64(aislamientoAC);
-                  end;
-
-                  2: begin
-                    Base64(aislamientoAR);
-                  end;
-
-                  3: begin
-                    Base64(aislamientoAG);
-                  end;
-                  4: begin
-                    Base64(aislamientoAN);
-                  end;
-                  5: begin
-                    Base64(aislamientoCD);
-                  end;
-                  6: begin
-                    Base64(aislamientoSC);
-                  end;
-                end;
+                Name := 'fechaAislamiento'+ aislamientosidPacienteAislamiento.AsString;
+                StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
+                // TextSettings.Font.Size := 13;
+                // TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+                TextSettings.HorzAlign := TTextAlign.Center;
+                HitTest := false;
+                Text := aislamientosfechaDesde.AsString;
               end;
-
-              // Fecha del aislamiento
-              with TLabel.Create(lyAisl) do
-                begin
-                  Parent := lyAisl;
-                  Height := 37;
-                  Width := 82;
-                  Align := TAlignLayout.Bottom;
-                  HitTest := false;
-                  Name := 'fechaAislamiento'+ aislamientosidPacienteAislamiento.AsString;
-                  StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
-                  // TextSettings.Font.Size := 13;
-                  // TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
-                  TextSettings.HorzAlign := TTextAlign.Center;
-                  HitTest := false;
-                  Text := aislamientosfechaDesde.AsString;
-                end;
-              end;
-
-
-
-            aislamientos.Next;
-          until aislamientos.Eof;
-        end
-      else
-        begin
-          // si no hay aislamientos, muestro el texto Agregar Aislamiento.
-
-          with TLabel.Create(pAislamiento) do
-            begin
-              Parent := pAislamiento;
-              Align := TAlignLayout.Client;
-              HitTest := false;
-              Name := 'lbAgregarAislamientos';
-              StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
-              TextSettings.Font.Size := 16;
-              // TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
-              TextSettings.HorzAlign := TTextAlign.Center;
-              HitTest := false;
-              Text := 'Agregar Aislamiento';
             end;
-        end;
-    end;
+
+
+
+          aislamientos.Next;
+        until aislamientos.Eof;
+      end
+    else
+      begin
+        // si no hay aislamientos, muestro el texto Agregar Aislamiento.
+
+        with TLabel.Create(pAislamiento) do
+          begin
+            Parent := pAislamiento;
+            Align := TAlignLayout.Client;
+            HitTest := false;
+            Name := 'lbAgregarAislamientos';
+            StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
+            TextSettings.Font.Size := 16;
+            // TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
+            TextSettings.HorzAlign := TTextAlign.Center;
+            HitTest := false;
+            Text := 'Agregar Aislamiento';
+          end;
+      end;
 end;
 
 procedure Tform_DetallesCama.obtenerPermisosModulosPaciente(idServicio: integer);

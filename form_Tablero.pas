@@ -406,61 +406,42 @@ var
 begin
   if FCamasUI.TryGetValue(idCama, ui) then
     begin
-      if permisoModulo(3) = 0 then // no tiene permiso para ver los aislamientos del paciente
+      // tiene permiso para ver los aislamientos del paciente
+
+      if camas2camaEnAislamiento.AsInteger = 1 then
         begin
-          if camas2camaEnAislamiento.AsInteger = 1 then
+          if camas2idEstado.AsInteger = 2 then // la cama está ocupada
             begin
-              ui.iconoAislamiento.Base64(aislamiento);
-              ui.iconoAislamiento.Visible := true;
-              ui.lbPrecaucion.Text := 'AISLAMIENTO';
-            end
-          else
-            begin
-              if Assigned(ui.iconoAislamiento) then
-                ui.iconoAislamiento.Visible := false;
-              if Assigned(ui.lbPrecaucion) then
-                ui.lbPrecaucion.Text := '';
-            end;
+                if (camas2aislamiento_contacto.AsString <> '') and (camas2kpc.AsInteger = 1) then
+                  ui.iconoAislamientoC.Base64(aislamientoKPC)
+                else
+                  ui.iconoAislamientoC.Base64(aislamientoAC);
+
+                ui.iconoAislamientoC.Visible  := camas2aislamiento_contacto.AsString <> '';
+                ui.iconoAislamientoAR.Visible := camas2aislamiento_respiratorio.AsString <> '';
+                ui.iconoAislamientoGC.Visible := camas2aislamiento_gota.AsString <> '';
+                ui.iconoAislamientoN.Visible  := camas2aislamiento_neutropenico.AsString <> '';
+                ui.iconoAislamientoCD.Visible := camas2aislamiento_cd.AsString <> '';
+                ui.iconoAislamientoSC.Visible := camas2aislamiento_sc.AsString <> '';
+              end
+            else
+              begin
+                ui.iconoAislamientoC.Visible  := false;
+                ui.iconoAislamientoAR.Visible := false;
+                ui.iconoAislamientoGC.Visible := false;
+                ui.iconoAislamientoN.Visible  := false;
+                ui.iconoAislamientoCD.Visible := false;
+                ui.iconoAislamientoSC.Visible := false;
+              end;
         end
       else
         begin
-          // tiene permiso para ver los aislamientos del paciente
-
-          if camas2camaEnAislamiento.AsInteger = 1 then
-            begin
-              if camas2idEstado.AsInteger = 2 then // la cama está ocupada
-                begin
-                    if (camas2aislamiento_contacto.AsString <> '') and (camas2kpc.AsInteger = 1) then
-                      ui.iconoAislamientoC.Base64(aislamientoKPC)
-                    else
-                      ui.iconoAislamientoC.Base64(aislamientoAC);
-
-                    ui.iconoAislamientoC.Visible  := camas2aislamiento_contacto.AsString <> '';
-                    ui.iconoAislamientoAR.Visible := camas2aislamiento_respiratorio.AsString <> '';
-                    ui.iconoAislamientoGC.Visible := camas2aislamiento_gota.AsString <> '';
-                    ui.iconoAislamientoN.Visible  := camas2aislamiento_neutropenico.AsString <> '';
-                    ui.iconoAislamientoCD.Visible := camas2aislamiento_cd.AsString <> '';
-                    ui.iconoAislamientoSC.Visible := camas2aislamiento_sc.AsString <> '';
-                  end
-                else
-                  begin
-                    ui.iconoAislamientoC.Visible  := false;
-                    ui.iconoAislamientoAR.Visible := false;
-                    ui.iconoAislamientoGC.Visible := false;
-                    ui.iconoAislamientoN.Visible  := false;
-                    ui.iconoAislamientoCD.Visible := false;
-                    ui.iconoAislamientoSC.Visible := false;
-                  end;
-            end
-          else
-            begin
-              ui.iconoAislamientoC.Visible  := false;
-              ui.iconoAislamientoAR.Visible := false;
-              ui.iconoAislamientoGC.Visible := false;
-              ui.iconoAislamientoN.Visible  := false;
-              ui.iconoAislamientoCD.Visible := false;
-              ui.iconoAislamientoSC.Visible := false;
-            end;
+          ui.iconoAislamientoC.Visible  := false;
+          ui.iconoAislamientoAR.Visible := false;
+          ui.iconoAislamientoGC.Visible := false;
+          ui.iconoAislamientoN.Visible  := false;
+          ui.iconoAislamientoCD.Visible := false;
+          ui.iconoAislamientoSC.Visible := false;
         end;
     end;
 end;
@@ -841,184 +822,134 @@ begin
                         LyIconos.Margins.Left := 5;
                         LyIconos.HitTest := false;
 
-                        if permisoModulo(3) = 0 then // si no tienen permisos para ver los aislamientos.
+                        // permiso de lectura (1) y control total (2)
+
+                        // Ícono Aislamiento de Contacto
+                        iconoAislamientoC := TImage.Create(Self);
+                        with iconoAislamientoC do
                           begin
-                            // sin permiso
-                            // verifico si tiene algún tipo de aislamiento
-                            if camascamaEnAislamiento.AsInteger = 1 then
-                              begin
-                                iconoAislamiento := TImage.Create(Self);
-                                with iconoAislamiento do
-                                  begin
-                                    Parent := LyIconos;
-                                    Position.X :=1;
-                                    Position.Y := 1;
-                                    Width := 40;
-                                    Height := 50;
-                                    Align := TAlignLayout.Left;
-                                    Name := 'aislamientoNoAccede'+ camasidCama.AsString;
-                                    WrapMode := TImageWrapMode.Fit;
-                                    Base64(aislamiento);
-                                    HitTest := false;
-                                    Visible := true;
-                                  end;
-
-                                // texto indicando que hay aislamientos
-                                lbPrecaucion := TLabel.Create(Self);
-                                with lbPrecaucion do
-                                  begin
-                                    Parent := LyIconos;
-                                    Position.X :=45;
-                                    Position.Y := 20;
-                                    Height := 17;
-                                    Align := TAlignLayout.None;
-                                    HitTest := false;
-                                    Name := 'lb_lineaPrecuacion'+ camasidCama.AsString;
-                                    StyledSettings := StyledSettings - [TStyledSetting.Family, TStyledSetting.FontColor, TStyledSetting.Size];
-                                    Font.Style := Font.Style - [TFontStyle.fsBold];
-                                    TextSettings.Font.Style := Font.Style + [TFontStyle.fsBold];
-                                    TextSettings.HorzAlign := TTextAlign.Leading;
-                                    TextSettings.FontColor := TAlphaColorRec.Red;
-                                    TextSettings.Font.Size := 13;
-                                    HitTest := false;
-                                    Text := 'AISLAMIENTO';
-                                  end;
-                              end;
-                          end
-                        else
-                          begin
-                            // permiso de lectura (1) y control total (2)
-
-                            // Ícono Aislamiento de Contacto
-                            iconoAislamientoC := TImage.Create(Self);
-                            with iconoAislamientoC do
-                              begin
-                                Parent := LyIconos;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 40;
-                                Height := 50;
-                                Align := TAlignLayout.Left;
-                                Name := 'aislamientoAC'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-                                if camaskpc.AsInteger = 0 then
-                                  Base64(aislamientoAC)
-                                else
-                                  Base64(aislamientoKPC);
-                                HitTest := false;
-                                if camasaislamiento_contacto.AsString <> '' then
-                                  Visible := true
-                                else
-                                  Visible := false;
-                              end;
-
-
-                            // Ícono Aislamiento Gota Contacto
-                            iconoAislamientoGC := TImage.Create(Self);
-                            with iconoAislamientoGC do
-                              begin
-                                Parent := LyIconos;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 40;
-                                Height := 50;
-                                Align := TAlignLayout.Left;
-                                Name := 'aislamientoAG'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-                                Base64(aislamientoAG);
-                                HitTest := false;
-                                if camasaislamiento_gota.AsString <> '' then
-                                  Visible := true
-                                else
-                                  Visible := false;
-                              end;
-
-
-                            // Ícono Aislamiento Aire Respiratorio
-                            iconoAislamientoAR := TImage.Create(Self);
-                            with iconoAislamientoAR do
-                              begin
-                                Parent := LyIconos;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 40;
-                                Height := 50;
-                                Align := TAlignLayout.Left;
-                                Name := 'aislamientoAR'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-                                Base64(aislamientoAR);
-                                HitTest := false;
-                                if camasaislamiento_respiratorio.AsString <> '' then
-                                  Visible := true
-                                else
-                                  Visible := false;
-                              end;
-
-
-                            // Ícono Aislamiento de Protección Neutropenico
-                            iconoAislamientoN := TImage.Create(Self);
-                            with iconoAislamientoN do
-                              begin
-                                Parent := LyIconos;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 40;
-                                Height := 50;
-                                Align := TAlignLayout.Left;
-                                Name := 'aislamientoAN'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-                                Base64(aislamientoAN);
-                                HitTest := false;
-                                if camasaislamiento_neutropenico.AsString <> '' then
-                                  Visible := true
-                                else
-                                  Visible := false;
-                              end;
-
-
-                            // Ícono Aislamiento CD
-                            iconoAislamientoCD := TImage.Create(Self);
-                            with iconoAislamientoCD do
-                              begin
-                                Parent := LyIconos;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 40;
-                                Height := 50;
-                                Align := TAlignLayout.Left;
-                                Name := 'aislamientoCD'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-                                Base64(aislamientoCD);
-                                HitTest := false;
-                                if camasaislamiento_cd.AsString <> '' then
-                                  Visible := true
-                                else
-                                  Visible := false;
-                              end;
-
-                            // Ícono Aislamiento SC
-                            iconoAislamientoSC := TImage.Create(Self);
-                            with iconoAislamientoSC do
-                              begin
-                                Parent := LyIconos;
-                                Position.X :=1;
-                                Position.Y := 1;
-                                Width := 40;
-                                Height := 50;
-                                Align := TAlignLayout.Left;
-                                Name := 'aislamientoSC'+ camasidCama.AsString;
-                                WrapMode := TImageWrapMode.Fit;
-                                Base64(aislamientoSC);
-                                HitTest := false;
-                                if camasaislamiento_sc.AsString <> '' then
-                                  Visible := true
-                                else
-                                  Visible := false;
-                              end;
-
+                            Parent := LyIconos;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Left;
+                            Name := 'aislamientoAC'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            if camaskpc.AsInteger = 0 then
+                              Base64(aislamientoAC)
+                            else
+                              Base64(aislamientoKPC);
+                            HitTest := false;
+                            if camasaislamiento_contacto.AsString <> '' then
+                              Visible := true
+                            else
+                              Visible := false;
                           end;
 
 
+                        // Ícono Aislamiento Gota Contacto
+                        iconoAislamientoGC := TImage.Create(Self);
+                        with iconoAislamientoGC do
+                          begin
+                            Parent := LyIconos;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Left;
+                            Name := 'aislamientoAG'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            Base64(aislamientoAG);
+                            HitTest := false;
+                            if camasaislamiento_gota.AsString <> '' then
+                              Visible := true
+                            else
+                              Visible := false;
+                          end;
+
+
+                        // Ícono Aislamiento Aire Respiratorio
+                        iconoAislamientoAR := TImage.Create(Self);
+                        with iconoAislamientoAR do
+                          begin
+                            Parent := LyIconos;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Left;
+                            Name := 'aislamientoAR'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            Base64(aislamientoAR);
+                            HitTest := false;
+                            if camasaislamiento_respiratorio.AsString <> '' then
+                              Visible := true
+                            else
+                              Visible := false;
+                          end;
+
+
+                        // Ícono Aislamiento de Protección Neutropenico
+                        iconoAislamientoN := TImage.Create(Self);
+                        with iconoAislamientoN do
+                          begin
+                            Parent := LyIconos;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Left;
+                            Name := 'aislamientoAN'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            Base64(aislamientoAN);
+                            HitTest := false;
+                            if camasaislamiento_neutropenico.AsString <> '' then
+                              Visible := true
+                            else
+                              Visible := false;
+                          end;
+
+
+                        // Ícono Aislamiento CD
+                        iconoAislamientoCD := TImage.Create(Self);
+                        with iconoAislamientoCD do
+                          begin
+                            Parent := LyIconos;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Left;
+                            Name := 'aislamientoCD'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            Base64(aislamientoCD);
+                            HitTest := false;
+                            if camasaislamiento_cd.AsString <> '' then
+                              Visible := true
+                            else
+                              Visible := false;
+                          end;
+
+                        // Ícono Aislamiento SC
+                        iconoAislamientoSC := TImage.Create(Self);
+                        with iconoAislamientoSC do
+                          begin
+                            Parent := LyIconos;
+                            Position.X :=1;
+                            Position.Y := 1;
+                            Width := 40;
+                            Height := 50;
+                            Align := TAlignLayout.Left;
+                            Name := 'aislamientoSC'+ camasidCama.AsString;
+                            WrapMode := TImageWrapMode.Fit;
+                            Base64(aislamientoSC);
+                            HitTest := false;
+                            if camasaislamiento_sc.AsString <> '' then
+                              Visible := true
+                            else
+                              Visible := false;
+                          end;
 
                         // Boton
                         botonCama := TSpeedButton.Create(Self);
