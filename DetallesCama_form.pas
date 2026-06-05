@@ -134,7 +134,6 @@ type
     camashabitacion: TWideStringField;
     camaspiso: TWideStringField;
     camaspisoTexto: TWideStringField;
-    camastipocama: TWideStringField;
     camasidEstado: TWideStringField;
     camasestado: TWideStringField;
     camascolor: TWideStringField;
@@ -246,6 +245,9 @@ type
     alertasApagartipoAlerta: TStringField;
     alertasApagaridCama: TIntegerField;
     alertasApagarfecha: TStringField;
+    Label5: TLabel;
+    lb_TipoCama: TLabel;
+    camastipoCama: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);
@@ -317,6 +319,10 @@ begin
     begin
       lb_cama.Text := camascama.AsString;
       lb_id_cama.Text := camasidCama.AsString;
+      if camastipocama.AsString = 'F' then
+        lb_tipoCama.Text := 'FÍSICA'
+      else
+        lb_tipoCama.Text := 'VIRTUAL';
       lb_estado.Text  := camasestado.AsString;
       etiquetaEstado.Fill.Color := TAlphaColor(StrToAlphaColor(camascolor.AsString));
 

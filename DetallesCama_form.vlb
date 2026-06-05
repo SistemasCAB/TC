@@ -193,9 +193,6 @@ Coordinates=665,1,123,58
 [camascambioCamaPendiente]
 Coordinates=1384,56,185,36
 
-[camastipocama]
-Coordinates=1384,111,104,36
-
 [contenedorAlertas]
 Coordinates=1384,166,119,36
 
@@ -560,7 +557,7 @@ Coordinates=1649,1981,165,36
 Coordinates=1649,2036,213,36
 
 []
-Coordinates=1132,1046,103,36
+Coordinates=1384,111,104,36
 Visible=True
 
 [formAislamiento.disponibles]
