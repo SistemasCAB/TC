@@ -24,7 +24,7 @@ object form_Configuracion: Tform_Configuracion
   end
   object FORMULARIO: TRectangle
     Align = Center
-    Size.Width = 1295.000000000000000000
+    Size.Width = 1028.000000000000000000
     Size.Height = 673.000000000000000000
     Size.PlatformDefault = False
     object contenedorPrincipal: TLayout
@@ -33,34 +33,35 @@ object form_Configuracion: Tform_Configuracion
       Margins.Top = 10.000000000000000000
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 10.000000000000000000
-      Size.Width = 1275.000000000000000000
+      Size.Width = 1008.000000000000000000
       Size.Height = 603.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       object pagina: TTabControl
         Align = Client
         FullSize = True
-        Size.Width = 1275.000000000000000000
-        Size.Height = 603.000000000000000000
+        Size.Width = 1008.000000000000000000
+        Size.Height = 559.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 35.000000000000000000
-        TabIndex = 0
-        TabOrder = 0
+        TabIndex = 2
+        TabOrder = 1
         TabPosition = PlatformDefault
-        OnChange = paginaChange
         Sizes = (
-          1275s
-          568s
-          1275s
-          568s)
+          1008s
+          524s
+          1008s
+          524s
+          1008s
+          524s)
         object tabServicios: TTabItem
           CustomIcon = <
             item
             end>
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           StyledSettings = [Family, Size, FontColor]
-          IsSelected = True
-          Size.Width = 636.000000000000000000
+          IsSelected = False
+          Size.Width = 335.000000000000000000
           Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -71,77 +72,22 @@ object form_Configuracion: Tform_Configuracion
           object contenedorTabServicios: TLayout
             Align = Client
             Margins.Top = 10.000000000000000000
-            Size.Width = 1275.000000000000000000
-            Size.Height = 558.000000000000000000
+            Size.Width = 1008.000000000000000000
+            Size.Height = 514.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             object Layout5: TLayout
               Align = Client
-              Size.Width = 1275.000000000000000000
-              Size.Height = 558.000000000000000000
+              Size.Width = 1008.000000000000000000
+              Size.Height = 514.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
-              object Layout6: TLayout
-                Align = Top
-                Size.Width = 1275.000000000000000000
-                Size.Height = 113.000000000000000000
-                Size.PlatformDefault = False
-                TabOrder = 0
-                object Label6: TLabel
-                  Position.X = 89.000000000000000000
-                  Position.Y = 66.000000000000000000
-                  Size.Width = 352.000000000000000000
-                  Size.Height = 17.000000000000000000
-                  Size.PlatformDefault = False
-                  Text = 'No necesita autorizaci'#243'n para cambio de cama dentro del servicio'
-                  TabOrder = 0
-                end
-                object areaCerrada: TSwitch
-                  IsChecked = False
-                  Position.X = 24.000000000000000000
-                  Position.Y = 62.000000000000000000
-                  Size.Width = 57.000000000000000000
-                  Size.Height = 27.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 3
-                end
-                object Label5: TLabel
-                  Position.X = 24.000000000000000000
-                  Position.Y = 16.000000000000000000
-                  Text = 'Nombre del servicio'
-                  TabOrder = 2
-                end
-                object comboServiciosCamas: TComboBox
-                  Position.X = 152.000000000000000000
-                  Position.Y = 16.000000000000000000
-                  Size.Width = 537.000000000000000000
-                  Size.Height = 22.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 4
-                  OnChange = comboServiciosCamasChange
-                end
-                object lb_idServicio: TLabel
-                  Position.X = 704.000000000000000000
-                  Position.Y = 16.000000000000000000
-                  Text = 'ID Servicio: xxxx'
-                  TabOrder = 1
-                end
-                object Rectangle1: TRectangle
-                  Fill.Kind = None
-                  Position.X = 23.000000000000000000
-                  Position.Y = 56.000000000000000000
-                  Size.Width = 61.000000000000000000
-                  Size.Height = 37.000000000000000000
-                  Size.PlatformDefault = False
-                  Stroke.Kind = None
-                end
-              end
               object Layout7: TLayout
                 Align = Client
-                Size.Width = 1275.000000000000000000
-                Size.Height = 445.000000000000000000
+                Size.Width = 1008.000000000000000000
+                Size.Height = 514.000000000000000000
                 Size.PlatformDefault = False
-                TabOrder = 1
+                TabOrder = 0
                 object Layout8: TLayout
                   Align = Left
                   Margins.Left = 20.000000000000000000
@@ -149,7 +95,7 @@ object form_Configuracion: Tform_Configuracion
                   Position.X = 245.000000000000000000
                   Position.Y = 33.000000000000000000
                   Size.Width = 79.000000000000000000
-                  Size.Height = 412.000000000000000000
+                  Size.Height = 481.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
                   object recQuitarCama: TRectangle
@@ -221,7 +167,7 @@ object form_Configuracion: Tform_Configuracion
                   Align = Left
                   Position.Y = 33.000000000000000000
                   Size.Width = 225.000000000000000000
-                  Size.Height = 412.000000000000000000
+                  Size.Height = 481.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 2
                   DisableFocusEffect = True
@@ -229,14 +175,14 @@ object form_Configuracion: Tform_Configuracion
                   DefaultItemStyles.GroupHeaderStyle = ''
                   DefaultItemStyles.GroupFooterStyle = ''
                   Viewport.Width = 221.000000000000000000
-                  Viewport.Height = 408.000000000000000000
+                  Viewport.Height = 477.000000000000000000
                 end
                 object listaCamasDisponibles: TListBox
                   Align = Left
                   Position.X = 344.000000000000000000
                   Position.Y = 33.000000000000000000
                   Size.Width = 225.000000000000000000
-                  Size.Height = 412.000000000000000000
+                  Size.Height = 481.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 1
                   DisableFocusEffect = True
@@ -244,11 +190,11 @@ object form_Configuracion: Tform_Configuracion
                   DefaultItemStyles.GroupHeaderStyle = ''
                   DefaultItemStyles.GroupFooterStyle = ''
                   Viewport.Width = 221.000000000000000000
-                  Viewport.Height = 408.000000000000000000
+                  Viewport.Height = 477.000000000000000000
                 end
                 object Layout9: TLayout
                   Align = Top
-                  Size.Width = 1275.000000000000000000
+                  Size.Width = 1008.000000000000000000
                   Size.Height = 33.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 3
@@ -282,7 +228,7 @@ object form_Configuracion: Tform_Configuracion
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           StyledSettings = [Family, Size, FontColor]
           IsSelected = False
-          Size.Width = 637.000000000000000000
+          Size.Width = 335.000000000000000000
           Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -293,49 +239,27 @@ object form_Configuracion: Tform_Configuracion
           object Layout2: TLayout
             Align = Client
             Margins.Top = 10.000000000000000000
-            Size.Width = 1275.000000000000000000
-            Size.Height = 558.000000000000000000
+            Size.Width = 1008.000000000000000000
+            Size.Height = 514.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             object Layout11: TLayout
               Align = Client
-              Size.Width = 1275.000000000000000000
-              Size.Height = 558.000000000000000000
+              Size.Width = 1008.000000000000000000
+              Size.Height = 514.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
-              object Layout12: TLayout
-                Align = Top
-                Size.Width = 1275.000000000000000000
-                Size.Height = 44.000000000000000000
-                Size.PlatformDefault = False
-                TabOrder = 0
-                object Label12: TLabel
-                  Position.X = 16.000000000000000000
-                  Position.Y = 9.000000000000000000
-                  Text = 'Nombre del servicio'
-                  TabOrder = 0
-                end
-                object comboServicios: TComboBox
-                  Position.X = 144.000000000000000000
-                  Position.Y = 8.000000000000000000
-                  Size.Width = 481.000000000000000000
-                  Size.Height = 22.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 1
-                  OnChange = comboServiciosChange
-                end
-              end
               object Layout13: TLayout
                 Align = Client
-                Size.Width = 1275.000000000000000000
+                Size.Width = 1008.000000000000000000
                 Size.Height = 514.000000000000000000
                 Size.PlatformDefault = False
-                TabOrder = 1
+                TabOrder = 0
                 object Layout14: TLayout
                   Align = Left
                   Margins.Left = 20.000000000000000000
                   Margins.Right = 20.000000000000000000
-                  Position.X = 597.000000000000000000
+                  Position.X = 457.000000000000000000
                   Position.Y = 33.000000000000000000
                   Size.Width = 79.000000000000000000
                   Size.Height = 481.000000000000000000
@@ -409,7 +333,7 @@ object form_Configuracion: Tform_Configuracion
                 object listaAlertasServicio: TListBox
                   Align = Left
                   Position.Y = 33.000000000000000000
-                  Size.Width = 577.000000000000000000
+                  Size.Width = 437.000000000000000000
                   Size.Height = 481.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 2
@@ -417,12 +341,12 @@ object form_Configuracion: Tform_Configuracion
                   DefaultItemStyles.ItemStyle = ''
                   DefaultItemStyles.GroupHeaderStyle = ''
                   DefaultItemStyles.GroupFooterStyle = ''
-                  Viewport.Width = 573.000000000000000000
+                  Viewport.Width = 433.000000000000000000
                   Viewport.Height = 477.000000000000000000
                 end
                 object Layout15: TLayout
                   Align = Top
-                  Size.Width = 1275.000000000000000000
+                  Size.Width = 1008.000000000000000000
                   Size.Height = 33.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 3
@@ -447,7 +371,7 @@ object form_Configuracion: Tform_Configuracion
                 end
                 object listaAlertasDisponibles: TListBox
                   Align = Left
-                  Position.X = 696.000000000000000000
+                  Position.X = 556.000000000000000000
                   Position.Y = 33.000000000000000000
                   Size.Width = 577.000000000000000000
                   Size.Height = 481.000000000000000000
@@ -464,20 +388,384 @@ object form_Configuracion: Tform_Configuracion
             end
           end
         end
+        object tabPermisos: TTabItem
+          CustomIcon = <
+            item
+            end>
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          StyledSettings = [Family, Size, FontColor]
+          IsSelected = True
+          Size.Width = 336.000000000000000000
+          Size.Height = 35.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'PERMISOS SERVICIOS'
+          ExplicitSize.cx = 425.000000000000000000
+          ExplicitSize.cy = 35.000000000000000000
+          object Layout1: TLayout
+            Align = Client
+            Margins.Top = 10.000000000000000000
+            Size.Width = 1008.000000000000000000
+            Size.Height = 514.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object Layout3: TLayout
+              Align = Client
+              Size.Width = 1008.000000000000000000
+              Size.Height = 514.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              object Layout10: TLayout
+                Align = Client
+                Size.Width = 1008.000000000000000000
+                Size.Height = 514.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                object Layout17: TLayout
+                  Align = Top
+                  Size.Width = 1008.000000000000000000
+                  Size.Height = 33.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  object Label4: TLabel
+                    Position.X = 8.000000000000000000
+                    Position.Y = 8.000000000000000000
+                    Size.Width = 193.000000000000000000
+                    Size.Height = 17.000000000000000000
+                    Size.PlatformDefault = False
+                    Text = 'M'#243'dulos del sistema'
+                    TabOrder = 2
+                  end
+                end
+                object listaModulos: TListView
+                  ItemAppearanceClassName = 'TImageListItemAppearance'
+                  ItemEditAppearanceClassName = 'TImageListItemDeleteAppearance'
+                  HeaderAppearanceClassName = 'TListHeaderObjects'
+                  FooterAppearanceClassName = 'TListHeaderObjects'
+                  Images = ImageList1
+                  Align = Left
+                  Position.Y = 33.000000000000000000
+                  Size.Width = 401.000000000000000000
+                  Size.Height = 481.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  ItemAppearanceObjects.ItemObjects.Image.Width = 24.000000000000000000
+                  ItemAppearanceObjects.ItemObjects.Image.Height = 24.000000000000000000
+                  OnItemClick = listaModulosItemClick
+                end
+                object lyEditarPermisos: TLayout
+                  Align = Client
+                  Size.Width = 607.000000000000000000
+                  Size.Height = 481.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 2
+                  object Label1: TLabel
+                    AutoSize = True
+                    StyledSettings = [Family, Size, Style]
+                    Position.X = 38.000000000000000000
+                    Position.Y = 64.000000000000000000
+                    Size.Width = 51.000000000000000000
+                    Size.Height = 16.000000000000000000
+                    Size.PlatformDefault = False
+                    TextSettings.FontColor = xFF00558C
+                    Text = 'M'#243'dulo:'
+                    TabOrder = 6
+                  end
+                  object lbModulo: TLabel
+                    StyledSettings = [Family, Size, FontColor]
+                    Position.X = 38.000000000000000000
+                    Position.Y = 81.000000000000000000
+                    Size.Width = 401.000000000000000000
+                    Size.Height = 17.000000000000000000
+                    Size.PlatformDefault = False
+                    TextSettings.Font.StyleExt = {00070000000000000004000000}
+                    Text = 'M'#243'dulo'
+                    TabOrder = 3
+                  end
+                  object lbDescripcion: TLabel
+                    Position.X = 38.000000000000000000
+                    Position.Y = 122.000000000000000000
+                    Size.Width = 401.000000000000000000
+                    Size.Height = 55.000000000000000000
+                    Size.PlatformDefault = False
+                    TextSettings.VertAlign = Leading
+                    Text = 'M'#243'dulo'
+                    TabOrder = 4
+                  end
+                  object grupoPermisos: TGroupBox
+                    StyledSettings = [Family, Size, Style, Other]
+                    Position.X = 38.000000000000000000
+                    Position.Y = 192.000000000000000000
+                    Size.Width = 489.000000000000000000
+                    Size.Height = 57.000000000000000000
+                    Size.PlatformDefault = False
+                    Text = 'Permisos'
+                    TextSettings.FontColor = xFF00558C
+                    TabOrder = 7
+                    object rdSinAcceso: TRadioButton
+                      Position.X = 34.000000000000000000
+                      Position.Y = 25.000000000000000000
+                      TabOrder = 39
+                      Text = 'Sin acceso'
+                    end
+                    object rdLectura: TRadioButton
+                      Position.X = 210.000000000000000000
+                      Position.Y = 25.000000000000000000
+                      Size.Width = 97.000000000000000000
+                      Size.Height = 19.000000000000000000
+                      Size.PlatformDefault = False
+                      TabOrder = 38
+                      Text = 'Solo lectura'
+                    end
+                    object rdEditar: TRadioButton
+                      Position.X = 381.000000000000000000
+                      Position.Y = 25.000000000000000000
+                      Size.Width = 89.000000000000000000
+                      Size.Height = 19.000000000000000000
+                      Size.PlatformDefault = False
+                      TabOrder = 37
+                      Text = 'Edici'#243'n'
+                    end
+                    object Image1: TImage
+                      MultiResBitmap = <
+                        item
+                          Width = 24
+                          Height = 24
+                          PNG = {
+                            89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+                            F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                            045C49444154484BD5555B6C146514FECE3FB3D3DDB6966EEB2E97456BC3CDE0
+                            85A69870B14DC5A455B984048C42A289E8B3C1C88B86071F34BC188D1A5F7CE1
+                            C1C42081989810C5D60B14230814822D82360D5A5BA816DADDED7667E6BFCCF1
+                            6177D66137F8AC27F93333E7FCE7FBCEEDFF07F82FC908E09C0762D5FA7F13AA
+                            5654CB6877C776114FEC201174C2E8544060087B8A0C9DD5D9DC9155E7AF7C5D
+                            ED13953B120C77AED9146FB6DF65E60E53F4615C0F300100806C0B22118795A8
+                            0320BE776FCEED5D337CF5423506EE4430FC68E75EDBA1F764760E325B009841
+                            8222DB196C186409C49277C1694A68DFC3F31DA72F7E5A05554B70B1EB913D36
+                            E983C5A91918A9206C0B060888788EC89A22220BCCED1C041600B036B0137548
+                            A49390124FAD3D73F178144F443FCE7477B733FB1FE5A66EC1D71ADAB620C1D0
+                            42F8F6D2F6ED1B46C7EF5FFFEBEF2BB068D10A8E27F66B014FDB02AE2791FF6B
+                            16B0F993535D5DC928E66D0414E40F14B28598A734942028662800DAE844E1FA
+                            1F07CFF476B703C0FA5367AF6DBC3C7A8052AD1B34AC5B5A00AEEBC3CD175A1C
+                            E1BE7E1B66F8727ADBE30BBDEB13E3DE4CC1212230330814293B033167B231B3
+                            A4A7EBBB1FC642BF13EBD6F67A37FFEC07330020DEBA60DA695BDDB6F1E85117
+                            D10CD46CAEDB2F4A4731A098C1716748DB940DB35044504A6672139383DF6CDA
+                            B82CF47BECC7A101633B838A193260F8452F65B237D686F60AC1BCEB3DE44A0D
+                            4D0405429058F086B87B519F0F4BCB80A1185020F84A2DC98D4F9E3CDED3B33C
+                            F43576EC98024113C1951A73B333AB6A085CCF4FCA20126D0CF39B4F9F3F2752
+                            2D5B349192D14C8CCA64277E3BF1453913C9C1B402A000F8C6A0902FD8350492
+                            91971C40822111407A320D003BCE5EEAB75B925B344155EC04282333B3E39327
+                            BFEAED4D1B0BB1921F433243916D6A0894E55C56A052290CC3F3E593A16DE7D0
+                            C880954C6DD520A5A2E5D23273E3DA2F8345695E8AEAADE6A6CA105408EA33A9
+                            5352081396C197EEAE434FF4DC17DA775FB8D44F2DA9AD9A2C1D6DBCAFD52AE9
+                            BBEB1495C75A202BDA569EAB21D879FCE4046CE74B55EE83349CC88E5DFBFC70
+                            5F5F4BB8E7850B97FAEDD6E6CDD2B28A1512948622EC4150173FF4CC9123851A
+                            020010A9D6D794251036DB93EAE11B6397873E7860E5B31F3FD7DB00002F0E8D
+                            0CD4A5D37B2409A3984B519747545A56B1F19E256F46316BEEA2F71F5CF9AA37
+                            37F74E45C10C22029135CD82C6884898406528C0E27F02641009384D4DBB5FF9
+                            E9EA6D175E0D0100BCBD7AF95B72BEB89F39289DE68A944E6BD48DC12021106F
+                            6C7A79DFC8D50F2B86B258D50A0018989EF9765BDBBDC3BE96EB82809B0D80D2
+                            A2F20282123460D93F37342DD8B56FF8CAE16A1C4442A90790049000E09489F3
+                            6DE9F4E29EFAD8D3ADA04D8E31CB585043C98BF332B046A789078E650B9FE572
+                            B92C80C6721C12800B6016403124A82B6FA843E99F6B959701300FC05E9A4C26
+                            1712D503C02450989A99C902080034947B1126AA00F8000AE5E7FF5CFE06B38D
+                            40F03899BF470000000049454E44AE426082}
+                          FileName = 
+                            'C:\Users\jorgeluis.rodriguez\Pictures\iconos\coquette-icons-set\' +
+                            'png\24x24\block.png'
+                        end>
+                      Position.X = 9.000000000000000000
+                      Position.Y = 22.000000000000000000
+                      Size.Width = 24.000000000000000000
+                      Size.Height = 24.000000000000000000
+                      Size.PlatformDefault = False
+                    end
+                    object Image2: TImage
+                      MultiResBitmap = <
+                        item
+                          Width = 24
+                          Height = 24
+                          PNG = {
+                            89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+                            F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                            027F49444154484BED92CD4B545118C67FEF39F7EA7C2825654165DA27B4C8DC
+                            D4A236AE8A3EA008C24D29FD03458B692C1329340D731319E1FF501441611004
+                            1145BB5A8515540BA58FA918C78BCDCC3D6F8BC9EB7CE0AE55F85B3EE779DEE7
+                            BCF75C58E6BF47AA851A2EC6F7A0B60BD5BD78B209B40127B3A09F30FA82D0DC
+                            6538F7AC3AB6C0D205E7933BA9937EE03860112074598C6470DA8C310D65EE47
+                            FC2E0E333A5F5364AA0500528914BE3E074E0016F84CDEF5E0FBAD0CCE6D4665
+                            2BC8691CD37F1307F1BDA7A493A30C50573EAA728373C4A96FB88D4777A41574
+                            865CA193F1FC14A9558DD8C25A46B2EF0138E3B793F49E60EDEAC8AF4C32AFDD
+                            8CCD7DA562830BC9B5C4E20FF1CB8603181D603C3FC5F9BAC3D4E7DF922F9E8D
+                            CE6E14DE10B84B48D93D8503C46592BE580B51415FAC05910758DB892E7A712E
+                            8BDABBA468C4F327105D8727E5DF1E7C7B9F30CC5668D0817A77880AD4DEC2B0
+                            BBCA0446328CCC66B089ED185987029E9CA43F799BBEE420E9FA36AE075F3092
+                            A98E6268277A834B895D601E002D952EF7131B6BE377C1C784EF3166E5E2913A
+                            7CDB0C5E9170FE2398A68A68D17D6024D85ADA6030780D7A1075A5C75B404C13
+                            D9E01023B319F2EE2CAABF4ABA6608C31E2E677F900F8ED40CC74DE1E428357F
+                            515FAC15B1F7403A222D74EF20D8C730DF18886FC0D92D846E8AABC10C17E3EB
+                            51798E35AD91BFA82FD1B08B6BF39FA92900E86D5C85E83896AE4853DE804B33
+                            144C02CA092CDB12FBC18E61744799EF265E2ECD658205A9B66081DEC429AC5C
+                            41A42DD2543F22F21D650DC2C645B3BE42B59FA1E0F1A25662E90280DE154D48
+                            781CD16318D989A31930180D713A8D919738B9C3F7DC43262854C79759E6DFF0
+                            0720CBE124E673F22E0000000049454E44AE426082}
+                          FileName = 
+                            'C:\Users\jorgeluis.rodriguez\Pictures\iconos\coquette-icons-set\' +
+                            'png\24x24\ojo.png'
+                        end>
+                      Position.X = 182.000000000000000000
+                      Position.Y = 22.000000000000000000
+                      Size.Width = 24.000000000000000000
+                      Size.Height = 24.000000000000000000
+                      Size.PlatformDefault = False
+                    end
+                    object Image4: TImage
+                      MultiResBitmap = <
+                        item
+                          Width = 24
+                          Height = 24
+                          PNG = {
+                            89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+                            F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                            038649444154484BE5945B6C145518C7FFE7CC6D7767775BBA816EB5160AA514
+                            1B6BD4C480168DD007A30929897DD0847279427D20580B21E1411F9A68A235C1
+                            1863941A1385D058480C58E91A8B2490406C44B19072B12D74DD9696652FB3BB
+                            EE5CCEF1811D5D4F7729FAE08BBFE4CBC9CC7CFFF97D332733C0FF961B07B63D
+                            3CB239FCE995379EEAE2FD1D9278DD858A27EE85D9EF3E7E2CF6CDE02955E25B
+                            D9D42FEF4C5E18FB3276A24B17FBF06F0437272ED65CEEEB3D4C9C4C50D6283C
+                            01154846DB93C706CE4E1FDDF790D8FF8F049C0FCBE3D12B079D8E9E15F27D4D
+                            B00D03B605385C8193C934FF36D0373475E8B5078A33A4F86021AC4BED6F658C
+                            F89E998AFDA008811DED46FEFC3150AF1FB643914BDBC819F60BEB87E2036EE6
+                            9E9F207F6DE776C738B72750DD88E578138B9508AA767C01EDB9BDC824F2C826
+                            4DD8C43BD5BCF7DDD3C5B9B2BB5F8C19DDFFA433F3C16139F48CCCA9076C6E10
+                            9A3D0A427518F52FE1772D84F4B9536CC5B6EE2DF73FFFCA487176C157C4E3FD
+                            75E6B55D2749A0A59EF857834DF703520588B71992A623CD9A303AFB047CC6ED
+                            7D8FB46DEC11F377153076DD6BFEB07E88F896B44A8B5AE1DC3A01986910BD05
+                            C4530BA81E4894C3B01A3E0BD6BDBC55CC63A13D30473B7B89AAB5D2CA3560A9
+                            11F0DC3488AF0944AD062480500F98BCFC82BFB6FD5531EB5256605EEEDC49F2
+                            133B68D5D3E0B971B0D47950FD4110250CF014C02D30C667247F5B3BA5351931
+                            EF5252C063C3CBECC44F3DB46A2DC02CB0F8F720DE95205A1DB81D03775260E6
+                            6D46F4759B8977D5AF62BE989202332B6F20BEDD3AE852B0D923206A2DA8A701
+                            3C1F05CF47012B0E29B0B65BA97C362266454A0A18CB6C205208CC6E03F40E10
+                            EF5270EB16B8F12360CE81785BDE97C3BB7AC55C294A0A60F326599100250812
+                            7A1DC4B7112C310C6E2701B5FAA454DFD52D46CA314F1089444207BFBDB82C91
+                            75A0AA12086C90CA4DD01A3F8752B57A5269F9A893D2C6BC982BC73C416CE2EA
+                            A3677F1E5BD4777C0453379390833AA091E9397BDD7B97D29FACA1F4F11B62E6
+                            6ECCFBD03A5FEC78DB72B03B5C538360501F0B57F8FB068F1CFFF0AB3367D285
+                            1677282EAC252916F800785635D41F58B2B8BA31914A1EBA3E3EF975329B3500
+                            E800140090FFEAE70460B8538E05D8002C003900F1C2CA8B051E004155552B4C
+                            D3CC15260B28777E88EED46EFF9FD35B805390B8823C806461FD9B40442ADCD0
+                            AD52F032F5DFF10749BE58AFFEC7B04D0000000049454E44AE426082}
+                          FileName = 
+                            'C:\Users\jorgeluis.rodriguez\Pictures\iconos\coquette-part-2-ico' +
+                            'ns-set\png\24x24\edit.png'
+                        end>
+                      Position.X = 355.000000000000000000
+                      Position.Y = 22.000000000000000000
+                      Size.Width = 24.000000000000000000
+                      Size.Height = 24.000000000000000000
+                      Size.PlatformDefault = False
+                    end
+                  end
+                  object recBotonAplicar: TRectangle
+                    Fill.Color = xFF00558C
+                    Position.X = 38.000000000000000000
+                    Position.Y = 269.000000000000000000
+                    Size.Width = 121.000000000000000000
+                    Size.Height = 44.000000000000000000
+                    Size.PlatformDefault = False
+                    Stroke.Kind = None
+                    Stroke.Thickness = 2.000000000000000000
+                    XRadius = 5.000000000000000000
+                    YRadius = 5.000000000000000000
+                    object Label3: TLabel
+                      Align = Client
+                      StyledSettings = [Family, Size]
+                      Locked = True
+                      Size.Width = 121.000000000000000000
+                      Size.Height = 44.000000000000000000
+                      Size.PlatformDefault = False
+                      TextSettings.Font.StyleExt = {00070000000000000004000000}
+                      TextSettings.FontColor = claWhite
+                      TextSettings.HorzAlign = Center
+                      Text = 'Aplicar'
+                      TabOrder = 1
+                    end
+                    object BotonAplicar: TSpeedButton
+                      Align = Contents
+                      Locked = True
+                      Size.Width = 121.000000000000000000
+                      Size.Height = 44.000000000000000000
+                      Size.PlatformDefault = False
+                      OnClick = BotonAplicarClick
+                    end
+                  end
+                  object Label2: TLabel
+                    StyledSettings = [Family, Size]
+                    Position.X = 38.000000000000000000
+                    Position.Y = 25.000000000000000000
+                    Size.Width = 401.000000000000000000
+                    Size.Height = 17.000000000000000000
+                    Size.PlatformDefault = False
+                    TextSettings.Font.StyleExt = {00070000000000000004000000}
+                    TextSettings.FontColor = xFF00558C
+                    Text = 'EDITAR PERMISO'
+                    TabOrder = 2
+                  end
+                  object Label5: TLabel
+                    AutoSize = True
+                    StyledSettings = [Family, Size, Style]
+                    Position.X = 38.000000000000000000
+                    Position.Y = 104.000000000000000000
+                    Size.Width = 139.000000000000000000
+                    Size.Height = 16.000000000000000000
+                    Size.PlatformDefault = False
+                    TextSettings.FontColor = xFF00558C
+                    Text = 'Descripci'#243'n del m'#243'dulo:'
+                    TabOrder = 5
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+      object Layout12: TLayout
+        Align = Top
+        Size.Width = 1008.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Label12: TLabel
+          Position.X = 16.000000000000000000
+          Position.Y = 9.000000000000000000
+          Text = 'Nombre del servicio'
+          TabOrder = 0
+        end
+        object comboServicios: TComboBox
+          Position.X = 144.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 481.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          OnChange = comboServiciosChange
+        end
       end
     end
     object recTitulo: TRectangle
       Align = Top
       Fill.Color = xFF00558C
       Padding.Left = 15.000000000000000000
-      Size.Width = 1295.000000000000000000
+      Size.Width = 1028.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       object lbTitulo: TLabel
         Align = Client
         StyledSettings = [Family]
-        Size.Width = 1235.000000000000000000
+        Size.Width = 968.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 18.000000000000000000
@@ -492,7 +780,7 @@ object form_Configuracion: Tform_Configuracion
         Hint = 'Salir'
         Padding.Top = 4.000000000000000000
         Padding.Bottom = 4.000000000000000000
-        Position.X = 1250.000000000000000000
+        Position.X = 983.000000000000000000
         Size.Width = 45.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
@@ -512,21 +800,21 @@ object form_Configuracion: Tform_Configuracion
               PNG = {
                 89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
                 93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                01BB494441545847EDD7314B23411806E0CD154BD25D0C27E8A9A01672F78BB4
-                D15A6CF45F885898DECEDE4EC41F60235E73C55909FE01D30C3A4B76BEF7B5D0
-                627C6744165CD0639F2EDFF7BD331392DD648BA2D3F9DF912CCD6CECBDBF674B
-                BCF713331B932C75FF84991DE9022DDAD7FD7B5AF0DEDFF7FBFD19ADB7A1AAAA
-                C9603018C5B5E44024A9B536F57ABD5767F816BFF80CBA03BDE7EB1F08C029C9
-                7992230063ED17CF330745510C492E0038D37E237AA350005E5DA600F69C7320
-                49E79C01D891FEACAE118B67B334A0002C6B06C09673EE11C046A6B7A66BC474
-                3EA1011542B82439D41C80D94C6D1442F8A36BC43493D0404E08E12F8039CDC6
-                002CD675FD4FB34A73090DBCA5AEEB5B922B9A2F5E3EA6E9747AA7991CCD36BE
-                CA6224939F9E0FA7EF20A7C14776A359A5B984065408E1EA8D2FF58F4C6D44F2
-                5AD7886926A10105E09766006C3AE71E00AC677ABF758D98CE2734A000FC8CE7
-                01ECCA8D715BFAABBA462C9ECDD28032B373000B24876676A87D3ECF1C90FC4E
-                72C9CC2EB41FD3FD93AB2437D4A6EE0F5A53DD81DE931CA8AAAA89D6DA92DB2B
-                39505996275A6B4B5996C75A4B448FD213BD677C94468FD29DCE57F7041AF6BC
-                FE0334A82E0000000049454E44AE426082}
+                01BF494441545847EDD7B16E13411405D035C5CAEE301696204EA48402C11725
+                0DD4110DF90B6451C47DBAF47411E203681034145045CA0FD8D25822B3F2CEBB
+                97C214933B63592B792512EDE9FCDEBB3363D9BBF61645A7F3D0912CCD6CE6BD
+                9FB325DEFB8599CD4896BA7FC2CCCE7581167DD0FD7B5AF0DECFFBFDFE13ADB7
+                A1AAAAC5603018C5B5E44024A9B536F57ABD3B677814BFF81F7407DAE6FE1F08
+                C02792CF498E00CCB45FAC67A645510C494E005C69BF11BD512800772E530067
+                CE3990A473CE00BC93FE58D788C5B3591A50000E3503E0AD73EE16C049A6F752
+                D788E97C42032A84F095E4507300C699DA2884F043D7886926A1819C10C24F00
+                CF341B03B05FD7F52FCD2ACD2534B0495DD7D7248F345FFCFB9856ABD58D6672
+                34DBF82A8B914C7E7A764EDF414E838FECB76695E6121A5021846F1BBED44F33
+                B511C9EFBA464C33090D2800AF3403E0CD72B9FC03E038D37BAD6BC4743EA101
+                05602F9E07F05E6E8CA7D27FA16BC4E2D92C0D2833FB0C60427268661FB5CFF5
+                CC94E463920766F645FB31DD3FB94A72436DEAFEA035D51D689BE44055552DB4
+                D696DC5EC981CAB2BCD45A5BCAB2BCD05A227A945EE83D63571A3D4A773AF7DD
+                5FB1F4BCDD435AB4410000000049454E44AE426082}
               FileName = 
                 'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
                 '\Boton Salir.png'
@@ -628,8 +916,8 @@ object form_Configuracion: Tform_Configuracion
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 625
-    Top = 515
+    Left = 633
+    Top = 587
     object camasServicioidCama: TIntegerField
       FieldName = 'idCama'
     end
@@ -730,8 +1018,8 @@ object form_Configuracion: Tform_Configuracion
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 351
-    Top = 382
+    Left = 463
+    Top = 406
     object alertasServicioidServicio: TIntegerField
       FieldName = 'idServicio'
     end
@@ -780,5 +1068,240 @@ object form_Configuracion: Tform_Configuracion
     ScopeMappings = <>
     Left = 312
     Top = 560
+  end
+  object permisosServicio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 151
+    Top = 454
+    object permisosServicioidPermiso: TIntegerField
+      FieldName = 'idPermiso'
+    end
+    object permisosServicioidServicio: TIntegerField
+      FieldName = 'idServicio'
+    end
+    object permisosServicionombreServicio: TStringField
+      FieldName = 'nombreServicio'
+      Size = 255
+    end
+    object permisosServicioidModulo: TIntegerField
+      FieldName = 'idModulo'
+    end
+    object permisosServicionombreModulo: TStringField
+      FieldName = 'nombreModulo'
+      Size = 255
+    end
+    object permisosServiciodescripcionModulo: TStringField
+      FieldName = 'descripcionModulo'
+      Size = 255
+    end
+    object permisosServiciocontrolTotal: TIntegerField
+      FieldName = 'controlTotal'
+    end
+  end
+  object modulosTablero: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 775
+    Top = 365
+    object modulosTableroidModulo: TIntegerField
+      FieldName = 'idModulo'
+    end
+    object modulosTableronombreModulo: TStringField
+      FieldName = 'nombreModulo'
+      Size = 255
+    end
+    object modulosTablerodescripcion: TStringField
+      FieldName = 'descripcion'
+      Size = 255
+    end
+    object modulosTablerocontrolTotal: TIntegerField
+      FieldName = 'controlTotal'
+    end
+    object modulosTableropermiso: TStringField
+      FieldName = 'permiso'
+      Size = 50
+    end
+    object modulosTableronombreServicio: TStringField
+      FieldName = 'nombreServicio'
+      Size = 255
+    end
+  end
+  object ImageList1: TImageList
+    Source = <
+      item
+        MultiResBitmap.Height = 24
+        MultiResBitmap.Width = 24
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 24
+            Height = 24
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+              F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              046549444154484BD5955D6C145514C7FFE7DED9D9DDB62E5D4A17DA052BE1CB
+              E007044CF8B04DC5A4A8082101A3906822FA6C30F2A2E1C1070D2F46A3C6175F
+              7830314820262644B1F50B30824021D8228DA4F265A15A68F7AB3B33F7CE9DE3
+              C3EEACD3DDE0B39EE46666CEB9E7FCEE39E7DE3BC07F498601FB2C10ABD7FF9B
+              50BDA25E2EF7ACDC2A12C96D24825530AA5D53C05224C6C9D0693F973FB4ECEC
+              A56FEA7DA27257C0D0AA151B12ADF23D66AC34650FC67101130000C89210C904
+              64320E40FCE8DC2EEE5E313472AE3E06EE06187A74D56ECBA6F755AE08952B01
+              CC204191E90C360C9202B1F43DB053C2F7DCF80B2B4F9EFFAC2E5423E07CF723
+              BB2CF2F797C727619486B0241C20B0C8142DB6C6490A09E6851C041200D837B0
+              92712433692885A7569F3A7F341A4F443F4EF5F42C642E7C9C1FBF03CFF7E15B
+              120A0C2D84179FBF68EBBAD11BF7AFFDEDDA12CC9BB78413C9BDBEF05CDF1270
+              5C85C25F5380C59F9EE8EE4E4763CE005050D857CAE998AB7D6841D0CCD000A4
+              F193A59B37F69FEAEB5908006B4F9CBEB2FEE2E57DD4DEB9CE0FE41D5F008EE3
+              C1299466DBC2796346CCF0E5E496C7E7BA3747AFBB93DA262230330814293B03
+              317BAC25DBD9DBFDFD4FA3A1DF0F6B56F7B9B7FFEC073300C06A9B35D1D4B5BC
+              6BFDE1C30EA219E8A97C8F57265B33A099C1097BD0B7FC5C98852682D62A9BBF
+              3676FCDB0DEB17857E8FFD3C38602CFBB866860A18A6ECB69BDCADD5A1BD0698
+              76DC871CE5C32782062148CE7A53CC59B0B110485F050CCD8006C10B7467FEEA
+              D8B1A3BDBD8B435F63C58E68107C2238CA47716A725903C071BDB40A22AB8D61
+              7AD3C9B3679273673FED2BD62A9A09EBEC9DEB577FF8B29A89E2604203D0003C
+              63502A94AC0680621414075060280450AECA00C0B6D317FAAD8EB62AA46A2720
+              60959DBA3A76ECEBBEBE8C918855FC188A199A2CD300D0D2BEA84195521886EB
+              A92743DBF6C1E101392FB3D9F7A0F58C72A9ECADDF478E97957939AA97ADA9DA
+              26A8019AB2ED278A4298B00C9ECAED38F044EF7DA17DE7B90BFDD491D9EC43FA
+              D1C67BC65FA63C674DA5740C4FF839D1B5F44C0360FBD1637FC42DFB2B5DED83
+              327632377AE58B831B37CE0EE7BC78EE42BF35A7755351CA720D82CAA6087B80
+              78CB81670F1D2A35000040B4B7BDAEA540D86C57E9876F8D5E1CFCF081A5CF7D
+              F27C5F3300BC34383C90CA6476154918CD5C398CD52DEA4A596E59D0F9563466
+              C35DF4C1834B5F738BC5776B0A66101188E5045B344A44C2045E9602D1F1CF02
+              194402762AB5F3D55F46665C780D00007867F9E2B7D574792F735039CD35A99C
+              D6A81B83414220D1927A65CFF0C84735435564BD0200062626BFDBD275EF90E7
+              AB3541C0AD06406550750041253420E5AFCDA9D61D7B862E1DAC8F83C8529A00
+              A4012401D85570A12B93E9E86D8A3DD306DA607B66916B533300C449175410BF
+              3C413C702457FA3C9FCFE700B454D7A1003800A600944340BC3A218ECA3F5756
+              8701300DC09A9F4EA7E7123501C018501A9F9CCC01080034577B1126AA017800
+              4AD5E7FF5CFE06C5D748FE2B663AFE0000000049454E44AE426082}
+            FileName = 
+              'C:\Users\jorgeluis.rodriguez\Pictures\iconos\coquette-icons-set\' +
+              'png\24x24\block.png'
+          end>
+        Name = 'block'
+      end
+      item
+        MultiResBitmap.Height = 24
+        MultiResBitmap.Width = 24
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 24
+            Height = 24
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+              F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              028449444154484BED924D4B15611886AF67DE99C9738E52522658A67D420BAD
+              4D2D6AE3AAE8030A21DC94D21F285A989689149A46B9898CE83F288560180441
+              48D22E576105E6A2E8E3541C75F0CC9C99A7C5C9F17CE0AE55782DEFF7BE9FFB
+              7DE61D58E7BF474A8532AE270EA3A60DD523D8B213B4924816403F61E96B426B
+              8CC1C557A5B115D62EB89A6AC2955EA0153008900D33B8561A5F6B70ADCA02F7
+              33B2B941EE2E971559A502009DC94E9C680A3807189479FCA88384DB40FFD22E
+              8CEC01B948C4E7BF891388FD92AED45DFA700B47156F7085041B2A1F61D31E6B
+              59FD8217B430E2CFD2B9B90A13D43294F900C025A79994BCC0B85B62BF32C9B2
+              B633BCF48DA20DAEA56AA9484CE0140C07B0B58F117F96ABEE291CFF1D7EEE72
+              7C763F98C1931B48C13D85E32464929E8A7AE2829E8A7A44C631A6055DF5E287
+              19D48CD14915B6F318A375D852F8EDC1314FC9E632451A1C44ED51E202350FB1
+              38546202D74A33B490C624F761495DBE5CCED39B7A444FAA9FAE0D8DDCF3BEE2
+              5AE9D22816CDC46F70237900AC71A0BED815FCC2A41AC9060EEA7FC07136C547
+              BE46244C0DD839C2A53970AA8BA2B9E82343DE9EFC06FDDE5BD01368947FBC15
+              C4A926E39D6468214D28970982DF793D4823610737333FF1BDD365C3896689E4
+              0C657F514F4503629E801C8CB55CF41EF18E32C877FA12DB89CC6EC26896DBDE
+              17AE27B611CA148ED5B0EAD769346CE3CEF23C650500DD559B111DC1D0166BCA
+              0C445D0C789380720EC3DEE431D40C63747F81EF01F6621737F156A4F28215BA
+              931730720B91C658539D43E407CA56841DAB667D836A2F03DEF3552DCFDA0500
+              DD1BAB91B015D1B358D2844F0D60E16A484E3F63CB34918CF2637182C704A5F1
+              75D6F937FC018687E02CD23DBE4E0000000049454E44AE426082}
+            FileName = 
+              'C:\Users\jorgeluis.rodriguez\Pictures\iconos\coquette-icons-set\' +
+              'png\24x24\ojo.png'
+          end>
+        Name = 'lectura'
+      end
+      item
+        MultiResBitmap.Height = 24
+        MultiResBitmap.Width = 24
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 24
+            Height = 24
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+              F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              038649444154484BE5945D6C14551886DF73E66F7767775BBA816EB5160AB514
+              1B6BD4C420168DD00BA309A90935D1840A5EA15E10AC859070A117184D041334
+              31465B63A2101A7E12033674138B249054D388A9450B625BE8BA2D2D4B777776
+              D7F93BC70B76743DDDA5E885373EC9979399F9DE79BE999319E07FCBB59E6D0F
+              0C6F897E7AF98DC7BB785F87245EF7A0E2893B61F6EB8F1F4EF4F79F5525BE95
+              4DFDF8EEE4C8D8D1C4E92E5DECC3BF115C9FB85873A967FF11C2B26159A3F085
+              5420156F4F9D3C36347D62EFFD62FF3F12703E288FC72F1F729F7B6B957C5713
+              1CC38063032E57E066B3CDBF1DED1D983AFCDA3DC519527CB018F64FED6F678D
+              E4EE998A83A088809DE88679E124A83F08C7A5C8671CE40D67F38681E4312F73
+              C74F605ED9F1926B7CBB3B54DD889578134B9518AAB67F01EDE93DC8CE9BC8A5
+              2C38C43FD5BC67FFB9E25CD9DD2FC68A1F7CCC99F9E088127952E6D40736D70F
+              CD1905A13A8CFA17F0BB164166E82C5BB5ADFBC5BB9F7965B838BBE82BE2C9BE
+              3AEBCACE3324D4524F826BC0A6FB00A902C4DF0C49D391614D189D5D87807173
+              EF836D9BF689F9DB0A18BBEAB7BEDB3040F465ADD29256B8374E035606446F01
+              F1D502AA0F12E530EC86CFC2752F6F15F3586C0FACD1CE0344D35A69E55AB0F4
+              30787E1A24D004A256031240A80F4C5E3912AC6D7F55CC7A941558973A771073
+              623BAD7A023C3F0E96BE00AADF07A244019E06B80DD7E53352B0AD9DD29AAC98
+              F72829E089C115F6CD1FF6D1AA4701668325BF01F1DF0BA2D5813B0970370DD7
+              4C321A5CBF85F857FF2AE68B2929B072F246AAEFD2419783CD1E07516B417D0D
+              E0661CDC8C03761272785DB752F9544CCC8A94143096DD48A40898D306E81D20
+              FEE5E0F60D70E37BC09A03F1B7BC2F47771E1073A5282980C39B644502943048
+              E47590C026B0F941702705A8D567A4FAAE6E31528E0582582C163914BBB8623E
+              E742552510382095CF426BFC1C72D59A49A5E5A34E4A1B4D31578E0582C4C42F
+              0F0D8D8C2DE93D358CA9EB29C8611D5C23D373CEFAF77ECE7CB296D247AE8999
+              DBB1E043EB7CBEE31DDBC5AE684D0DC2E1C058B422D4DB7FFCD4875F9E3F9F29
+              B4784371612D49B12000C0B7BAA1BE67D9D2EAC6F974EAF0D5F1C9AF52B99C01
+              4007A00080FC573F2700C3AD726DC0016003C8034816565E2CF00108ABAA5A61
+              5956BE305948B9F543F4A6F6FAFF9CDE06DC82C41398005285F56F0211A97043
+              AF4AC1CBD47FC71F565E59AC56AF3E3C0000000049454E44AE426082}
+            FileName = 
+              'C:\Users\jorgeluis.rodriguez\Pictures\iconos\coquette-part-2-ico' +
+              'ns-set\png\24x24\edit.png'
+          end>
+        Name = 'edicion'
+      end>
+    Destination = <
+      item
+        Layers = <
+          item
+            Name = 'block'
+            SourceRect.Right = 24.000000000000000000
+            SourceRect.Bottom = 24.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'lectura'
+            SourceRect.Right = 24.000000000000000000
+            SourceRect.Bottom = 24.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'edicion'
+            SourceRect.Right = 24.000000000000000000
+            SourceRect.Bottom = 24.000000000000000000
+          end>
+      end>
+    Left = 869
+    Top = 293
   end
 end

@@ -69,6 +69,7 @@ type
     procedure listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
     procedure ActualizarServicios;
     procedure botonSalirClick(Sender: TObject);
+    procedure marcarServicioPredeterminado;
   private
     { Private declarations }
   public
@@ -128,9 +129,27 @@ end;
 procedure Tform_ServiciosCambio.listaServiciosItemClick(const Sender: TObject; const AItem: TListViewItem);
 begin
   datos.servicio := serviciosidServicio.AsInteger;
+  marcarServicioPredeterminado;
   formTablero.ActualizarServicio;
   formTablero.ActualizarCamas;
   Close;
+end;
+
+procedure Tform_ServiciosCambio.marcarServicioPredeterminado;
+var
+  response: IResponse;
+  recurso, body:string;
+begin
+  // marca el servicio seleccionado por el usuario como predeterminado, para que la próxima vez el tablero use este servicio por defecto.
+  recurso := '/tablerocamas/servicioPredeterminar';
+  body := '{"idServicio":'+ datos.servicio.ToString +',"idUsuario":'+ datos.idUsuario.ToString +'}';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              //.Adapters(TDataSetSerializeAdapter.New(servicios))
+              .Post;
 end;
 
 end.

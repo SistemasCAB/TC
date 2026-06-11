@@ -340,7 +340,7 @@ implementation
 
 uses form_login, ModuloDatos, constantes, DetallesCama_form, Configuracion_form, ServiciosCambio_form, UFunciones,
   FMX.Image.Base64, RESTRequest4D, DataSet.Serialize.Adapter.RESTRequest4D,
-  AutorizacionesPendientes_form, FiltrarCamas_form;
+  AutorizacionesPendientes_form, FiltrarCamas_form, Config_form;
 
 function TformTablero.permisoModulo(idModulo: integer): integer;
 begin
@@ -504,6 +504,11 @@ begin
 
   if permisoModulo(11) = 2 then
     begin
+//      Application.CreateForm(Tform_Config, form_Config);
+//      form_Config.Height := formTablero.Height;
+//      form_Config.Width := formTablero.Width;
+//      form_Config.ShowModal;
+
       Application.CreateForm(Tform_Configuracion, form_Configuracion);
       form_Configuracion.Height := formTablero.Height;
       form_Configuracion.Width := formTablero.Width;

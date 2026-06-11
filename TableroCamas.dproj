@@ -365,6 +365,10 @@
             <Form>formFiltrarCamas</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="Config_form.pas">
+            <Form>form_Config</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <None Include="config.ini"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

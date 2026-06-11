@@ -28,7 +28,8 @@ uses
   TareaRepracionCrear_form in 'TareaRepracionCrear_form.pas' {form_TareaRepracionCrear},
   Reservas_form in 'Reservas_form.pas' {form_Reservas},
   EnviarQuirofano_form in 'EnviarQuirofano_form.pas' {form_EnviarQuirofano},
-  FiltrarCamas_form in 'FiltrarCamas_form.pas' {formFiltrarCamas};
+  FiltrarCamas_form in 'FiltrarCamas_form.pas' {formFiltrarCamas},
+  Config_form in 'Config_form.pas' {form_Config};
 
 {$R *.res}
 

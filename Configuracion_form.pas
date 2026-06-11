@@ -14,7 +14,8 @@ uses
   Data.Bind.ObjectScope, FMX.ListView, System.Rtti, System.Bindings.Outputs,
   Fmx.Bind.Editors, Data.Bind.EngExt, Fmx.Bind.DBEngExt, Data.Bind.DBScope,
   FMX.ListBox, FMX.Edit,
-  RESTRequest4D,DataSet.Serialize.Adapter.RESTRequest4D, System.JSON;
+  RESTRequest4D,DataSet.Serialize.Adapter.RESTRequest4D, System.JSON,
+  System.ImageList, FMX.ImgList;
 
 type
   TComboItem = class
@@ -34,10 +35,6 @@ type
     tabAlertas: TTabItem;
     contenedorTabServicios: TLayout;
     Layout5: TLayout;
-    Layout6: TLayout;
-    Label6: TLabel;
-    areaCerrada: TSwitch;
-    Label5: TLabel;
     Layout7: TLayout;
     Layout8: TLayout;
     recQuitarCama: TRectangle;
@@ -88,8 +85,6 @@ type
     resultadosmensaje: TStringField;
     Layout2: TLayout;
     Layout11: TLayout;
-    Layout12: TLayout;
-    Label12: TLabel;
     Layout13: TLayout;
     Layout14: TLayout;
     recBotonQuitarAlerta: TRectangle;
@@ -102,7 +97,6 @@ type
     Layout15: TLayout;
     Label17: TLabel;
     Label18: TLabel;
-    comboServicios: TComboBox;
     listaAlertasDisponibles: TListBox;
     alertasServicio: TFDMemTable;
     alertasDisponibles: TFDMemTable;
@@ -117,11 +111,49 @@ type
     LinkListControlToField4: TLinkListControlToField;
     BindSourceDB5: TBindSourceDB;
     LinkListControlToField5: TLinkListControlToField;
-    comboServiciosCamas: TComboBox;
-    lb_idServicio: TLabel;
-    Rectangle1: TRectangle;
+    tabPermisos: TTabItem;
+    Layout1: TLayout;
+    Layout3: TLayout;
+    Layout10: TLayout;
+    Layout17: TLayout;
+    Label4: TLabel;
+    permisosServicio: TFDMemTable;
+    permisosServicioidPermiso: TIntegerField;
+    permisosServicioidServicio: TIntegerField;
+    permisosServicionombreServicio: TStringField;
+    permisosServicioidModulo: TIntegerField;
+    permisosServicionombreModulo: TStringField;
+    permisosServiciodescripcionModulo: TStringField;
+    permisosServiciocontrolTotal: TIntegerField;
+    Layout12: TLayout;
+    Label12: TLabel;
+    comboServicios: TComboBox;
+    modulosTablero: TFDMemTable;
+    modulosTableroidModulo: TIntegerField;
+    modulosTableronombreModulo: TStringField;
+    modulosTablerodescripcion: TStringField;
+    modulosTablerocontrolTotal: TIntegerField;
+    modulosTableropermiso: TStringField;
+    modulosTableronombreServicio: TStringField;
+    listaModulos: TListView;
+    ImageList1: TImageList;
+    lyEditarPermisos: TLayout;
+    Label1: TLabel;
+    lbModulo: TLabel;
+    lbDescripcion: TLabel;
+    grupoPermisos: TGroupBox;
+    rdSinAcceso: TRadioButton;
+    rdLectura: TRadioButton;
+    rdEditar: TRadioButton;
+    Image1: TImage;
+    Image2: TImage;
+    Image4: TImage;
+    recBotonAplicar: TRectangle;
+    Label3: TLabel;
+    BotonAplicar: TSpeedButton;
+    Label2: TLabel;
+    Label5: TLabel;
     procedure botonSalirClick(Sender: TObject);
-    procedure paginaChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ActualizarServicios;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -135,7 +167,11 @@ type
     procedure BotonAgregarAlertaClick(Sender: TObject);
     procedure BotonQuitarAlertaClick(Sender: TObject);
     procedure obtenerCamasServicio(idServicio:integer);
-    procedure comboServiciosCamasChange(Sender: TObject);
+    procedure obtenerPermisosServicio;
+    procedure actualizarListaPermisos;
+    procedure listaModulosItemClick(const Sender: TObject;
+      const AItem: TListViewItem);
+    procedure BotonAplicarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -218,7 +254,7 @@ begin
   recurso := '/tablerocamas/servicioAgregarCama';
   json := TJSONObject.Create;
   try
-    json.AddPair('idServicio', TJSONNumber.Create(serviciosidServicio.AsInteger));
+    json.AddPair('idServicio', TJSONNumber.Create(idServicioSeleccionado));
     json.AddPair('idCama', TJSONNumber.Create(camasDisponiblesServicioidCama.AsString));
     json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
     body := json.ToJSON;
@@ -240,8 +276,8 @@ begin
       exit;
     end;
 
-  camasServicioVer(serviciosidServicio.AsInteger);
-  camasDisponiblesVer(serviciosidServicio.AsInteger);
+  camasServicioVer(idServicioSeleccionado);
+  camasDisponiblesVer(idServicioSeleccionado);
 end;
 
 procedure Tform_Configuracion.BotonQuitarAlertaClick(Sender: TObject);
@@ -288,7 +324,7 @@ begin
   json := TJSONObject.Create;
   try
     json.AddPair('idCama', TJSONNumber.Create(camasServicioidCama.AsString));
-    json.AddPair('idServicio', TJSONNumber.Create(serviciosidServicio.AsInteger));
+    json.AddPair('idServicio', TJSONNumber.Create(idServicioSeleccionado));
     json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
     body := json.ToJSON;
   finally
@@ -309,8 +345,8 @@ begin
       exit;
     end;
 
-  camasServicioVer(serviciosidServicio.AsInteger);
-  camasDisponiblesVer(serviciosidServicio.AsInteger);
+  camasServicioVer(idServicioSeleccionado);
+  camasDisponiblesVer(idServicioSeleccionado);
 end;
 
 procedure Tform_Configuracion.botonSalirClick(Sender: TObject);
@@ -371,7 +407,6 @@ var
   Item: TComboItem;
 begin
   comboServicios.Items.Clear;
-  comboServiciosCamas.Items.Clear;
   servicios.First;
   while not servicios.Eof do
   begin
@@ -382,38 +417,8 @@ begin
     Item.Descripcion := serviciosnombreServicio.AsString;
     // Agregar al ComboBox: el texto visible + el objeto adjunto
     comboServicios.Items.AddObject(Item.Descripcion, Item);
-    comboServiciosCamas.Items.AddObject(Item.Descripcion, Item);
     servicios.Next;
   end;
-end;
-
-procedure Tform_Configuracion.comboServiciosCamasChange(Sender: TObject);
-var
-  ItemSeleccionado: TComboItem;
-begin
-  // Verificar que haya algo seleccionado
-  if comboServiciosCamas.ItemIndex < 0 then
-    Exit; // No hay nada seleccionado, salir
-  // Recuperar el objeto adjunto al ítem seleccionado
-  // El cast (TComboItem) es necesario porque Items.Objects devuelve TObject
-  ItemSeleccionado := TComboItem(comboServiciosCamas.Items.Objects[comboServiciosCamas.ItemIndex]);
-  //idServicioSeleccionado := ItemSeleccionado.ID;
-
-  lb_idServicio.text := 'ID Servicio: ' + ItemSeleccionado.ID.ToString;
-
-  obtenerCamasServicio(ItemSeleccionado.ID);
-
-  // filtro los servicios parar ver solo el seleccionado
-  servicios.Filter := 'idServicio = ' + ItemSeleccionado.ID.ToString;
-  servicios.Filtered := True;
-
-  if servicioscambioCamaAreaCerrada.AsInteger = 1 then
-    areaCerrada.IsChecked := true
-  else
-    areaCerrada.IsChecked := false;
-
-  // desactivo el filtro
-  servicios.Filtered := False;
 end;
 
 procedure Tform_Configuracion.comboServiciosChange(Sender: TObject);
@@ -423,12 +428,23 @@ begin
   // Verificar que haya algo seleccionado
   if comboServicios.ItemIndex < 0 then
     Exit; // No hay nada seleccionado, salir
-  // Recuperar el objeto adjunto al ítem seleccionado
-  // El cast (TComboItem) es necesario porque Items.Objects devuelve TObject
+
+
+  // obtengo el servicio seleccionado en el comboServicios
   ItemSeleccionado := TComboItem(comboServicios.Items.Objects[comboServicios.ItemIndex]);
   idServicioSeleccionado := ItemSeleccionado.ID;
 
+  // obtengo las camas atendidas y las disponibles
+  obtenerCamasServicio(ItemSeleccionado.ID);
+
+  // obtengo las alertas atendidas y las disponibles
   obtenerAlertasServicio;
+
+  // obtengo los permisos del servicio
+  obtenerPermisosServicio;
+
+  // muestro la página de configuración
+  pagina.Visible := true;
 end;
 
 procedure Tform_Configuracion.FormClose(Sender: TObject;  var Action: TCloseAction);
@@ -440,6 +456,34 @@ procedure Tform_Configuracion.FormCreate(Sender: TObject);
 begin
   lbTitulo.Text := 'CONFIGURACIÓN -> ' + pagina.Tabs[0].Text;
   ActualizarServicios;
+
+  pagina.Visible := false;
+  lyEditarPermisos.Visible := false;
+end;
+
+procedure Tform_Configuracion.listaModulosItemClick(const Sender: TObject; const AItem: TListViewItem);
+begin
+  if modulosTablero.Locate('idModulo', AItem.Tag, []) then
+    begin
+      lbModulo.Text := modulosTableronombreModulo.AsString;
+      lbDescripcion.Text := modulosTablerodescripcion.AsString;
+      rdSinAcceso.IsChecked := false;
+      rdLectura.IsChecked := false;
+      rdEditar.IsChecked := false;
+      case modulosTablerocontrolTotal.AsInteger of
+        0: begin
+            rdSinAcceso.IsChecked := true;
+        end;
+        1: begin
+            rdLectura.IsChecked := true;
+        end;
+        2: begin
+            rdEditar.IsChecked := true;
+        end;
+      end;
+
+      lyEditarPermisos.Visible := true;
+    end;
 end;
 
 procedure Tform_Configuracion.obtenerAlertasServicio;
@@ -533,9 +577,92 @@ begin
     end;
 end;
 
-procedure Tform_Configuracion.paginaChange(Sender: TObject);
+procedure Tform_Configuracion.obtenerPermisosServicio;
+var
+  response, response2: IResponse;
+  recurso:string;
 begin
-  lbTitulo.Text := 'CONFIGURACIÓN - ' + pagina.Tabs[pagina.TabIndex].Text;
+  recurso := '/tablerocamas/servicioModulosTablero';
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddParam('idServicio',idServicioSeleccionado.ToString)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(modulosTablero))
+              .Get;
+
+  actualizarListaPermisos;
+end;
+
+procedure Tform_Configuracion.BotonAplicarClick(Sender: TObject);
+var
+  response : IResponse;
+  recurso, body : string;
+  permiso : integer;
+  json: TJSONObject;
+begin
+  recurso := '/tablerocamas/permisoEditar';
+
+  // obtengo el permiso seleccionado.
+  if rdSinAcceso.IsChecked then
+    permiso := 0
+  else if rdLectura.IsChecked then
+        permiso := 1
+  else if rdEditar.IsChecked then
+        permiso := 2;
+
+  //body := '{"idServicio":'+ idServicioSeleccionado.ToString +', "idModulo":'+ modulosTableroidModulo.AsString +', "permiso":'+ permiso.ToString +'}';
+
+  json := TJSONObject.Create;
+  try
+    json.AddPair('idServicio', TJSONNumber.Create(idServicioSeleccionado));
+    json.AddPair('idModulo', TJSONNumber.Create(modulosTableroidModulo.AsInteger));
+    json.AddPair('permiso', TJSONNumber.Create(permiso));
+    body := json.ToJSON;
+  finally
+    json.Free;
+  end;
+
+  // showmessage(body);
+
+  response := TRequest.New.BaseURL(datos.urlTC)
+              .Resource(recurso)
+              .AddHeader('TokenAcceso', datos.tokenAcceso)
+              .AddBody(body)
+              .Accept('application/json')
+              .Adapters(TDataSetSerializeAdapter.New(resultados))
+              .Post;
+
+  if response.StatusCode <> 200 then
+    begin
+      datos.VerMensaje('Error ' + response.StatusCode.ToString ,resultadosmensaje.AsString  ,'Aceptar','ERROR',0);
+    end;
+
+  obtenerPermisosServicio;
+  //actualizarListaPermisos;
+  lyEditarPermisos.Visible := false;
+end;
+
+procedure Tform_Configuracion.actualizarListaPermisos;
+var
+  Item: TListViewItem;
+  Estado: Integer;
+begin
+  listaModulos.BeginUpdate;
+  try
+    listaModulos.Items.Clear;
+
+    while not modulosTablero.Eof do
+    begin
+      Item := listaModulos.Items.Add;
+      Item.Text := modulosTableronombreModulo.AsString;
+      Item.Tag := modulosTableroidModulo.AsInteger;
+      Item.ImageIndex := modulosTablerocontrolTotal.AsInteger;
+      modulosTablero.Next;
+    end;
+  finally
+    listaModulos.EndUpdate;
+  end;
 end;
 
 end.

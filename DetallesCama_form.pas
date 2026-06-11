@@ -539,24 +539,26 @@ begin
           recCambioCama.Visible             := false;
           botonAltaProbable.Visible         := false;
 
-          // TAREAS DE REPARACIÓN
-          case permisoModulo(6) of
-            0: begin
-              rBotonReparacion.Visible := false;
-            end;
 
-            1: begin
-              rBotonReparacion.Visible := true;
-            end;
-
-            2: begin
-              rBotonReparacion.Visible := true;
-            end;
-          end;
 
           // RESERVADAS
           actualizarReserva(camasidCama.AsInteger);
         end;
+
+      // TAREAS DE REPARACIÓN
+      case permisoModulo(6) of
+        0: begin
+          rBotonReparacion.Visible := false;
+        end;
+
+        1: begin
+          rBotonReparacion.Visible := true;
+        end;
+
+        2: begin
+          rBotonReparacion.Visible := true;
+        end;
+      end;
 
 
 
