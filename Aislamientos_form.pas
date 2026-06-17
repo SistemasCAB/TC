@@ -34,11 +34,9 @@ type
     Layout2: TLayout;
     botonCancelar: TRectangle;
     Label3: TLabel;
-    Label4: TLabel;
     btnCancelar: TSpeedButton;
     botonGrabar: TRectangle;
     Label6: TLabel;
-    Label7: TLabel;
     btnGrabar: TSpeedButton;
     Label8: TLabel;
     disponibles: TFDMemTable;
@@ -72,6 +70,8 @@ type
     Image2: TImage;
     botonSalir: TSpeedButton;
     Image3: TImage;
+    Image4: TImage;
+    Image5: TImage;
     procedure ActualizarAislamientos();
     procedure crearAislamiento(id, idAislamiento, kpc: integer; FechaDesde: string);
     procedure FormActivate(Sender: TObject);

@@ -22,9 +22,6 @@ Coordinates=217,10,120,51
 [Label8]
 Coordinates=395,234,46,51
 
-[Label4]
-Coordinates=418,166,46,51
-
 [Label3]
 Coordinates=563,10,46,51
 
@@ -66,11 +63,8 @@ Coordinates=175,302,86,33
 [botonGrabar]
 Coordinates=10,302,76,33
 
-[Label7]
-Coordinates=10,166,46,51
-
 []
-Coordinates=73,166,65,51
+Coordinates=418,166,46,51
 Visible=True
 
 [btnGrabar]
