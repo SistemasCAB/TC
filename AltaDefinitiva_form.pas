@@ -15,7 +15,7 @@ uses
   DataSet.Serialize.Adapter.RESTRequest4D, System.Rtti, System.Bindings.Outputs,
   Fmx.Bind.Editors, Data.Bind.EngExt, Fmx.Bind.DBEngExt, Data.Bind.Components,
   Data.Bind.DBScope, Data.Win.ADODB, FMX.Edit,
-  DateTimeMaskEdit_unit;
+  DateTimeMaskEdit_unit, FMX.DateTimeCtrls, System.JSON;
 
 type
   Tform_AltaDefinitiva = class(TForm)
@@ -48,7 +48,6 @@ type
     btnAltaDefinitiva: TSpeedButton;
     alta: TFDMemTable;
     altaestado: TStringField;
-    altamensaje: TStringField;
     Label3: TLabel;
     lb_profesionalAlta: TLabel;
     resultadoActualizacion: TFDMemTable;
@@ -60,15 +59,22 @@ type
     btn_AltaDefinitiva: TSpeedButton;
     Image1: TImage;
     Label5: TLabel;
-    lbFormato: TLabel;
+    EditFecha: TDateEdit;
+    EditHora: TTimeEdit;
+    altamensaje: TStringField;
     procedure btnAltaDefinitivaClick(Sender: TObject);
     procedure ActualizarCamasMarkey;
     procedure Actualizar;
     procedure FormCreate(Sender: TObject);
     procedure btn_AltaDefinitivaClick(Sender: TObject);
+    procedure EditHoraChange(Sender: TObject);
   private
     { Private declarations }
-    EditFechaHora: TDateTimeMaskEdit;
+    //EditFechaHora: TDateTimeMaskEdit;
+
+    //EditFecha: TDateEdit;
+    //EditHora: TTimeEdit;
+    function ObtenerFechaHoraValidada(out dt: TDateTime): Boolean;
   public
     { Public declarations }
     idCama,soloAltaMedica,id_habitacion, idTipoAltaMedica, idInternacion,paciCodigo:integer;
@@ -125,31 +131,41 @@ var
   apiRecurso,body:string;
   url,mensaje:string;
   dt:TDateTime;
+  json: TJSONObject;
 begin
+  // 1) Obtengo la fecha y hora del alta.
+  if not ObtenerFechaHoraValidada(dt) then
+    Exit;
+
   // ejecuto el alta en Markey, luego de la confirmación del usuario.
 
   mensaje := '¿Está seguro que desea dar el alta a esta paciente?' + #13 + 'Al hacerlo esta internación se cerrará y no podrá registrar nada más en la historia clínica.';
 
   if datos.MensajeConfirmacion('Confirme su decisión', mensaje,'Si, dar el alta','No','PREGUNTA', ancho, alto) = 6 then
     begin
-      // 1) Obtengo la fecha y hora del alta.
-      dt := EditFechaHora.GetDateTime;
+
       fechaAltaEfectiva := FormatDateTime('yyyy-mm-dd hh:nn:ss', dt);
 
 
       // 2) Doy el alta en Markey y en las tablas locales del tablero (todo lo hace este método AltaDefinitiva de la api)
+      // la fecha de alta definitiva es validada en la api php
 
       apiRecurso := '/tablerocamas/altaDefinitiva';
-      body := '{'+
-              '"idCama":'+idCama.ToString+','+
-              '"idHabitacion":'+id_habitacion.ToString+','+
-              '"idInternacion":'+form_DetallesCama.camasidInternacion.AsString+','+
-              '"paciCodigo":'+paciCodigo.ToString+','+
-              '"fechaAltaDefinitiva":"'+fechaAltaEfectiva+'",'+
-              '"dni":"'+datos.dniLogin+'",'+
-              '"nombreUsuario":"'+datos.nombreLogin+'",'+
-              '"idServicio":'+datos.servicio.ToString+''+
-              '}';
+      json := TJSONObject.Create;
+      try
+        json.AddPair('idCama', TJSONNumber.Create(idCama));
+        json.AddPair('idHabitacion', TJSONNumber.Create(id_habitacion));
+        json.AddPair('idInternacion', TJSONNumber.Create(idInternacion));
+        json.AddPair('paciCodigo',TJSONNumber.Create(paciCodigo));
+        json.AddPair('fechaAltaDefinitiva',fechaAltaEfectiva);
+        json.AddPair('dni',datos.dniLogin);
+        json.AddPair('nombreUsuario',datos.nombreLogin);
+        json.AddPair('idServicio',TJSONNumber.Create(datos.servicio));
+        body := json.ToJSON;
+      finally
+        json.Free;
+      end;
+
       response := TRequest.New.BaseURL(datos.urlTC)
                            .Resource(apiRecurso)
                            .AddHeader('TokenAcceso', datos.tokenAcceso)
@@ -177,19 +193,53 @@ begin
    Close;
 end;
 
+procedure Tform_AltaDefinitiva.EditHoraChange(Sender: TObject);
+var
+  tValor: TDateTime;
+begin
+  if not EditHora.IsEmpty then
+  begin
+    tValor := EditHora.Time;
+    // Forzar re-display con formato correcto
+    EditHora.Text := FormatDateTime('HH:nn', tValor);
+  end;
+end;
+
 procedure Tform_AltaDefinitiva.FormCreate(Sender: TObject);
 begin
   alto := formTablero.Height;
   ancho := formTablero.Width;
 
-  EditFechaHora := TDateTimeMaskEdit.Create(Self);
-  EditFechaHora.Parent := LyDatosAlta;
-  EditFechaHora.Position.X := 377;
-  EditFechaHora.Position.Y := 216;
-  EditFechaHora.Width := 130;
-  EditFechaHora.StyledSettings := [];
-  EditFechaHora.TextSettings.Font.Size := 14;
-  EditFechaHora.TextSettings.Font.Style := [TFontStyle.fsBold];
+  // Corregir el separador de tiempo para evitar el bug con locale argentino
+  {$IF DEFINED(MSWINDOWS)}
+  FormatSettings.TimeSeparator := ':';
+  FormatSettings.DecimalSeparator := '.'; // solo si no afecta otros controles
+  {$ENDIF}
+
+  // Forzar formato y cultura invariante en el TTimeEdit
+  EditHora.Format := 'HH:nn';
+  // Sobreescribir el FormatSettings para el control
+  // para evitar el problema con separador decimal argentino
+  EditHora.IsEmpty := True;
+end;
+
+function Tform_AltaDefinitiva.ObtenerFechaHoraValidada(out dt: TDateTime): Boolean;
+begin
+  Result := False;
+  if EditFecha.IsEmpty then
+    begin
+      datos.VerMensaje('ATENCIÓN', 'Debe seleccionar la fecha de alta.', 'Aceptar', 'ERROR', 0);
+      EditFecha.SetFocus;
+      Exit;
+    end;
+  if EditHora.IsEmpty then
+    begin
+      datos.VerMensaje('ATENCIÓN', 'Debe seleccionar la hora de alta.', 'Aceptar', 'ERROR', 0);
+      EditHora.SetFocus;
+      Exit;
+    end;
+  dt := Trunc(EditFecha.Date) + Frac(EditHora.Time);
+  Result := True;
 end;
 
 end.

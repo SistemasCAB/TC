@@ -248,6 +248,32 @@ type
     Label5: TLabel;
     lb_TipoCama: TLabel;
     camastipoCama: TStringField;
+    rBotonLimpieza: TRectangle;
+    Image3: TImage;
+    Label7: TLabel;
+    botonLimpieza: TSpeedButton;
+    Layout1: TLayout;
+    recTareaLimpiezaVarios: TRectangle;
+    ShadowEffect7: TShadowEffect;
+    Label8: TLabel;
+    botonTareaLimpieza: TSpeedButton;
+    Layout2: TLayout;
+    lb_tareaLimpiezaVarios_estado: TLabel;
+    camastlv_idTipoTarea: TIntegerField;
+    camastlv_fecha: TStringField;
+    camastlv_usuario: TStringField;
+    camastlv_idEstadoTarea: TIntegerField;
+    camastlv_estado: TStringField;
+    camastlv_detalle: TMemoField;
+    lb_tareaLimpiezaVariosDetalle: TLabel;
+    rBotonHabilitar: TRectangle;
+    imgBotonHabilitar: TImage;
+    lbBotonHabilitar: TLabel;
+    botonHabiliar: TSpeedButton;
+    Layout3: TLayout;
+    resultado: TFDMemTable;
+    resultadoestado: TIntegerField;
+    resultadomensaje: TStringField;
     procedure botonSalirClick(Sender: TObject);
     procedure botonActualizarClick(Sender: TObject);
     procedure Actualizar(idCama:integer);
@@ -271,6 +297,9 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure cargarAlertasApagar(idCama,idServicio: integer; filtro:string);
+    procedure botonLimpiezaClick(Sender: TObject);
+    procedure HabilitarDeshabilitarCama(idCama:integer; accion:string);
+    procedure botonHabiliarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -288,7 +317,8 @@ implementation
 
 uses form_Tablero, ModuloDatos, UFunciones, constantes, CambioDeCama_form, CambioDeCamaAdmision_form,
   FMX.Image.Base64, AltaDefinitiva_form, Aislamientos_form, AltaProbable_form,
-  TareasReparacion_form, Reservas_form, EnviarQuirofano_form;
+  TareasReparacion_form, Reservas_form, EnviarQuirofano_form, Limpieza_form,
+  TareasLimpieza_form;
 
 procedure Tform_DetallesCama.Actualizar(idCama:integer);
 var
@@ -305,7 +335,7 @@ begin
   obtenerPermisosModulosPaciente(datos.servicio); // obtengo los permisos que tiene este servicio.
 
   // Obtengo los datos de la cama
-  apiRecurso := '/tablerocamas/verUnaCama';
+  apiRecurso := '/tablerocamas/verUnaCama_v2';
   response := TRequest.New.BaseURL(datos.urlTC)
               .Resource(apiRecurso)
               .AddHeader('TokenAcceso', datos.tokenAcceso)
@@ -525,6 +555,9 @@ begin
             end;
           end;
 
+          // BOTON HABILITAR CAMA
+          rBotonHabilitar.Visible := false;
+
 
 
 
@@ -534,15 +567,27 @@ begin
           panelPaciente.Visible             := false;
           panelInternacion.Visible          := false;
           panelAislamientos.Visible         := false;
-          //lyAlertasMedicas.Visible          := false;
           botonQuirofano.Visible            := false;
           recCambioCama.Visible             := false;
           botonAltaProbable.Visible         := false;
 
-
-
           // RESERVADAS
           actualizarReserva(camasidCama.AsInteger);
+
+          // BOTON HABILITAR CAMA
+          rBotonHabilitar.Visible := true;
+          if camasidEstado.AsInteger = 5 then // si está deshabilitada
+            begin
+              imgBotonHabilitar.Base64(iconoCheckBlanco);
+              lbBotonHabilitar.Text := 'Habilitar Cama';
+            end
+          else
+            begin
+              imgBotonHabilitar.Base64(iconoBlock);
+              lbBotonHabilitar.Text := 'Deshabilitar Cama';
+            end;
+
+
         end;
 
       // TAREAS DE REPARACIÓN
@@ -575,12 +620,30 @@ begin
         begin
           mostrarAlertas(idCama,datos.servicio,'pendientes');
         end;
+
+
+      // TAREAS DE LIMPIEZA VARIOS
+      if (camastlv_idTipoTarea.AsInteger = 3) and (camastlv_idEstadoTarea.AsInteger in [1,2] ) then
+        begin
+          recTareaLimpiezaVarios.Visible := true;
+          lb_tareaLimpiezaVarios_estado.Text := camastlv_estado.AsString;
+          lb_tareaLimpiezaVariosDetalle.Text := camastlv_detalle.AsString;
+          lb_tareaLimpiezaVariosDetalle.Text := lb_tareaLimpiezaVariosDetalle.Text + #13 +'____________________________';
+          lb_tareaLimpiezaVariosDetalle.Text := lb_tareaLimpiezaVariosDetalle.Text + #13 + 'Solicitado por: ' + camastlv_usuario.AsString + ' - ' + camastlv_fecha.AsString;
+        end
+      else
+        begin
+          recTareaLimpiezaVarios.Visible := false;
+        end;
+
     end
   else
     begin
       mensaje := camas.FieldByName('mensaje').AsString + #13 + #13 + 'Recurso: ' + apiRecurso + #13 + 'ID cama: ' + idCama.ToString;
       datos.VerMensaje('ERROR ' + response.StatusCode.ToString,mensaje,'Aceptar','ERROR',0);
     end;
+
+
 end;
 
 procedure Tform_DetallesCama.actualizarReserva(idCama:integer);
@@ -752,6 +815,24 @@ begin
     end;
 
   Actualizar(idCama);
+end;
+
+procedure Tform_DetallesCama.botonHabiliarClick(Sender: TObject);
+begin
+  if camasidEstado.AsInteger = 5 then
+    HabilitarDeshabilitarCama(camasidCama.AsInteger,'habilitar')
+  else
+    HabilitarDeshabilitarCama(camasidCama.AsInteger,'deshabilitar');
+end;
+
+procedure Tform_DetallesCama.botonLimpiezaClick(Sender: TObject);
+begin
+  Application.CreateForm(Tform_TareasLimpieza, form_TareasLimpieza);
+  form_TareasLimpieza.idCama := camasidCama.AsInteger;
+  form_TareasLimpieza.Height := alto;
+  form_TareasLimpieza.Width := ancho;
+  form_TareasLimpieza.tituloVentana.Text := 'TAREAS DE LIMPIEZA - CAMA ' + camascama.AsString;
+  form_TareasLimpieza.showModal;
 end;
 
 procedure Tform_DetallesCama.botonReparacionClick(Sender: TObject);
@@ -1122,6 +1203,71 @@ begin
   ancho := formTablero.Width;
 end;
 
+procedure Tform_DetallesCama.HabilitarDeshabilitarCama(idCama: integer; accion: string);
+var
+  response : IResponse;
+  recurso, body, mensaje, titulo: string;
+  json: TJSONObject;
+  habilitar:integer;
+begin
+  if accion = 'deshabilitar' then
+    begin
+      mensaje := '¿Estas seguro que queres deshabilitar esta cama?' + #13 + 'Una cama deshabilitada no podrá ser usada.';
+      habilitar := 0;
+      titulo := 'CAMA DESHABILITADA';
+    end
+  else
+    begin
+      mensaje := '¿Estas seguro que queres habilitar esta cama?' + #13 + 'Al hacerlo la cama podrá ser usada.';
+      habilitar := 1;
+      titulo := 'CAMA HABILITADA';
+    end;
+
+  if permisoModulo(12) = 2 then // si tiene control total en el módulo Habilitar / Deshabilitar Camas
+    begin
+
+      if datos.MensajeConfirmacion('Confirme su decisión',mensaje,'Si. Estoy seguro','No','WARNING',ancho,alto) = 6 then
+        begin
+          json := TJSONObject.Create;
+          try
+            json.AddPair('idCama', TJSONNumber.Create(idCama));
+            json.AddPair('habilitar', TJSONNumber.Create(habilitar));
+            json.AddPair('idServicio',TJSONNumber.Create(datos.servicio));
+            json.AddPair('idUsuario', TJSONNumber.Create(datos.idUsuario));
+            json.AddPair('idAplicacion',TJSONNumber.Create(datos.idAplicacion));
+            body := json.ToJSON;
+          finally
+            json.Free;
+          end;
+
+          recurso := '/tablerocamas/camaHabilitarDeshabilitar';
+          response := TRequest.New.BaseURL(datos.urlTC)
+                                  .Resource(recurso)
+                                  .AddHeader('TokenAcceso', datos.tokenAcceso)
+                                  .AddBody(body)
+                                  .Accept('application/json')
+                                  .Adapters(TDataSetSerializeAdapter.New(resultado))
+                                  .Post;
+
+          if response.StatusCode = 200 then
+            begin
+              form_DetallesCama.Actualizar(idCama);
+              datos.VerMensaje(titulo  ,resultadomensaje.AsString,'Aceptar','OK',0);
+              Close;
+            end
+          else
+            begin
+              datos.VerMensaje('ERROR' + response.StatusCode.ToString ,'Error: ' + resultadomensaje.AsString,'Aceptar','ERROR',0);
+            end;
+
+        end;
+    end
+  else
+    begin
+      datos.VerMensaje('ACCESO DENEGADO','El servicio '+ formTablero.nombreServicio.Text +' no tiene permiso para realizar esta acción.','Aceptar','ERROR',0)
+    end;
+end;
+
 procedure Tform_DetallesCama.MostrarAislamentos;
 var
   lyAisl: TLayout;
@@ -1313,6 +1459,7 @@ begin
           form_AltaDefinitiva.id_habitacion     := camasidHabitacion.AsInteger;
           form_AltaDefinitiva.idTipoAltaMedica  := camasidTipoAltaMedica.AsInteger;
           form_AltaDefinitiva.paciCodigo        := camaspaciCodigo.AsInteger;
+          form_AltaDefinitiva.idInternacion     := camasidInternacion.AsInteger;
           form_AltaDefinitiva.Actualizar;
           form_AltaDefinitiva.showModal;
         end;

@@ -65,7 +65,7 @@ Coordinates=597,454,69,33
 Coordinates=702,386,96,51
 
 []
-Coordinates=193,287,78,69
+Coordinates=505,1763,73,33
 Visible=True
 
 [formulario]
@@ -109,9 +109,6 @@ Coordinates=505,1653,65,33
 
 [form_DetallesCama.permisos]
 Coordinates=505,718,159,177
-
-[altamensaje]
-Coordinates=505,1763,73,33
 
 [lyDatosAlta]
 Coordinates=527,454,53,33

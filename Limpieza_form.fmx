@@ -1,0 +1,224 @@
+object form_Limpieza: Tform_Limpieza
+  Left = 0
+  Top = 0
+  Caption = 'Solicitar Limpieza'
+  ClientHeight = 292
+  ClientWidth = 496
+  Position = ScreenCenter
+  Transparency = True
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object FondoTransparente: TRectangle
+    Align = Client
+    Fill.Color = claBlack
+    Opacity = 0.400000005960464500
+    Size.Width = 496.000000000000000000
+    Size.Height = 292.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Formulario: TRectangle
+    Align = Center
+    Size.Width = 417.000000000000000000
+    Size.Height = 223.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object recTitulo: TRectangle
+      Align = Top
+      Fill.Color = xFF00558C
+      Padding.Left = 15.000000000000000000
+      Size.Width = 417.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object lbTitulo: TLabel
+        Align = Client
+        StyledSettings = [Family]
+        Size.Width = 357.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        Text = 'SOLICITAR LIMPIEZA'
+        TabOrder = 0
+      end
+      object botonSalir: TSpeedButton
+        Align = Right
+        StyledSettings = []
+        Hint = 'Salir'
+        Padding.Top = 4.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Position.X = 372.000000000000000000
+        Size.Width = 45.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        ParentShowHint = False
+        ShowHint = True
+        TextSettings.Font.Family = 'Font Awesome 6 Free Solid'
+        TextSettings.Font.Size = 30.000000000000000000
+        TextSettings.FontColor = claWhite
+        OnClick = botonSalirClick
+        object Image3: TImage
+          MultiResBitmap.Height = 38
+          MultiResBitmap.Width = 36
+          MultiResBitmap = <
+            item
+              Width = 36
+              Height = 38
+              PNG = {
+                89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+                93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                01C0494441545847EDD7B16E13411405D035C5CAEE302B2C8524480905822F22
+                4DA8231AF217C84A11F774E9E922C407D0206828A042CA0FD86B5922B3F2CEBB
+                97C229C677C6B256F24A24DAD3F9BD7767C6B277EDCDB24EE7A123999BD9C439
+                37654B9C7333339B90CC75FF88995DEA022DFAA0FBF7B4E09C9BF6FBFD275A6F
+                435555B3C1605084B5E84024A9B536F57ABDB5333C0A5FFC0FBA036D73FF0F04
+                E013C967240B0013ED67AB9971966543920700AEB5DF88DE281480B5CB14C079
+                599620C9B22C0DC03BE98F748D50389BA40105E0483300DECEE7F35B002789DE
+                4B5D23A4F3110D28EFFD579243CD0118256A85F7FE87AE11D24C440329DEFB9F
+                00F6341B027058D7F52FCD2ACD4534B0495DD77F481E6B3EBBFB9896CBE58D66
+                5234DBF82A0B918C7E7A764EDF414A838FECB76695E6221A50DEFB6F1BBED44F
+                13B582E4775D23A49988061480579A0170BA582CFE027893E8BDD635423A1FD1
+                8002B01FCE03782F37C633E9BFD03542E16C920694997D06704072686617DAE7
+                6A664CF231C9E766F645FB21DD3FBA4A52436DEAFEA035D51D689BE8405555CD
+                B4D696D45ED181F23CBFD25A5BF23CFFA8B548F0283DD37BC6AE347A94EE74EE
+                BB7F898ABCC2AD0216100000000049454E44AE426082}
+              FileName = 
+                'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+                '\Boton Salir.png'
+            end>
+          Align = Client
+          Locked = True
+          HitTest = False
+          Size.Width = 45.000000000000000000
+          Size.Height = 42.000000000000000000
+          Size.PlatformDefault = False
+          WrapMode = Place
+        end
+      end
+    end
+    object ShadowEffect1: TShadowEffect
+      Distance = 3.000000000000000000
+      Direction = 45.000000000000000000
+      Softness = 0.300000011920929000
+      Opacity = 0.600000023841857900
+      ShadowColor = claBlack
+    end
+    object botonGrabar: TRectangle
+      Fill.Color = claCrimson
+      Padding.Left = 5.000000000000000000
+      Padding.Right = 5.000000000000000000
+      Position.X = 261.000000000000000000
+      Position.Y = 145.000000000000000000
+      Size.Width = 140.000000000000000000
+      Size.Height = 55.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      Stroke.Thickness = 2.000000000000000000
+      XRadius = 5.000000000000000000
+      YRadius = 5.000000000000000000
+      OnClick = botonGrabarClick
+      object Label6: TLabel
+        Align = Client
+        StyledSettings = [Family, Size]
+        Locked = True
+        Size.Width = 92.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        Text = 'Enviar'
+        TabOrder = 1
+      end
+      object btnGrabar: TSpeedButton
+        Align = Contents
+        Hint = 'Registrar el cambio de cama'
+        Locked = True
+        Size.Width = 140.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        ParentShowHint = False
+        ShowHint = True
+      end
+      object Image4: TImage
+        MultiResBitmap.Height = 38
+        MultiResBitmap.Width = 36
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 38
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000260806000000ACC839
+              93000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              01F5494441545847EDD63DAF0C611806E073969C1C61452444C12FE0D4844AA2
+              91100AC989C22914C42FD0522A25120A2A423482C24723E20F48E814A2112442
+              C457707F28CCCAB83376676767B79AAB9C7DEEE779E77DB399776EAED3E98C4F
+              529FE46500CF485EB4BD256B66C6F602C97B2E01F04AD2F1AC9D099257CB8B29
+              23795D523F335343F27C2E2291BC94B9A990B492C3AB90BC9DD9D649DA01E04B
+              0E4F00DE4A5ACA7CAB24F5013CCFE109C01B49DB33DF3A9257727802F049D2EE
+              CC8E246949D249493BF3B72AB60FE7F02A920E657624497B017CF49F37FA21E9
+              68D69449DA04E0750E4F924E6776244907017CAF68762C6B0748DEC8FA44F266
+              E646B2BD6FD83F44D24A66241DC9BA04E085A48D991D4AD2D6C1310D2369B994
+              D90CE05DD69401F82569CFBFD36A90B42B9BFD4FB12BAB867D1A06489ECD59B5
+              485A43F25636AC02E09BEDC7F93C01786ABB97B36A93B49EE4A36CDC0400363A
+              AA647B91E4DD1C302E92E7B2776392D6927C9043EA02F0D2F686EC3B91E2A6D7
+              E8F8241DC87EAD68727C24AF659F5615C7F730075701F041D2B6ECD1BA318EEF
+              4466A7A6B8B0DFC9150C00789299A9B3DD237901C0D758CCCF995CB892ED79DB
+              0BB6CF00F85C2CE6BDA465DB3DDBF399A9A369EE2FDB8B924E91BC2F69FF449F
+              8762E7F3D9D86CAFB6BD6ED2B72B767DA21E9D4EA7AEDFFE975D4A2C1D4F2300
+              00000049454E44AE426082}
+            FileName = 
+              'C:\Users\jorgeluis.rodriguez\Documents\ICONOS\ICONOS\PNG\BLANCOS' +
+              '\Aceptar.png'
+          end>
+        Align = Left
+        Locked = True
+        Position.X = 5.000000000000000000
+        Size.Width = 38.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        WrapMode = Place
+      end
+    end
+    object Label1: TLabel
+      Position.X = 15.000000000000000000
+      Position.Y = 72.000000000000000000
+      Size.Width = 170.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Motivo (breve descripci'#243'n)'
+      TabOrder = 1
+    end
+    object detalle: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 2
+      Position.X = 15.000000000000000000
+      Position.Y = 97.000000000000000000
+      Size.Width = 386.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object resultados: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 103
+    Top = 186
+    object resultadosestado: TIntegerField
+      FieldName = 'estado'
+    end
+    object resultadosmensaje: TStringField
+      FieldName = 'mensaje'
+      Size = 255
+    end
+  end
+end

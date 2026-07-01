@@ -29,7 +29,9 @@ uses
   Reservas_form in 'Reservas_form.pas' {form_Reservas},
   EnviarQuirofano_form in 'EnviarQuirofano_form.pas' {form_EnviarQuirofano},
   FiltrarCamas_form in 'FiltrarCamas_form.pas' {formFiltrarCamas},
-  Config_form in 'Config_form.pas' {form_Config};
+  Config_form in 'Config_form.pas' {form_Config},
+  Limpieza_form in 'Limpieza_form.pas' {form_Limpieza},
+  TareasLimpieza_form in 'TareasLimpieza_form.pas' {form_TareasLimpieza};
 
 {$R *.res}
 

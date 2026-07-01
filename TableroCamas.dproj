@@ -280,6 +280,9 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Icon_MainIcon>C:\TableroCamas\TableroCamas_Icon3.ico</Icon_MainIcon>
+        <VerInfo_MajorVer>3</VerInfo_MajorVer>
+        <VerInfo_Keys>CompanyName=Clínica Adventista Belgrano;FileDescription=$(MSBuildProjectName);FileVersion=3.1.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=2.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -367,6 +370,14 @@
         </DCCReference>
         <DCCReference Include="Config_form.pas">
             <Form>form_Config</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="Limpieza_form.pas">
+            <Form>form_Limpieza</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="TareasLimpieza_form.pas">
+            <Form>form_TareasLimpieza</Form>
             <FormType>fmx</FormType>
         </DCCReference>
         <None Include="config.ini"/>
